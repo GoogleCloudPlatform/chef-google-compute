@@ -86,6 +86,7 @@ chef-codegen:
   * .gitignore
   * .rubocop.yml
   * Berksfile
+  * CHANGELOG.md
   * chefignore
   * CONTRIBUTING.md
   * Gemfile
@@ -161,6 +162,7 @@ chef-codegen:
   * libraries/google/compute/property/time.rb
   * libraries/google/compute/property/zone_deprecated.rb
   * libraries/google/compute/property/zone_name.rb
+  * libraries/google/functions/gcompute_address_ip.rb
   * libraries/google/functions/gcompute_image_family.rb
   * LICENSE
   * metadata.rb

@@ -3952,6 +3952,30 @@ the function first. Before calling a function, add the following line:
 ::Chef::Resource.send(:include, Google::Functions)
 ```
 
+### `gcompute_address_ip`
+
+  Retrieves the IP address associated with a gcompute_address static IP.
+
+#### Arguments
+
+  - `name`:
+    the name of the static IP
+
+  - `region`:
+    the name of the region that hosts the address
+
+  - `project`:
+    the name of the project that hosts the address
+
+  - `cred`:
+    the credential to use to authorize the information request
+
+#### Examples
+
+```ruby
+gcompute_address_ip('my-server', 'us-central1', 'myproject', fn_auth)
+```
+
 ### `gcompute_image_family`
 
   Builds the family resource identifier required to uniquely identify the

@@ -45,7 +45,12 @@ module Google
         def send
           request = @cred.authorize(builder.new(@link))
           request['User-Agent'] = generate_user_agent
-          transport(request).request(request)
+          response = transport(request).request(request)
+          unless ENV['GOOGLE_HTTP_VERBOSE'].nil?
+            puts ["network(#{request}: [#{response.code}]",
+                  response.body.split("\n").map(&:strip).join(' ')].join(' ')
+          end
+          response
         end
 
         def transport(request)

@@ -49,8 +49,12 @@
 module Google
   # Module that holds all client-side functions
   module Functions
-    def gcompute_image_family(family_name, project_name)
+    def self.gcompute_image_family(family_name, project_name)
       "projects/#{project_name}/global/images/family/#{family_name}"
+    end
+
+    def gcompute_image_family(family_name, project_name)
+      ::Google::Functions.gcompute_image_family(family_name, project_name)
     end
   end
 end
