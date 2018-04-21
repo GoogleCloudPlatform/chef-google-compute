@@ -181,9 +181,22 @@ For complete details of the authentication cookbook, visit the
     outgoing traffic and a default "deny" for incoming traffic. For all
     networks except the default network, you must create any firewall rules
     you need.
+* [`gcompute_forwarding_rule`](#gcompute_forwarding_rule) -
+    A ForwardingRule resource. A ForwardingRule resource specifies which
+    pool
+    of target virtual machines to forward a packet to if it matches the
+    given
+    [IPAddress, IPProtocol, portRange] tuple.
 * [`gcompute_global_address`](#gcompute_global_address) -
     Represents a Global Address resource. Global addresses are used for
     HTTP(S) load balancing.
+* [`gcompute_global_forwarding_rule`](#gcompute_global_forwarding_rule) -
+    Represents a GlobalForwardingRule resource. Global forwarding rules are
+    used to forward traffic to the correct load balancer for HTTP load
+    balancing. Global forwarding rules can only be used for HTTP load
+    balancing.
+    For more information, see
+    https://cloud.google.com/compute/docs/load-balancing/http/
 * [`gcompute_http_health_check`](#gcompute_http_health_check) -
     An HttpHealthCheck resource. This resource defines a template for how
     individual VMs should be checked for health, via HTTP.
@@ -238,6 +251,16 @@ For complete details of the authentication cookbook, visit the
     use an instance template. Unlike managed instance groups, you must
     create
     and add instances to an instance group manually.
+* [`gcompute_instance_group_manager`](#gcompute_instance_group_manager) -
+    Creates a managed instance group using the information that you specify
+    in
+    the request. After the group is created, it schedules an action to
+    create
+    instances in the group using the specified instance template. This
+    operation is marked as DONE when the group is created even if the
+    instances in the group have not yet been created. You must separately
+    verify the status of the individual instances.
+    A managed instance group can have up to 1000 VM instances per group.
 * [`gcompute_machine_type`](#gcompute_machine_type) -
     Represents a MachineType resource. Machine types determine the
     virtualized
@@ -289,6 +312,20 @@ For complete details of the authentication cookbook, visit the
     sending virtual machine's routing table will be dropped.
     A Routes resources must have exactly one specification of either
     nextHopGateway, nextHopInstance, nextHopIp, or nextHopVpnTunnel.
+* [`gcompute_snapshot`](#gcompute_snapshot) -
+    Represents a Persistent Disk Snapshot resource.
+    Use snapshots to back up data from your persistent disks. Snapshots are
+    different from public images and custom images, which are used
+    primarily
+    to create instances or configure instance templates. Snapshots are
+    useful
+    for periodic backup of the data on your persistent disks. You can
+    create
+    snapshots from persistent disks even while they are attached to running
+    instances.
+    Snapshots are incremental, so you can create regular snapshots on a
+    persistent disk faster and at a much lower cost than if you regularly
+    created a full image of the disk.
 * [`gcompute_ssl_certificate`](#gcompute_ssl_certificate) -
     An SslCertificate resource. This resource provides a mechanism to
     upload
@@ -320,6 +357,26 @@ For complete details of the authentication cookbook, visit the
     region, using their RFC1918 private IP addresses. You can isolate
     portions
     of the network, even entire subnets, using firewall rules.
+* [`gcompute_target_http_proxy`](#gcompute_target_http_proxy) -
+    Represents a TargetHttpProxy resource, which is used by one or more
+    global
+    forwarding rule to route incoming HTTP requests to a URL map.
+* [`gcompute_target_https_proxy`](#gcompute_target_https_proxy) -
+    Represents a TargetHttpsProxy resource, which is used by one or more
+    global forwarding rule to route incoming HTTPS requests to a URL map.
+* [`gcompute_target_pool`](#gcompute_target_pool) -
+    Represents a TargetPool resource, used for Load Balancing.
+* [`gcompute_target_ssl_proxy`](#gcompute_target_ssl_proxy) -
+    Represents a TargetSslProxy resource, which is used by one or more
+    global forwarding rule to route incoming SSL requests to a backend
+    service.
+* [`gcompute_target_tcp_proxy`](#gcompute_target_tcp_proxy) -
+    Represents a TargetTcpProxy resource, which is used by one or more
+    global forwarding rule to route incoming TCP requests to a Backend
+    service.
+* [`gcompute_url_map`](#gcompute_url_map) -
+    UrlMaps are used to route requests to a backend service based on rules
+    that you define for the host and path of an incoming URL.
 * [`gcompute_zone`](#gcompute_zone) -
     Represents a Zone resource.
 
@@ -404,7 +461,12 @@ end
   Output only. The unique identifier for the resource.
 
 * `name` -
-  Name of the resource.
+  Name of the resource. The name must be 1-63 characters long, and
+  comply with RFC1035. Specifically, the name must be 1-63 characters
+  long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])?
+  which means the first character must be a lowercase letter, and all
+  following characters must be a dash, lowercase letter, or digit,
+  except the last character, which cannot be a dash.
 
 * `users` -
   Output only. The URLs of the resources that are using this address.
@@ -475,7 +537,7 @@ end
 #### Properties
 
 * `bucket_name` -
-  Cloud Storage bucket name.
+  Required. Cloud Storage bucket name.
 
 * `creation_timestamp` -
   Output only. Creation timestamp in RFC3339 text format.
@@ -488,13 +550,13 @@ end
   If true, enable Cloud CDN for this BackendBucket.
 
 * `id` -
-  Unique identifier for the resource.
+  Output only. Unique identifier for the resource.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the
   last character, which cannot be a dash.
@@ -516,12 +578,6 @@ included in the request.
 # make sure they are defined as well:
 #   - gcompute_instance_group 'my-masters' do ... end
 #   - Health check
-my_health_check = [
-  'https://www.googleapis.com/compute/v1',
-  'projects/google.com:graphite-playground',
-  'global/healthChecks/another-hc'
-].join('/')
-
 gcompute_backend_service 'my-app-backend' do
   action :create
   backends [
@@ -529,7 +585,7 @@ gcompute_backend_service 'my-app-backend' do
   ]
   enable_cdn true
   health_checks [
-    my_health_check
+    gcompute_health_check_ref('another-hc', 'google.com:graphite-playground')
   ]
   project 'google.com:graphite-playground'
   credential 'mycred'
@@ -739,7 +795,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
-  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
   first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
@@ -909,9 +965,9 @@ affordable storage with consistent performance characteristics.
 gcompute_disk 'data-disk-1' do
   action :create
   size_gb 50
-  disk_encryption_key({
+  disk_encryption_key(
     raw_key: 'SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0='
-  })
+  )
   zone 'us-central1-a'
   project 'google.com:graphite-playground'
   credential 'mycred'
@@ -996,7 +1052,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
-  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
   first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
@@ -1234,7 +1290,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
-  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
   first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
@@ -1279,6 +1335,181 @@ end
 
 #### Label
 Set the `f_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_forwarding_rule
+A ForwardingRule resource. A ForwardingRule resource specifies which pool
+of target virtual machines to forward a packet to if it matches the given
+[IPAddress, IPProtocol, portRange] tuple.
+
+
+#### Example
+
+```ruby
+gcompute_forwarding_rule 'fwd-rule-test' do
+  action :create
+  ip_address gcompute_address_ref(
+    'some-address',
+    'us-west1', 'google.com:graphite-playground'
+  )
+  ip_protocol 'TCP'
+  port_range '80'
+  target 'target-pool'
+  region 'some-region'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_forwarding_rule 'id-for-resource' do
+  backend_service       reference to gcompute_backend_service
+  creation_timestamp    time
+  description           string
+  id                    integer
+  ip_address            string
+  ip_protocol           'TCP', 'UDP', 'ESP', 'AH', 'SCTP' or 'ICMP'
+  ip_version            'IPV4' or 'IPV6'
+  load_balancing_scheme 'INTERNAL' or 'EXTERNAL'
+  name                  string
+  network               reference to gcompute_network
+  port_range            string
+  ports                 [
+    string,
+    ...
+  ]
+  region                reference to gcompute_region
+  subnetwork            reference to gcompute_subnetwork
+  target                reference to gcompute_target_pool
+  project               string
+  credential            reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_forwarding_rule` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_forwarding_rule` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource. Provide this property when
+  you create the resource.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `ip_address` -
+  The IP address that this forwarding rule is serving on behalf of.
+  Addresses are restricted based on the forwarding rule's load balancing
+  scheme (EXTERNAL or INTERNAL) and scope (global or regional).
+  When the load balancing scheme is EXTERNAL, for global forwarding
+  rules, the address must be a global IP, and for regional forwarding
+  rules, the address must live in the same region as the forwarding
+  rule. If this field is empty, an ephemeral IPv4 address from the same
+  scope (global or regional) will be assigned. A regional forwarding
+  rule supports IPv4 only. A global forwarding rule supports either IPv4
+  or IPv6.
+  When the load balancing scheme is INTERNAL, this can only be an RFC
+  1918 IP address belonging to the network/subnet configured for the
+  forwarding rule. By default, if this field is empty, an ephemeral
+  internal IP address will be automatically allocated from the IP range
+  of the subnet or network configured for this forwarding rule.
+  An address can be specified either by a literal IP address or a URL
+  reference to an existing Address resource. The following examples are
+  all valid:
+  * 100.1.2.3
+  * https://www.googleapis.com/compute/v1/projects/project
+  /regions/region/addresses/address
+  * projects/project/regions/region/addresses/address
+  * regions/region/addresses/address
+  * global/addresses/address
+  * address
+
+* `ip_protocol` -
+  The IP protocol to which this rule applies. Valid options are TCP,
+  UDP, ESP, AH, SCTP or ICMP.
+  When the load balancing scheme is INTERNAL, only TCP and UDP are
+  valid.
+
+* `backend_service` -
+  A reference to BackendService resource
+
+* `ip_version` -
+  The IP Version that will be used by this forwarding rule. Valid
+  options are IPV4 or IPV6. This can only be specified for a global
+  forwarding rule.
+
+* `load_balancing_scheme` -
+  This signifies what the ForwardingRule will be used for and can only
+  take the following values: INTERNAL, EXTERNAL The value of INTERNAL
+  means that this will be used for Internal Network Load Balancing (TCP,
+  UDP). The value of EXTERNAL means that this will be used for External
+  Load Balancing (HTTP(S) LB, External TCP/UDP LB, SSL Proxy)
+
+* `name` -
+  Required. Name of the resource; provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `network` -
+  A reference to Network resource
+
+* `port_range` -
+  This field is used along with the target field for TargetHttpProxy,
+  TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway,
+  TargetPool, TargetInstance.
+  Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets
+  addressed to ports in the specified range will be forwarded to target.
+  Forwarding rules with the same [IPAddress, IPProtocol] pair must have
+  disjoint port ranges.
+  Some types of forwarding target have constraints on the acceptable
+  ports:
+  * TargetHttpProxy: 80, 8080
+  * TargetHttpsProxy: 443
+  * TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995,
+  1883, 5222
+  * TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995,
+  1883, 5222
+  * TargetVpnGateway: 500, 4500
+
+* `ports` -
+  This field is used along with the backend_service field for internal
+  load balancing.
+  When the load balancing scheme is INTERNAL, a single port or a comma
+  separated list of ports can be configured. Only packets addressed to
+  these ports will be forwarded to the backends configured with this
+  forwarding rule.
+  You may specify a maximum of up to 5 ports.
+
+* `subnetwork` -
+  A reference to Subnetwork resource
+
+* `target` -
+  A reference to TargetPool resource
+
+* `region` -
+  Required. A reference to Region resource
+
+#### Label
+Set the `fr_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
@@ -1341,10 +1572,10 @@ end
   the server.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
@@ -1354,6 +1585,189 @@ end
 
 #### Label
 Set the `ga_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_global_forwarding_rule
+Represents a GlobalForwardingRule resource. Global forwarding rules are
+used to forward traffic to the correct load balancer for HTTP load
+balancing. Global forwarding rules can only be used for HTTP load
+balancing.
+
+For more information, see
+https://cloud.google.com/compute/docs/load-balancing/http/
+
+
+#### Example
+
+```ruby
+gcompute_global_forwarding_rule 'test1' do
+  action :create
+  ip_address gcompute_global_address_ref(
+    'my-app-lb-address',
+    'google.com:graphite-playground'
+  )
+  ip_protocol 'TCP'
+  port_range '80'
+  target gcompute_target_http_proxy_ref(
+    'my-http-proxy',
+    'google.com:graphite-playground'
+  )
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_global_forwarding_rule 'id-for-resource' do
+  backend_service       reference to gcompute_backend_service
+  creation_timestamp    time
+  description           string
+  id                    integer
+  ip_address            string
+  ip_protocol           'TCP', 'UDP', 'ESP', 'AH', 'SCTP' or 'ICMP'
+  ip_version            'IPV4' or 'IPV6'
+  load_balancing_scheme 'INTERNAL' or 'EXTERNAL'
+  name                  string
+  network               reference to gcompute_network
+  port_range            string
+  ports                 [
+    string,
+    ...
+  ]
+  region                reference to gcompute_region
+  subnetwork            reference to gcompute_subnetwork
+  target                string
+  project               string
+  credential            reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_global_forwarding_rule` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_global_forwarding_rule` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource. Provide this property when
+  you create the resource.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `ip_address` -
+  The IP address that this forwarding rule is serving on behalf of.
+  Addresses are restricted based on the forwarding rule's load balancing
+  scheme (EXTERNAL or INTERNAL) and scope (global or regional).
+  When the load balancing scheme is EXTERNAL, for global forwarding
+  rules, the address must be a global IP, and for regional forwarding
+  rules, the address must live in the same region as the forwarding
+  rule. If this field is empty, an ephemeral IPv4 address from the same
+  scope (global or regional) will be assigned. A regional forwarding
+  rule supports IPv4 only. A global forwarding rule supports either IPv4
+  or IPv6.
+  When the load balancing scheme is INTERNAL, this can only be an RFC
+  1918 IP address belonging to the network/subnet configured for the
+  forwarding rule. By default, if this field is empty, an ephemeral
+  internal IP address will be automatically allocated from the IP range
+  of the subnet or network configured for this forwarding rule.
+  An address can be specified either by a literal IP address or a URL
+  reference to an existing Address resource. The following examples are
+  all valid:
+  * 100.1.2.3
+  * https://www.googleapis.com/compute/v1/projects/project
+  /regions/region/addresses/address
+  * projects/project/regions/region/addresses/address
+  * regions/region/addresses/address
+  * global/addresses/address
+  * address
+
+* `ip_protocol` -
+  The IP protocol to which this rule applies. Valid options are TCP,
+  UDP, ESP, AH, SCTP or ICMP.
+  When the load balancing scheme is INTERNAL, only TCP and UDP are
+  valid.
+
+* `backend_service` -
+  A reference to BackendService resource
+
+* `ip_version` -
+  The IP Version that will be used by this forwarding rule. Valid
+  options are IPV4 or IPV6. This can only be specified for a global
+  forwarding rule.
+
+* `load_balancing_scheme` -
+  This signifies what the ForwardingRule will be used for and can only
+  take the following values: INTERNAL, EXTERNAL The value of INTERNAL
+  means that this will be used for Internal Network Load Balancing (TCP,
+  UDP). The value of EXTERNAL means that this will be used for External
+  Load Balancing (HTTP(S) LB, External TCP/UDP LB, SSL Proxy)
+
+* `name` -
+  Required. Name of the resource; provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `network` -
+  A reference to Network resource
+
+* `port_range` -
+  This field is used along with the target field for TargetHttpProxy,
+  TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway,
+  TargetPool, TargetInstance.
+  Applicable only when IPProtocol is TCP, UDP, or SCTP, only packets
+  addressed to ports in the specified range will be forwarded to target.
+  Forwarding rules with the same [IPAddress, IPProtocol] pair must have
+  disjoint port ranges.
+  Some types of forwarding target have constraints on the acceptable
+  ports:
+  * TargetHttpProxy: 80, 8080
+  * TargetHttpsProxy: 443
+  * TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995,
+  1883, 5222
+  * TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995,
+  1883, 5222
+  * TargetVpnGateway: 500, 4500
+
+* `ports` -
+  This field is used along with the backend_service field for internal
+  load balancing.
+  When the load balancing scheme is INTERNAL, a single port or a comma
+  separated list of ports can be configured. Only packets addressed to
+  these ports will be forwarded to the backends configured with this
+  forwarding rule.
+  You may specify a maximum of up to 5 ports.
+
+* `subnetwork` -
+  A reference to Subnetwork resource
+
+* `region` -
+  Output only. A reference to Region resource
+
+* `target` -
+  This target must be a global load balancing resource. The forwarded
+  traffic must be of a type appropriate to the target object.
+  Valid types: HTTP_PROXY, HTTPS_PROXY, SSL_PROXY, TCP_PROXY
+
+#### Label
+Set the `gfr_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
@@ -1436,10 +1850,10 @@ end
   the server.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the
   last character, which cannot be a dash.
@@ -1545,10 +1959,10 @@ end
   the server.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the
   last character, which cannot be a dash.
@@ -1680,7 +2094,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the
   last character, which cannot be a dash.
@@ -1845,6 +2259,10 @@ gcompute_instance_template 'instance-template-test' do
         }
       }
     ],
+    metadata: {
+      'startup-script-url' => 'gs://graphite-playground/bootstrap.sh',
+      'cost-center' => '12345'
+    },
     network_interfaces: [
       {
         access_configs: {
@@ -1908,9 +2326,7 @@ gcompute_instance_template 'id-for-resource' do
       ...
     ],
     machine_type       reference to gcompute_machine_type,
-    metadata           {
-      items namevalues,
-    },
+    metadata           namevalues,
     network_interfaces [
       {
         access_configs  [
@@ -2122,10 +2538,6 @@ end
   The metadata key/value pairs to assign to instances that are
   created from this template. These pairs can consist of custom
   metadata or predefined keys.
-
-* `properties/metadata/items`
-  An array of tags. Each tag must be 1-63 characters long, and
-  comply with RFC1035.
 
 * `properties/guest_accelerators`
   List of the type and count of accelerator cards attached to the
@@ -2501,10 +2913,10 @@ end
   Any applicable license URI.
 
 * `name` -
-  Name of the resource; provided by the client when the resource is
+  Required. Name of the resource; provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the
   last character, which cannot be a dash.
@@ -2585,6 +2997,10 @@ gcompute_instance 'instance-test' do
       source: 'instance-test-os-1'
     }
   ]
+  metadata ({
+    'startup-script-url' => 'gs://graphite-playground/bootstrap.sh',
+    'cost-center' => '12345'
+  })
   network_interfaces [
     {
       network: 'mynetwork-test',
@@ -2649,9 +3065,7 @@ gcompute_instance 'id-for-resource' do
   id                 integer
   label_fingerprint  string
   machine_type       reference to gcompute_machine_type
-  metadata           {
-    items namevalues,
-  }
+  metadata           namevalues
   min_cpu_platform   string
   name               string
   network_interfaces [
@@ -2870,10 +3284,6 @@ end
   created from this template. These pairs can consist of custom
   metadata or predefined keys.
 
-* `metadata/items`
-  An array of tags. Each tag must be 1-63 characters long, and
-  comply with RFC1035.
-
 * `machine_type` -
   A reference to MachineType resource
 
@@ -2886,7 +3296,7 @@ end
   creating the resource. The resource name must be 1-63 characters long,
   and comply with RFC1035. Specifically, the name must be 1-63
   characters long and match the regular expression
-  [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a
+  `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a
   lowercase letter, and all following characters must be a dash,
   lowercase letter, or digit, except the last character, which cannot
   be a dash.
@@ -3132,6 +3542,195 @@ Set the `ig_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
+### gcompute_instance_group_manager
+Creates a managed instance group using the information that you specify in
+the request. After the group is created, it schedules an action to create
+instances in the group using the specified instance template. This
+operation is marked as DONE when the group is created even if the
+instances in the group have not yet been created. You must separately
+verify the status of the individual instances.
+
+A managed instance group can have up to 1000 VM instances per group.
+
+
+#### Example
+
+```ruby
+gcompute_instance_group_manager 'test1' do
+  action :create
+  base_instance_name 'test1-child'
+  instance_template 'instance-template'
+  target_size 3
+  zone 'us-west1-a'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_instance_group_manager 'id-for-resource' do
+  base_instance_name string
+  creation_timestamp time
+  current_actions    {
+    abandoning               integer,
+    creating                 integer,
+    creating_without_retries integer,
+    deleting                 integer,
+    none                     integer,
+    recreating               integer,
+    refreshing               integer,
+    restarting               integer,
+  }
+  description        string
+  id                 integer
+  instance_group     reference to gcompute_instance_group
+  instance_template  reference to gcompute_instance_template
+  name               string
+  named_ports        [
+    {
+      name string,
+      port integer,
+    },
+    ...
+  ]
+  region             reference to gcompute_region
+  target_pools       [
+    reference to a gcompute_target_pool,
+    ...
+  ]
+  target_size        integer
+  zone               reference to gcompute_zone
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_instance_group_manager` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_instance_group_manager` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `base_instance_name` -
+  Required. The base instance name to use for instances in this group. The
+  value
+  must be 1-58 characters long. Instances are named by appending a
+  hyphen and a random four-character string to the base instance name.
+  The base instance name must comply with RFC1035.
+
+* `creation_timestamp` -
+  Output only. The creation timestamp for this managed instance group in
+  RFC3339
+  text format.
+
+* `current_actions` -
+  Output only. The list of instance actions and the number of instances in
+  this
+  managed instance group that are scheduled for each of those actions.
+
+* `current_actions/abandoning`
+  Output only. The total number of instances in the managed instance group that
+  are scheduled to be abandoned. Abandoning an instance removes it
+  from the managed instance group without deleting it.
+
+* `current_actions/creating`
+  Output only. The number of instances in the managed instance group that are
+  scheduled to be created or are currently being created. If the
+  group fails to create any of these instances, it tries again until
+  it creates the instance successfully.
+  If you have disabled creation retries, this field will not be
+  populated; instead, the creatingWithoutRetries field will be
+  populated.
+
+* `current_actions/creating_without_retries`
+  Output only. The number of instances that the managed instance group will
+  attempt to create. The group attempts to create each instance only
+  once. If the group fails to create any of these instances, it
+  decreases the group's targetSize value accordingly.
+
+* `current_actions/deleting`
+  Output only. The number of instances in the managed instance group that are
+  scheduled to be deleted or are currently being deleted.
+
+* `current_actions/none`
+  Output only. The number of instances in the managed instance group that are
+  running and have no scheduled actions.
+
+* `current_actions/recreating`
+  Output only. The number of instances in the managed instance group that are
+  scheduled to be recreated or are currently being being recreated.
+  Recreating an instance deletes the existing root persistent disk
+  and creates a new disk from the image that is defined in the
+  instance template.
+
+* `current_actions/refreshing`
+  Output only. The number of instances in the managed instance group that are
+  being reconfigured with properties that do not require a restart
+  or a recreate action. For example, setting or removing target
+  pools for the instance.
+
+* `current_actions/restarting`
+  Output only. The number of instances in the managed instance group that are
+  scheduled to be restarted or are currently being restarted.
+
+* `description` -
+  An optional description of this resource. Provide this property when
+  you create the resource.
+
+* `id` -
+  Output only. A unique identifier for this resource
+
+* `instance_group` -
+  Output only. A reference to InstanceGroup resource
+
+* `instance_template` -
+  Required. A reference to InstanceTemplate resource
+
+* `name` -
+  Required. The name of the managed instance group. The name must be 1-63
+  characters long, and comply with RFC1035.
+
+* `named_ports` -
+  Named ports configured for the Instance Groups complementary to this
+  Instance Group Manager.
+
+* `named_ports[]/name`
+  The name for this named port. The name must be 1-63 characters
+  long, and comply with RFC1035.
+
+* `named_ports[]/port`
+  The port number, which can be a value between 1 and 65535.
+
+* `region` -
+  Output only. A reference to Region resource
+
+* `target_pools` -
+  TargetPool resources to which instances in the instanceGroup field are
+  added. The target pools automatically apply to all of the instances in
+  the managed instance group.
+
+* `target_size` -
+  The target number of running instances for this managed instance
+  group. Deleting or abandoning instances reduces this number. Resizing
+  the group changes this number.
+
+* `zone` -
+  Required. A reference to Zone resource
+
+#### Label
+Set the `igm_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
 ### gcompute_machine_type
 Represents a MachineType resource. Machine types determine the virtualized
 hardware specifications of your virtual machine instances, such as the
@@ -3347,7 +3946,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
-  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
   first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
@@ -3556,7 +4155,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
-  match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the
   last character, which cannot be a dash.
@@ -3599,6 +4198,159 @@ end
 
 #### Label
 Set the `r_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_snapshot
+Represents a Persistent Disk Snapshot resource.
+
+Use snapshots to back up data from your persistent disks. Snapshots are
+different from public images and custom images, which are used primarily
+to create instances or configure instance templates. Snapshots are useful
+for periodic backup of the data on your persistent disks. You can create
+snapshots from persistent disks even while they are attached to running
+instances.
+
+Snapshots are incremental, so you can create regular snapshots on a
+persistent disk faster and at a much lower cost than if you regularly
+created a full image of the disk.
+
+
+#### Example
+
+```ruby
+gcompute_snapshot 'data-disk-snapshot-1' do
+  action :create
+  snapshot_encryption_key(
+    raw_key: 'VGhpcyBpcyBhbiBlbmNyeXB0ZWQgc25hcHNob3QhISE='
+  )
+  source_disk_encryption_key(
+    raw_key: 'SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0='
+  )
+  source 'data-disk-1'
+  zone 'us-central1-a'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_snapshot 'id-for-resource' do
+  creation_timestamp         time
+  description                string
+  disk_size_gb               integer
+  id                         integer
+  labels                     [
+    string,
+    ...
+  ]
+  licenses                   [
+    reference to a gcompute_license,
+    ...
+  ]
+  name                       string
+  snapshot_encryption_key    {
+    raw_key string,
+    sha256  string,
+  }
+  source                     reference to gcompute_disk
+  source_disk_encryption_key {
+    raw_key string,
+    sha256  string,
+  }
+  storage_bytes              integer
+  zone                       reference to gcompute_zone
+  project                    string
+  credential                 reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_snapshot` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_snapshot` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `disk_size_gb` -
+  Output only. Size of the snapshot, specified in GB.
+
+* `name` -
+  Required. Name of the resource; provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `description` -
+  An optional description of this resource.
+
+* `storage_bytes` -
+  Output only. A size of the the storage used by the snapshot. As snapshots
+  share
+  storage, this number is expected to change with snapshot
+  creation/deletion.
+
+* `licenses` -
+  A list of public visible licenses that apply to this snapshot. This
+  can be because the original image had licenses attached (such as a
+  Windows image).  snapshotEncryptionKey nested object Encrypts the
+  snapshot using a customer-supplied encryption key.
+
+* `labels` -
+  Labels to apply to this snapshot.
+
+* `source` -
+  A reference to Disk resource
+
+* `zone` -
+  A reference to Zone resource
+
+* `snapshot_encryption_key` -
+  The customer-supplied encryption key of the snapshot. Required if the
+  source snapshot is protected by a customer-supplied encryption key.
+
+* `snapshot_encryption_key/raw_key`
+  Specifies a 256-bit customer-supplied encryption key, encoded in
+  RFC 4648 base64 to either encrypt or decrypt this resource.
+
+* `snapshot_encryption_key/sha256`
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
+  customer-supplied
+  encryption key that protects this resource.
+
+* `source_disk_encryption_key` -
+  The customer-supplied encryption key of the source snapshot. Required
+  if the source snapshot is protected by a customer-supplied encryption
+  key.
+
+* `source_disk_encryption_key/raw_key`
+  Specifies a 256-bit customer-supplied encryption key, encoded in
+  RFC 4648 base64 to either encrypt or decrypt this resource.
+
+* `source_disk_encryption_key/sha256`
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
+  customer-supplied
+  encryption key that protects this resource.
+
+#### Label
+Set the `s_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
@@ -3703,7 +4455,7 @@ end
   Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
-  the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
   first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
@@ -3814,7 +4566,7 @@ end
   The name of the resource, provided by the client when initially
   creating the resource. The name must be 1-63 characters long, and
   comply with RFC1035. Specifically, the name must be 1-63 characters
-  long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which
+  long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which
   means the first character must be a lowercase letter, and all
   following characters must be a dash, lowercase letter, or digit,
   except the last character, which cannot be a dash.
@@ -3831,6 +4583,590 @@ end
 
 #### Label
 Set the `s_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_target_http_proxy
+Represents a TargetHttpProxy resource, which is used by one or more global
+forwarding rule to route incoming HTTP requests to a URL map.
+
+
+#### Example
+
+```ruby
+gcompute_target_http_proxy 'my-http-proxy' do
+  action :create
+  url_map 'my-url-map'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_target_http_proxy 'id-for-resource' do
+  creation_timestamp time
+  description        string
+  id                 integer
+  name               string
+  url_map            reference to gcompute_url_map
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_target_http_proxy` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_target_http_proxy` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `name` -
+  Required. Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `url_map` -
+  Required. A reference to UrlMap resource
+
+#### Label
+Set the `thp_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_target_https_proxy
+Represents a TargetHttpsProxy resource, which is used by one or more
+global forwarding rule to route incoming HTTPS requests to a URL map.
+
+
+#### Example
+
+```ruby
+gcompute_target_https_proxy 'my-https-proxy' do
+  action :create
+  ssl_certificates [
+    'sample-certificate'
+  ]
+  url_map 'my-url-map'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_target_https_proxy 'id-for-resource' do
+  creation_timestamp time
+  description        string
+  id                 integer
+  name               string
+  ssl_certificates   [
+    reference to a gcompute_ssl_certificate,
+    ...
+  ]
+  url_map            reference to gcompute_url_map
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_target_https_proxy` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_target_https_proxy` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `name` -
+  Required. Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `ssl_certificates` -
+  Required. A list of SslCertificate resources that are used to authenticate
+  connections between users and the load balancer. Currently, exactly
+  one SSL certificate must be specified.
+
+* `url_map` -
+  Required. A reference to UrlMap resource
+
+#### Label
+Set the `thp_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_target_pool
+Represents a TargetPool resource, used for Load Balancing.
+
+#### Example
+
+```ruby
+
+```
+
+#### Reference
+
+```ruby
+gcompute_target_pool 'id-for-resource' do
+  backup_pool        reference to gcompute_target_pool
+  creation_timestamp time
+  description        string
+  failover_ratio     double
+  health_check       reference to gcompute_http_health_check
+  id                 integer
+  instances          [
+    reference to a gcompute_instance,
+    ...
+  ]
+  name               string
+  region             reference to gcompute_region
+  session_affinity   'NONE', 'CLIENT_IP' or 'CLIENT_IP_PROTO'
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_target_pool` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_target_pool` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `backup_pool` -
+  A reference to TargetPool resource
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource.
+
+* `failover_ratio` -
+  This field is applicable only when the containing target pool is
+  serving a forwarding rule as the primary pool (i.e., not as a backup
+  pool to some other target pool). The value of the field must be in
+  [0, 1].
+  If set, backupPool must also be set. They together define the fallback
+  behavior of the primary target pool: if the ratio of the healthy
+  instances in the primary pool is at or below this number, traffic
+  arriving at the load-balanced IP will be directed to the backup pool.
+  In case where failoverRatio is not set or all the instances in the
+  backup pool are unhealthy, the traffic will be directed back to the
+  primary pool in the "force" mode, where traffic will be spread to the
+  healthy instances with the best effort, or to all instances when no
+  instance is healthy.
+
+* `health_check` -
+  A reference to HttpHealthCheck resource
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `instances` -
+  A list of virtual machine instances serving this pool.
+  They must live in zones contained in the same region as this pool.
+
+* `name` -
+  Required. Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `session_affinity` -
+  Session affinity option. Must be one of these values:
+  - NONE: Connections from the same client IP may go to any instance in
+  the pool.
+  - CLIENT_IP: Connections from the same client IP will go to the same
+  instance in the pool while that instance remains healthy.
+  - CLIENT_IP_PROTO: Connections from the same client IP with the same
+  IP protocol will go to the same instance in the pool while that
+  instance remains healthy.
+
+* `region` -
+  Required. A reference to Region resource
+
+#### Label
+Set the `tp_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_target_ssl_proxy
+Represents a TargetSslProxy resource, which is used by one or more
+global forwarding rule to route incoming SSL requests to a backend
+service.
+
+
+#### Example
+
+```ruby
+gcompute_target_ssl_proxy 'my-ssl-proxy' do
+  action :create
+  proxy_header 'PROXY_V1'
+  service 'my-ssl-backend'
+  ssl_certificates [
+    'sample-certificate'
+  ]
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_target_ssl_proxy 'id-for-resource' do
+  creation_timestamp time
+  description        string
+  id                 integer
+  name               string
+  proxy_header       'NONE' or 'PROXY_V1'
+  service            reference to gcompute_backend_service
+  ssl_certificates   [
+    reference to a gcompute_ssl_certificate,
+    ...
+  ]
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_target_ssl_proxy` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_target_ssl_proxy` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `name` -
+  Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `proxy_header` -
+  Specifies the type of proxy header to append before sending data to
+  the backend, either NONE or PROXY_V1. The default is NONE.
+
+* `service` -
+  A reference to BackendService resource
+
+* `ssl_certificates` -
+  A list of SslCertificate resources that are used to authenticate
+  connections between users and the load balancer. Currently, exactly
+  one SSL certificate must be specified.
+
+#### Label
+Set the `tsp_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_target_tcp_proxy
+Represents a TargetTcpProxy resource, which is used by one or more
+global forwarding rule to route incoming TCP requests to a Backend
+service.
+
+
+#### Example
+
+```ruby
+gcompute_target_tcp_proxy 'my-tcp-proxy' do
+  action :create
+  proxy_header 'PROXY_V1'
+  service 'my-tcp-backend'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_target_tcp_proxy 'id-for-resource' do
+  creation_timestamp time
+  description        string
+  id                 integer
+  name               string
+  proxy_header       'NONE' or 'PROXY_V1'
+  service            reference to gcompute_backend_service
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_target_tcp_proxy` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_target_tcp_proxy` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `name` -
+  Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `proxy_header` -
+  Specifies the type of proxy header to append before sending data to
+  the backend, either NONE or PROXY_V1. The default is NONE.
+
+* `service` -
+  A reference to BackendService resource
+
+#### Label
+Set the `ttp_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_url_map
+UrlMaps are used to route requests to a backend service based on rules
+that you define for the host and path of an incoming URL.
+
+
+#### Example
+
+```ruby
+gcompute_url_map 'my-url-map' do
+  action :create
+  default_service 'my-app-backend'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_url_map 'id-for-resource' do
+  creation_timestamp time
+  default_service    reference to gcompute_backend_service
+  description        string
+  host_rules         [
+    {
+      description  string,
+      hosts        [
+        string,
+        ...
+      ],
+      path_matcher string,
+    },
+    ...
+  ]
+  id                 integer
+  name               string
+  path_matchers      [
+    {
+      default_service reference to gcompute_backend_service,
+      description     string,
+      name            string,
+      path_rules      [
+        {
+          paths   [
+            string,
+            ...
+          ],
+          service reference to gcompute_backend_service,
+        },
+        ...
+      ],
+    },
+    ...
+  ]
+  tests              [
+    {
+      description string,
+      host        string,
+      path        string,
+      service     reference to gcompute_backend_service,
+    },
+    ...
+  ]
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_url_map` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_url_map` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `default_service` -
+  Required. A reference to BackendService resource
+
+* `description` -
+  An optional description of this resource. Provide this property when
+  you create the resource.
+
+* `host_rules` -
+  The list of HostRules to use against the URL.
+
+* `host_rules[]/description`
+  An optional description of this resource. Provide this property
+  when you create the resource.
+
+* `host_rules[]/hosts`
+  The list of host patterns to match. They must be valid
+  hostnames, except * will match any string of ([a-z0-9-.]*). In
+  that case, * must be the first character and must be followed in
+  the pattern by either - or ..
+
+* `host_rules[]/path_matcher`
+  The name of the PathMatcher to use to match the path portion of
+  the URL if the hostRule matches the URL's host portion.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `name` -
+  Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035. Specifically, the name must be 1-63 characters long and match
+  the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+  first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `path_matchers` -
+  The list of named PathMatchers to use against the URL.
+
+* `path_matchers[]/default_service`
+  A reference to BackendService resource
+
+* `path_matchers[]/description`
+  An optional description of this resource.
+
+* `path_matchers[]/name`
+  The name to which this PathMatcher is referred by the HostRule.
+
+* `path_matchers[]/path_rules`
+  The list of path rules.
+
+* `path_matchers[]/path_rules[]/paths`
+  The list of path patterns to match. Each must start with /
+  and the only place a * is allowed is at the end following
+  a /. The string fed to the path matcher does not include
+  any text after the first ? or #, and those chars are not
+  allowed here.
+
+* `path_matchers[]/path_rules[]/service`
+  A reference to BackendService resource
+
+* `tests` -
+  The list of expected URL mappings. Request to update this UrlMap will
+  succeed only if all of the test cases pass.
+
+* `tests[]/description`
+  Description of this test case.
+
+* `tests[]/host`
+  Host portion of the URL.
+
+* `tests[]/path`
+  Path portion of the URL.
+
+* `tests[]/service`
+  A reference to BackendService resource
+
+#### Label
+Set the `um_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
@@ -3974,6 +5310,24 @@ the function first. Before calling a function, add the following line:
 
 ```ruby
 gcompute_address_ip('my-server', 'us-central1', 'myproject', fn_auth)
+```
+
+### `gcompute_health_check_ref`
+
+  Builds a reference to a health check to be used in the backend service.
+
+#### Arguments
+
+  - `name`:
+    the name of the health check
+
+  - `project_name`:
+    the name of the project that hosts the check
+
+#### Examples
+
+```ruby
+{{function:name}}('my-hc', 'my-project')
 ```
 
 ### `gcompute_image_family`

@@ -37,5 +37,16 @@ module Google
             .tr('.', '_')
             .downcase
     end
+
+    # Add spaces before every capitalized word except first.
+    def self.uncombine(source)
+      source.gsub(/(?=[A-Z])/, ' ').strip
+    end
+
+    # rubocop:disable Style/SafeNavigation # support Ruby < 2.3.0
+    def self.symbolize(key)
+      key.to_sym unless key.nil?
+    end
+    # rubocop:enable Style/SafeNavigation
   end
 end
