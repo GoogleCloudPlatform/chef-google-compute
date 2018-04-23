@@ -82,6 +82,10 @@ module Google
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
 
+      # TODO(alexstephen): Check w/ Chef how to not expose this property yet
+      # allow the resource to store the @fetched API results for exports usage.
+      property :__fetched, Hash, desired_state: false, required: false
+
       action :create do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#targetSslProxy')
@@ -96,7 +100,8 @@ module Google
               collection(@new_resource), fetch_auth(@new_resource),
               'application/json', resource_to_request
             )
-            wait_for_operation create_req.send, @new_resource
+            @new_resource.__fetched =
+              wait_for_operation create_req.send, @new_resource
           end
         else
           @current_resource = @new_resource.clone
@@ -104,14 +109,8 @@ module Google
             ::Google::Compute::Property::Time.api_parse(
               fetch['creationTimestamp']
             )
-          @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
           @current_resource.id =
             ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.tsp_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.proxy_header =
             ::Google::Compute::Property::Enum.api_parse(fetch['proxyHeader'])
           @current_resource.service =
@@ -122,6 +121,7 @@ module Google
             ::Google::Compute::Property::SslCertSelfLinkRefArray.api_parse(
               fetch['sslCertificates']
             )
+          @new_resource.__fetched = fetch
 
           update
         end
@@ -142,6 +142,12 @@ module Google
       end
 
       # TODO(nelsonjr): Add actions :manage and :modify
+
+      def exports
+        {
+          self_link: __fetched['selfLink']
+        }
+      end
 
       private
 
