@@ -27,6 +27,16 @@ module Google
       result
     end
 
+    def self.symbolize_keys(source)
+      result = source.clone
+      # rubocop:disable Performance/HashEachMethods
+      result.keys.each do |k|
+        result[Google::StringUtils.symbolize(k)] = result.delete(k)
+      end
+      # rubocop:enable Performance/HashEachMethods
+      result
+    end
+
     # Allows fetching objects within a tree path.
     def self.navigate(source, path, default = nil)
       key = path.take(1)[0]

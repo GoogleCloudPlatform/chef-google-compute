@@ -102,6 +102,7 @@ chef-codegen:
   * libraries/google/compute/property/backendservice_cache_key_policy.rb
   * libraries/google/compute/property/backendservice_cdn_policy.rb
   * libraries/google/compute/property/backendservice_connection_draining.rb
+  * libraries/google/compute/property/backendservice_selflink.rb
   * libraries/google/compute/property/boolean.rb
   * libraries/google/compute/property/disk_disk_encryption_key.rb
   * libraries/google/compute/property/disk_name.rb
@@ -116,6 +117,7 @@ chef-codegen:
   * libraries/google/compute/property/healthcheck_https_health_check.rb
   * libraries/google/compute/property/healthcheck_ssl_health_check.rb
   * libraries/google/compute/property/healthcheck_tcp_health_check.rb
+  * libraries/google/compute/property/httphealthcheck_selflink.rb
   * libraries/google/compute/property/image_deprecated.rb
   * libraries/google/compute/property/image_guest_os_features.rb
   * libraries/google/compute/property/image_image_encryption_key.rb
@@ -127,28 +129,31 @@ chef-codegen:
   * libraries/google/compute/property/instance_disks.rb
   * libraries/google/compute/property/instance_guest_accelerators.rb
   * libraries/google/compute/property/instance_initialize_params.rb
-  * libraries/google/compute/property/instance_metadata.rb
   * libraries/google/compute/property/instance_network_interfaces.rb
   * libraries/google/compute/property/instance_scheduling.rb
+  * libraries/google/compute/property/instance_selflink.rb
   * libraries/google/compute/property/instance_service_accounts.rb
   * libraries/google/compute/property/instance_source_image_encryption_key.rb
   * libraries/google/compute/property/instance_tags.rb
   * libraries/google/compute/property/instancegroup_named_ports.rb
   * libraries/google/compute/property/instancegroup_selflink.rb
+  * libraries/google/compute/property/instancegroupmanager_current_actions.rb
+  * libraries/google/compute/property/instancegroupmanager_named_ports.rb
   * libraries/google/compute/property/instancetemplate_access_configs.rb
   * libraries/google/compute/property/instancetemplate_alias_ip_ranges.rb
   * libraries/google/compute/property/instancetemplate_disk_encryption_key.rb
   * libraries/google/compute/property/instancetemplate_disks.rb
   * libraries/google/compute/property/instancetemplate_guest_accelerators.rb
   * libraries/google/compute/property/instancetemplate_initialize_params.rb
-  * libraries/google/compute/property/instancetemplate_metadata.rb
   * libraries/google/compute/property/instancetemplate_network_interfaces.rb
   * libraries/google/compute/property/instancetemplate_properties.rb
   * libraries/google/compute/property/instancetemplate_scheduling.rb
+  * libraries/google/compute/property/instancetemplate_selflink.rb
   * libraries/google/compute/property/instancetemplate_service_accounts.rb
   * libraries/google/compute/property/instancetemplate_source_image_encryption_key.rb
   * libraries/google/compute/property/instancetemplate_tags.rb
   * libraries/google/compute/property/integer.rb
+  * libraries/google/compute/property/license_selflink.rb
   * libraries/google/compute/property/machinetype_deprecated.rb
   * libraries/google/compute/property/machinetype_name.rb
   * libraries/google/compute/property/machinetype_selflink.rb
@@ -156,13 +161,23 @@ chef-codegen:
   * libraries/google/compute/property/network_selflink.rb
   * libraries/google/compute/property/region_name.rb
   * libraries/google/compute/property/region_selflink.rb
+  * libraries/google/compute/property/snapshot_snapshot_encryption_key.rb
+  * libraries/google/compute/property/snapshot_source_disk_encryption_key.rb
+  * libraries/google/compute/property/sslcertificate_selflink.rb
   * libraries/google/compute/property/string.rb
   * libraries/google/compute/property/string_array.rb
   * libraries/google/compute/property/subnetwork_selflink.rb
+  * libraries/google/compute/property/targetpool_selflink.rb
   * libraries/google/compute/property/time.rb
+  * libraries/google/compute/property/urlmap_host_rules.rb
+  * libraries/google/compute/property/urlmap_path_matchers.rb
+  * libraries/google/compute/property/urlmap_path_rules.rb
+  * libraries/google/compute/property/urlmap_selflink.rb
+  * libraries/google/compute/property/urlmap_tests.rb
   * libraries/google/compute/property/zone_deprecated.rb
   * libraries/google/compute/property/zone_name.rb
   * libraries/google/functions/gcompute_address_ip.rb
+  * libraries/google/functions/gcompute_health_check_ref.rb
   * libraries/google/functions/gcompute_image_family.rb
   * LICENSE
   * metadata.rb
@@ -175,29 +190,41 @@ chef-codegen:
   * recipes/examples~delete_backend_service.rb
   * recipes/examples~delete_disk.rb
   * recipes/examples~delete_firewall.rb
+  * recipes/examples~delete_forwarding_rule.rb
   * recipes/examples~delete_global_address.rb
+  * recipes/examples~delete_global_forwarding_rule.rb
   * recipes/examples~delete_health_check.rb
   * recipes/examples~delete_http_health_check.rb
   * recipes/examples~delete_https_health_check.rb
   * recipes/examples~delete_image.rb
   * recipes/examples~delete_instance.rb
   * recipes/examples~delete_instance_group.rb
+  * recipes/examples~delete_instance_group_manager.rb
   * recipes/examples~delete_instance_template.rb
   * recipes/examples~delete_network.rb
   * recipes/examples~delete_route.rb
+  * recipes/examples~delete_snapshot.rb
   * recipes/examples~delete_ssl_certificate.rb
   * recipes/examples~delete_subnetwork.rb
+  * recipes/examples~delete_target_http_proxy.rb
+  * recipes/examples~delete_target_https_proxy.rb
+  * recipes/examples~delete_target_ssl_proxy.rb
+  * recipes/examples~delete_target_tcp_proxy.rb
+  * recipes/examples~delete_url_map.rb
   * recipes/examples~disk.rb
   * recipes/examples~disk_type.rb
   * recipes/examples~firewall.rb
   * recipes/examples~firewall~change1.rb
+  * recipes/examples~forwarding_rule.rb
   * recipes/examples~global_address.rb
+  * recipes/examples~global_forwarding_rule.rb
   * recipes/examples~health_check.rb
   * recipes/examples~http_health_check.rb
   * recipes/examples~https_health_check.rb
   * recipes/examples~image.rb
   * recipes/examples~instance.rb
   * recipes/examples~instance_group.rb
+  * recipes/examples~instance_group_manager.rb
   * recipes/examples~instance_template.rb
   * recipes/examples~license.rb
   * recipes/examples~machine_type.rb
@@ -207,8 +234,14 @@ chef-codegen:
   * recipes/examples~network~legacy.rb
   * recipes/examples~region.rb
   * recipes/examples~route.rb
+  * recipes/examples~snapshot.rb
   * recipes/examples~ssl_certificate.rb
   * recipes/examples~subnetwork.rb
+  * recipes/examples~target_http_proxy.rb
+  * recipes/examples~target_https_proxy.rb
+  * recipes/examples~target_ssl_proxy.rb
+  * recipes/examples~target_tcp_proxy.rb
+  * recipes/examples~url_map.rb
   * recipes/examples~zone.rb
   * recipes/README.md
   * recipes/tests~address.rb
@@ -219,29 +252,41 @@ chef-codegen:
   * recipes/tests~delete_backend_service.rb
   * recipes/tests~delete_disk.rb
   * recipes/tests~delete_firewall.rb
+  * recipes/tests~delete_forwarding_rule.rb
   * recipes/tests~delete_global_address.rb
+  * recipes/tests~delete_global_forwarding_rule.rb
   * recipes/tests~delete_health_check.rb
   * recipes/tests~delete_http_health_check.rb
   * recipes/tests~delete_https_health_check.rb
   * recipes/tests~delete_image.rb
   * recipes/tests~delete_instance.rb
   * recipes/tests~delete_instance_group.rb
+  * recipes/tests~delete_instance_group_manager.rb
   * recipes/tests~delete_instance_template.rb
   * recipes/tests~delete_network.rb
   * recipes/tests~delete_route.rb
+  * recipes/tests~delete_snapshot.rb
   * recipes/tests~delete_ssl_certificate.rb
   * recipes/tests~delete_subnetwork.rb
+  * recipes/tests~delete_target_http_proxy.rb
+  * recipes/tests~delete_target_https_proxy.rb
+  * recipes/tests~delete_target_ssl_proxy.rb
+  * recipes/tests~delete_target_tcp_proxy.rb
+  * recipes/tests~delete_url_map.rb
   * recipes/tests~disk.rb
   * recipes/tests~disk_type.rb
   * recipes/tests~firewall.rb
   * recipes/tests~firewall~change1.rb
+  * recipes/tests~forwarding_rule.rb
   * recipes/tests~global_address.rb
+  * recipes/tests~global_forwarding_rule.rb
   * recipes/tests~health_check.rb
   * recipes/tests~http_health_check.rb
   * recipes/tests~https_health_check.rb
   * recipes/tests~image.rb
   * recipes/tests~instance.rb
   * recipes/tests~instance_group.rb
+  * recipes/tests~instance_group_manager.rb
   * recipes/tests~instance_template.rb
   * recipes/tests~license.rb
   * recipes/tests~machine_type.rb
@@ -251,8 +296,14 @@ chef-codegen:
   * recipes/tests~network~legacy.rb
   * recipes/tests~region.rb
   * recipes/tests~route.rb
+  * recipes/tests~snapshot.rb
   * recipes/tests~ssl_certificate.rb
   * recipes/tests~subnetwork.rb
+  * recipes/tests~target_http_proxy.rb
+  * recipes/tests~target_https_proxy.rb
+  * recipes/tests~target_ssl_proxy.rb
+  * recipes/tests~target_tcp_proxy.rb
+  * recipes/tests~url_map.rb
   * recipes/tests~zone.rb
   * resources/address.rb
   * resources/backend_bucket.rb
@@ -260,21 +311,31 @@ chef-codegen:
   * resources/disk.rb
   * resources/disk_type.rb
   * resources/firewall.rb
+  * resources/forwarding_rule.rb
   * resources/global_address.rb
+  * resources/global_forwarding_rule.rb
   * resources/health_check.rb
   * resources/http_health_check.rb
   * resources/https_health_check.rb
   * resources/image.rb
   * resources/instance.rb
   * resources/instance_group.rb
+  * resources/instance_group_manager.rb
   * resources/instance_template.rb
   * resources/license.rb
   * resources/machine_type.rb
   * resources/network.rb
   * resources/region.rb
   * resources/route.rb
+  * resources/snapshot.rb
   * resources/ssl_certificate.rb
   * resources/subnetwork.rb
+  * resources/target_http_proxy.rb
+  * resources/target_https_proxy.rb
+  * resources/target_pool.rb
+  * resources/target_ssl_proxy.rb
+  * resources/target_tcp_proxy.rb
+  * resources/url_map.rb
   * resources/zone.rb
   * spec/address_spec.rb
   * spec/backend_bucket_spec.rb
@@ -317,12 +378,24 @@ chef-codegen:
   * spec/data/network/gcompute_firewall/success2~title.yaml
   * spec/data/network/gcompute_firewall/success3~name.yaml
   * spec/data/network/gcompute_firewall/success3~title.yaml
+  * spec/data/network/gcompute_forwarding_rule/success1~name.yaml
+  * spec/data/network/gcompute_forwarding_rule/success1~title.yaml
+  * spec/data/network/gcompute_forwarding_rule/success2~name.yaml
+  * spec/data/network/gcompute_forwarding_rule/success2~title.yaml
+  * spec/data/network/gcompute_forwarding_rule/success3~name.yaml
+  * spec/data/network/gcompute_forwarding_rule/success3~title.yaml
   * spec/data/network/gcompute_global_address/success1~name.yaml
   * spec/data/network/gcompute_global_address/success1~title.yaml
   * spec/data/network/gcompute_global_address/success2~name.yaml
   * spec/data/network/gcompute_global_address/success2~title.yaml
   * spec/data/network/gcompute_global_address/success3~name.yaml
   * spec/data/network/gcompute_global_address/success3~title.yaml
+  * spec/data/network/gcompute_global_forwarding_rule/success1~name.yaml
+  * spec/data/network/gcompute_global_forwarding_rule/success1~title.yaml
+  * spec/data/network/gcompute_global_forwarding_rule/success2~name.yaml
+  * spec/data/network/gcompute_global_forwarding_rule/success2~title.yaml
+  * spec/data/network/gcompute_global_forwarding_rule/success3~name.yaml
+  * spec/data/network/gcompute_global_forwarding_rule/success3~title.yaml
   * spec/data/network/gcompute_health_check/success1~name.yaml
   * spec/data/network/gcompute_health_check/success1~title.yaml
   * spec/data/network/gcompute_health_check/success2~name.yaml
@@ -359,6 +432,12 @@ chef-codegen:
   * spec/data/network/gcompute_instance_group/success2~title.yaml
   * spec/data/network/gcompute_instance_group/success3~name.yaml
   * spec/data/network/gcompute_instance_group/success3~title.yaml
+  * spec/data/network/gcompute_instance_group_manager/success1~name.yaml
+  * spec/data/network/gcompute_instance_group_manager/success1~title.yaml
+  * spec/data/network/gcompute_instance_group_manager/success2~name.yaml
+  * spec/data/network/gcompute_instance_group_manager/success2~title.yaml
+  * spec/data/network/gcompute_instance_group_manager/success3~name.yaml
+  * spec/data/network/gcompute_instance_group_manager/success3~title.yaml
   * spec/data/network/gcompute_instance_template/success1~name.yaml
   * spec/data/network/gcompute_instance_template/success1~title.yaml
   * spec/data/network/gcompute_instance_template/success2~name.yaml
@@ -395,6 +474,12 @@ chef-codegen:
   * spec/data/network/gcompute_route/success2~title.yaml
   * spec/data/network/gcompute_route/success3~name.yaml
   * spec/data/network/gcompute_route/success3~title.yaml
+  * spec/data/network/gcompute_snapshot/success1~name.yaml
+  * spec/data/network/gcompute_snapshot/success1~title.yaml
+  * spec/data/network/gcompute_snapshot/success2~name.yaml
+  * spec/data/network/gcompute_snapshot/success2~title.yaml
+  * spec/data/network/gcompute_snapshot/success3~name.yaml
+  * spec/data/network/gcompute_snapshot/success3~title.yaml
   * spec/data/network/gcompute_ssl_certificate/success1~name.yaml
   * spec/data/network/gcompute_ssl_certificate/success1~title.yaml
   * spec/data/network/gcompute_ssl_certificate/success2~name.yaml
@@ -407,6 +492,42 @@ chef-codegen:
   * spec/data/network/gcompute_subnetwork/success2~title.yaml
   * spec/data/network/gcompute_subnetwork/success3~name.yaml
   * spec/data/network/gcompute_subnetwork/success3~title.yaml
+  * spec/data/network/gcompute_target_http_proxy/success1~name.yaml
+  * spec/data/network/gcompute_target_http_proxy/success1~title.yaml
+  * spec/data/network/gcompute_target_http_proxy/success2~name.yaml
+  * spec/data/network/gcompute_target_http_proxy/success2~title.yaml
+  * spec/data/network/gcompute_target_http_proxy/success3~name.yaml
+  * spec/data/network/gcompute_target_http_proxy/success3~title.yaml
+  * spec/data/network/gcompute_target_https_proxy/success1~name.yaml
+  * spec/data/network/gcompute_target_https_proxy/success1~title.yaml
+  * spec/data/network/gcompute_target_https_proxy/success2~name.yaml
+  * spec/data/network/gcompute_target_https_proxy/success2~title.yaml
+  * spec/data/network/gcompute_target_https_proxy/success3~name.yaml
+  * spec/data/network/gcompute_target_https_proxy/success3~title.yaml
+  * spec/data/network/gcompute_target_pool/success1~name.yaml
+  * spec/data/network/gcompute_target_pool/success1~title.yaml
+  * spec/data/network/gcompute_target_pool/success2~name.yaml
+  * spec/data/network/gcompute_target_pool/success2~title.yaml
+  * spec/data/network/gcompute_target_pool/success3~name.yaml
+  * spec/data/network/gcompute_target_pool/success3~title.yaml
+  * spec/data/network/gcompute_target_ssl_proxy/success1~name.yaml
+  * spec/data/network/gcompute_target_ssl_proxy/success1~title.yaml
+  * spec/data/network/gcompute_target_ssl_proxy/success2~name.yaml
+  * spec/data/network/gcompute_target_ssl_proxy/success2~title.yaml
+  * spec/data/network/gcompute_target_ssl_proxy/success3~name.yaml
+  * spec/data/network/gcompute_target_ssl_proxy/success3~title.yaml
+  * spec/data/network/gcompute_target_tcp_proxy/success1~name.yaml
+  * spec/data/network/gcompute_target_tcp_proxy/success1~title.yaml
+  * spec/data/network/gcompute_target_tcp_proxy/success2~name.yaml
+  * spec/data/network/gcompute_target_tcp_proxy/success2~title.yaml
+  * spec/data/network/gcompute_target_tcp_proxy/success3~name.yaml
+  * spec/data/network/gcompute_target_tcp_proxy/success3~title.yaml
+  * spec/data/network/gcompute_url_map/success1~name.yaml
+  * spec/data/network/gcompute_url_map/success1~title.yaml
+  * spec/data/network/gcompute_url_map/success2~name.yaml
+  * spec/data/network/gcompute_url_map/success2~title.yaml
+  * spec/data/network/gcompute_url_map/success3~name.yaml
+  * spec/data/network/gcompute_url_map/success3~title.yaml
   * spec/data/network/gcompute_zone/success1~name.yaml
   * spec/data/network/gcompute_zone/success1~title.yaml
   * spec/data/network/gcompute_zone/success2~name.yaml
@@ -419,11 +540,14 @@ chef-codegen:
   * spec/fake_cred.rb
   * spec/firewall_spec.rb
   * spec/foodcritic_spec.rb
+  * spec/forwarding_rule_spec.rb
   * spec/global_address_spec.rb
+  * spec/global_forwarding_rule_spec.rb
   * spec/health_check_spec.rb
   * spec/http_health_check_spec.rb
   * spec/https_health_check_spec.rb
   * spec/image_spec.rb
+  * spec/instance_group_manager_spec.rb
   * spec/instance_group_spec.rb
   * spec/instance_spec.rb
   * spec/instance_template_spec.rb
@@ -438,10 +562,17 @@ chef-codegen:
   * spec/network_spec.rb
   * spec/region_spec.rb
   * spec/route_spec.rb
+  * spec/snapshot_spec.rb
   * spec/spec_helper.rb
   * spec/ssl_certificate_spec.rb
   * spec/subnetwork_spec.rb
+  * spec/target_http_proxy_spec.rb
+  * spec/target_https_proxy_spec.rb
+  * spec/target_pool_spec.rb
+  * spec/target_ssl_proxy_spec.rb
+  * spec/target_tcp_proxy_spec.rb
   * spec/test_constants.rb
+  * spec/url_map_spec.rb
   * spec/zone_spec.rb
 
 The list below contains all the files that were automatically sourced from a

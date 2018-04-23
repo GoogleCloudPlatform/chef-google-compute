@@ -37,5 +37,24 @@ module Google
             .tr('.', '_')
             .downcase
     end
+
+    # Add spaces before every capitalized word except first.
+    def self.uncombine(source)
+      source.gsub(/(?=[A-Z])/, ' ').strip
+    end
+
+    # rubocop:disable Style/SafeNavigation # support Ruby < 2.3.0
+    def self.symbolize(key)
+      key.to_sym unless key.nil?
+    end
+    # rubocop:enable Style/SafeNavigation
+
+    # Returns all the characters up until the period (.) or returns text
+    # unchanged if there is no period.
+    def self.first_sentence(text)
+      period_pos = text.index(/[\.\?!]/)
+      return text if period_pos.nil?
+      text[0, period_pos + 1]
+    end
   end
 end
