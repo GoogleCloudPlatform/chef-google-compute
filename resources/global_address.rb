@@ -33,6 +33,7 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
+require 'google/compute/property/enum'
 require 'google/compute/property/integer'
 require 'google/compute/property/region_selflink'
 require 'google/compute/property/string'
@@ -66,6 +67,10 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
+      property :ip_version,
+               equal_to: %w[IPV4 IPV6],
+               coerce: ::Google::Compute::Property::Enum.coerce,
+               desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegioSelfLinkRef],
                coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce,
@@ -73,6 +78,10 @@ module Google
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
+
+      # TODO(alexstephen): Check w/ Chef how to not expose this property yet
+      # allow the resource to store the @fetched API results for exports usage.
+      property :__fetched, Hash, desired_state: false, required: false
 
       action :create do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
@@ -88,7 +97,8 @@ module Google
               collection(@new_resource), fetch_auth(@new_resource),
               'application/json', resource_to_request
             )
-            wait_for_operation create_req.send, @new_resource
+            @new_resource.__fetched =
+              wait_for_operation create_req.send, @new_resource
           end
         else
           @current_resource = @new_resource.clone
@@ -106,10 +116,13 @@ module Google
             ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.ga_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.ip_version =
+            ::Google::Compute::Property::Enum.api_parse(fetch['ipVersion'])
           @current_resource.region =
             ::Google::Compute::Property::RegioSelfLinkRef.api_parse(
               fetch['region']
             )
+          @new_resource.__fetched = fetch
 
           update
         end
@@ -131,6 +144,12 @@ module Google
 
       # TODO(nelsonjr): Add actions :manage and :modify
 
+      def exports
+        {
+          self_link: __fetched['selfLink']
+        }
+      end
+
       private
 
       action_class do
@@ -138,7 +157,8 @@ module Google
           request = {
             kind: 'compute#address',
             description: new_resource.description,
-            name: new_resource.ga_label
+            name: new_resource.ga_label,
+            ipVersion: new_resource.ip_version
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -172,6 +192,7 @@ module Google
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
+            ip_version: resource.ip_version,
             region: resource.region
           }.reject { |_, v| v.nil? }
         end

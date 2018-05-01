@@ -31,10 +31,10 @@ name: title1
 id: 4299001743
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 deprecated:
-  deleted: '2077-09-13T09:30:57+00:00'
-  deprecated: '2139-10-09T00:58:11+00:00'
-  obsolete: '2046-07-15T01:08:32+00:00'
-  replacement: test deprecated_replacement#1 data
+  deleted: '2137-07-31T19:03:40+00:00'
+  deprecated: '2151-02-27T04:41:13+00:00'
+  obsolete: '2094-12-29T01:29:01+00:00'
+  replacement: test replacement#1 data
   state: OBSOLETE
 description: test description#1 data
 project: "'test project#1 data'"

@@ -109,6 +109,7 @@ chef-codegen:
   * libraries/google/compute/property/disk_selflink.rb
   * libraries/google/compute/property/disk_source_image_encryption_key.rb
   * libraries/google/compute/property/disk_source_snapshot_encryption_key.rb
+  * libraries/google/compute/property/disktype_deprecated.rb
   * libraries/google/compute/property/disktype_selflink.rb
   * libraries/google/compute/property/double.rb
   * libraries/google/compute/property/enum.rb
@@ -159,6 +160,7 @@ chef-codegen:
   * libraries/google/compute/property/machinetype_selflink.rb
   * libraries/google/compute/property/namevalues.rb
   * libraries/google/compute/property/network_selflink.rb
+  * libraries/google/compute/property/region_deprecated.rb
   * libraries/google/compute/property/region_name.rb
   * libraries/google/compute/property/region_selflink.rb
   * libraries/google/compute/property/snapshot_snapshot_encryption_key.rb
@@ -190,27 +192,18 @@ chef-codegen:
   * recipes/examples~delete_backend_service.rb
   * recipes/examples~delete_disk.rb
   * recipes/examples~delete_firewall.rb
-  * recipes/examples~delete_forwarding_rule.rb
   * recipes/examples~delete_global_address.rb
-  * recipes/examples~delete_global_forwarding_rule.rb
   * recipes/examples~delete_health_check.rb
   * recipes/examples~delete_http_health_check.rb
   * recipes/examples~delete_https_health_check.rb
   * recipes/examples~delete_image.rb
   * recipes/examples~delete_instance.rb
   * recipes/examples~delete_instance_group.rb
-  * recipes/examples~delete_instance_group_manager.rb
   * recipes/examples~delete_instance_template.rb
   * recipes/examples~delete_network.rb
   * recipes/examples~delete_route.rb
-  * recipes/examples~delete_snapshot.rb
   * recipes/examples~delete_ssl_certificate.rb
   * recipes/examples~delete_subnetwork.rb
-  * recipes/examples~delete_target_http_proxy.rb
-  * recipes/examples~delete_target_https_proxy.rb
-  * recipes/examples~delete_target_ssl_proxy.rb
-  * recipes/examples~delete_target_tcp_proxy.rb
-  * recipes/examples~delete_url_map.rb
   * recipes/examples~disk.rb
   * recipes/examples~disk_type.rb
   * recipes/examples~firewall.rb
@@ -252,27 +245,18 @@ chef-codegen:
   * recipes/tests~delete_backend_service.rb
   * recipes/tests~delete_disk.rb
   * recipes/tests~delete_firewall.rb
-  * recipes/tests~delete_forwarding_rule.rb
   * recipes/tests~delete_global_address.rb
-  * recipes/tests~delete_global_forwarding_rule.rb
   * recipes/tests~delete_health_check.rb
   * recipes/tests~delete_http_health_check.rb
   * recipes/tests~delete_https_health_check.rb
   * recipes/tests~delete_image.rb
   * recipes/tests~delete_instance.rb
   * recipes/tests~delete_instance_group.rb
-  * recipes/tests~delete_instance_group_manager.rb
   * recipes/tests~delete_instance_template.rb
   * recipes/tests~delete_network.rb
   * recipes/tests~delete_route.rb
-  * recipes/tests~delete_snapshot.rb
   * recipes/tests~delete_ssl_certificate.rb
   * recipes/tests~delete_subnetwork.rb
-  * recipes/tests~delete_target_http_proxy.rb
-  * recipes/tests~delete_target_https_proxy.rb
-  * recipes/tests~delete_target_ssl_proxy.rb
-  * recipes/tests~delete_target_tcp_proxy.rb
-  * recipes/tests~delete_url_map.rb
   * recipes/tests~disk.rb
   * recipes/tests~disk_type.rb
   * recipes/tests~firewall.rb
