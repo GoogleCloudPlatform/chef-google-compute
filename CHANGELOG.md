@@ -13,6 +13,10 @@
 - Added `gcompute_target_tcp_proxy` resource
 - Added `gcompute_url_map` resource
 
+### Fixes
+
+- Moved `deprecated_*` properties to `deprecated { ... }`
+
 ## 0.1.1 (2017-10-16)
 
 ### New features
