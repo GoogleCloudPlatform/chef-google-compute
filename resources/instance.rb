@@ -279,7 +279,6 @@ module Google
             tags: new_resource.tags
           }.reject { |_, v| v.nil? }
           # Format request to conform with API endpoint
-          request = encode_request(request)
           request.to_json
         end
         # rubocop:enable Metrics/MethodLength
@@ -437,7 +436,7 @@ module Google
             unless response.is_a?(Net::HTTPResponse)
           return if response.is_a?(Net::HTTPNotFound)
           return if response.is_a?(Net::HTTPNoContent)
-          result = decode_response(response, kind)
+          result = JSON.parse(response.body)
           raise_if_errors result, %w[error errors], 'message'
           raise "Bad response: #{response}" unless response.is_a?(Net::HTTPOK)
           raise "Incorrect result: #{result['kind']} (expected '#{kind}')" \
