@@ -279,6 +279,7 @@ module Google
             tags: new_resource.tags
           }.reject { |_, v| v.nil? }
           # Format request to conform with API endpoint
+          request = encode_request(request)
           request.to_json
         end
         # rubocop:enable Metrics/MethodLength
@@ -436,7 +437,7 @@ module Google
             unless response.is_a?(Net::HTTPResponse)
           return if response.is_a?(Net::HTTPNotFound)
           return if response.is_a?(Net::HTTPNoContent)
-          result = JSON.parse(response.body)
+          result = decode_response(response, kind)
           raise_if_errors result, %w[error errors], 'message'
           raise "Bad response: #{response}" unless response.is_a?(Net::HTTPOK)
           raise "Incorrect result: #{result['kind']} (expected '#{kind}')" \
@@ -517,6 +518,55 @@ module Google
 
         def raise_if_errors(response, err_path, msg_field)
           self.class.raise_if_errors(response, err_path, msg_field)
+        end
+
+        def self.encode_request(request)
+          metadata_encoder(request[:metadata]) unless request[:metadata].nil?
+          request
+        end
+
+        def encode_request(resource_request)
+          self.class.encode_request(resource_request)
+        end
+
+        def self.decode_response(response, kind)
+          response = JSON.parse(response.body)
+          return response unless kind == 'compute#instance'
+
+          metadata_decoder(response['metadata']) unless response['metadata'].nil?
+          response
+        end
+
+        # TODO(nelsonjr): Implement updating metadata on exsiting resources.
+
+        # Expose instance 'metadata' as a simple name/value pair hash. However the API
+        # defines metadata as a NestedObject with the following layout:
+        #
+        # metadata {
+        #   fingerprint: 'hash-of-last-metadata'
+        #   items: [
+        #     {
+        #       key: 'metadata1-key'
+        #       value: 'metadata1-value'
+        #     },
+        #     ...
+        #   ]
+        # }
+        #
+        # Fingerpint is an optimistic locking mechanism for updates, which requires
+        # adding the 'fingerprint' of the last metadata to allow update.
+        def self.metadata_encoder(metadata)
+          items = metadata.map { |k, v| { key: k, value: v } }
+          metadata.clear
+          metadata[:items] = items
+        end
+
+        # Map metadata.items[]{key:,value:} => metadata[key]=value
+        def self.metadata_decoder(metadata)
+          metadata_items = metadata['items']
+          metadata.clear
+          metadata.merge!(Hash[metadata_items.map { |i| [i['key'], i['value']] }]) \
+            unless metadata_items.nil?
         end
 
         def self.fetch_resource(resource, self_link, kind)

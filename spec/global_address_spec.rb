@@ -97,6 +97,7 @@ context 'gcompute_global_address' do
                   gcompute_global_address 'title0' do
                     action :create
                     description 'test description#0 data'
+                    ip_version 'IPV4'
                     project 'test project#0 data'
                     credential 'mycred'
                   end
@@ -104,6 +105,7 @@ context 'gcompute_global_address' do
                   gcompute_global_address 'title1' do
                     action :create
                     description 'test description#1 data'
+                    ip_version 'IPV6'
                     project 'test project#1 data'
                     credential 'mycred'
                   end
@@ -111,6 +113,7 @@ context 'gcompute_global_address' do
                   gcompute_global_address 'title2' do
                     action :create
                     description 'test description#2 data'
+                    ip_version 'IPV4'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -135,6 +138,8 @@ context 'gcompute_global_address' do
               end
 
               it { is_expected.to have_attributes(ga_label: 'title0') }
+
+              it { is_expected.to have_attributes(ip_version: 'IPV4') }
             end
 
             context 'gcompute_global_address[title1]' do
@@ -148,6 +153,8 @@ context 'gcompute_global_address' do
               end
 
               it { is_expected.to have_attributes(ga_label: 'title1') }
+
+              it { is_expected.to have_attributes(ip_version: 'IPV6') }
             end
 
             context 'gcompute_global_address[title2]' do
@@ -161,6 +168,8 @@ context 'gcompute_global_address' do
               end
 
               it { is_expected.to have_attributes(ga_label: 'title2') }
+
+              it { is_expected.to have_attributes(ip_version: 'IPV4') }
             end
           end
 
@@ -217,6 +226,7 @@ context 'gcompute_global_address' do
                     action :create
                     description 'test description#0 data'
                     ga_label 'test name#0 data'
+                    ip_version 'IPV4'
                     project 'test project#0 data'
                     credential 'mycred'
                   end
@@ -225,6 +235,7 @@ context 'gcompute_global_address' do
                     action :create
                     description 'test description#1 data'
                     ga_label 'test name#1 data'
+                    ip_version 'IPV6'
                     project 'test project#1 data'
                     credential 'mycred'
                   end
@@ -233,6 +244,7 @@ context 'gcompute_global_address' do
                     action :create
                     description 'test description#2 data'
                     ga_label 'test name#2 data'
+                    ip_version 'IPV4'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -259,6 +271,8 @@ context 'gcompute_global_address' do
               it do
                 is_expected.to have_attributes(ga_label: 'test name#0 data')
               end
+
+              it { is_expected.to have_attributes(ip_version: 'IPV4') }
             end
 
             context 'gcompute_global_address[title1]' do
@@ -274,6 +288,8 @@ context 'gcompute_global_address' do
               it do
                 is_expected.to have_attributes(ga_label: 'test name#1 data')
               end
+
+              it { is_expected.to have_attributes(ip_version: 'IPV6') }
             end
 
             context 'gcompute_global_address[title2]' do
@@ -289,6 +305,8 @@ context 'gcompute_global_address' do
               it do
                 is_expected.to have_attributes(ga_label: 'test name#2 data')
               end
+
+              it { is_expected.to have_attributes(ip_version: 'IPV4') }
             end
           end
 
@@ -347,7 +365,8 @@ context 'gcompute_global_address' do
               {
                 'kind' => 'compute#address',
                 'description' => 'test description#0 data',
-                'name' => 'title0'
+                'name' => 'title0',
+                'ipVersion' => 'IPV4'
               },
               name: 'title0'
             expect_network_get_async 1, name: 'title0'
@@ -384,6 +403,7 @@ context 'gcompute_global_address' do
                 gcompute_global_address 'title0' do
                   action :create
                   description 'test description#0 data'
+                  ip_version 'IPV4'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -411,6 +431,8 @@ context 'gcompute_global_address' do
           end
 
           it { is_expected.to have_attributes(ga_label: 'title0') }
+
+          it { is_expected.to have_attributes(ip_version: 'IPV4') }
         end
 
         # Ensure present: resource missing, ignore, no name, fail
@@ -431,7 +453,8 @@ context 'gcompute_global_address' do
               1,
               'kind' => 'compute#address',
               'description' => 'test description#0 data',
-              'name' => 'test name#0 data'
+              'name' => 'test name#0 data',
+              'ipVersion' => 'IPV4'
             expect_network_get_async 1
           end
 
@@ -467,6 +490,7 @@ context 'gcompute_global_address' do
                   action :create
                   description 'test description#0 data'
                   ga_label 'test name#0 data'
+                  ip_version 'IPV4'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -494,6 +518,8 @@ context 'gcompute_global_address' do
           end
 
           it { is_expected.to have_attributes(ga_label: 'test name#0 data') }
+
+          it { is_expected.to have_attributes(ip_version: 'IPV4') }
         end
 
         # Ensure present: resource missing, ignore, has name, fail

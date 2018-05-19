@@ -397,6 +397,59 @@ module Google
           self.class.raise_if_errors(response, err_path, msg_field)
         end
 
+        def self.encode_request(request)
+          metadata_encoder(request[:properties].metadata) \
+            unless request[:properties].nil? || request[:properties].metadata.nil?
+          request
+        end
+
+        def encode_request(resource_request)
+          self.class.encode_request(resource_request)
+        end
+
+        def self.decode_response(response, kind)
+          response = JSON.parse(response.body)
+          return response unless kind == 'compute#instanceTemplate'
+
+          properties = response['properties']
+          metadata_decoder(properties['metadata']) \
+            unless properties.nil? || properties['metadata'].nil?
+
+          response
+        end
+
+        # TODO(nelsonjr): Implement updating metadata on exsiting resources.
+
+        # Expose instance 'metadata' as a simple name/value pair hash. However the API
+        # defines metadata as a NestedObject with the following layout:
+        #
+        # metadata {
+        #   fingerprint: 'hash-of-last-metadata'
+        #   items: [
+        #     {
+        #       key: 'metadata1-key'
+        #       value: 'metadata1-value'
+        #     },
+        #     ...
+        #   ]
+        # }
+        #
+        # Fingerpint is an optimistic locking mechanism for updates, which requires
+        # adding the 'fingerprint' of the last metadata to allow update.
+        def self.metadata_encoder(metadata)
+          items = metadata.map { |k, v| { key: k, value: v } }
+          metadata.clear
+          metadata[:items] = items
+        end
+
+        # Map metadata.items[]{key:,value:} => metadata[key]=value
+        def self.metadata_decoder(metadata)
+          metadata_items = metadata['items']
+          metadata.clear
+          metadata.merge!(Hash[metadata_items.map { |i| [i['key'], i['value']] }]) \
+            unless metadata_items.nil?
+        end
+
         def self.fetch_resource(resource, self_link, kind)
           get_request = ::Google::Compute::Network::Get.new(
             self_link, fetch_auth(resource)

@@ -403,6 +403,7 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#0 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -434,11 +435,13 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#1 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -466,16 +469,19 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#3 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#4 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -580,11 +586,13 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#1 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -757,16 +765,19 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#3 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#4 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -790,16 +801,19 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#3 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#4 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#5 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1282,6 +1296,7 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#0 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1313,11 +1328,13 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#1 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1345,16 +1362,19 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#3 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#4 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1460,11 +1480,13 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#1 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1638,16 +1660,19 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#2 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#3 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#4 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1671,16 +1696,19 @@ context 'gcompute_instance_template' do
                             {
                               name: 'test name#3 data',
                               nat_ip: 'resource(address,0)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#4 data',
                               nat_ip: 'resource(address,1)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             },
                             {
                               name: 'test name#5 data',
                               nat_ip: 'resource(address,2)',
+                              network_tier: 'PREMIUM',
                               type: 'ONE_TO_ONE_NAT'
                             }
                           ],
@@ -1952,7 +1980,8 @@ context 'gcompute_instance_template' do
                         {
                           'name' => 'test name#0 data',
                           'natIP' => 'test address#0 data',
-                          'type' => 'ONE_TO_ONE_NAT'
+                          'type' => 'ONE_TO_ONE_NAT',
+                          'networkTier' => 'PREMIUM'
                         }
                       ],
                       'aliasIpRanges' => [
@@ -1983,12 +2012,14 @@ context 'gcompute_instance_template' do
                         {
                           'name' => 'test name#1 data',
                           'natIP' => 'test address#1 data',
-                          'type' => 'ONE_TO_ONE_NAT'
+                          'type' => 'ONE_TO_ONE_NAT',
+                          'networkTier' => 'PREMIUM'
                         },
                         {
                           'name' => 'test name#2 data',
                           'natIP' => 'test address#2 data',
-                          'type' => 'ONE_TO_ONE_NAT'
+                          'type' => 'ONE_TO_ONE_NAT',
+                          'networkTier' => 'PREMIUM'
                         }
                       ],
                       'aliasIpRanges' => [
@@ -2015,17 +2046,20 @@ context 'gcompute_instance_template' do
                         {
                           'name' => 'test name#2 data',
                           'natIP' => 'test address#2 data',
-                          'type' => 'ONE_TO_ONE_NAT'
+                          'type' => 'ONE_TO_ONE_NAT',
+                          'networkTier' => 'PREMIUM'
                         },
                         {
                           'name' => 'test name#3 data',
                           'natIP' => 'test address#0 data',
-                          'type' => 'ONE_TO_ONE_NAT'
+                          'type' => 'ONE_TO_ONE_NAT',
+                          'networkTier' => 'PREMIUM'
                         },
                         {
                           'name' => 'test name#4 data',
                           'natIP' => 'test address#1 data',
-                          'type' => 'ONE_TO_ONE_NAT'
+                          'type' => 'ONE_TO_ONE_NAT',
+                          'networkTier' => 'PREMIUM'
                         }
                       ],
                       'aliasIpRanges' => [
@@ -2361,6 +2395,7 @@ context 'gcompute_instance_template' do
                           {
                             name: 'test name#0 data',
                             nat_ip: 'resource(address,0)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           }
                         ],
@@ -2392,11 +2427,13 @@ context 'gcompute_instance_template' do
                           {
                             name: 'test name#1 data',
                             nat_ip: 'resource(address,1)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           },
                           {
                             name: 'test name#2 data',
                             nat_ip: 'resource(address,2)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           }
                         ],
@@ -2424,16 +2461,19 @@ context 'gcompute_instance_template' do
                           {
                             name: 'test name#2 data',
                             nat_ip: 'resource(address,2)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           },
                           {
                             name: 'test name#3 data',
                             nat_ip: 'resource(address,0)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           },
                           {
                             name: 'test name#4 data',
                             nat_ip: 'resource(address,1)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           }
                         ],
@@ -2616,7 +2656,8 @@ context 'gcompute_instance_template' do
                       {
                         'name' => 'test name#0 data',
                         'natIP' => 'test address#0 data',
-                        'type' => 'ONE_TO_ONE_NAT'
+                        'type' => 'ONE_TO_ONE_NAT',
+                        'networkTier' => 'PREMIUM'
                       }
                     ],
                     'aliasIpRanges' => [
@@ -2647,12 +2688,14 @@ context 'gcompute_instance_template' do
                       {
                         'name' => 'test name#1 data',
                         'natIP' => 'test address#1 data',
-                        'type' => 'ONE_TO_ONE_NAT'
+                        'type' => 'ONE_TO_ONE_NAT',
+                        'networkTier' => 'PREMIUM'
                       },
                       {
                         'name' => 'test name#2 data',
                         'natIP' => 'test address#2 data',
-                        'type' => 'ONE_TO_ONE_NAT'
+                        'type' => 'ONE_TO_ONE_NAT',
+                        'networkTier' => 'PREMIUM'
                       }
                     ],
                     'aliasIpRanges' => [
@@ -2679,17 +2722,20 @@ context 'gcompute_instance_template' do
                       {
                         'name' => 'test name#2 data',
                         'natIP' => 'test address#2 data',
-                        'type' => 'ONE_TO_ONE_NAT'
+                        'type' => 'ONE_TO_ONE_NAT',
+                        'networkTier' => 'PREMIUM'
                       },
                       {
                         'name' => 'test name#3 data',
                         'natIP' => 'test address#0 data',
-                        'type' => 'ONE_TO_ONE_NAT'
+                        'type' => 'ONE_TO_ONE_NAT',
+                        'networkTier' => 'PREMIUM'
                       },
                       {
                         'name' => 'test name#4 data',
                         'natIP' => 'test address#1 data',
-                        'type' => 'ONE_TO_ONE_NAT'
+                        'type' => 'ONE_TO_ONE_NAT',
+                        'networkTier' => 'PREMIUM'
                       }
                     ],
                     'aliasIpRanges' => [
@@ -3024,6 +3070,7 @@ context 'gcompute_instance_template' do
                           {
                             name: 'test name#0 data',
                             nat_ip: 'resource(address,0)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           }
                         ],
@@ -3055,11 +3102,13 @@ context 'gcompute_instance_template' do
                           {
                             name: 'test name#1 data',
                             nat_ip: 'resource(address,1)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           },
                           {
                             name: 'test name#2 data',
                             nat_ip: 'resource(address,2)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           }
                         ],
@@ -3087,16 +3136,19 @@ context 'gcompute_instance_template' do
                           {
                             name: 'test name#2 data',
                             nat_ip: 'resource(address,2)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           },
                           {
                             name: 'test name#3 data',
                             nat_ip: 'resource(address,0)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           },
                           {
                             name: 'test name#4 data',
                             nat_ip: 'resource(address,1)',
+                            network_tier: 'PREMIUM',
                             type: 'ONE_TO_ONE_NAT'
                           }
                         ],

@@ -36,12 +36,14 @@ module Google
         attr_reader :name
         attr_reader :nat_ip
         attr_reader :type
+        attr_reader :network_tier
 
         def to_json(_arg = nil)
           {
             'name' => name,
             'natIP' => nat_ip,
-            'type' => type
+            'type' => type,
+            'networkTier' => network_tier
           }.reject { |_k, v| v.nil? }.to_json
         end
 
@@ -49,7 +51,8 @@ module Google
           {
             name: name.to_s,
             nat_ip: nat_ip.to_s,
-            type: type.to_s
+            type: type.to_s,
+            network_tier: network_tier.to_s
           }.map { |k, v| "#{k}: #{v}" }.join(', ')
         end
 
@@ -82,7 +85,8 @@ module Google
           [
             { self: name, other: other.name },
             { self: nat_ip, other: other.nat_ip },
-            { self: type, other: other.type }
+            { self: type, other: other.type },
+            { self: network_tier, other: other.network_tier }
           ]
         end
       end
@@ -96,6 +100,8 @@ module Google
             args['natIP']
           )
           @type = Google::Compute::Property::Enum.api_parse(args['type'])
+          @network_tier =
+            Google::Compute::Property::Enum.api_parse(args['networkTier'])
         end
       end
 
@@ -108,6 +114,8 @@ module Google
             args[:nat_ip]
           )
           @type = Google::Compute::Property::Enum.catalog_parse(args[:type])
+          @network_tier =
+            Google::Compute::Property::Enum.catalog_parse(args[:network_tier])
         end
       end
     end

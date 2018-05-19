@@ -115,12 +115,15 @@ properties:
     - name: test name#2 data
       natIP: test address#2 data
       type: ONE_TO_ONE_NAT
+      networkTier: PREMIUM
     - name: test name#3 data
       natIP: test address#0 data
       type: ONE_TO_ONE_NAT
+      networkTier: PREMIUM
     - name: test name#4 data
       natIP: test address#1 data
       type: ONE_TO_ONE_NAT
+      networkTier: PREMIUM
     aliasIpRanges:
     - ipCidrRange: test ip_cidr_range#2 data
       subnetworkRangeName: test subnetwork_range_name#2 data
@@ -134,12 +137,15 @@ properties:
     - name: test name#3 data
       natIP: test address#0 data
       type: ONE_TO_ONE_NAT
+      networkTier: PREMIUM
     - name: test name#4 data
       natIP: test address#1 data
       type: ONE_TO_ONE_NAT
+      networkTier: PREMIUM
     - name: test name#5 data
       natIP: test address#2 data
       type: ONE_TO_ONE_NAT
+      networkTier: PREMIUM
     aliasIpRanges:
     - ipCidrRange: test ip_cidr_range#3 data
       subnetworkRangeName: test subnetwork_range_name#3 data
