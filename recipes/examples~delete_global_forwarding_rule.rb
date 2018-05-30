@@ -64,6 +64,12 @@ gauth_credential 'mycred' do
   ]
 end
 
+gcompute_global_address 'my-app-lb-address' do
+  action :create
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
 gcompute_zone 'us-central1-a' do
   project 'google.com:graphite-playground'
   credential 'mycred'
@@ -105,6 +111,12 @@ end
 
 gcompute_global_forwarding_rule 'test1' do
   action :delete
+  ip_address gcompute_global_address_ref(
+    'my-app-lb-address',
+    'google.com:graphite-playground'
+  )
+  ip_protocol 'TCP'
+  port_range '80'
   target gcompute_target_http_proxy_ref(
     'my-http-proxy',
     'google.com:graphite-playground'

@@ -654,6 +654,7 @@ context 'gcompute_target_tcp_proxy' do
         context 'title == name (pass)' do
           before do
             expect_network_get_failed 1, name: 'title0'
+            expect_network_get_success_backend_service 1
           end
 
           let(:runner) do
@@ -684,8 +685,16 @@ context 'gcompute_target_tcp_proxy' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_backend_service 'resource(backend_service,0)' do
+                  action :create
+                  bs_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_target_tcp_proxy 'title0' do
                   action :delete
+                  service 'resource(backend_service,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -718,6 +727,7 @@ context 'gcompute_target_tcp_proxy' do
         context 'title != name (pass)' do
           before do
             expect_network_get_failed 1
+            expect_network_get_success_backend_service 1
           end
 
           let(:runner) do
@@ -748,8 +758,16 @@ context 'gcompute_target_tcp_proxy' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_backend_service 'resource(backend_service,0)' do
+                  action :create
+                  bs_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_target_tcp_proxy 'title0' do
                   action :delete
+                  service 'resource(backend_service,0)'
                   ttp_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -787,6 +805,7 @@ context 'gcompute_target_tcp_proxy' do
             expect_network_get_success 1, name: 'title0'
             expect_network_delete 1, 'title0'
             expect_network_get_async 1, name: 'title0'
+            expect_network_get_success_backend_service 1
           end
 
           let(:runner) do
@@ -817,8 +836,16 @@ context 'gcompute_target_tcp_proxy' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_backend_service 'resource(backend_service,0)' do
+                  action :create
+                  bs_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_target_tcp_proxy 'title0' do
                   action :delete
+                  service 'resource(backend_service,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -857,6 +884,7 @@ context 'gcompute_target_tcp_proxy' do
             expect_network_get_success 1
             expect_network_delete 1
             expect_network_get_async 1
+            expect_network_get_success_backend_service 1
           end
 
           let(:runner) do
@@ -887,8 +915,16 @@ context 'gcompute_target_tcp_proxy' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_backend_service 'resource(backend_service,0)' do
+                  action :create
+                  bs_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_target_tcp_proxy 'title0' do
                   action :delete
+                  service 'resource(backend_service,0)'
                   ttp_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'

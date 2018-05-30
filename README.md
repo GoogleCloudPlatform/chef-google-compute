@@ -139,7 +139,7 @@ For complete details of the authentication cookbook, visit the
     Backend buckets allow you to use Google Cloud Storage buckets with
     HTTP(S)
     load balancing.
-    An HTTP(S) load balancing can direct traffic to specified URLs to a
+    An HTTP(S) load balancer can direct traffic to specified URLs to a
     backend bucket rather than a backend service. It can send requests for
     static content to a Cloud Storage bucket and requests for dynamic
     content
@@ -472,7 +472,8 @@ end
   Output only. The URLs of the resources that are using this address.
 
 * `region` -
-  Required. A reference to Region resource
+  Required. URL of the region where the regional address resides.
+  This field is not applicable to global addresses.
 
 #### Label
 Set the `a_label` property when attempting to set primary key
@@ -483,7 +484,7 @@ the resource followed by "_label"
 Backend buckets allow you to use Google Cloud Storage buckets with HTTP(S)
 load balancing.
 
-An HTTP(S) load balancing can direct traffic to specified URLs to a
+An HTTP(S) load balancer can direct traffic to specified URLs to a
 backend bucket rather than a backend service. It can send requests for
 static content to a Cloud Storage bucket and requests for dynamic content
 a virtual machine instance.
@@ -692,7 +693,14 @@ end
   Provide this property when you create the resource.
 
 * `backends[]/group`
-  A reference to InstanceGroup resource
+  This instance group defines the list of instances that serve
+  traffic. Member virtual machine instances from each instance
+  group must live in the same zone as the instance group itself.
+  No two backends in a backend service are allowed to use same
+  Instance Group resource.
+  When the BackendService has load balancing scheme INTERNAL, the
+  instance group must be in a zone within the same region as the
+  BackendService.
 
 * `backends[]/max_connections`
   The max number of simultaneous connections for the group. Can
@@ -813,7 +821,8 @@ end
   the default is TCP.
 
 * `region` -
-  A reference to Region resource
+  The region where the regional backend service resides.
+  This field is not applicable to global backend services.
 
 * `session_affinity` -
   Type of session affinity to use. The default is NONE.
@@ -854,20 +863,22 @@ end
 
 ```ruby
 gcompute_disk_type 'id-for-resource' do
-  creation_timestamp     time
-  default_disk_size_gb   integer
-  deprecated_deleted     time
-  deprecated_deprecated  time
-  deprecated_obsolete    time
-  deprecated_replacement string
-  deprecated_state       'DEPRECATED', 'OBSOLETE' or 'DELETED'
-  description            string
-  id                     integer
-  name                   string
-  valid_disk_size        string
-  zone                   reference to gcompute_zone
-  project                string
-  credential             reference to gauth_credential
+  creation_timestamp   time
+  default_disk_size_gb integer
+  deprecated           {
+    deleted     time,
+    deprecated  time,
+    obsolete    time,
+    replacement string,
+    state       'DEPRECATED', 'OBSOLETE' or 'DELETED',
+  }
+  description          string
+  id                   integer
+  name                 string
+  valid_disk_size      string
+  zone                 reference to gcompute_zone
+  project              string
+  credential           reference to gauth_credential
 end
 ```
 
@@ -889,30 +900,32 @@ end
 * `default_disk_size_gb` -
   Output only. Server-defined default disk size in GB.
 
-* `deprecated_deleted` -
-  Output only. An optional RFC3339 timestamp on or after which the
-  deprecation state
+* `deprecated` -
+  Output only. The deprecation status associated with this disk type.
+
+* `deprecated/deleted`
+  Output only. An optional RFC3339 timestamp on or after which the deprecation
+  state
   of this resource will be changed to DELETED.
 
-* `deprecated_deprecated` -
-  Output only. An optional RFC3339 timestamp on or after which the
-  deprecation state
+* `deprecated/deprecated`
+  Output only. An optional RFC3339 timestamp on or after which the deprecation
+  state
   of this resource will be changed to DEPRECATED.
 
-* `deprecated_obsolete` -
-  Output only. An optional RFC3339 timestamp on or after which the
-  deprecation state
+* `deprecated/obsolete`
+  Output only. An optional RFC3339 timestamp on or after which the deprecation
+  state
   of this resource will be changed to OBSOLETE.
 
-* `deprecated_replacement` -
-  Output only. The URL of the suggested replacement for a deprecated
-  resource. The
+* `deprecated/replacement`
+  Output only. The URL of the suggested replacement for a deprecated resource.
+  The
   suggested replacement resource must be the same kind of resource as
   the deprecated resource.
 
-* `deprecated_state` -
-  Output only. The deprecation state of this resource. This can be
-  DEPRECATED,
+* `deprecated/state`
+  Output only. The deprecation state of this resource. This can be DEPRECATED,
   OBSOLETE, or DELETED. Operations which create a new resource using a
   DEPRECATED resource will return successfully, but with a warning
   indicating the deprecated resource and recommending its replacement.
@@ -934,7 +947,7 @@ end
   "10GB-10TB".
 
 * `zone` -
-  Required. A reference to Zone resource
+  Required. A reference to the zone where the disk type resides.
 
 #### Label
 Set the `dt_label` property when attempting to set primary key
@@ -986,6 +999,7 @@ gcompute_disk 'id-for-resource' do
     sha256  string,
   }
   id                             integer
+  labels                         namevalues
   last_attach_timestamp          time
   last_detach_timestamp          time
   licenses                       [
@@ -1045,6 +1059,9 @@ end
 * `last_detach_timestamp` -
   Output only. Last dettach timestamp in RFC3339 text format.
 
+* `labels` -
+  Labels to apply to this disk.  A list of key->value pairs.
+
 * `licenses` -
   Any applicable publicly visible licenses.
 
@@ -1085,8 +1102,7 @@ end
   global/images/family/my-private-family
 
 * `type` -
-  Output only. URL of the disk type resource describing which disk type to
-  use to
+  URL of the disk type resource describing which disk type to use to
   create the disk. Provide this when creating the disk.
 
 * `users` -
@@ -1094,7 +1110,7 @@ end
   project/zones/zone/instances/instance
 
 * `zone` -
-  Required. A reference to Zone resource
+  Required. A reference to the zone where the disk resides.
 
 * `disk_encryption_key` -
   Encrypts the disk using a customer-supplied encryption key.
@@ -1432,8 +1448,8 @@ end
   reference to an existing Address resource. The following examples are
   all valid:
   * 100.1.2.3
-  * https://www.googleapis.com/compute/v1/projects/project
-  /regions/region/addresses/address
+  * https://www.googleapis.com/compute/v1/projects/project/regions/
+  region/addresses/address
   * projects/project/regions/region/addresses/address
   * regions/region/addresses/address
   * global/addresses/address
@@ -1446,7 +1462,9 @@ end
   valid.
 
 * `backend_service` -
-  A reference to BackendService resource
+  A reference to a BackendService to receive the matched traffic.
+  This is used for internal load balancing.
+  (not used for external load balancing)
 
 * `ip_version` -
   The IP Version that will be used by this forwarding rule. Valid
@@ -1470,7 +1488,10 @@ end
   character, which cannot be a dash.
 
 * `network` -
-  A reference to Network resource
+  For internal load balancing, this field identifies the network that
+  the load balanced IP should belong to for this Forwarding Rule. If
+  this field is not specified, the default network will be used.
+  This field is not used for external load balancing.
 
 * `port_range` -
   This field is used along with the target field for TargetHttpProxy,
@@ -1500,13 +1521,26 @@ end
   You may specify a maximum of up to 5 ports.
 
 * `subnetwork` -
-  A reference to Subnetwork resource
+  A reference to a subnetwork.
+  For internal load balancing, this field identifies the subnetwork that
+  the load balanced IP should belong to for this Forwarding Rule.
+  If the network specified is in auto subnet mode, this field is
+  optional. However, if the network is in custom subnet mode, a
+  subnetwork must be specified.
+  This field is not used for external load balancing.
 
 * `target` -
-  A reference to TargetPool resource
+  A reference to a TargetPool resource to receive the matched traffic.
+  For regional forwarding rules, this target must live in the same
+  region as the forwarding rule. For global forwarding rules, this
+  target must be a global load balancing resource. The forwarded traffic
+  must be of a type appropriate to the target object.
+  This field is not used for internal load balancing.
 
 * `region` -
-  Required. A reference to Region resource
+  Required. A reference to the region where the regional forwarding rule
+  resides.
+  This field is not applicable to global forwarding rules.
 
 #### Label
 Set the `fr_label` property when attempting to set primary key
@@ -1537,6 +1571,7 @@ gcompute_global_address 'id-for-resource' do
   creation_timestamp time
   description        string
   id                 integer
+  ip_version         'IPV4' or 'IPV6'
   name               string
   region             reference to gcompute_region
   project            string
@@ -1580,8 +1615,12 @@ end
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
 
+* `ip_version` -
+  The IP Version that will be used by this address. Valid options are
+  IPV4 or IPV6. The default value is IPV4.
+
 * `region` -
-  Output only. A reference to Region resource
+  Output only. A reference to the region where the regional address resides.
 
 #### Label
 Set the `ga_label` property when attempting to set primary key
@@ -1688,8 +1727,8 @@ end
   reference to an existing Address resource. The following examples are
   all valid:
   * 100.1.2.3
-  * https://www.googleapis.com/compute/v1/projects/project
-  /regions/region/addresses/address
+  * https://www.googleapis.com/compute/v1/projects/project/regions/
+  region/addresses/address
   * projects/project/regions/region/addresses/address
   * regions/region/addresses/address
   * global/addresses/address
@@ -1702,7 +1741,9 @@ end
   valid.
 
 * `backend_service` -
-  A reference to BackendService resource
+  A reference to a BackendService to receive the matched traffic.
+  This is used for internal load balancing.
+  (not used for external load balancing)
 
 * `ip_version` -
   The IP Version that will be used by this forwarding rule. Valid
@@ -1726,7 +1767,10 @@ end
   character, which cannot be a dash.
 
 * `network` -
-  A reference to Network resource
+  For internal load balancing, this field identifies the network that
+  the load balanced IP should belong to for this Forwarding Rule. If
+  this field is not specified, the default network will be used.
+  This field is not used for external load balancing.
 
 * `port_range` -
   This field is used along with the target field for TargetHttpProxy,
@@ -1756,10 +1800,18 @@ end
   You may specify a maximum of up to 5 ports.
 
 * `subnetwork` -
-  A reference to Subnetwork resource
+  A reference to a subnetwork.
+  For internal load balancing, this field identifies the subnetwork that
+  the load balanced IP should belong to for this Forwarding Rule.
+  If the network specified is in auto subnet mode, this field is
+  optional. However, if the network is in custom subnet mode, a
+  subnetwork must be specified.
+  This field is not used for external load balancing.
 
 * `region` -
-  Output only. A reference to Region resource
+  Output only. A reference to the region where the regional forwarding rule
+  resides.
+  This field is not applicable to global forwarding rules.
 
 * `target` -
   This target must be a global load balancing resource. The forwarded
@@ -2471,7 +2523,7 @@ end
   choose an appropriate value.
 
 * `properties/disks[]/initialize_params`
-  Required. Specifies the parameters for a new disk that will be
+  Specifies the parameters for a new disk that will be
   created alongside the new instance. Use initialization
   parameters to create boot disks or local SSDs attached to
   the new instance.
@@ -2484,7 +2536,9 @@ end
   Specifies the size of the disk in base-2 GB.
 
 * `properties/disks[]/initialize_params/disk_type`
-  A reference to DiskType resource
+  Reference to a gcompute_disk_type resource.
+  Specifies the disk type to use to create the instance.
+  If not specified, the default is pd-standard.
 
 * `properties/disks[]/initialize_params/source_image`
   The source image to create this disk. When creating a
@@ -2525,14 +2579,20 @@ end
   disk in READ_WRITE mode.
 
 * `properties/disks[]/source`
-  A reference to Disk resource
+  Reference to a gcompute_disk resource. When creating a new instance,
+  one of initializeParams.sourceImage or disks.source is required.
+  If desired, you can also attach existing non-root
+  persistent disks using this property. This field is only
+  applicable for persistent disks.
+  Note that for InstanceTemplate, specify the disk name, not
+  the URL for the disk.
 
 * `properties/disks[]/type`
   Specifies the type of the disk, either SCRATCH or
   PERSISTENT. If not specified, the default is PERSISTENT.
 
 * `properties/machine_type`
-  Required. A reference to MachineType resource
+  Required. Reference to a gcompute_machine_type resource.
 
 * `properties/metadata`
   The metadata key/value pairs to assign to instances that are
@@ -2570,7 +2630,13 @@ end
   external IP or Network Access.
 
 * `properties/network_interfaces[]/access_configs[]/nat_ip`
-  Required. A reference to Address resource
+  Required. Specifies the title of a gcompute_address.
+  An external IP address associated with this instance.
+  Specify an unused static external IP address available to
+  the project or leave this field undefined to use an IP
+  from a shared ephemeral IP address pool. If you specify a
+  static external IP address, it must live in the same
+  region as the zone of the instance.
 
 * `properties/network_interfaces[]/access_configs[]/type`
   Required. The type of configuration. The default and only option is
@@ -2601,7 +2667,11 @@ end
   server. For network devices, these are eth0, eth1, etc
 
 * `properties/network_interfaces[]/network`
-  A reference to Network resource
+  Specifies the title of an existing gcompute_network.  When creating
+  an instance, if neither the network nor the subnetwork is specified,
+  the default network global/networks/default is used; if the network
+  is not specified but the subnetwork is specified, the network is
+  inferred.
 
 * `properties/network_interfaces[]/network_ip`
   An IPv4 internal network address to assign to the
@@ -2610,7 +2680,12 @@ end
   system.
 
 * `properties/network_interfaces[]/subnetwork`
-  A reference to Subnetwork resource
+  Reference to a gcompute_subnetwork resource.
+  If the network resource is in legacy mode, do not
+  provide this property.  If the network is in auto
+  subnet mode, providing the subnetwork is optional. If
+  the network is in custom subnet mode, then this field
+  should be specified.
 
 * `properties/scheduling`
   Sets the scheduling options for this instance.
@@ -2940,7 +3015,9 @@ end
   but not both.
 
 * `source_disk` -
-  A reference to Disk resource
+  Refers to a gcompute_disk object
+  You must provide either this property or the
+  rawDisk.source property but not both to create an image.
 
 * `source_disk_encryption_key` -
   The customer-supplied encryption key of the source disk. Required if
@@ -3195,7 +3272,7 @@ end
   choose an appropriate value.
 
 * `disks[]/initialize_params`
-  Required. Specifies the parameters for a new disk that will be
+  Specifies the parameters for a new disk that will be
   created alongside the new instance. Use initialization
   parameters to create boot disks or local SSDs attached to
   the new instance.
@@ -3208,7 +3285,9 @@ end
   Specifies the size of the disk in base-2 GB.
 
 * `disks[]/initialize_params/disk_type`
-  A reference to DiskType resource
+  Reference to a gcompute_disk_type resource.
+  Specifies the disk type to use to create the instance.
+  If not specified, the default is pd-standard.
 
 * `disks[]/initialize_params/source_image`
   The source image to create this disk. When creating a
@@ -3249,7 +3328,11 @@ end
   disk in READ_WRITE mode.
 
 * `disks[]/source`
-  A reference to Disk resource
+  Reference to a gcompute_disk resource. When creating a new instance,
+  one of initializeParams.sourceImage or disks.source is required.
+  If desired, you can also attach existing non-root
+  persistent disks using this property. This field is only
+  applicable for persistent disks.
 
 * `disks[]/type`
   Specifies the type of the disk, either SCRATCH or
@@ -3285,7 +3368,7 @@ end
   metadata or predefined keys.
 
 * `machine_type` -
-  A reference to MachineType resource
+  A reference to a machine type which defines VM kind.
 
 * `min_cpu_platform` -
   Specifies a minimum CPU platform for the VM instance. Applicable
@@ -3320,7 +3403,13 @@ end
   external IP or Network Access.
 
 * `network_interfaces[]/access_configs[]/nat_ip`
-  Required. A reference to Address resource
+  Required. Specifies the title of a gcompute_address.
+  An external IP address associated with this instance.
+  Specify an unused static external IP address available to
+  the project or leave this field undefined to use an IP
+  from a shared ephemeral IP address pool. If you specify a
+  static external IP address, it must live in the same
+  region as the zone of the instance.
 
 * `network_interfaces[]/access_configs[]/type`
   Required. The type of configuration. The default and only option is
@@ -3351,7 +3440,11 @@ end
   server. For network devices, these are eth0, eth1, etc
 
 * `network_interfaces[]/network`
-  A reference to Network resource
+  Specifies the title of an existing gcompute_network.  When creating
+  an instance, if neither the network nor the subnetwork is specified,
+  the default network global/networks/default is used; if the network
+  is not specified but the subnetwork is specified, the network is
+  inferred.
 
 * `network_interfaces[]/network_ip`
   An IPv4 internal network address to assign to the
@@ -3360,7 +3453,12 @@ end
   system.
 
 * `network_interfaces[]/subnetwork`
-  A reference to Subnetwork resource
+  Reference to a gcompute_subnetwork resource.
+  If the network resource is in legacy mode, do not
+  provide this property.  If the network is in auto
+  subnet mode, providing the subnetwork is optional. If
+  the network is in custom subnet mode, then this field
+  should be specified.
 
 * `scheduling` -
   Sets the scheduling options for this instance.
@@ -3423,7 +3521,7 @@ end
   comply with RFC1035.
 
 * `zone` -
-  Required. A reference to Zone resource
+  Required. A reference to the zone where the machine resides.
 
 #### Label
 Set the `i_label` property when attempting to set primary key
@@ -3526,16 +3624,17 @@ end
   The port number, which can be a value between 1 and 65535.
 
 * `network` -
-  A reference to Network resource
+  The network to which all instances in the instance group belong.
 
 * `region` -
-  A reference to Region resource
+  The region where the instance group is located
+  (for regional resources).
 
 * `subnetwork` -
-  A reference to Subnetwork resource
+  The subnetwork to which all instances in the instance group belong.
 
 * `zone` -
-  Required. A reference to Zone resource
+  Required. A reference to the zone where the instance group resides.
 
 #### Label
 Set the `ig_label` property when attempting to set primary key
@@ -3690,10 +3789,12 @@ end
   Output only. A unique identifier for this resource
 
 * `instance_group` -
-  Output only. A reference to InstanceGroup resource
+  Output only. The instance group being managed
 
 * `instance_template` -
-  Required. A reference to InstanceTemplate resource
+  Required. The instance template that is specified for this managed instance
+  group. The group uses this template to create all new instances in the
+  managed instance group.
 
 * `name` -
   Required. The name of the managed instance group. The name must be 1-63
@@ -3711,7 +3812,8 @@ end
   The port number, which can be a value between 1 and 65535.
 
 * `region` -
-  Output only. A reference to Region resource
+  Output only. The region this managed instance group resides
+  (for regional resources).
 
 * `target_pools` -
   TargetPool resources to which instances in the instanceGroup field are
@@ -3724,7 +3826,7 @@ end
   the group changes this number.
 
 * `zone` -
-  Required. A reference to Zone resource
+  Required. The zone the managed instance group resides.
 
 #### Label
 Set the `igm_label` property when attempting to set primary key
@@ -3856,7 +3958,7 @@ end
   Name of the resource.
 
 * `zone` -
-  Required. A reference to Zone resource
+  Required. The zone the machine type is defined.
 
 #### Label
 Set the `mt_label` property when attempting to set primary key
@@ -3992,21 +4094,23 @@ end
 
 ```ruby
 gcompute_region 'id-for-resource' do
-  creation_timestamp     time
-  deprecated_deleted     time
-  deprecated_deprecated  time
-  deprecated_obsolete    time
-  deprecated_replacement string
-  deprecated_state       'DEPRECATED', 'OBSOLETE' or 'DELETED'
-  description            string
-  id                     integer
-  name                   string
-  zones                  [
+  creation_timestamp time
+  deprecated         {
+    deleted     time,
+    deprecated  time,
+    obsolete    time,
+    replacement string,
+    state       'DEPRECATED', 'OBSOLETE' or 'DELETED',
+  }
+  description        string
+  id                 integer
+  name               string
+  zones              [
     string,
     ...
   ]
-  project                string
-  credential             reference to gauth_credential
+  project            string
+  credential         reference to gauth_credential
 end
 ```
 
@@ -4025,30 +4129,31 @@ end
 * `creation_timestamp` -
   Output only. Creation timestamp in RFC3339 text format.
 
-* `deprecated_deleted` -
-  Output only. An optional RFC3339 timestamp on or after which the
-  deprecation state
+* `deprecated` -
+  Output only. The deprecation state of this resource.
+
+* `deprecated/deleted`
+  An optional RFC3339 timestamp on or after which the deprecation state
   of this resource will be changed to DELETED.
 
-* `deprecated_deprecated` -
-  Output only. An optional RFC3339 timestamp on or after which the
-  deprecation state
+* `deprecated/deprecated`
+  Output only. An optional RFC3339 timestamp on or after which the deprecation
+  state
   of this resource will be changed to DEPRECATED.
 
-* `deprecated_obsolete` -
-  Output only. An optional RFC3339 timestamp on or after which the
-  deprecation state
+* `deprecated/obsolete`
+  Output only. An optional RFC3339 timestamp on or after which the deprecation
+  state
   of this resource will be changed to OBSOLETE.
 
-* `deprecated_replacement` -
-  Output only. The URL of the suggested replacement for a deprecated
-  resource. The
+* `deprecated/replacement`
+  Output only. The URL of the suggested replacement for a deprecated resource.
+  The
   suggested replacement resource must be the same kind of resource as
   the deprecated resource.
 
-* `deprecated_state` -
-  Output only. The deprecation state of this resource. This can be
-  DEPRECATED,
+* `deprecated/state`
+  Output only. The deprecation state of this resource. This can be DEPRECATED,
   OBSOLETE, or DELETED. Operations which create a new resource using a
   DEPRECATED resource will return successfully, but with a warning
   indicating the deprecated resource and recommending its replacement.
@@ -4161,7 +4266,7 @@ end
   last character, which cannot be a dash.
 
 * `network` -
-  A reference to Network resource
+  The network that this route applies to.
 
 * `priority` -
   The priority of this route. Priority is used to break ties in cases
@@ -4317,10 +4422,10 @@ end
   Labels to apply to this snapshot.
 
 * `source` -
-  A reference to Disk resource
+  A reference to the disk used to create this snapshot.
 
 * `zone` -
-  A reference to Zone resource
+  A reference to the zone where the disk is hosted.
 
 * `snapshot_encryption_key` -
   The customer-supplied encryption key of the snapshot. Required if the
@@ -4572,14 +4677,16 @@ end
   except the last character, which cannot be a dash.
 
 * `network` -
-  A reference to Network resource
+  The network this subnet belongs to.
+  Only networks that are in the distributed mode can have subnetworks.
 
 * `private_ip_google_access` -
   Whether the VMs in this subnet can access Google services without
   assigned external IP addresses.
 
 * `region` -
-  Required. A reference to Region resource
+  Required. URL of the region where the regional address resides.
+  This field is not applicable to global addresses.
 
 #### Label
 Set the `s_label` property when attempting to set primary key
@@ -4648,7 +4755,9 @@ end
   character, which cannot be a dash.
 
 * `url_map` -
-  Required. A reference to UrlMap resource
+  Required. A reference to the UrlMap resource that defines the mapping from
+  URL
+  to the BackendService.
 
 #### Label
 Set the `thp_label` property when attempting to set primary key
@@ -4729,7 +4838,9 @@ end
   one SSL certificate must be specified.
 
 * `url_map` -
-  Required. A reference to UrlMap resource
+  Required. A reference to the UrlMap resource that defines the mapping from
+  URL
+  to the BackendService.
 
 #### Label
 Set the `thp_label` property when attempting to set primary key
@@ -4780,7 +4891,18 @@ end
 #### Properties
 
 * `backup_pool` -
-  A reference to TargetPool resource
+  This field is applicable only when the containing target pool is
+  serving a forwarding rule as the primary pool, and its failoverRatio
+  field is properly set to a value between [0, 1].
+  backupPool and failoverRatio together define the fallback behavior of
+  the primary target pool: if the ratio of the healthy instances in the
+  primary pool is at or below failoverRatio, traffic arriving at the
+  load-balanced IP will be directed to the backup pool.
+  In case where failoverRatio and backupPool are not set, or all the
+  instances in the backup pool are unhealthy, the traffic will be
+  directed back to the primary pool in the "force" mode, where traffic
+  will be spread to the healthy instances with the best effort, or to
+  all instances when no instance is healthy.
 
 * `creation_timestamp` -
   Output only. Creation timestamp in RFC3339 text format.
@@ -4804,7 +4926,10 @@ end
   instance is healthy.
 
 * `health_check` -
-  A reference to HttpHealthCheck resource
+  A reference to a HttpHealthCheck resource.
+  A member instance in this pool is considered healthy if and only if
+  the health checks pass. If not specified it means all member instances
+  will be considered healthy at all times.
 
 * `id` -
   Output only. The unique identifier for the resource.
@@ -4833,7 +4958,7 @@ end
   instance remains healthy.
 
 * `region` -
-  Required. A reference to Region resource
+  Required. The region where the target pool resides.
 
 #### Label
 Set the `tp_label` property when attempting to set primary key
@@ -4916,7 +5041,7 @@ end
   the backend, either NONE or PROXY_V1. The default is NONE.
 
 * `service` -
-  Required. A reference to BackendService resource
+  Required. A reference to the BackendService resource.
 
 * `ssl_certificates` -
   Required. A list of SslCertificate resources that are used to authenticate
@@ -4984,7 +5109,7 @@ end
   Output only. The unique identifier for the resource.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
   the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
@@ -4997,7 +5122,7 @@ end
   the backend, either NONE or PROXY_V1. The default is NONE.
 
 * `service` -
-  A reference to BackendService resource
+  Required. A reference to the BackendService resource.
 
 #### Label
 Set the `ttp_label` property when attempting to set primary key
@@ -5089,7 +5214,8 @@ end
   Output only. Creation timestamp in RFC3339 text format.
 
 * `default_service` -
-  Required. A reference to BackendService resource
+  Required. A reference to BackendService resource if none of the hostRules
+  match.
 
 * `description` -
   An optional description of this resource. Provide this property when
@@ -5128,7 +5254,9 @@ end
   The list of named PathMatchers to use against the URL.
 
 * `path_matchers[]/default_service`
-  A reference to BackendService resource
+  A reference to a BackendService resource. This will be used if
+  none of the pathRules defined by this PathMatcher is matched by
+  the URL's path portion.
 
 * `path_matchers[]/description`
   An optional description of this resource.
@@ -5147,7 +5275,8 @@ end
   allowed here.
 
 * `path_matchers[]/path_rules[]/service`
-  A reference to BackendService resource
+  A reference to the BackendService resource if this rule is
+  matched.
 
 * `tests` -
   The list of expected URL mappings. Request to update this UrlMap will
@@ -5163,7 +5292,8 @@ end
   Path portion of the URL.
 
 * `tests[]/service`
-  A reference to BackendService resource
+  A reference to expected BackendService resource the given URL should be
+  mapped to.
 
 #### Label
 Set the `um_label` property when attempting to set primary key
@@ -5268,7 +5398,7 @@ end
   Name of the resource.
 
 * `region` -
-  Output only. A reference to Region resource
+  Output only. The region where the zone is located.
 
 * `status` -
   Output only. The status of the zone.

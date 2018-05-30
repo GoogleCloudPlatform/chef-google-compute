@@ -69,8 +69,26 @@ gcompute_zone 'us-central1-a' do
   credential 'mycred'
 end
 
+gcompute_disk 'data-disk-1' do
+  action :create
+  size_gb 50
+  disk_encryption_key(
+    raw_key: 'SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0='
+  )
+  zone 'us-central1-a'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
 gcompute_snapshot 'data-disk-snapshot-1' do
   action :delete
+  snapshot_encryption_key(
+    raw_key: 'VGhpcyBpcyBhbiBlbmNyeXB0ZWQgc25hcHNob3QhISE='
+  )
+  source_disk_encryption_key(
+    raw_key: 'SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0='
+  )
+  source 'data-disk-1'
   zone 'us-central1-a'
   project 'google.com:graphite-playground'
   credential 'mycred'

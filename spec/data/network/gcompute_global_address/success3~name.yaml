@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -32,6 +32,7 @@ id: 6448502614
 address: test address#2 data
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
+ipVersion: IPV4
 project: "'test project#2 data'"
 region: selflink(resource(region,2))
 selfLink: selflink(resource(global_address,2))

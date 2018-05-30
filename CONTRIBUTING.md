@@ -109,6 +109,7 @@ chef-codegen:
   * libraries/google/compute/property/disk_selflink.rb
   * libraries/google/compute/property/disk_source_image_encryption_key.rb
   * libraries/google/compute/property/disk_source_snapshot_encryption_key.rb
+  * libraries/google/compute/property/disktype_deprecated.rb
   * libraries/google/compute/property/disktype_selflink.rb
   * libraries/google/compute/property/double.rb
   * libraries/google/compute/property/enum.rb
@@ -159,6 +160,7 @@ chef-codegen:
   * libraries/google/compute/property/machinetype_selflink.rb
   * libraries/google/compute/property/namevalues.rb
   * libraries/google/compute/property/network_selflink.rb
+  * libraries/google/compute/property/region_deprecated.rb
   * libraries/google/compute/property/region_name.rb
   * libraries/google/compute/property/region_selflink.rb
   * libraries/google/compute/property/snapshot_snapshot_encryption_key.rb
