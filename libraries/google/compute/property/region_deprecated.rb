@@ -28,29 +28,38 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for tags for instance_template.
-      class InstancTemplatTags
+      # A class to manage data for deprecated for region.
+      class RegionDeprecated
         include Comparable
 
-        attr_reader :fingerprint
-        attr_reader :items
+        attr_reader :deleted
+        attr_reader :deprecated
+        attr_reader :obsolete
+        attr_reader :replacement
+        attr_reader :state
 
         def to_json(_arg = nil)
           {
-            'fingerprint' => fingerprint,
-            'items' => items
+            'deleted' => deleted,
+            'deprecated' => deprecated,
+            'obsolete' => obsolete,
+            'replacement' => replacement,
+            'state' => state
           }.reject { |_k, v| v.nil? }.to_json
         end
 
         def to_s
           {
-            fingerprint: fingerprint.to_s,
-            items: items.to_s
+            deleted: deleted.to_s,
+            deprecated: deprecated.to_s,
+            obsolete: obsolete.to_s,
+            replacement: replacement.to_s,
+            state: state.to_s
           }.map { |k, v| "#{k}: #{v}" }.join(', ')
         end
 
         def ==(other)
-          return false unless other.is_a? InstancTemplatTags
+          return false unless other.is_a? RegionDeprecated
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -59,7 +68,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancTemplatTags
+          return false unless other.is_a? RegionDeprecated
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -76,56 +85,68 @@ module Google
 
         def compare_fields(other)
           [
-            { self: fingerprint, other: other.fingerprint },
-            { self: items, other: other.items }
+            { self: deleted, other: other.deleted },
+            { self: deprecated, other: other.deprecated },
+            { self: obsolete, other: other.obsolete },
+            { self: replacement, other: other.replacement },
+            { self: state, other: other.state }
           ]
         end
       end
 
-      # Manages a InstancTemplatTags nested object
+      # Manages a RegionDeprecated nested object
       # Data is coming from the GCP API
-      class InstancTemplatTagsApi < InstancTemplatTags
+      class RegionDeprecatedApi < RegionDeprecated
         def initialize(args)
-          @fingerprint =
-            Google::Compute::Property::String.api_parse(args['fingerprint'])
-          @items =
-            Google::Compute::Property::StringArray.api_parse(args['items'])
+          @deleted = Google::Compute::Property::Time.api_parse(args['deleted'])
+          @deprecated =
+            Google::Compute::Property::Time.api_parse(args['deprecated'])
+          @obsolete =
+            Google::Compute::Property::Time.api_parse(args['obsolete'])
+          @replacement =
+            Google::Compute::Property::String.api_parse(args['replacement'])
+          @state = Google::Compute::Property::Enum.api_parse(args['state'])
         end
       end
 
-      # Manages a InstancTemplatTags nested object
+      # Manages a RegionDeprecated nested object
       # Data is coming from the Chef catalog
-      class InstancTemplatTagsCatalog < InstancTemplatTags
+      class RegionDeprecatedCatalog < RegionDeprecated
         def initialize(args)
-          @fingerprint =
-            Google::Compute::Property::String.catalog_parse(args[:fingerprint])
-          @items =
-            Google::Compute::Property::StringArray.catalog_parse(args[:items])
+          @deleted =
+            Google::Compute::Property::Time.catalog_parse(args[:deleted])
+          @deprecated =
+            Google::Compute::Property::Time.catalog_parse(args[:deprecated])
+          @obsolete =
+            Google::Compute::Property::Time.catalog_parse(args[:obsolete])
+          @replacement =
+            Google::Compute::Property::String.catalog_parse(args[:replacement])
+          @state = Google::Compute::Property::Enum.catalog_parse(args[:state])
         end
       end
     end
 
     module Property
-      # A class to manage input to tags for instance_template.
-      class InstancTemplatTags
+      # A class to manage input to deprecated for region.
+      class RegionDeprecated
         def self.coerce
           lambda do |x|
-            ::Google::Compute::Property::InstancTemplatTags.catalog_parse(x)
+            ::Google::Compute::Property::RegionDeprecated.catalog_parse(x)
           end
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatTags
-          Data::InstancTemplatTagsCatalog.new(value)
+          return value if value.is_a? Data::RegionDeprecated
+          Data::RegionDeprecatedCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatTags
-          Data::InstancTemplatTagsApi.new(value)
+          return value if value.is_a? Data::RegionDeprecated
+          Data::RegionDeprecatedApi.new(value)
         end
       end
     end

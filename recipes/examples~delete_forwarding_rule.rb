@@ -70,6 +70,13 @@ gcompute_region 'some-region' do
   credential 'mycred'
 end
 
+gcompute_address 'some-address' do
+  action :create
+  region 'some-region'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
 gcompute_target_pool 'target-pool' do
   action :create
   region 'some-region'
@@ -79,6 +86,12 @@ end
 
 gcompute_forwarding_rule 'fwd-rule-test' do
   action :delete
+  ip_address gcompute_address_ref(
+    'some-address',
+    'us-west1', 'google.com:graphite-playground'
+  )
+  ip_protocol 'TCP'
+  port_range '80'
   target 'target-pool'
   region 'some-region'
   project 'google.com:graphite-playground'

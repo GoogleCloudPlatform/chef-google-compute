@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -34,6 +34,10 @@ description: test description#1 data
 diskEncryptionKey:
   rawKey: test raw_key#1 data
   sha256: test sha256#1 data
+labels:
+  test labels#2 data: test labels#2 data
+  test labels#3 data: 8175001379
+  test labels#4 data: test labels#4 data
 lastAttachTimestamp: '2134-07-22T20:53:35+00:00'
 lastDetachTimestamp: '2003-04-28T21:49:42+00:00'
 licenses:

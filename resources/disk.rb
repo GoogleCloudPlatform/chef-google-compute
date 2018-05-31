@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -37,6 +37,7 @@ require 'google/compute/property/disk_disk_encryption_key'
 require 'google/compute/property/disk_source_image_encryption_key'
 require 'google/compute/property/disk_source_snapshot_encryption_key'
 require 'google/compute/property/integer'
+require 'google/compute/property/namevalues'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/time'
@@ -69,6 +70,10 @@ module Google
       property :last_detach_timestamp,
                Time,
                coerce: ::Google::Compute::Property::Time.coerce,
+               desired_state: true
+      property :labels,
+               [Hash, ::Google::Compute::Property::NameValues],
+               coerce: ::Google::Compute::Property::NameValues.coerce,
                desired_state: true
       # licenses is Array of Google::Compute::Property::StringArray
       property :licenses,
@@ -168,6 +173,8 @@ module Google
             ::Google::Compute::Property::Time.api_parse(
               fetch['lastDetachTimestamp']
             )
+          @current_resource.labels =
+            ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
           @current_resource.licenses =
             ::Google::Compute::Property::StringArray.api_parse(
               fetch['licenses']
@@ -215,10 +222,12 @@ module Google
           request = {
             kind: 'compute#disk',
             description: new_resource.description,
+            labels: new_resource.labels,
             licenses: new_resource.licenses,
             name: new_resource.d_label,
             sizeGb: new_resource.size_gb,
             sourceImage: new_resource.source_image,
+            type: new_resource.type,
             diskEncryptionKey: new_resource.disk_encryption_key,
             sourceImageEncryptionKey: new_resource.source_image_encryption_key,
             sourceSnapshotEncryptionKey:
@@ -255,6 +264,7 @@ module Google
             id: resource.id,
             last_attach_timestamp: resource.last_attach_timestamp,
             last_detach_timestamp: resource.last_detach_timestamp,
+            labels: resource.labels,
             licenses: resource.licenses,
             size_gb: resource.size_gb,
             source_image: resource.source_image,

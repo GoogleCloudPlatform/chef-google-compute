@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -35,6 +35,7 @@ require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/enum'
 require 'google/compute/property/integer'
+require 'google/compute/property/region_deprecated'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/time'
@@ -51,25 +52,9 @@ module Google
                Time,
                coerce: ::Google::Compute::Property::Time.coerce,
                desired_state: true
-      property :deprecated_deleted,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :deprecated_deprecated,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :deprecated_obsolete,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :deprecated_replacement,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :deprecated_state,
-               equal_to: %w[DEPRECATED OBSOLETE DELETED],
-               coerce: ::Google::Compute::Property::Enum.coerce,
+      property :_deprecated,
+               [Hash, ::Google::Compute::Data::RegionDeprecated],
+               coerce: ::Google::Compute::Property::RegionDeprecated.coerce,
                desired_state: true
       property :description,
                String,
@@ -118,25 +103,9 @@ module Google
             ::Google::Compute::Property::Time.api_parse(
               fetch['creationTimestamp']
             )
-          @current_resource.deprecated_deleted =
-            ::Google::Compute::Property::Time.api_parse(
-              ::Google::HashUtils.navigate(fetch, %w[deprecated deleted])
-            )
-          @current_resource.deprecated_deprecated =
-            ::Google::Compute::Property::Time.api_parse(
-              ::Google::HashUtils.navigate(fetch, %w[deprecated deprecated])
-            )
-          @current_resource.deprecated_obsolete =
-            ::Google::Compute::Property::Time.api_parse(
-              ::Google::HashUtils.navigate(fetch, %w[deprecated obsolete])
-            )
-          @current_resource.deprecated_replacement =
-            ::Google::Compute::Property::String.api_parse(
-              ::Google::HashUtils.navigate(fetch, %w[deprecated replacement])
-            )
-          @current_resource.deprecated_state =
-            ::Google::Compute::Property::Enum.api_parse(
-              ::Google::HashUtils.navigate(fetch, %w[deprecated state])
+          @current_resource._deprecated =
+            ::Google::Compute::Property::RegionDeprecated.api_parse(
+              fetch['deprecated']
             )
           @current_resource.description =
             ::Google::Compute::Property::String.api_parse(
@@ -205,11 +174,7 @@ module Google
             name: resource.r_label,
             kind: 'compute#region',
             creation_timestamp: resource.creation_timestamp,
-            deprecated_deleted: resource.deprecated_deleted,
-            deprecated_deprecated: resource.deprecated_deprecated,
-            deprecated_obsolete: resource.deprecated_obsolete,
-            deprecated_replacement: resource.deprecated_replacement,
-            deprecated_state: resource.deprecated_state,
+            deprecated: resource._deprecated,
             description: resource.description,
             id: resource.id,
             zones: resource.zones

@@ -118,10 +118,6 @@ module Google
           end
         else
           @current_resource = @new_resource.clone
-          @current_resource.backup_pool =
-            ::Google::Compute::Property::TargPoolSelfLinkRef.api_parse(
-              fetch['backupPool']
-            )
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(
               fetch['creationTimestamp']
@@ -143,12 +139,6 @@ module Google
           @current_resource.instances =
             ::Google::Compute::Property::InstaSelfLinkRefArray.api_parse(
               fetch['instances']
-            )
-          @current_resource.tp_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
-          @current_resource.session_affinity =
-            ::Google::Compute::Property::Enum.api_parse(
-              fetch['sessionAffinity']
             )
           @new_resource.__fetched = fetch
 

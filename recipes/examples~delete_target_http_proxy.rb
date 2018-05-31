@@ -64,8 +64,45 @@ gauth_credential 'mycred' do
   ]
 end
 
+gcompute_zone 'us-central1-a' do
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+gcompute_instance_group 'my-chef-servers' do
+  action :create
+  zone 'us-central1-a'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+# Google::Functions must be included at runtime to ensure that the
+# gcompute_health_check_ref function can be used in health_check blocks.
+::Chef::Resource.send(:include, Google::Functions)
+
+gcompute_backend_service 'my-app-backend' do
+  action :create
+  backends [
+    { group: 'my-chef-servers' }
+  ]
+  enable_cdn true
+  health_checks [
+    gcompute_health_check_ref('another-hc', 'google.com:graphite-playground')
+  ]
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
+gcompute_url_map 'my-url-map' do
+  action :create
+  default_service 'my-app-backend'
+  project 'google.com:graphite-playground'
+  credential 'mycred'
+end
+
 gcompute_target_http_proxy 'my-http-proxy' do
   action :delete
+  url_map 'my-url-map'
   project 'google.com:graphite-playground'
   credential 'mycred'
 end

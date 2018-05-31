@@ -1,4 +1,4 @@
-# Copyright 2017 Google Inc.
+# Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -131,6 +131,10 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
+                    labels({
+                      'test labels#1 data' => 'test labels#1 data',
+                      'test labels#2 data' => 6131251034
+                    })
                     licenses ['ww', 'xx']
                     size_gb 2858499398
                     source_image 'test source_image#0 data'
@@ -143,6 +147,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
+                    type 'test type#0 data'
                     zone 'resource(zone,0)'
                     project 'test project#0 data'
                     credential 'mycred'
@@ -154,6 +159,11 @@ context 'gcompute_disk' do
                     disk_encryption_key({
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
+                    })
+                    labels({
+                      'test labels#2 data' => 'test labels#2 data',
+                      'test labels#3 data' => 8175001379,
+                      'test labels#4 data' => 'test labels#4 data'
                     })
                     licenses ['uu', 'vv']
                     size_gb 5716998797
@@ -167,6 +177,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
                     })
+                    type 'test type#1 data'
                     zone 'resource(zone,1)'
                     project 'test project#1 data'
                     credential 'mycred'
@@ -178,6 +189,12 @@ context 'gcompute_disk' do
                     disk_encryption_key({
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
+                    })
+                    labels({
+                      'test labels#3 data' => 'test labels#3 data',
+                      'test labels#4 data' => 10218751724,
+                      'test labels#5 data' => 'test labels#5 data',
+                      'test labels#6 data' => 14306252413
                     })
                     licenses ['tt', 'uu', 'vv']
                     size_gb 8575498196
@@ -191,6 +208,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
+                    type 'test type#2 data'
                     zone 'resource(zone,2)'
                     project 'test project#2 data'
                     credential 'mycred'
@@ -215,6 +233,11 @@ context 'gcompute_disk' do
                   .to have_attributes(description: 'test description#0 data')
               end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(licenses: %w[ww xx]) }
 
               it { is_expected.to have_attributes(d_label: 'title0') }
@@ -225,6 +248,8 @@ context 'gcompute_disk' do
                 is_expected
                   .to have_attributes(source_image: 'test source_image#0 data')
               end
+
+              it { is_expected.to have_attributes(type: 'test type#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -264,6 +289,11 @@ context 'gcompute_disk' do
                   .to have_attributes(description: 'test description#1 data')
               end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(licenses: %w[uu vv]) }
 
               it { is_expected.to have_attributes(d_label: 'title1') }
@@ -274,6 +304,8 @@ context 'gcompute_disk' do
                 is_expected
                   .to have_attributes(source_image: 'test source_image#1 data')
               end
+
+              it { is_expected.to have_attributes(type: 'test type#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -313,6 +345,11 @@ context 'gcompute_disk' do
                   .to have_attributes(description: 'test description#2 data')
               end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(licenses: %w[tt uu vv]) }
 
               it { is_expected.to have_attributes(d_label: 'title2') }
@@ -323,6 +360,8 @@ context 'gcompute_disk' do
                 is_expected
                   .to have_attributes(source_image: 'test source_image#2 data')
               end
+
+              it { is_expected.to have_attributes(type: 'test type#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -434,6 +473,10 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
+                    labels({
+                      'test labels#1 data' => 'test labels#1 data',
+                      'test labels#2 data' => 6131251034
+                    })
                     licenses ['ww', 'xx']
                     size_gb 2858499398
                     source_image 'test source_image#0 data'
@@ -446,6 +489,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
+                    type 'test type#0 data'
                     zone 'resource(zone,0)'
                     project 'test project#0 data'
                     credential 'mycred'
@@ -459,6 +503,11 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
                     })
+                    labels({
+                      'test labels#2 data' => 'test labels#2 data',
+                      'test labels#3 data' => 8175001379,
+                      'test labels#4 data' => 'test labels#4 data'
+                    })
                     licenses ['uu', 'vv']
                     size_gb 5716998797
                     source_image 'test source_image#1 data'
@@ -471,6 +520,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
                     })
+                    type 'test type#1 data'
                     zone 'resource(zone,1)'
                     project 'test project#1 data'
                     credential 'mycred'
@@ -484,6 +534,12 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
+                    labels({
+                      'test labels#3 data' => 'test labels#3 data',
+                      'test labels#4 data' => 10218751724,
+                      'test labels#5 data' => 'test labels#5 data',
+                      'test labels#6 data' => 14306252413
+                    })
                     licenses ['tt', 'uu', 'vv']
                     size_gb 8575498196
                     source_image 'test source_image#2 data'
@@ -496,6 +552,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
+                    type 'test type#2 data'
                     zone 'resource(zone,2)'
                     project 'test project#2 data'
                     credential 'mycred'
@@ -520,6 +577,11 @@ context 'gcompute_disk' do
                   .to have_attributes(description: 'test description#0 data')
               end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(licenses: %w[ww xx]) }
 
               it { is_expected.to have_attributes(d_label: 'test name#0 data') }
@@ -530,6 +592,8 @@ context 'gcompute_disk' do
                 is_expected
                   .to have_attributes(source_image: 'test source_image#0 data')
               end
+
+              it { is_expected.to have_attributes(type: 'test type#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -569,6 +633,11 @@ context 'gcompute_disk' do
                   .to have_attributes(description: 'test description#1 data')
               end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(licenses: %w[uu vv]) }
 
               it { is_expected.to have_attributes(d_label: 'test name#1 data') }
@@ -579,6 +648,8 @@ context 'gcompute_disk' do
                 is_expected
                   .to have_attributes(source_image: 'test source_image#1 data')
               end
+
+              it { is_expected.to have_attributes(type: 'test type#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -618,6 +689,11 @@ context 'gcompute_disk' do
                   .to have_attributes(description: 'test description#2 data')
               end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(licenses: %w[tt uu vv]) }
 
               it { is_expected.to have_attributes(d_label: 'test name#2 data') }
@@ -628,6 +704,8 @@ context 'gcompute_disk' do
                 is_expected
                   .to have_attributes(source_image: 'test source_image#2 data')
               end
+
+              it { is_expected.to have_attributes(type: 'test type#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -715,10 +793,15 @@ context 'gcompute_disk' do
               {
                 'kind' => 'compute#disk',
                 'description' => 'test description#0 data',
+                'labels' => {
+                  'test labels#1 data' => 'test labels#1 data',
+                  'test labels#2 data' => 6_131_251_034
+                },
                 'licenses' => %w[ww xx],
                 'name' => 'title0',
                 'sizeGb' => 2_858_499_398,
                 'sourceImage' => 'test source_image#0 data',
+                'type' => 'test type#0 data',
                 'diskEncryptionKey' => {
                   'rawKey' => 'test raw_key#0 data',
                   'sha256' => 'test sha256#0 data'
@@ -780,6 +863,10 @@ context 'gcompute_disk' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
+                  labels({
+                    'test labels#1 data' => 'test labels#1 data',
+                    'test labels#2 data' => 6131251034
+                  })
                   licenses ['ww', 'xx']
                   size_gb 2858499398
                   source_image 'test source_image#0 data'
@@ -792,6 +879,7 @@ context 'gcompute_disk' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
+                  type 'test type#0 data'
                   zone 'resource(zone,0)'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -819,6 +907,11 @@ context 'gcompute_disk' do
               .to have_attributes(description: 'test description#0 data')
           end
 
+          # TODO(nelsonjr): Implement complex namevalues property test.
+          # it 'labels' do
+          #   # Add test code here
+          # end
+
           it { is_expected.to have_attributes(licenses: %w[ww xx]) }
 
           it { is_expected.to have_attributes(d_label: 'title0') }
@@ -829,6 +922,8 @@ context 'gcompute_disk' do
             is_expected
               .to have_attributes(source_image: 'test source_image#0 data')
           end
+
+          it { is_expected.to have_attributes(type: 'test type#0 data') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'zone' do
@@ -877,10 +972,15 @@ context 'gcompute_disk' do
               {
                 'kind' => 'compute#disk',
                 'description' => 'test description#0 data',
+                'labels' => {
+                  'test labels#1 data' => 'test labels#1 data',
+                  'test labels#2 data' => 6_131_251_034
+                },
                 'licenses' => %w[ww xx],
                 'name' => 'test name#0 data',
                 'sizeGb' => 2_858_499_398,
                 'sourceImage' => 'test source_image#0 data',
+                'type' => 'test type#0 data',
                 'diskEncryptionKey' => {
                   'rawKey' => 'test raw_key#0 data',
                   'sha256' => 'test sha256#0 data'
@@ -942,6 +1042,10 @@ context 'gcompute_disk' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
+                  labels({
+                    'test labels#1 data' => 'test labels#1 data',
+                    'test labels#2 data' => 6131251034
+                  })
                   licenses ['ww', 'xx']
                   size_gb 2858499398
                   source_image 'test source_image#0 data'
@@ -954,6 +1058,7 @@ context 'gcompute_disk' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
+                  type 'test type#0 data'
                   zone 'resource(zone,0)'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -981,6 +1086,11 @@ context 'gcompute_disk' do
               .to have_attributes(description: 'test description#0 data')
           end
 
+          # TODO(nelsonjr): Implement complex namevalues property test.
+          # it 'labels' do
+          #   # Add test code here
+          # end
+
           it { is_expected.to have_attributes(licenses: %w[ww xx]) }
 
           it { is_expected.to have_attributes(d_label: 'test name#0 data') }
@@ -991,6 +1101,8 @@ context 'gcompute_disk' do
             is_expected
               .to have_attributes(source_image: 'test source_image#0 data')
           end
+
+          it { is_expected.to have_attributes(type: 'test type#0 data') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'zone' do
