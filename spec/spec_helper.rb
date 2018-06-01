@@ -35,7 +35,7 @@ ENV['TZ'] = 'UTC'
 
 #----------------------------------------------------------
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start unless ENV['DISABLE_COVERAGE']
 
 $LOAD_PATH.unshift(File.expand_path('.'))
 $LOAD_PATH.unshift(File.expand_path('./libraries'))
