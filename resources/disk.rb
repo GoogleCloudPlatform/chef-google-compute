@@ -179,8 +179,6 @@ module Google
             ::Google::Compute::Property::StringArray.api_parse(
               fetch['licenses']
             )
-          @current_resource.d_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.size_gb =
             ::Google::Compute::Property::Integer.api_parse(fetch['sizeGb'])
           @current_resource.type =
