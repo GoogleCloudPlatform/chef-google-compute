@@ -181,7 +181,6 @@ chef-codegen:
   * libraries/google/functions/gcompute_address_ip.rb
   * libraries/google/functions/gcompute_health_check_ref.rb
   * libraries/google/functions/gcompute_image_family.rb
-  * LICENSE
   * metadata.rb
   * README.md
   * recipes/examples~address.rb
