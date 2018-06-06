@@ -32,7 +32,7 @@ end
 
 gcompute_zone 'us-west1-a' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -40,33 +40,33 @@ gcompute_disk 'instance-test-os-1' do
   action :create
   source_image 'projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts'
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_network 'mynetwork-test' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_region 'us-west1' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_address 'instance-test-ip' do
   action :create
   region 'us-west1'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_machine_type 'n1-standard-1' do
   action :create
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -93,7 +93,7 @@ gcompute_instance 'instance-test' do
     }
   ]
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 ```
@@ -403,14 +403,14 @@ static.
 gcompute_region 'some-region' do
   action :create
   r_label 'us-west1'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_address 'test1' do
   action :create
   region 'some-region'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -504,7 +504,7 @@ gcompute_backend_bucket 'be-bucket-connection' do
   bucket_name 'backend-bucket-test'
   description 'A BackendBucket to connect LNB w/ Storage Bucket'
   enable_cdn true
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -586,9 +586,9 @@ gcompute_backend_service 'my-app-backend' do
   ]
   enable_cdn true
   health_checks [
-    gcompute_health_check_ref('another-hc', 'google.com:graphite-playground')
+    gcompute_health_check_ref('another-hc', ENV['PROJECT'] # ex: 'my-test-project')
   ]
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -853,7 +853,7 @@ type, use the disk type's full or partial URL.
 gcompute_disk_type 'pd-standard' do
   action :create
   zone 'us-central1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -982,7 +982,7 @@ gcompute_disk 'data-disk-1' do
     raw_key: 'SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0='
   )
   zone 'us-central1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -1219,7 +1219,7 @@ gcompute_firewall 'test-fw-allow-ssh' do
     'test-ssh-server',
     'staging-ssh-server'
   ]
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -1367,13 +1367,13 @@ gcompute_forwarding_rule 'fwd-rule-test' do
   action :create
   ip_address gcompute_address_ref(
     'some-address',
-    'us-west1', 'google.com:graphite-playground'
+    'us-west1', ENV['PROJECT'] # ex: 'my-test-project'
   )
   ip_protocol 'TCP'
   port_range '80'
   target 'target-pool'
   region 'some-region'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -1557,7 +1557,7 @@ HTTP(S) load balancing.
 ```ruby
 gcompute_global_address 'my-app-lb' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -1644,15 +1644,15 @@ gcompute_global_forwarding_rule 'test1' do
   action :create
   ip_address gcompute_global_address_ref(
     'my-app-lb-address',
-    'google.com:graphite-playground'
+    ENV['PROJECT'] # ex: 'my-test-project'
   )
   ip_protocol 'TCP'
   port_range '80'
   target gcompute_target_http_proxy_ref(
     'my-http-proxy',
-    'google.com:graphite-playground'
+    ENV['PROJECT'] # ex: 'my-test-project'
   )
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -1838,7 +1838,7 @@ gcompute_http_health_check 'app-health-check' do
   port 8080
   timeout_sec 2
   unhealthy_threshold 5
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -1947,7 +1947,7 @@ gcompute_https_health_check 'app-health-check' do
   port 8080
   timeout_sec 2
   unhealthy_threshold 5
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -2058,7 +2058,7 @@ gcompute_health_check 'app-health-check' do
   healthy_threshold 10
   timeout_sec 2
   unhealthy_threshold 5
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -2325,7 +2325,7 @@ gcompute_instance_template 'instance-template-test' do
       }
     ]
   )
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -2754,7 +2754,7 @@ machine instances.
 
 ```ruby
 gcompute_license 'test-license' do
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -2822,7 +2822,7 @@ to create an instance.
 gcompute_image 'test-image' do
   action :create
   source_disk 'data-disk-1'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -3091,7 +3091,7 @@ gcompute_instance 'instance-test' do
     }
   ]
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -3551,7 +3551,7 @@ gcompute_instance_group 'my-masters' do
   ]
   network 'my-network'
   zone 'us-central1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -3661,7 +3661,7 @@ gcompute_instance_group_manager 'test1' do
   instance_template 'instance-template'
   target_size 3
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -3845,7 +3845,7 @@ amount of memory or number of virtual CPUs.
 gcompute_machine_type 'n1-standard-1' do
   action :create
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -3989,7 +3989,7 @@ advocate of IPv6 and it is an important future direction.
 gcompute_network 'mynetwork' do
   action :create
   auto_create_subnetworks true
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4084,7 +4084,7 @@ zones
 ```ruby
 gcompute_region 'us-west1' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4213,7 +4213,7 @@ gcompute_route 'corp-route' do
   next_hop_gateway 'global/gateways/default-internet-gateway'
   tags %w[backends databases] # %w[] best for single words. use ['.'] w/ spaces
   network 'my-network'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4334,7 +4334,7 @@ gcompute_snapshot 'data-disk-snapshot-1' do
   )
   source 'data-disk-1'
   zone 'us-central1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4509,7 +4509,7 @@ gcompute_ssl_certificate 'my-site-ssl-cert' do
        PRIVATE_KEY
        .split("\n").map(&:strip).join("\n")
   )
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4609,7 +4609,7 @@ gcompute_subnetwork 'servers' do
   ip_cidr_range '172.16.0.0/16'
   network 'mynetwork-subnetwork'
   region 'some-region'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4704,7 +4704,7 @@ forwarding rule to route incoming HTTP requests to a URL map.
 gcompute_target_http_proxy 'my-http-proxy' do
   action :create
   url_map 'my-url-map'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4778,7 +4778,7 @@ gcompute_target_https_proxy 'my-https-proxy' do
     'sample-certificate'
   ]
   url_map 'my-url-map'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -4981,7 +4981,7 @@ gcompute_target_ssl_proxy 'my-ssl-proxy' do
   ssl_certificates [
     'sample-certificate'
   ]
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -5066,7 +5066,7 @@ gcompute_target_tcp_proxy 'my-tcp-proxy' do
   action :create
   proxy_header 'PROXY_V1'
   service 'my-tcp-backend'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -5140,7 +5140,7 @@ that you define for the host and path of an incoming URL.
 gcompute_url_map 'my-url-map' do
   action :create
   default_service 'my-app-backend'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -5308,7 +5308,7 @@ Represents a Zone resource.
 ```ruby
 gcompute_zone 'us-west1-a' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
