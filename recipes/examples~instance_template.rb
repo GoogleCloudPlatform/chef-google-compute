@@ -26,36 +26,32 @@
 #
 # ----------------------------------------------------------------------------
 
-# An example Chef recipe that creates a Google Cloud Computing DNS Managed Zone
-# in a project.
-
-# Defines a credential to be used when communicating with Google Cloud
-# Platform. The title of this credential is then used as the 'credential'
-# parameter in the gdns_project type.
+# The following example requires two environment variables to be set:
+#   * CRED_PATH - the path to a JSON service_account file
+#   * PROJECT - the name of your GCP project.
 #
-# For more information on the gauth_credential parameters and providers please
-# refer to its detailed documentation at:
-#
-# For the sake of this example we set the parameter 'path' to point to the file
-# that contains your credential in JSON format. And for convenience this example
-# allows a variable named $cred_path to be provided to it. If running from the
-# command line you can pass it via the command line:
-#
-#   CRED_PATH=/path/to/my/cred.json \
-#     chef-client -z --runlist \
-#       "recipe[gcompute::examples~instance_template]"
-#
-# For convenience you optionally can add it to your ~/.bash_profile (or the
+# For convenience you optionally can add these to your ~/.bash_profile (or the
 # respective .profile settings) environment:
 #
 #   export CRED_PATH=/path/to/my/cred.json
+#   export PROJECT=/path/to/my/cred.json
 #
-# TODO(nelsonjr): Add link to documentation on Supermarket / Github
+# The following command will run this example:
+#   CRED_PATH=/path/to/my/cred.json \
+#   PROJECT='my-test-project'
+#     chef-client -z --runlist \
+#       "recipe[gcompute::examples~instance_template]"
+#
 # ________________________
 
 raise "Missing parameter 'CRED_PATH'. Please read docs at #{__FILE__}" \
   unless ENV.key?('CRED_PATH')
+raise "Missing parameter 'PROJECT'. Please read docs at #{__FILE__}" \
+  unless ENV.key?('PROJECT')
 
+# For more information on the gauth_credential parameters and providers please
+# refer to its detailed documentation at:
+# https://github.com/GoogleCloudPlatform/chef-google-auth
 gauth_credential 'mycred' do
   action :serviceaccount
   path ENV['CRED_PATH'] # e.g. '/path/to/my_account.json'
@@ -66,14 +62,14 @@ end
 
 gcompute_zone 'us-west1-a' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_machine_type 'n1-standard-1' do
   action :create
   zone 'us-west1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -83,7 +79,7 @@ end
 #  action :create
 #  zone 'us-west1-a'
 #  source_image 'projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts'
-#  project 'google.com:graphite-playground'
+#  project ENV['PROJECT'] # ex: 'my-test-project'
 #  credential 'mycred'
 #end
 
@@ -93,7 +89,7 @@ end
 
 gcompute_network 'mynetwork-test' do
   action :create
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -128,6 +124,6 @@ gcompute_instance_template 'instance-template-test' do
       }
     ]
   )
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

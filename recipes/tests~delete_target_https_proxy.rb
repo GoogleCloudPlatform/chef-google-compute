@@ -26,36 +26,32 @@
 #
 # ----------------------------------------------------------------------------
 
-# An example Chef recipe that creates a Google Cloud Computing DNS Managed Zone
-# in a project.
-
-# Defines a credential to be used when communicating with Google Cloud
-# Platform. The title of this credential is then used as the 'credential'
-# parameter in the gdns_project type.
+# The following example requires two environment variables to be set:
+#   * CRED_PATH - the path to a JSON service_account file
+#   * PROJECT - the name of your GCP project.
 #
-# For more information on the gauth_credential parameters and providers please
-# refer to its detailed documentation at:
-#
-# For the sake of this example we set the parameter 'path' to point to the file
-# that contains your credential in JSON format. And for convenience this example
-# allows a variable named $cred_path to be provided to it. If running from the
-# command line you can pass it via the command line:
-#
-#   CRED_PATH=/path/to/my/cred.json \
-#     chef-client -z --runlist \
-#       "recipe[gcompute::tests~delete_target_https_proxy]"
-#
-# For convenience you optionally can add it to your ~/.bash_profile (or the
+# For convenience you optionally can add these to your ~/.bash_profile (or the
 # respective .profile settings) environment:
 #
 #   export CRED_PATH=/path/to/my/cred.json
+#   export PROJECT=/path/to/my/cred.json
 #
-# TODO(nelsonjr): Add link to documentation on Supermarket / Github
+# The following command will run this example:
+#   CRED_PATH=/path/to/my/cred.json \
+#   PROJECT='my-test-project'
+#     chef-client -z --runlist \
+#       "recipe[gcompute::tests~delete_target_https_proxy]"
+#
 # ________________________
 
 raise "Missing parameter 'CRED_PATH'. Please read docs at #{__FILE__}" \
   unless ENV.key?('CRED_PATH')
+raise "Missing parameter 'PROJECT'. Please read docs at #{__FILE__}" \
+  unless ENV.key?('PROJECT')
 
+# For more information on the gauth_credential parameters and providers please
+# refer to its detailed documentation at:
+# https://github.com/GoogleCloudPlatform/chef-google-auth
 gauth_credential 'mycred' do
   action :serviceaccount
   path ENV['CRED_PATH'] # e.g. '/path/to/my_account.json'
@@ -65,14 +61,14 @@ gauth_credential 'mycred' do
 end
 
 gcompute_zone 'us-central1-a' do
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_instance_group 'chef-e2e-my-chef-servers' do
   action :create
   zone 'us-central1-a'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -87,16 +83,16 @@ gcompute_backend_service 'chef-e2e-my-app-backend' do
   ]
   enable_cdn true
   health_checks [
-    gcompute_health_check_ref('another-hc', 'google.com:graphite-playground')
+    gcompute_health_check_ref('another-hc', ENV['PROJECT'] # ex: 'my-test-project')
   ]
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_url_map 'chef-e2e-my-url-map' do
   action :create
   default_service 'chef-e2e-my-app-backend'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
@@ -117,7 +113,7 @@ end
 gcompute_ssl_certificate 'chef-e2e-sample-certificate' do
   action :create
   description 'A certificate for test purposes only.'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
   certificate '-----BEGIN CERTIFICATE-----
 MIICqjCCAk+gAwIBAgIJAIuJ+0352Kq4MAoGCCqGSM49BAMCMIGwMQswCQYDVQQG
@@ -149,6 +145,6 @@ gcompute_target_https_proxy 'chef-e2e-my-https-proxy' do
     'chef-e2e-sample-certificate'
   ]
   url_map 'chef-e2e-my-url-map'
-  project 'google.com:graphite-playground'
+  project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
