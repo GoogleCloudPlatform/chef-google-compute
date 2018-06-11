@@ -30,10 +30,12 @@ kind: compute#address
 name: test name#0 data
 id: 2149500871
 address: test address#0 data
+addressType: INTERNAL
 creationTimestamp: '2045-05-23T12:08:10+00:00'
 description: test description#0 data
 project: "'test project#0 data'"
 region: test name#0 data
+subnetwork: selflink(resource(subnetwork,0))
 users:
 - ww
 - xx

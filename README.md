@@ -421,11 +421,13 @@ end
 ```ruby
 gcompute_address 'id-for-resource' do
   address            string
+  address_type       'INTERNAL' or 'EXTERNAL'
   creation_timestamp time
   description        string
   id                 integer
   name               string
   region             reference to gcompute_region
+  subnetwork         reference to gcompute_subnetwork
   users              [
     string,
     ...
@@ -448,8 +450,14 @@ end
 #### Properties
 
 * `address` -
-  The static external IP address represented by this
-  resource. Only IPv4 is supported.
+  The static external IP address represented by this resource. Only
+  IPv4 is supported. An address may only be specified for INTERNAL
+  address types. The IP address must be inside the specified subnetwork,
+  if any.
+
+* `address_type` -
+  The type of address to reserve, either INTERNAL or EXTERNAL.
+  If unspecified, defaults to EXTERNAL.
 
 * `creation_timestamp` -
   Output only. Creation timestamp in RFC3339 text format.
@@ -461,12 +469,18 @@ end
   Output only. The unique identifier for the resource.
 
 * `name` -
-  Name of the resource. The name must be 1-63 characters long, and
+  Required. Name of the resource. The name must be 1-63 characters long, and
   comply with RFC1035. Specifically, the name must be 1-63 characters
-  long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])?
+  long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?`
   which means the first character must be a lowercase letter, and all
   following characters must be a dash, lowercase letter, or digit,
   except the last character, which cannot be a dash.
+
+* `subnetwork` -
+  The URL of the subnetwork in which to reserve the address. If an IP
+  address is specified, it must be within the subnetwork's IP range.
+  This field can only be used with INTERNAL type with
+  GCE_ENDPOINT/DNS_RESOLVER purposes.
 
 * `users` -
   Output only. The URLs of the resources that are using this address.
