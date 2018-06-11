@@ -73,6 +73,12 @@ context 'gcompute_address' do
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
+              expect_network_get_success_subnetwork 1,
+                                                    region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2,
+                                                    region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3,
+                                                    region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -92,7 +98,8 @@ context 'gcompute_address' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_address gcompute_region],
+                step_into: %w[gcompute_address gcompute_region
+                              gcompute_subnetwork],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -123,11 +130,37 @@ context 'gcompute_address' do
                     credential 'mycred'
                   end
 
+                  gcompute_subnetwork 'resource(subnetwork,0)' do
+                    action :create
+                    region 'resource(region,0)'
+                    s_label 'test name#0 data'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_subnetwork 'resource(subnetwork,1)' do
+                    action :create
+                    region 'resource(region,1)'
+                    s_label 'test name#1 data'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_subnetwork 'resource(subnetwork,2)' do
+                    action :create
+                    region 'resource(region,2)'
+                    s_label 'test name#2 data'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_address 'title0' do
                     action :create
                     address 'test address#0 data'
+                    address_type 'INTERNAL'
                     description 'test description#0 data'
                     region 'resource(region,0)'
+                    subnetwork 'resource(subnetwork,0)'
                     project 'test project#0 data'
                     credential 'mycred'
                   end
@@ -135,8 +168,10 @@ context 'gcompute_address' do
                   gcompute_address 'title1' do
                     action :create
                     address 'test address#1 data'
+                    address_type 'EXTERNAL'
                     description 'test description#1 data'
                     region 'resource(region,1)'
+                    subnetwork 'resource(subnetwork,1)'
                     project 'test project#1 data'
                     credential 'mycred'
                   end
@@ -144,8 +179,10 @@ context 'gcompute_address' do
                   gcompute_address 'title2' do
                     action :create
                     address 'test address#2 data'
+                    address_type 'INTERNAL'
                     description 'test description#2 data'
                     region 'resource(region,2)'
+                    subnetwork 'resource(subnetwork,2)'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -168,12 +205,19 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#0 data')
               end
 
+              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+
               it do
                 is_expected
                   .to have_attributes(description: 'test description#0 data')
               end
 
               it { is_expected.to have_attributes(a_label: 'title0') }
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'subnetwork' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -190,12 +234,19 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#1 data')
               end
 
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
+
               it do
                 is_expected
                   .to have_attributes(description: 'test description#1 data')
               end
 
               it { is_expected.to have_attributes(a_label: 'title1') }
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'subnetwork' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -212,12 +263,19 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#2 data')
               end
 
+              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+
               it do
                 is_expected
                   .to have_attributes(description: 'test description#2 data')
               end
 
               it { is_expected.to have_attributes(a_label: 'title2') }
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'subnetwork' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -248,6 +306,12 @@ context 'gcompute_address' do
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
+              expect_network_get_success_subnetwork 1,
+                                                    region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2,
+                                                    region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3,
+                                                    region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -267,7 +331,8 @@ context 'gcompute_address' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_address gcompute_region],
+                step_into: %w[gcompute_address gcompute_region
+                              gcompute_subnetwork],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -298,12 +363,38 @@ context 'gcompute_address' do
                     credential 'mycred'
                   end
 
+                  gcompute_subnetwork 'resource(subnetwork,0)' do
+                    action :create
+                    region 'resource(region,0)'
+                    s_label 'test name#0 data'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_subnetwork 'resource(subnetwork,1)' do
+                    action :create
+                    region 'resource(region,1)'
+                    s_label 'test name#1 data'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_subnetwork 'resource(subnetwork,2)' do
+                    action :create
+                    region 'resource(region,2)'
+                    s_label 'test name#2 data'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_address 'title0' do
                     action :create
                     a_label 'test name#0 data'
                     address 'test address#0 data'
+                    address_type 'INTERNAL'
                     description 'test description#0 data'
                     region 'resource(region,0)'
+                    subnetwork 'resource(subnetwork,0)'
                     project 'test project#0 data'
                     credential 'mycred'
                   end
@@ -312,8 +403,10 @@ context 'gcompute_address' do
                     action :create
                     a_label 'test name#1 data'
                     address 'test address#1 data'
+                    address_type 'EXTERNAL'
                     description 'test description#1 data'
                     region 'resource(region,1)'
+                    subnetwork 'resource(subnetwork,1)'
                     project 'test project#1 data'
                     credential 'mycred'
                   end
@@ -322,8 +415,10 @@ context 'gcompute_address' do
                     action :create
                     a_label 'test name#2 data'
                     address 'test address#2 data'
+                    address_type 'INTERNAL'
                     description 'test description#2 data'
                     region 'resource(region,2)'
+                    subnetwork 'resource(subnetwork,2)'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -346,12 +441,19 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#0 data')
               end
 
+              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+
               it do
                 is_expected
                   .to have_attributes(description: 'test description#0 data')
               end
 
               it { is_expected.to have_attributes(a_label: 'test name#0 data') }
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'subnetwork' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -368,12 +470,19 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#1 data')
               end
 
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
+
               it do
                 is_expected
                   .to have_attributes(description: 'test description#1 data')
               end
 
               it { is_expected.to have_attributes(a_label: 'test name#1 data') }
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'subnetwork' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -390,12 +499,19 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#2 data')
               end
 
+              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+
               it do
                 is_expected
                   .to have_attributes(description: 'test description#2 data')
               end
 
               it { is_expected.to have_attributes(a_label: 'test name#2 data') }
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'subnetwork' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -461,8 +577,10 @@ context 'gcompute_address' do
               {
                 'kind' => 'compute#address',
                 'address' => 'test address#0 data',
+                'addressType' => 'INTERNAL',
                 'description' => 'test description#0 data',
-                'name' => 'title0'
+                'name' => 'title0',
+                'subnetwork' => 'selflink(resource(subnetwork,0))'
               },
               name: 'title0',
               region: 'test name#0 data'
@@ -470,6 +588,7 @@ context 'gcompute_address' do
                                      name: 'title0',
                                      region: 'test name#0 data'
             expect_network_get_success_region 1
+            expect_network_get_success_subnetwork 1, region: 'test name#0 data'
           end
 
           let(:runner) do
@@ -489,7 +608,8 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region],
+              step_into: %w[gcompute_address gcompute_region
+                            gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -506,11 +626,21 @@ context 'gcompute_address' do
                   credential 'mycred'
                 end
 
+                gcompute_subnetwork 'resource(subnetwork,0)' do
+                  action :create
+                  region 'resource(region,0)'
+                  s_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_address 'title0' do
                   action :create
                   address 'test address#0 data'
+                  address_type 'INTERNAL'
                   description 'test description#0 data'
                   region 'resource(region,0)'
+                  subnetwork 'resource(subnetwork,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -534,12 +664,19 @@ context 'gcompute_address' do
           end
           it { is_expected.to have_attributes(address: 'test address#0 data') }
 
+          it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+
           it do
             is_expected
               .to have_attributes(description: 'test description#0 data')
           end
 
           it { is_expected.to have_attributes(a_label: 'title0') }
+
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'subnetwork' do
+          #   # Add test code here
+          # end
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'region' do
@@ -566,12 +703,15 @@ context 'gcompute_address' do
               {
                 'kind' => 'compute#address',
                 'address' => 'test address#0 data',
+                'addressType' => 'INTERNAL',
                 'description' => 'test description#0 data',
-                'name' => 'test name#0 data'
+                'name' => 'test name#0 data',
+                'subnetwork' => 'selflink(resource(subnetwork,0))'
               },
               region: 'test name#0 data'
             expect_network_get_async 1, region: 'test name#0 data'
             expect_network_get_success_region 1
+            expect_network_get_success_subnetwork 1, region: 'test name#0 data'
           end
 
           let(:runner) do
@@ -591,7 +731,8 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region],
+              step_into: %w[gcompute_address gcompute_region
+                            gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -608,12 +749,22 @@ context 'gcompute_address' do
                   credential 'mycred'
                 end
 
+                gcompute_subnetwork 'resource(subnetwork,0)' do
+                  action :create
+                  region 'resource(region,0)'
+                  s_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_address 'title0' do
                   action :create
                   a_label 'test name#0 data'
                   address 'test address#0 data'
+                  address_type 'INTERNAL'
                   description 'test description#0 data'
                   region 'resource(region,0)'
+                  subnetwork 'resource(subnetwork,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -637,12 +788,19 @@ context 'gcompute_address' do
           end
           it { is_expected.to have_attributes(address: 'test address#0 data') }
 
+          it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+
           it do
             is_expected
               .to have_attributes(description: 'test description#0 data')
           end
 
           it { is_expected.to have_attributes(a_label: 'test name#0 data') }
+
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'subnetwork' do
+          #   # Add test code here
+          # end
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'region' do
@@ -690,7 +848,8 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region],
+              step_into: %w[gcompute_address gcompute_region
+                            gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -762,7 +921,8 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region],
+              step_into: %w[gcompute_address gcompute_region
+                            gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -843,7 +1003,8 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region],
+              step_into: %w[gcompute_address gcompute_region
+                            gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -921,7 +1082,8 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region],
+              step_into: %w[gcompute_address gcompute_region
+                            gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1086,6 +1248,106 @@ context 'gcompute_address' do
     data
   end
 
+  def expect_network_get_success_subnetwork(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_subnetwork("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_subnetwork(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_subnetwork(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_subnetwork(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_subnetwork', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_subnetwork objects
+  def uri_data_subnetwork(id)
+    {
+      project: GoogleTests::Constants::S_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::S_PROJECT_DATA.size],
+      region: GoogleTests::Constants::S_REGION_DATA[(id - 1) \
+        % GoogleTests::Constants::S_REGION_DATA.size],
+      name: GoogleTests::Constants::S_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::S_NAME_DATA.size]
+    }
+  end
+
+  def self_link_subnetwork(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_subnetwork(
+        'projects/{{project}}/regions/{{region}}/subnetworks/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_region(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_region("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_region(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_region(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_region(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_region', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_region objects
+  def uri_data_region(id)
+    {
+      project: GoogleTests::Constants::R_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::R_PROJECT_DATA.size],
+      name: GoogleTests::Constants::R_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::R_NAME_DATA.size]
+    }
+  end
+
+  def self_link_region(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_region(
+        'projects/{{project}}/regions/{{name}}',
+        data
+      )
+    )
+  end
+
   def expect_network_get_success_region(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
     body = load_network_result_region("success#{id}~" \
@@ -1142,6 +1404,16 @@ context 'gcompute_address' do
   def debug_network(message)
     puts("Network #{message}") \
       if ENV['RSPEC_DEBUG'] || ENV['RSPEC_HTTP_VERBOSE']
+  end
+
+  def expand_variables_subnetwork(template, data, ext_dat = {})
+    Google::GCOMPUTE::Subnetwork
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_region(template, data, ext_dat = {})
+    Google::GCOMPUTE::Region
+      .action_class.expand_variables(template, data, ext_dat)
   end
 
   def expand_variables_region(template, data, ext_dat = {})

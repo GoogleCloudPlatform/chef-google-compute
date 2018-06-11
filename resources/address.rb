@@ -33,10 +33,12 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
+require 'google/compute/property/enum'
 require 'google/compute/property/integer'
 require 'google/compute/property/region_name'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
+require 'google/compute/property/subnetwork_selflink'
 require 'google/compute/property/time'
 require 'google/hash_utils'
 
@@ -50,6 +52,10 @@ module Google
       property :address,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
+               desired_state: true
+      property :address_type,
+               equal_to: %w[INTERNAL EXTERNAL],
+               coerce: ::Google::Compute::Property::Enum.coerce,
                desired_state: true
       property :creation_timestamp,
                Time,
@@ -67,6 +73,10 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
+      property :subnetwork,
+               [String, ::Google::Compute::Data::SubneSelfLinkRef],
+               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce,
+               desired_state: true
       # users is Array of Google::Compute::Property::StringArray
       property :users,
                Array,
@@ -104,6 +114,8 @@ module Google
           @current_resource = @new_resource.clone
           @current_resource.address =
             ::Google::Compute::Property::String.api_parse(fetch['address'])
+          @current_resource.address_type =
+            ::Google::Compute::Property::Enum.api_parse(fetch['addressType'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(
               fetch['creationTimestamp']
@@ -116,6 +128,10 @@ module Google
             ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.a_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.subnetwork =
+            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(
+              fetch['subnetwork']
+            )
           @current_resource.users =
             ::Google::Compute::Property::StringArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch
@@ -141,7 +157,8 @@ module Google
 
       def exports
         {
-          address: __fetched['address']
+          address: __fetched['address'],
+          self_link: __fetched['selfLink']
         }
       end
 
@@ -152,8 +169,10 @@ module Google
           request = {
             kind: 'compute#address',
             address: new_resource.address,
+            addressType: new_resource.address_type,
             description: new_resource.description,
-            name: new_resource.a_label
+            name: new_resource.a_label,
+            subnetwork: new_resource.subnetwork
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -184,9 +203,11 @@ module Google
             name: resource.a_label,
             kind: 'compute#address',
             address: resource.address,
+            address_type: resource.address_type,
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
+            subnetwork: resource.subnetwork,
             users: resource.users,
             region: resource.region
           }.reject { |_, v| v.nil? }
