@@ -83,9 +83,8 @@ context 'gcompute_target_tcp_proxy' do
               # add in the mocked version so that the tests do not fail.
               # Since cookbooks can have any name, we assume that
               # any directory with the word auth is the google-gauth cookbook.
-              if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-                cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-              end
+              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
               ChefSpec::SoloRunner.new(
                 step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
                 cookbook_path: cookbook_paths,
@@ -253,9 +252,8 @@ context 'gcompute_target_tcp_proxy' do
               # add in the mocked version so that the tests do not fail.
               # Since cookbooks can have any name, we assume that
               # any directory with the word auth is the google-gauth cookbook.
-              if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-                cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-              end
+              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
               ChefSpec::SoloRunner.new(
                 step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
                 cookbook_path: cookbook_paths,
@@ -472,9 +470,8 @@ context 'gcompute_target_tcp_proxy' do
             # add in the mocked version so that the tests do not fail.
             # Since cookbooks can have any name, we assume that
             # any directory with the word auth is the google-gauth cookbook.
-            if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-            end
+            cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
               cookbook_path: cookbook_paths,
@@ -573,9 +570,8 @@ context 'gcompute_target_tcp_proxy' do
             # add in the mocked version so that the tests do not fail.
             # Since cookbooks can have any name, we assume that
             # any directory with the word auth is the google-gauth cookbook.
-            if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-            end
+            cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
               cookbook_path: cookbook_paths,
@@ -671,9 +667,8 @@ context 'gcompute_target_tcp_proxy' do
             # add in the mocked version so that the tests do not fail.
             # Since cookbooks can have any name, we assume that
             # any directory with the word auth is the google-gauth cookbook.
-            if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-            end
+            cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
               cookbook_path: cookbook_paths,
@@ -744,9 +739,8 @@ context 'gcompute_target_tcp_proxy' do
             # add in the mocked version so that the tests do not fail.
             # Since cookbooks can have any name, we assume that
             # any directory with the word auth is the google-gauth cookbook.
-            if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-            end
+            cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
               cookbook_path: cookbook_paths,
@@ -822,9 +816,8 @@ context 'gcompute_target_tcp_proxy' do
             # add in the mocked version so that the tests do not fail.
             # Since cookbooks can have any name, we assume that
             # any directory with the word auth is the google-gauth cookbook.
-            if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-            end
+            cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
               cookbook_path: cookbook_paths,
@@ -901,9 +894,8 @@ context 'gcompute_target_tcp_proxy' do
             # add in the mocked version so that the tests do not fail.
             # Since cookbooks can have any name, we assume that
             # any directory with the word auth is the google-gauth cookbook.
-            if Dir.entries(parent_dir).select { |p| p.include? 'auth' }.empty?
-              cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
-            end
+            cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
+
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_target_tcp_proxy gcompute_backend_service],
               cookbook_path: cookbook_paths,
