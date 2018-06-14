@@ -310,7 +310,7 @@ For complete details of the authentication cookbook, visit the
     machine destination, a virtual machine gateway or a Compute
     Engine-operated gateway. Packets that do not match any route in the
     sending virtual machine's routing table will be dropped.
-    A Routes resources must have exactly one specification of either
+    A Route resource must have exactly one specification of either
     nextHopGateway, nextHopInstance, nextHopIp, or nextHopVpnTunnel.
 * [`gcompute_snapshot`](#gcompute_snapshot) -
     Represents a Persistent Disk Snapshot resource.
@@ -4211,7 +4211,7 @@ machine destination, a virtual machine gateway or a Compute
 Engine-operated gateway. Packets that do not match any route in the
 sending virtual machine's routing table will be dropped.
 
-A Routes resources must have exactly one specification of either
+A Route resource must have exactly one specification of either
 nextHopGateway, nextHopInstance, nextHopIp, or nextHopVpnTunnel.
 
 
@@ -4237,12 +4237,14 @@ end
 
 ```ruby
 gcompute_route 'id-for-resource' do
+  description         string
   dest_range          string
   name                string
   network             reference to gcompute_network
   next_hop_gateway    string
   next_hop_instance   string
   next_hop_ip         string
+  next_hop_network    string
   next_hop_vpn_tunnel string
   priority            integer
   tags                [
@@ -4267,11 +4269,16 @@ end
 #### Properties
 
 * `dest_range` -
-  The destination range of outgoing packets that this route applies to.
+  Required. The destination range of outgoing packets that this route applies
+  to.
   Only IPv4 is supported.
 
+* `description` -
+  An optional description of this resource. Provide this property
+  when you create the resource.
+
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
   match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
@@ -4280,7 +4287,7 @@ end
   last character, which cannot be a dash.
 
 * `network` -
-  The network that this route applies to.
+  Required. The network that this route applies to.
 
 * `priority` -
   The priority of this route. Priority is used to break ties in cases
@@ -4314,6 +4321,9 @@ end
 
 * `next_hop_vpn_tunnel` -
   URL to a VpnTunnel that should handle matching packets.
+
+* `next_hop_network` -
+  Output only. URL to a Network that should handle matching packets.
 
 #### Label
 Set the `r_label` property when attempting to set primary key
