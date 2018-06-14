@@ -28,11 +28,13 @@
 ---
 kind: compute#route
 name: test name#0 data
+description: test description#0 data
 destRange: test dest_range#0 data
 network: selflink(resource(network,0))
 nextHopGateway: test next_hop_gateway#0 data
 nextHopInstance: test next_hop_instance#0 data
 nextHopIp: test next_hop_ip#0 data
+nextHopNetwork: test next_hop_network#0 data
 nextHopVpnTunnel: test next_hop_vpn_tunnel#0 data
 priority: 1108918677
 project: "'test project#0 data'"
