@@ -100,8 +100,8 @@ context 'gcompute_global_forwarding_rule' do
               ChefSpec::SoloRunner.new(
                 step_into: %w[gcompute_global_forwarding_rule
                               gcompute_region
-                              gcompute_subnetwork
                               gcompute_network
+                              gcompute_subnetwork
                               gcompute_backend_service],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
@@ -177,6 +177,8 @@ context 'gcompute_global_forwarding_rule' do
 
                   gcompute_subnetwork 'resource(subnetwork,0)' do
                     action :create
+                    ip_cidr_range 'test ip_cidr_range#0 data'
+                    network 'resource(network,0)'
                     region 'resource(region,0)'
                     s_label 'test name#0 data'
                     project 'test project#0 data'
@@ -185,6 +187,8 @@ context 'gcompute_global_forwarding_rule' do
 
                   gcompute_subnetwork 'resource(subnetwork,1)' do
                     action :create
+                    ip_cidr_range 'test ip_cidr_range#1 data'
+                    network 'resource(network,1)'
                     region 'resource(region,1)'
                     s_label 'test name#1 data'
                     project 'test project#1 data'
@@ -193,6 +197,8 @@ context 'gcompute_global_forwarding_rule' do
 
                   gcompute_subnetwork 'resource(subnetwork,2)' do
                     action :create
+                    ip_cidr_range 'test ip_cidr_range#2 data'
+                    network 'resource(network,2)'
                     region 'resource(region,2)'
                     s_label 'test name#2 data'
                     project 'test project#2 data'
@@ -477,8 +483,8 @@ context 'gcompute_global_forwarding_rule' do
               ChefSpec::SoloRunner.new(
                 step_into: %w[gcompute_global_forwarding_rule
                               gcompute_region
-                              gcompute_subnetwork
                               gcompute_network
+                              gcompute_subnetwork
                               gcompute_backend_service],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
@@ -554,6 +560,8 @@ context 'gcompute_global_forwarding_rule' do
 
                   gcompute_subnetwork 'resource(subnetwork,0)' do
                     action :create
+                    ip_cidr_range 'test ip_cidr_range#0 data'
+                    network 'resource(network,0)'
                     region 'resource(region,0)'
                     s_label 'test name#0 data'
                     project 'test project#0 data'
@@ -562,6 +570,8 @@ context 'gcompute_global_forwarding_rule' do
 
                   gcompute_subnetwork 'resource(subnetwork,1)' do
                     action :create
+                    ip_cidr_range 'test ip_cidr_range#1 data'
+                    network 'resource(network,1)'
                     region 'resource(region,1)'
                     s_label 'test name#1 data'
                     project 'test project#1 data'
@@ -570,6 +580,8 @@ context 'gcompute_global_forwarding_rule' do
 
                   gcompute_subnetwork 'resource(subnetwork,2)' do
                     action :create
+                    ip_cidr_range 'test ip_cidr_range#2 data'
+                    network 'resource(network,2)'
                     region 'resource(region,2)'
                     s_label 'test name#2 data'
                     project 'test project#2 data'
@@ -902,8 +914,8 @@ context 'gcompute_global_forwarding_rule' do
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_global_forwarding_rule
                             gcompute_region
-                            gcompute_subnetwork
                             gcompute_network
+                            gcompute_subnetwork
                             gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -937,6 +949,8 @@ context 'gcompute_global_forwarding_rule' do
 
                 gcompute_subnetwork 'resource(subnetwork,0)' do
                   action :create
+                  ip_cidr_range 'test ip_cidr_range#0 data'
+                  network 'resource(network,0)'
                   region 'resource(region,0)'
                   s_label 'test name#0 data'
                   project 'test project#0 data'
@@ -1075,8 +1089,8 @@ context 'gcompute_global_forwarding_rule' do
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_global_forwarding_rule
                             gcompute_region
-                            gcompute_subnetwork
                             gcompute_network
+                            gcompute_subnetwork
                             gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1110,6 +1124,8 @@ context 'gcompute_global_forwarding_rule' do
 
                 gcompute_subnetwork 'resource(subnetwork,0)' do
                   action :create
+                  ip_cidr_range 'test ip_cidr_range#0 data'
+                  network 'resource(network,0)'
                   region 'resource(region,0)'
                   s_label 'test name#0 data'
                   project 'test project#0 data'
@@ -1233,8 +1249,8 @@ context 'gcompute_global_forwarding_rule' do
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_global_forwarding_rule
                             gcompute_region
-                            gcompute_subnetwork
                             gcompute_network
+                            gcompute_subnetwork
                             gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1300,8 +1316,8 @@ context 'gcompute_global_forwarding_rule' do
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_global_forwarding_rule
                             gcompute_region
-                            gcompute_subnetwork
                             gcompute_network
+                            gcompute_subnetwork
                             gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1372,8 +1388,8 @@ context 'gcompute_global_forwarding_rule' do
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_global_forwarding_rule
                             gcompute_region
-                            gcompute_subnetwork
                             gcompute_network
+                            gcompute_subnetwork
                             gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1445,8 +1461,8 @@ context 'gcompute_global_forwarding_rule' do
             ChefSpec::SoloRunner.new(
               step_into: %w[gcompute_global_forwarding_rule
                             gcompute_region
-                            gcompute_subnetwork
                             gcompute_network
+                            gcompute_subnetwork
                             gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1753,6 +1769,55 @@ context 'gcompute_global_forwarding_rule' do
     )
   end
 
+  def expect_network_get_success_network(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_network("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_network(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_network(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_network(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_network', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_network objects
+  def uri_data_network(id)
+    {
+      project: GoogleTests::Constants::N_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::N_PROJECT_DATA.size],
+      name: GoogleTests::Constants::N_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::N_NAME_DATA.size]
+    }
+  end
+
+  def self_link_network(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_network(
+        'projects/{{project}}/global/networks/{{name}}',
+        data
+      )
+    )
+  end
+
   def expect_network_get_success_region(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
     body = load_network_result_region("success#{id}~" \
@@ -1872,6 +1937,11 @@ context 'gcompute_global_forwarding_rule' do
 
   def expand_variables_subnetwork(template, data, ext_dat = {})
     Google::GCOMPUTE::Subnetwork
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_network(template, data, ext_dat = {})
+    Google::GCOMPUTE::Network
       .action_class.expand_variables(template, data, ext_dat)
   end
 
