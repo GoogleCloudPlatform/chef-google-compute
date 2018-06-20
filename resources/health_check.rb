@@ -53,7 +53,7 @@ module Google
       property :check_interval_sec,
                Integer,
                coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               default: 5, desired_state: true
       property :creation_timestamp,
                Time,
                coerce: ::Google::Compute::Property::Time.coerce,
@@ -77,11 +77,11 @@ module Google
       property :timeout_sec,
                Integer,
                coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               default: 5, desired_state: true
       property :unhealthy_threshold,
                Integer,
                coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               default: 2, desired_state: true
       property :type,
                equal_to: %w[TCP SSL HTTP],
                coerce: ::Google::Compute::Property::Enum.coerce,

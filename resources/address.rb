@@ -56,7 +56,7 @@ module Google
       property :address_type,
                equal_to: %w[INTERNAL EXTERNAL],
                coerce: ::Google::Compute::Property::Enum.coerce,
-               desired_state: true
+               default: 'EXTERNAL', desired_state: true
       property :creation_timestamp,
                Time,
                coerce: ::Google::Compute::Property::Time.coerce,
