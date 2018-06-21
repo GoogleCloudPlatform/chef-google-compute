@@ -48,7 +48,7 @@ module Google
       property :check_interval_sec,
                Integer,
                coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               default: 5, desired_state: true
       property :creation_timestamp,
                Time,
                coerce: ::Google::Compute::Property::Time.coerce,
