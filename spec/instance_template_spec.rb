@@ -507,15 +507,15 @@ context 'gcompute_instance_template' do
                       },
                       service_accounts: [
                         {
-                          email: true,
+                          email: 'test email#0 data',
                           scopes: ['rr', 'ss', 'tt', 'uu', 'vv']
                         },
                         {
-                          email: false,
+                          email: 'test email#1 data',
                           scopes: ['ll', 'mm', 'nn', 'oo', 'pp']
                         },
                         {
-                          email: true,
+                          email: 'test email#2 data',
                           scopes: ['ee', 'ff', 'gg', 'hh']
                         }
                       ],
@@ -620,23 +620,23 @@ context 'gcompute_instance_template' do
                       },
                       service_accounts: [
                         {
-                          email: false,
+                          email: 'test email#1 data',
                           scopes: ['ll', 'mm', 'nn', 'oo', 'pp']
                         },
                         {
-                          email: true,
+                          email: 'test email#2 data',
                           scopes: ['ee', 'ff', 'gg', 'hh']
                         },
                         {
-                          email: false,
+                          email: 'test email#3 data',
                           scopes: ['ww', 'xx', 'yy', 'zz']
                         },
                         {
-                          email: true,
+                          email: 'test email#4 data',
                           scopes: ['rr', 'ss', 'tt']
                         },
                         {
-                          email: false,
+                          email: 'test email#5 data',
                           scopes: ['ll', 'mm', 'nn']
                         }
                       ],
@@ -843,15 +843,15 @@ context 'gcompute_instance_template' do
                       },
                       service_accounts: [
                         {
-                          email: true,
+                          email: 'test email#2 data',
                           scopes: ['ee', 'ff', 'gg', 'hh']
                         },
                         {
-                          email: false,
+                          email: 'test email#3 data',
                           scopes: ['ww', 'xx', 'yy', 'zz']
                         },
                         {
-                          email: true,
+                          email: 'test email#4 data',
                           scopes: ['rr', 'ss', 'tt']
                         }
                       ],
@@ -1391,15 +1391,15 @@ context 'gcompute_instance_template' do
                       },
                       service_accounts: [
                         {
-                          email: true,
+                          email: 'test email#0 data',
                           scopes: ['rr', 'ss', 'tt', 'uu', 'vv']
                         },
                         {
-                          email: false,
+                          email: 'test email#1 data',
                           scopes: ['ll', 'mm', 'nn', 'oo', 'pp']
                         },
                         {
-                          email: true,
+                          email: 'test email#2 data',
                           scopes: ['ee', 'ff', 'gg', 'hh']
                         }
                       ],
@@ -1505,23 +1505,23 @@ context 'gcompute_instance_template' do
                       },
                       service_accounts: [
                         {
-                          email: false,
+                          email: 'test email#1 data',
                           scopes: ['ll', 'mm', 'nn', 'oo', 'pp']
                         },
                         {
-                          email: true,
+                          email: 'test email#2 data',
                           scopes: ['ee', 'ff', 'gg', 'hh']
                         },
                         {
-                          email: false,
+                          email: 'test email#3 data',
                           scopes: ['ww', 'xx', 'yy', 'zz']
                         },
                         {
-                          email: true,
+                          email: 'test email#4 data',
                           scopes: ['rr', 'ss', 'tt']
                         },
                         {
-                          email: false,
+                          email: 'test email#5 data',
                           scopes: ['ll', 'mm', 'nn']
                         }
                       ],
@@ -1729,15 +1729,15 @@ context 'gcompute_instance_template' do
                       },
                       service_accounts: [
                         {
-                          email: true,
+                          email: 'test email#2 data',
                           scopes: ['ee', 'ff', 'gg', 'hh']
                         },
                         {
-                          email: false,
+                          email: 'test email#3 data',
                           scopes: ['ww', 'xx', 'yy', 'zz']
                         },
                         {
-                          email: true,
+                          email: 'test email#4 data',
                           scopes: ['rr', 'ss', 'tt']
                         }
                       ],
@@ -2061,15 +2061,15 @@ context 'gcompute_instance_template' do
                   },
                   'serviceAccounts' => [
                     {
-                      'email' => true,
+                      'email' => 'test email#0 data',
                       'scopes' => %w[rr ss tt uu vv]
                     },
                     {
-                      'email' => false,
+                      'email' => 'test email#1 data',
                       'scopes' => %w[ll mm nn oo pp]
                     },
                     {
-                      'email' => true,
+                      'email' => 'test email#2 data',
                       'scopes' => %w[ee ff gg hh]
                     }
                   ],
@@ -2475,15 +2475,15 @@ context 'gcompute_instance_template' do
                     },
                     service_accounts: [
                       {
-                        email: true,
+                        email: 'test email#0 data',
                         scopes: ['rr', 'ss', 'tt', 'uu', 'vv']
                       },
                       {
-                        email: false,
+                        email: 'test email#1 data',
                         scopes: ['ll', 'mm', 'nn', 'oo', 'pp']
                       },
                       {
-                        email: true,
+                        email: 'test email#2 data',
                         scopes: ['ee', 'ff', 'gg', 'hh']
                       }
                     ],
@@ -2730,15 +2730,15 @@ context 'gcompute_instance_template' do
                 },
                 'serviceAccounts' => [
                   {
-                    'email' => true,
+                    'email' => 'test email#0 data',
                     'scopes' => %w[rr ss tt uu vv]
                   },
                   {
-                    'email' => false,
+                    'email' => 'test email#1 data',
                     'scopes' => %w[ll mm nn oo pp]
                   },
                   {
-                    'email' => true,
+                    'email' => 'test email#2 data',
                     'scopes' => %w[ee ff gg hh]
                   }
                 ],
@@ -3143,15 +3143,15 @@ context 'gcompute_instance_template' do
                     },
                     service_accounts: [
                       {
-                        email: true,
+                        email: 'test email#0 data',
                         scopes: ['rr', 'ss', 'tt', 'uu', 'vv']
                       },
                       {
-                        email: false,
+                        email: 'test email#1 data',
                         scopes: ['ll', 'mm', 'nn', 'oo', 'pp']
                       },
                       {
-                        email: true,
+                        email: 'test email#2 data',
                         scopes: ['ee', 'ff', 'gg', 'hh']
                       }
                     ],

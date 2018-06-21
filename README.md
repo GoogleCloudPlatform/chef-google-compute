@@ -2424,7 +2424,7 @@ gcompute_instance_template 'id-for-resource' do
     },
     service_accounts   [
       {
-        email  boolean,
+        email  string,
         scopes [
           string,
           ...
@@ -3190,7 +3190,7 @@ gcompute_instance 'id-for-resource' do
   }
   service_accounts   [
     {
-      email  boolean,
+      email  string,
       scopes [
         string,
         ...

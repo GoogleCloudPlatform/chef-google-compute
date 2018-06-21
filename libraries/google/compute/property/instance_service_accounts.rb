@@ -87,7 +87,7 @@ module Google
       # Data is coming from the GCP API
       class InstancServiceAccountApi < InstancServiceAccount
         def initialize(args)
-          @email = Google::Compute::Property::Boolean.api_parse(args['email'])
+          @email = Google::Compute::Property::String.api_parse(args['email'])
           @scopes =
             Google::Compute::Property::StringArray.api_parse(args['scopes'])
         end
@@ -97,8 +97,7 @@ module Google
       # Data is coming from the Chef catalog
       class InstancServiceAccountCatalog < InstancServiceAccount
         def initialize(args)
-          @email =
-            Google::Compute::Property::Boolean.catalog_parse(args[:email])
+          @email = Google::Compute::Property::String.catalog_parse(args[:email])
           @scopes =
             Google::Compute::Property::StringArray.catalog_parse(args[:scopes])
         end
