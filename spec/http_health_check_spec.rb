@@ -95,7 +95,7 @@ context 'gcompute_http_health_check' do
                 <<-MANIFEST
                   gcompute_http_health_check 'title0' do
                     action :create
-                    check_interval_sec 242040324
+                    check_interval_sec 5
                     description 'test description#0 data'
                     healthy_threshold 295703256
                     host 'test host#0 data'
@@ -109,7 +109,7 @@ context 'gcompute_http_health_check' do
 
                   gcompute_http_health_check 'title1' do
                     action :create
-                    check_interval_sec 484080649
+                    check_interval_sec 5
                     description 'test description#1 data'
                     healthy_threshold 591406512
                     host 'test host#1 data'
@@ -123,7 +123,7 @@ context 'gcompute_http_health_check' do
 
                   gcompute_http_health_check 'title2' do
                     action :create
-                    check_interval_sec 726120974
+                    check_interval_sec 5
                     description 'test description#2 data'
                     healthy_threshold 887109769
                     host 'test host#2 data'
@@ -149,9 +149,7 @@ context 'gcompute_http_health_check' do
                 chef_run.find_resource(:gcompute_http_health_check, 'title0')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 242_040_324)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -186,9 +184,7 @@ context 'gcompute_http_health_check' do
                 chef_run.find_resource(:gcompute_http_health_check, 'title1')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 484_080_649)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -223,9 +219,7 @@ context 'gcompute_http_health_check' do
                 chef_run.find_resource(:gcompute_http_health_check, 'title2')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 726_120_974)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -306,7 +300,7 @@ context 'gcompute_http_health_check' do
                 <<-MANIFEST
                   gcompute_http_health_check 'title0' do
                     action :create
-                    check_interval_sec 242040324
+                    check_interval_sec 5
                     description 'test description#0 data'
                     healthy_threshold 295703256
                     hhc_label 'test name#0 data'
@@ -321,7 +315,7 @@ context 'gcompute_http_health_check' do
 
                   gcompute_http_health_check 'title1' do
                     action :create
-                    check_interval_sec 484080649
+                    check_interval_sec 5
                     description 'test description#1 data'
                     healthy_threshold 591406512
                     hhc_label 'test name#1 data'
@@ -336,7 +330,7 @@ context 'gcompute_http_health_check' do
 
                   gcompute_http_health_check 'title2' do
                     action :create
-                    check_interval_sec 726120974
+                    check_interval_sec 5
                     description 'test description#2 data'
                     healthy_threshold 887109769
                     hhc_label 'test name#2 data'
@@ -363,9 +357,7 @@ context 'gcompute_http_health_check' do
                 chef_run.find_resource(:gcompute_http_health_check, 'title0')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 242_040_324)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -402,9 +394,7 @@ context 'gcompute_http_health_check' do
                 chef_run.find_resource(:gcompute_http_health_check, 'title1')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 484_080_649)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -441,9 +431,7 @@ context 'gcompute_http_health_check' do
                 chef_run.find_resource(:gcompute_http_health_check, 'title2')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 726_120_974)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -530,7 +518,7 @@ context 'gcompute_http_health_check' do
               1,
               {
                 'kind' => 'compute#httpHealthCheck',
-                'checkIntervalSec' => 242_040_324,
+                'checkIntervalSec' => 5,
                 'description' => 'test description#0 data',
                 'healthyThreshold' => 295_703_256,
                 'host' => 'test host#0 data',
@@ -573,7 +561,7 @@ context 'gcompute_http_health_check' do
               <<-MANIFEST
                 gcompute_http_health_check 'title0' do
                   action :create
-                  check_interval_sec 242040324
+                  check_interval_sec 5
                   description 'test description#0 data'
                   healthy_threshold 295703256
                   host 'test host#0 data'
@@ -602,7 +590,7 @@ context 'gcompute_http_health_check' do
             expect(chef_run).to create(:gcompute_http_health_check,
                                        'title0')
           end
-          it { is_expected.to have_attributes(check_interval_sec: 242_040_324) }
+          it { is_expected.to have_attributes(check_interval_sec: 5) }
 
           it do
             is_expected
@@ -646,7 +634,7 @@ context 'gcompute_http_health_check' do
             expect_network_create \
               1,
               'kind' => 'compute#httpHealthCheck',
-              'checkIntervalSec' => 242_040_324,
+              'checkIntervalSec' => 5,
               'description' => 'test description#0 data',
               'healthyThreshold' => 295_703_256,
               'host' => 'test host#0 data',
@@ -687,7 +675,7 @@ context 'gcompute_http_health_check' do
               <<-MANIFEST
                 gcompute_http_health_check 'title0' do
                   action :create
-                  check_interval_sec 242040324
+                  check_interval_sec 5
                   description 'test description#0 data'
                   healthy_threshold 295703256
                   hhc_label 'test name#0 data'
@@ -717,7 +705,7 @@ context 'gcompute_http_health_check' do
             expect(chef_run).to create(:gcompute_http_health_check,
                                        'title0')
           end
-          it { is_expected.to have_attributes(check_interval_sec: 242_040_324) }
+          it { is_expected.to have_attributes(check_interval_sec: 5) }
 
           it do
             is_expected

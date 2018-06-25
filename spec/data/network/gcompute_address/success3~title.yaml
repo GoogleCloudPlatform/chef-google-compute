@@ -30,7 +30,7 @@ kind: compute#address
 name: title2
 id: 6448502614
 address: test address#2 data
-addressType: INTERNAL
+addressType: EXTERNAL
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
 project: "'test project#2 data'"

@@ -29,7 +29,7 @@
 kind: compute#httpHealthCheck
 name: title0
 id: 2149500871
-checkIntervalSec: 242040324
+checkIntervalSec: 5
 creationTimestamp: '2045-05-23T12:08:10+00:00'
 description: test description#0 data
 healthyThreshold: 295703256
