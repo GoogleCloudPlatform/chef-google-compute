@@ -187,7 +187,7 @@ context 'gcompute_address' do
                   gcompute_address 'title0' do
                     action :create
                     address 'test address#0 data'
-                    address_type 'INTERNAL'
+                    address_type 'EXTERNAL'
                     description 'test description#0 data'
                     region 'resource(region,0)'
                     subnetwork 'resource(subnetwork,0)'
@@ -209,7 +209,7 @@ context 'gcompute_address' do
                   gcompute_address 'title2' do
                     action :create
                     address 'test address#2 data'
-                    address_type 'INTERNAL'
+                    address_type 'EXTERNAL'
                     description 'test description#2 data'
                     region 'resource(region,2)'
                     subnetwork 'resource(subnetwork,2)'
@@ -235,7 +235,7 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#0 data')
               end
 
-              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
               it do
                 is_expected
@@ -293,7 +293,7 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#2 data')
               end
 
-              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
               it do
                 is_expected
@@ -451,7 +451,7 @@ context 'gcompute_address' do
                     action :create
                     a_label 'test name#0 data'
                     address 'test address#0 data'
-                    address_type 'INTERNAL'
+                    address_type 'EXTERNAL'
                     description 'test description#0 data'
                     region 'resource(region,0)'
                     subnetwork 'resource(subnetwork,0)'
@@ -475,7 +475,7 @@ context 'gcompute_address' do
                     action :create
                     a_label 'test name#2 data'
                     address 'test address#2 data'
-                    address_type 'INTERNAL'
+                    address_type 'EXTERNAL'
                     description 'test description#2 data'
                     region 'resource(region,2)'
                     subnetwork 'resource(subnetwork,2)'
@@ -501,7 +501,7 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#0 data')
               end
 
-              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
               it do
                 is_expected
@@ -559,7 +559,7 @@ context 'gcompute_address' do
                 is_expected.to have_attributes(address: 'test address#2 data')
               end
 
-              it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
               it do
                 is_expected
@@ -637,7 +637,7 @@ context 'gcompute_address' do
               {
                 'kind' => 'compute#address',
                 'address' => 'test address#0 data',
-                'addressType' => 'INTERNAL',
+                'addressType' => 'EXTERNAL',
                 'description' => 'test description#0 data',
                 'name' => 'title0',
                 'subnetwork' => 'selflink(resource(subnetwork,0))'
@@ -707,7 +707,7 @@ context 'gcompute_address' do
                 gcompute_address 'title0' do
                   action :create
                   address 'test address#0 data'
-                  address_type 'INTERNAL'
+                  address_type 'EXTERNAL'
                   description 'test description#0 data'
                   region 'resource(region,0)'
                   subnetwork 'resource(subnetwork,0)'
@@ -734,7 +734,7 @@ context 'gcompute_address' do
           end
           it { is_expected.to have_attributes(address: 'test address#0 data') }
 
-          it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+          it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
           it do
             is_expected
@@ -773,7 +773,7 @@ context 'gcompute_address' do
               {
                 'kind' => 'compute#address',
                 'address' => 'test address#0 data',
-                'addressType' => 'INTERNAL',
+                'addressType' => 'EXTERNAL',
                 'description' => 'test description#0 data',
                 'name' => 'test name#0 data',
                 'subnetwork' => 'selflink(resource(subnetwork,0))'
@@ -841,7 +841,7 @@ context 'gcompute_address' do
                   action :create
                   a_label 'test name#0 data'
                   address 'test address#0 data'
-                  address_type 'INTERNAL'
+                  address_type 'EXTERNAL'
                   description 'test description#0 data'
                   region 'resource(region,0)'
                   subnetwork 'resource(subnetwork,0)'
@@ -868,7 +868,7 @@ context 'gcompute_address' do
           end
           it { is_expected.to have_attributes(address: 'test address#0 data') }
 
-          it { is_expected.to have_attributes(address_type: 'INTERNAL') }
+          it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
           it do
             is_expected

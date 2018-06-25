@@ -29,7 +29,7 @@
 kind: compute#healthCheck
 name: title1
 id: 4299001743
-checkIntervalSec: 484080649
+checkIntervalSec: 5
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 description: test description#1 data
 healthyThreshold: 591406512
@@ -58,7 +58,7 @@ tcpHealthCheck:
   port: 1519024273
   portName: test port_name#1 data
   proxyHeader: PROXY_V1
-timeoutSec: 5408063442
+timeoutSec: 5
 type: SSL
-unhealthyThreshold: 3209026038
+unhealthyThreshold: 2
 selfLink: selflink(resource(health_check,1))

@@ -95,7 +95,7 @@ context 'gcompute_health_check' do
                 <<-MANIFEST
                   gcompute_health_check 'title0' do
                     action :create
-                    check_interval_sec 242040324
+                    check_interval_sec 5
                     description 'test description#0 data'
                     healthy_threshold 295703256
                     http_health_check({
@@ -126,16 +126,16 @@ context 'gcompute_health_check' do
                       request: 'test request#0 data',
                       response: 'test response#0 data'
                     })
-                    timeout_sec 2704031721
+                    timeout_sec 5
                     type 'TCP'
-                    unhealthy_threshold 1604513019
+                    unhealthy_threshold 2
                     project 'test project#0 data'
                     credential 'mycred'
                   end
 
                   gcompute_health_check 'title1' do
                     action :create
-                    check_interval_sec 484080649
+                    check_interval_sec 5
                     description 'test description#1 data'
                     healthy_threshold 591406512
                     http_health_check({
@@ -166,16 +166,16 @@ context 'gcompute_health_check' do
                       request: 'test request#1 data',
                       response: 'test response#1 data'
                     })
-                    timeout_sec 5408063442
+                    timeout_sec 5
                     type 'SSL'
-                    unhealthy_threshold 3209026038
+                    unhealthy_threshold 2
                     project 'test project#1 data'
                     credential 'mycred'
                   end
 
                   gcompute_health_check 'title2' do
                     action :create
-                    check_interval_sec 726120974
+                    check_interval_sec 5
                     description 'test description#2 data'
                     healthy_threshold 887109769
                     http_health_check({
@@ -206,9 +206,9 @@ context 'gcompute_health_check' do
                       request: 'test request#2 data',
                       response: 'test response#2 data'
                     })
-                    timeout_sec 8112095164
+                    timeout_sec 5
                     type 'HTTP'
-                    unhealthy_threshold 4813539057
+                    unhealthy_threshold 2
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -227,9 +227,7 @@ context 'gcompute_health_check' do
                 chef_run.find_resource(:gcompute_health_check, 'title0')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 242_040_324)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -242,12 +240,9 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(hc_label: 'title0') }
 
-              it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
+              it { is_expected.to have_attributes(timeout_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 1_604_513_019)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
               it { is_expected.to have_attributes(type: 'TCP') }
 
@@ -277,9 +272,7 @@ context 'gcompute_health_check' do
                 chef_run.find_resource(:gcompute_health_check, 'title1')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 484_080_649)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -292,12 +285,9 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(hc_label: 'title1') }
 
-              it { is_expected.to have_attributes(timeout_sec: 5_408_063_442) }
+              it { is_expected.to have_attributes(timeout_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 3_209_026_038)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
               it { is_expected.to have_attributes(type: 'SSL') }
 
@@ -327,9 +317,7 @@ context 'gcompute_health_check' do
                 chef_run.find_resource(:gcompute_health_check, 'title2')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 726_120_974)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -342,12 +330,9 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(hc_label: 'title2') }
 
-              it { is_expected.to have_attributes(timeout_sec: 8_112_095_164) }
+              it { is_expected.to have_attributes(timeout_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 4_813_539_057)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
               it { is_expected.to have_attributes(type: 'HTTP') }
 
@@ -423,7 +408,7 @@ context 'gcompute_health_check' do
                 <<-MANIFEST
                   gcompute_health_check 'title0' do
                     action :create
-                    check_interval_sec 242040324
+                    check_interval_sec 5
                     description 'test description#0 data'
                     hc_label 'test name#0 data'
                     healthy_threshold 295703256
@@ -455,16 +440,16 @@ context 'gcompute_health_check' do
                       request: 'test request#0 data',
                       response: 'test response#0 data'
                     })
-                    timeout_sec 2704031721
+                    timeout_sec 5
                     type 'TCP'
-                    unhealthy_threshold 1604513019
+                    unhealthy_threshold 2
                     project 'test project#0 data'
                     credential 'mycred'
                   end
 
                   gcompute_health_check 'title1' do
                     action :create
-                    check_interval_sec 484080649
+                    check_interval_sec 5
                     description 'test description#1 data'
                     hc_label 'test name#1 data'
                     healthy_threshold 591406512
@@ -496,16 +481,16 @@ context 'gcompute_health_check' do
                       request: 'test request#1 data',
                       response: 'test response#1 data'
                     })
-                    timeout_sec 5408063442
+                    timeout_sec 5
                     type 'SSL'
-                    unhealthy_threshold 3209026038
+                    unhealthy_threshold 2
                     project 'test project#1 data'
                     credential 'mycred'
                   end
 
                   gcompute_health_check 'title2' do
                     action :create
-                    check_interval_sec 726120974
+                    check_interval_sec 5
                     description 'test description#2 data'
                     hc_label 'test name#2 data'
                     healthy_threshold 887109769
@@ -537,9 +522,9 @@ context 'gcompute_health_check' do
                       request: 'test request#2 data',
                       response: 'test response#2 data'
                     })
-                    timeout_sec 8112095164
+                    timeout_sec 5
                     type 'HTTP'
-                    unhealthy_threshold 4813539057
+                    unhealthy_threshold 2
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -558,9 +543,7 @@ context 'gcompute_health_check' do
                 chef_run.find_resource(:gcompute_health_check, 'title0')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 242_040_324)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -575,12 +558,9 @@ context 'gcompute_health_check' do
                 is_expected.to have_attributes(hc_label: 'test name#0 data')
               end
 
-              it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
+              it { is_expected.to have_attributes(timeout_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 1_604_513_019)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
               it { is_expected.to have_attributes(type: 'TCP') }
 
@@ -610,9 +590,7 @@ context 'gcompute_health_check' do
                 chef_run.find_resource(:gcompute_health_check, 'title1')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 484_080_649)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -627,12 +605,9 @@ context 'gcompute_health_check' do
                 is_expected.to have_attributes(hc_label: 'test name#1 data')
               end
 
-              it { is_expected.to have_attributes(timeout_sec: 5_408_063_442) }
+              it { is_expected.to have_attributes(timeout_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 3_209_026_038)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
               it { is_expected.to have_attributes(type: 'SSL') }
 
@@ -662,9 +637,7 @@ context 'gcompute_health_check' do
                 chef_run.find_resource(:gcompute_health_check, 'title2')
               end
 
-              it do
-                is_expected.to have_attributes(check_interval_sec: 726_120_974)
-              end
+              it { is_expected.to have_attributes(check_interval_sec: 5) }
 
               it do
                 is_expected
@@ -679,12 +652,9 @@ context 'gcompute_health_check' do
                 is_expected.to have_attributes(hc_label: 'test name#2 data')
               end
 
-              it { is_expected.to have_attributes(timeout_sec: 8_112_095_164) }
+              it { is_expected.to have_attributes(timeout_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 4_813_539_057)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
               it { is_expected.to have_attributes(type: 'HTTP') }
 
@@ -764,12 +734,12 @@ context 'gcompute_health_check' do
               1,
               {
                 'kind' => 'compute#healthCheck',
-                'checkIntervalSec' => 242_040_324,
+                'checkIntervalSec' => 5,
                 'description' => 'test description#0 data',
                 'healthyThreshold' => 295_703_256,
                 'name' => 'title0',
-                'timeoutSec' => 2_704_031_721,
-                'unhealthyThreshold' => 1_604_513_019,
+                'timeoutSec' => 5,
+                'unhealthyThreshold' => 2,
                 'type' => 'TCP',
                 'httpHealthCheck' => {
                   'host' => 'test host#0 data',
@@ -833,7 +803,7 @@ context 'gcompute_health_check' do
               <<-MANIFEST
                 gcompute_health_check 'title0' do
                   action :create
-                  check_interval_sec 242040324
+                  check_interval_sec 5
                   description 'test description#0 data'
                   healthy_threshold 295703256
                   http_health_check({
@@ -864,9 +834,9 @@ context 'gcompute_health_check' do
                     request: 'test request#0 data',
                     response: 'test response#0 data'
                   })
-                  timeout_sec 2704031721
+                  timeout_sec 5
                   type 'TCP'
-                  unhealthy_threshold 1604513019
+                  unhealthy_threshold 2
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -888,7 +858,7 @@ context 'gcompute_health_check' do
             expect(chef_run).to create(:gcompute_health_check,
                                        'title0')
           end
-          it { is_expected.to have_attributes(check_interval_sec: 242_040_324) }
+          it { is_expected.to have_attributes(check_interval_sec: 5) }
 
           it do
             is_expected
@@ -899,11 +869,9 @@ context 'gcompute_health_check' do
 
           it { is_expected.to have_attributes(hc_label: 'title0') }
 
-          it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
+          it { is_expected.to have_attributes(timeout_sec: 5) }
 
-          it do
-            is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019)
-          end
+          it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
           it { is_expected.to have_attributes(type: 'TCP') }
 
@@ -945,12 +913,12 @@ context 'gcompute_health_check' do
             expect_network_create \
               1,
               'kind' => 'compute#healthCheck',
-              'checkIntervalSec' => 242_040_324,
+              'checkIntervalSec' => 5,
               'description' => 'test description#0 data',
               'healthyThreshold' => 295_703_256,
               'name' => 'test name#0 data',
-              'timeoutSec' => 2_704_031_721,
-              'unhealthyThreshold' => 1_604_513_019,
+              'timeoutSec' => 5,
+              'unhealthyThreshold' => 2,
               'type' => 'TCP',
               'httpHealthCheck' => {
                 'host' => 'test host#0 data',
@@ -1012,7 +980,7 @@ context 'gcompute_health_check' do
               <<-MANIFEST
                 gcompute_health_check 'title0' do
                   action :create
-                  check_interval_sec 242040324
+                  check_interval_sec 5
                   description 'test description#0 data'
                   hc_label 'test name#0 data'
                   healthy_threshold 295703256
@@ -1044,9 +1012,9 @@ context 'gcompute_health_check' do
                     request: 'test request#0 data',
                     response: 'test response#0 data'
                   })
-                  timeout_sec 2704031721
+                  timeout_sec 5
                   type 'TCP'
-                  unhealthy_threshold 1604513019
+                  unhealthy_threshold 2
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1068,7 +1036,7 @@ context 'gcompute_health_check' do
             expect(chef_run).to create(:gcompute_health_check,
                                        'title0')
           end
-          it { is_expected.to have_attributes(check_interval_sec: 242_040_324) }
+          it { is_expected.to have_attributes(check_interval_sec: 5) }
 
           it do
             is_expected
@@ -1079,11 +1047,9 @@ context 'gcompute_health_check' do
 
           it { is_expected.to have_attributes(hc_label: 'test name#0 data') }
 
-          it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
+          it { is_expected.to have_attributes(timeout_sec: 5) }
 
-          it do
-            is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019)
-          end
+          it { is_expected.to have_attributes(unhealthy_threshold: 2) }
 
           it { is_expected.to have_attributes(type: 'TCP') }
 
