@@ -32,6 +32,7 @@ id: 6448502614
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
 project: "'test project#2 data'"
+quicOverride: DISABLE
 sslCertificates:
 - selflink(resource(ssl_certificate,0))
 - selflink(resource(ssl_certificate,1))

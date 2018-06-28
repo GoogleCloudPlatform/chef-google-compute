@@ -33,6 +33,7 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
+require 'google/compute/property/enum'
 require 'google/compute/property/integer'
 require 'google/compute/property/sslcertificate_selflink'
 require 'google/compute/property/string'
@@ -62,6 +63,10 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
+      property :quic_override,
+               equal_to: %w[NONE ENABLE DISABLE],
+               coerce: ::Google::Compute::Property::Enum.coerce,
+               desired_state: true
       # ssl_certificates is Array of
       # Google::Compute::Property::SslCertSelfLinkRefArray
       property :ssl_certificates,
@@ -106,6 +111,8 @@ module Google
             )
           @current_resource.id =
             ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+          @current_resource.quic_override =
+            ::Google::Compute::Property::Enum.api_parse(fetch['quicOverride'])
           @current_resource.ssl_certificates =
             ::Google::Compute::Property::SslCertSelfLinkRefArray.api_parse(
               fetch['sslCertificates']
@@ -150,6 +157,7 @@ module Google
             kind: 'compute#targetHttpsProxy',
             description: new_resource.description,
             name: new_resource.thp_label,
+            quicOverride: new_resource.quic_override,
             sslCertificates: new_resource.ssl_certificates,
             urlMap: new_resource.url_map
           }.reject { |_, v| v.nil? }
@@ -184,6 +192,7 @@ module Google
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
+            quic_override: resource.quic_override,
             ssl_certificates: resource.ssl_certificates,
             url_map: resource.url_map
           }.reject { |_, v| v.nil? }

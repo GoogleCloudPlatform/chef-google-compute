@@ -172,6 +172,7 @@ context 'gcompute_target_https_proxy' do
                   gcompute_target_https_proxy 'title0' do
                     action :create
                     description 'test description#0 data'
+                    quic_override 'NONE'
                     ssl_certificates ['resource(ssl_certificate,0)']
                     url_map 'resource(url_map,0)'
                     project 'test project#0 data'
@@ -181,6 +182,7 @@ context 'gcompute_target_https_proxy' do
                   gcompute_target_https_proxy 'title1' do
                     action :create
                     description 'test description#1 data'
+                    quic_override 'ENABLE'
                     ssl_certificates ['resource(ssl_certificate,0)', 'resource(ssl_certificate,1)']
                     url_map 'resource(url_map,1)'
                     project 'test project#1 data'
@@ -190,6 +192,7 @@ context 'gcompute_target_https_proxy' do
                   gcompute_target_https_proxy 'title2' do
                     action :create
                     description 'test description#2 data'
+                    quic_override 'DISABLE'
                     ssl_certificates ['resource(ssl_certificate,0)', 'resource(ssl_certificate,1)', 'resource(ssl_certificate,2)']
                     url_map 'resource(url_map,2)'
                     project 'test project#2 data'
@@ -217,6 +220,8 @@ context 'gcompute_target_https_proxy' do
 
               it { is_expected.to have_attributes(thp_label: 'title0') }
 
+              it { is_expected.to have_attributes(quic_override: 'NONE') }
+
               # TODO(nelsonjr): Implement complex array object test.
               # it 'sslCertificates' do
               #   # Add test code here
@@ -240,6 +245,8 @@ context 'gcompute_target_https_proxy' do
 
               it { is_expected.to have_attributes(thp_label: 'title1') }
 
+              it { is_expected.to have_attributes(quic_override: 'ENABLE') }
+
               # TODO(nelsonjr): Implement complex array object test.
               # it 'sslCertificates' do
               #   # Add test code here
@@ -262,6 +269,8 @@ context 'gcompute_target_https_proxy' do
               end
 
               it { is_expected.to have_attributes(thp_label: 'title2') }
+
+              it { is_expected.to have_attributes(quic_override: 'DISABLE') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'sslCertificates' do
@@ -402,6 +411,7 @@ context 'gcompute_target_https_proxy' do
                   gcompute_target_https_proxy 'title0' do
                     action :create
                     description 'test description#0 data'
+                    quic_override 'NONE'
                     ssl_certificates ['resource(ssl_certificate,0)']
                     thp_label 'test name#0 data'
                     url_map 'resource(url_map,0)'
@@ -412,6 +422,7 @@ context 'gcompute_target_https_proxy' do
                   gcompute_target_https_proxy 'title1' do
                     action :create
                     description 'test description#1 data'
+                    quic_override 'ENABLE'
                     ssl_certificates ['resource(ssl_certificate,0)', 'resource(ssl_certificate,1)']
                     thp_label 'test name#1 data'
                     url_map 'resource(url_map,1)'
@@ -422,6 +433,7 @@ context 'gcompute_target_https_proxy' do
                   gcompute_target_https_proxy 'title2' do
                     action :create
                     description 'test description#2 data'
+                    quic_override 'DISABLE'
                     ssl_certificates ['resource(ssl_certificate,0)', 'resource(ssl_certificate,1)', 'resource(ssl_certificate,2)']
                     thp_label 'test name#2 data'
                     url_map 'resource(url_map,2)'
@@ -452,6 +464,8 @@ context 'gcompute_target_https_proxy' do
                 is_expected.to have_attributes(thp_label: 'test name#0 data')
               end
 
+              it { is_expected.to have_attributes(quic_override: 'NONE') }
+
               # TODO(nelsonjr): Implement complex array object test.
               # it 'sslCertificates' do
               #   # Add test code here
@@ -477,6 +491,8 @@ context 'gcompute_target_https_proxy' do
                 is_expected.to have_attributes(thp_label: 'test name#1 data')
               end
 
+              it { is_expected.to have_attributes(quic_override: 'ENABLE') }
+
               # TODO(nelsonjr): Implement complex array object test.
               # it 'sslCertificates' do
               #   # Add test code here
@@ -501,6 +517,8 @@ context 'gcompute_target_https_proxy' do
               it do
                 is_expected.to have_attributes(thp_label: 'test name#2 data')
               end
+
+              it { is_expected.to have_attributes(quic_override: 'DISABLE') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'sslCertificates' do
@@ -570,6 +588,7 @@ context 'gcompute_target_https_proxy' do
                 'kind' => 'compute#targetHttpsProxy',
                 'description' => 'test description#0 data',
                 'name' => 'title0',
+                'quicOverride' => 'NONE',
                 'sslCertificates' => [
                   'selflink(resource(ssl_certificate,0))'
                 ],
@@ -635,6 +654,7 @@ context 'gcompute_target_https_proxy' do
                 gcompute_target_https_proxy 'title0' do
                   action :create
                   description 'test description#0 data'
+                  quic_override 'NONE'
                   ssl_certificates ['resource(ssl_certificate,0)']
                   url_map 'resource(url_map,0)'
                   project 'test project#0 data'
@@ -664,6 +684,8 @@ context 'gcompute_target_https_proxy' do
           end
 
           it { is_expected.to have_attributes(thp_label: 'title0') }
+
+          it { is_expected.to have_attributes(quic_override: 'NONE') }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'sslCertificates' do
@@ -695,6 +717,7 @@ context 'gcompute_target_https_proxy' do
               'kind' => 'compute#targetHttpsProxy',
               'description' => 'test description#0 data',
               'name' => 'test name#0 data',
+              'quicOverride' => 'NONE',
               'sslCertificates' => [
                 'selflink(resource(ssl_certificate,0))'
               ],
@@ -758,6 +781,7 @@ context 'gcompute_target_https_proxy' do
                 gcompute_target_https_proxy 'title0' do
                   action :create
                   description 'test description#0 data'
+                  quic_override 'NONE'
                   ssl_certificates ['resource(ssl_certificate,0)']
                   thp_label 'test name#0 data'
                   url_map 'resource(url_map,0)'
@@ -788,6 +812,8 @@ context 'gcompute_target_https_proxy' do
           end
 
           it { is_expected.to have_attributes(thp_label: 'test name#0 data') }
+
+          it { is_expected.to have_attributes(quic_override: 'NONE') }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'sslCertificates' do
