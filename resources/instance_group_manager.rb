@@ -113,6 +113,10 @@ module Google
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
 
+      # TODO(alexstephen): Check w/ Chef how to not expose this property yet
+      # allow the resource to store the @fetched API results for exports usage.
+      property :__fetched, Hash, desired_state: false, required: false
+
       action :create do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#instanceGroupManager')
@@ -127,7 +131,8 @@ module Google
               collection(@new_resource), fetch_auth(@new_resource),
               'application/json', resource_to_request
             )
-            wait_for_operation create_req.send, @new_resource
+            @new_resource.__fetched =
+              wait_for_operation create_req.send, @new_resource
           end
         else
           @current_resource = @new_resource.clone
@@ -171,6 +176,7 @@ module Google
             ::Google::Compute::Property::Integer.api_parse(
               fetch['targetSize']
             )
+          @new_resource.__fetched = fetch
 
           update
         end
@@ -191,6 +197,12 @@ module Google
       end
 
       # TODO(nelsonjr): Add actions :manage and :modify
+
+      def exports
+        {
+          self_link: __fetched['selfLink']
+        }
+      end
 
       private
 
