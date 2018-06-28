@@ -40,6 +40,7 @@ require 'google/compute/property/backendservice_connection_draining'
 require 'google/compute/property/boolean'
 require 'google/compute/property/double'
 require 'google/compute/property/enum'
+require 'google/compute/property/httphealthcheck_selflink'
 require 'google/compute/property/instancegroup_selflink'
 require 'google/compute/property/integer'
 require 'google/compute/property/region_selflink'
@@ -86,10 +87,12 @@ module Google
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce,
                desired_state: true
-      # health_checks is Array of Google::Compute::Property::StringArray
+      # health_checks is Array of
+      # Google::Compute::Property::HttHeaCheSelLinRefArray
       property :health_checks,
                Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
+               coerce: \
+                 ::Google::Compute::Property::HttHeaCheSelLinRefArray.coerce,
                desired_state: true
       property :id,
                Integer,
@@ -174,7 +177,7 @@ module Google
           @current_resource.enable_cdn =
             ::Google::Compute::Property::Boolean.api_parse(fetch['enableCDN'])
           @current_resource.health_checks =
-            ::Google::Compute::Property::StringArray.api_parse(
+            ::Google::Compute::Property::HttHeaCheSelLinRefArray.api_parse(
               fetch['healthChecks']
             )
           @current_resource.id =
@@ -265,11 +268,6 @@ module Google
                                                   resource_to_request)
             wait_for_operation update_req.send, @new_resource
           end
-        end
-
-        def self.fetch_export(resource, type, id, property)
-          return if id.nil?
-          resource.resources("#{type}[#{id}]").exports[property]
         end
 
         # rubocop:disable Metrics/MethodLength

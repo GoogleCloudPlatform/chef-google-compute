@@ -426,8 +426,8 @@ gcompute_address 'id-for-resource' do
   description        string
   id                 integer
   name               string
-  region             reference to gcompute_region
-  subnetwork         reference to gcompute_subnetwork
+  region             reference to a gcompute_region
+  subnetwork         reference to a gcompute_subnetwork
   users              [
     string,
     ...
@@ -593,6 +593,18 @@ included in the request.
 # make sure they are defined as well:
 #   - gcompute_instance_group 'my-masters' do ... end
 #   - Health check
+
+gcompute_http_health_check 'app-health-check' do
+  action :create
+  hhc_label 'my-app-http-hc'
+  healthy_threshold 10
+  port 8080
+  timeout_sec 2
+  unhealthy_threshold 5
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+end
+
 gcompute_backend_service 'my-app-backend' do
   action :create
   backends [
@@ -600,7 +612,7 @@ gcompute_backend_service 'my-app-backend' do
   ]
   enable_cdn true
   health_checks [
-    gcompute_health_check_ref('another-hc', ENV['PROJECT'] # ex: 'my-test-project')
+    'app-health-check'
   ]
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
@@ -618,7 +630,7 @@ gcompute_backend_service 'id-for-resource' do
       balancing_mode               'UTILIZATION', 'RATE' or 'CONNECTION',
       capacity_scaler              double,
       description                  string,
-      group                        reference to gcompute_instance_group,
+      group                        reference to a gcompute_instance_group,
       max_connections              integer,
       max_connections_per_instance integer,
       max_rate                     integer,
@@ -649,14 +661,14 @@ gcompute_backend_service 'id-for-resource' do
   description             string
   enable_cdn              boolean
   health_checks           [
-    string,
+    reference to gcompute_http_health_check ,gcompute_https_health_check or gcompute_health_check,
     ...
   ]
   id                      integer
   name                    string
   port_name               string
   protocol                'HTTP', 'HTTPS', 'TCP' or 'SSL'
-  region                  reference to gcompute_region
+  region                  reference to a gcompute_region
   session_affinity        'NONE', 'CLIENT_IP', 'GENERATED_COOKIE', 'CLIENT_IP_PROTO' or 'CLIENT_IP_PORT_PROTO'
   timeout_sec             integer
   project                 string
@@ -890,7 +902,7 @@ gcompute_disk_type 'id-for-resource' do
   id                   integer
   name                 string
   valid_disk_size      string
-  zone                 reference to gcompute_zone
+  zone                 reference to a gcompute_zone
   project              string
   credential           reference to gauth_credential
 end
@@ -1039,7 +1051,7 @@ gcompute_disk 'id-for-resource' do
     string,
     ...
   ]
-  zone                           reference to gcompute_zone
+  zone                           reference to a gcompute_zone
   project                        string
   credential                     reference to gauth_credential
 end
@@ -1397,7 +1409,7 @@ end
 
 ```ruby
 gcompute_forwarding_rule 'id-for-resource' do
-  backend_service       reference to gcompute_backend_service
+  backend_service       reference to a gcompute_backend_service
   creation_timestamp    time
   description           string
   id                    integer
@@ -1406,14 +1418,14 @@ gcompute_forwarding_rule 'id-for-resource' do
   ip_version            'IPV4' or 'IPV6'
   load_balancing_scheme 'INTERNAL' or 'EXTERNAL'
   name                  string
-  network               reference to gcompute_network
+  network               reference to a gcompute_network
   port_range            string
   ports                 [
     string,
     ...
   ]
-  region                reference to gcompute_region
-  subnetwork            reference to gcompute_subnetwork
+  region                reference to a gcompute_region
+  subnetwork            reference to a gcompute_subnetwork
   project               string
   credential            reference to gauth_credential
 end
@@ -1578,7 +1590,7 @@ gcompute_global_address 'id-for-resource' do
   id                 integer
   ip_version         'IPV4' or 'IPV6'
   name               string
-  region             reference to gcompute_region
+  region             reference to a gcompute_region
   project            string
   credential         reference to gauth_credential
 end
@@ -1667,7 +1679,7 @@ end
 
 ```ruby
 gcompute_global_forwarding_rule 'id-for-resource' do
-  backend_service       reference to gcompute_backend_service
+  backend_service       reference to a gcompute_backend_service
   creation_timestamp    time
   description           string
   id                    integer
@@ -1676,14 +1688,14 @@ gcompute_global_forwarding_rule 'id-for-resource' do
   ip_version            'IPV4' or 'IPV6'
   load_balancing_scheme 'INTERNAL' or 'EXTERNAL'
   name                  string
-  network               reference to gcompute_network
+  network               reference to a gcompute_network
   port_range            string
   ports                 [
     string,
     ...
   ]
-  region                reference to gcompute_region
-  subnetwork            reference to gcompute_subnetwork
+  region                reference to a gcompute_region
+  subnetwork            reference to a gcompute_subnetwork
   target                string
   project               string
   credential            reference to gauth_credential
@@ -2361,7 +2373,7 @@ gcompute_instance_template 'id-for-resource' do
         initialize_params   {
           disk_name                   string,
           disk_size_gb                integer,
-          disk_type                   reference to gcompute_disk_type,
+          disk_type                   reference to a gcompute_disk_type,
           source_image                string,
           source_image_encryption_key {
             raw_key string,
@@ -2370,7 +2382,7 @@ gcompute_instance_template 'id-for-resource' do
         },
         interface           'SCSI' or 'NVME',
         mode                'READ_WRITE' or 'READ_ONLY',
-        source              reference to gcompute_disk,
+        source              reference to a gcompute_disk,
         type                'SCRATCH' or 'PERSISTENT',
       },
       ...
@@ -2382,14 +2394,14 @@ gcompute_instance_template 'id-for-resource' do
       },
       ...
     ],
-    machine_type       reference to gcompute_machine_type,
+    machine_type       reference to a gcompute_machine_type,
     metadata           namevalues,
     network_interfaces [
       {
         access_configs  [
           {
             name   string,
-            nat_ip reference to gcompute_address,
+            nat_ip reference to a gcompute_address,
             type   ONE_TO_ONE_NAT,
           },
           ...
@@ -2402,9 +2414,9 @@ gcompute_instance_template 'id-for-resource' do
           ...
         ],
         name            string,
-        network         reference to gcompute_network,
+        network         reference to a gcompute_network,
         network_ip      string,
-        subnetwork      reference to gcompute_subnetwork,
+        subnetwork      reference to a gcompute_subnetwork,
       },
       ...
     ],
@@ -2870,7 +2882,7 @@ gcompute_image 'id-for-resource' do
     sha1_checksum  string,
     source         string,
   }
-  source_disk                reference to gcompute_disk
+  source_disk                reference to a gcompute_disk
   source_disk_encryption_key {
     raw_key string,
     sha256  string,
@@ -3123,7 +3135,7 @@ gcompute_instance 'id-for-resource' do
       initialize_params   {
         disk_name                   string,
         disk_size_gb                integer,
-        disk_type                   reference to gcompute_disk_type,
+        disk_type                   reference to a gcompute_disk_type,
         source_image                string,
         source_image_encryption_key {
           raw_key string,
@@ -3132,7 +3144,7 @@ gcompute_instance 'id-for-resource' do
       },
       interface           'SCSI' or 'NVME',
       mode                'READ_WRITE' or 'READ_ONLY',
-      source              reference to gcompute_disk,
+      source              reference to a gcompute_disk,
       type                'SCRATCH' or 'PERSISTENT',
     },
     ...
@@ -3146,7 +3158,7 @@ gcompute_instance 'id-for-resource' do
   ]
   id                 integer
   label_fingerprint  string
-  machine_type       reference to gcompute_machine_type
+  machine_type       reference to a gcompute_machine_type
   metadata           namevalues
   min_cpu_platform   string
   name               string
@@ -3155,7 +3167,7 @@ gcompute_instance 'id-for-resource' do
       access_configs  [
         {
           name   string,
-          nat_ip reference to gcompute_address,
+          nat_ip reference to a gcompute_address,
           type   ONE_TO_ONE_NAT,
         },
         ...
@@ -3168,9 +3180,9 @@ gcompute_instance 'id-for-resource' do
         ...
       ],
       name            string,
-      network         reference to gcompute_network,
+      network         reference to a gcompute_network,
       network_ip      string,
-      subnetwork      reference to gcompute_subnetwork,
+      subnetwork      reference to a gcompute_subnetwork,
     },
     ...
   ]
@@ -3198,7 +3210,7 @@ gcompute_instance 'id-for-resource' do
       ...
     ],
   }
-  zone               reference to gcompute_zone
+  zone               reference to a gcompute_zone
   project            string
   credential         reference to gauth_credential
 end
@@ -3577,10 +3589,10 @@ gcompute_instance_group 'id-for-resource' do
     },
     ...
   ]
-  network            reference to gcompute_network
-  region             reference to gcompute_region
-  subnetwork         reference to gcompute_subnetwork
-  zone               reference to gcompute_zone
+  network            reference to a gcompute_network
+  region             reference to a gcompute_region
+  subnetwork         reference to a gcompute_subnetwork
+  zone               reference to a gcompute_zone
   project            string
   credential         reference to gauth_credential
 end
@@ -3690,8 +3702,8 @@ gcompute_instance_group_manager 'id-for-resource' do
   }
   description        string
   id                 integer
-  instance_group     reference to gcompute_instance_group
-  instance_template  reference to gcompute_instance_template
+  instance_group     reference to a gcompute_instance_group
+  instance_template  reference to a gcompute_instance_template
   name               string
   named_ports        [
     {
@@ -3700,13 +3712,13 @@ gcompute_instance_group_manager 'id-for-resource' do
     },
     ...
   ]
-  region             reference to gcompute_region
+  region             reference to a gcompute_region
   target_pools       [
     reference to a gcompute_target_pool,
     ...
   ]
   target_size        integer
-  zone               reference to gcompute_zone
+  zone               reference to a gcompute_zone
   project            string
   credential         reference to gauth_credential
 end
@@ -3876,7 +3888,7 @@ gcompute_machine_type 'id-for-resource' do
   maximum_persistent_disks_size_gb integer
   memory_mb                        integer
   name                             string
-  zone                             reference to gcompute_zone
+  zone                             reference to a gcompute_zone
   project                          string
   credential                       reference to gauth_credential
 end
@@ -4231,7 +4243,7 @@ gcompute_route 'id-for-resource' do
   description         string
   dest_range          string
   name                string
-  network             reference to gcompute_network
+  network             reference to a gcompute_network
   next_hop_gateway    string
   next_hop_instance   string
   next_hop_ip         string
@@ -4376,13 +4388,13 @@ gcompute_snapshot 'id-for-resource' do
     raw_key string,
     sha256  string,
   }
-  source                     reference to gcompute_disk
+  source                     reference to a gcompute_disk
   source_disk_encryption_key {
     raw_key string,
     sha256  string,
   }
   storage_bytes              integer
-  zone                       reference to gcompute_zone
+  zone                       reference to a gcompute_zone
   project                    string
   credential                 reference to gauth_credential
 end
@@ -4640,9 +4652,9 @@ gcompute_subnetwork 'id-for-resource' do
   id                       integer
   ip_cidr_range            string
   name                     string
-  network                  reference to gcompute_network
+  network                  reference to a gcompute_network
   private_ip_google_access boolean
-  region                   reference to gcompute_region
+  region                   reference to a gcompute_region
   project                  string
   credential               reference to gauth_credential
 end
@@ -4733,7 +4745,7 @@ gcompute_target_http_proxy 'id-for-resource' do
   description        string
   id                 integer
   name               string
-  url_map            reference to gcompute_url_map
+  url_map            reference to a gcompute_url_map
   project            string
   credential         reference to gauth_credential
 end
@@ -4811,7 +4823,7 @@ gcompute_target_https_proxy 'id-for-resource' do
     reference to a gcompute_ssl_certificate,
     ...
   ]
-  url_map            reference to gcompute_url_map
+  url_map            reference to a gcompute_url_map
   project            string
   credential         reference to gauth_credential
 end
@@ -4875,18 +4887,18 @@ Represents a TargetPool resource, used for Load Balancing.
 
 ```ruby
 gcompute_target_pool 'id-for-resource' do
-  backup_pool        reference to gcompute_target_pool
+  backup_pool        reference to a gcompute_target_pool
   creation_timestamp time
   description        string
   failover_ratio     double
-  health_check       reference to gcompute_http_health_check
+  health_check       reference to a gcompute_http_health_check
   id                 integer
   instances          [
     reference to a gcompute_instance,
     ...
   ]
   name               string
-  region             reference to gcompute_region
+  region             reference to a gcompute_region
   session_affinity   'NONE', 'CLIENT_IP' or 'CLIENT_IP_PROTO'
   project            string
   credential         reference to gauth_credential
@@ -5011,7 +5023,7 @@ gcompute_target_ssl_proxy 'id-for-resource' do
   id                 integer
   name               string
   proxy_header       'NONE' or 'PROXY_V1'
-  service            reference to gcompute_backend_service
+  service            reference to a gcompute_backend_service
   ssl_certificates   [
     reference to a gcompute_ssl_certificate,
     ...
@@ -5096,7 +5108,7 @@ gcompute_target_tcp_proxy 'id-for-resource' do
   id                 integer
   name               string
   proxy_header       'NONE' or 'PROXY_V1'
-  service            reference to gcompute_backend_service
+  service            reference to a gcompute_backend_service
   project            string
   credential         reference to gauth_credential
 end
@@ -5166,7 +5178,7 @@ end
 ```ruby
 gcompute_url_map 'id-for-resource' do
   creation_timestamp time
-  default_service    reference to gcompute_backend_service
+  default_service    reference to a gcompute_backend_service
   description        string
   host_rules         [
     {
@@ -5183,7 +5195,7 @@ gcompute_url_map 'id-for-resource' do
   name               string
   path_matchers      [
     {
-      default_service reference to gcompute_backend_service,
+      default_service reference to a gcompute_backend_service,
       description     string,
       name            string,
       path_rules      [
@@ -5192,7 +5204,7 @@ gcompute_url_map 'id-for-resource' do
             string,
             ...
           ],
-          service reference to gcompute_backend_service,
+          service reference to a gcompute_backend_service,
         },
         ...
       ],
@@ -5204,7 +5216,7 @@ gcompute_url_map 'id-for-resource' do
       description string,
       host        string,
       path        string,
-      service     reference to gcompute_backend_service,
+      service     reference to a gcompute_backend_service,
     },
     ...
   ]
@@ -5344,7 +5356,7 @@ gcompute_zone 'id-for-resource' do
   description        string
   id                 integer
   name               string
-  region             reference to gcompute_region
+  region             reference to a gcompute_region
   status             'UP' or 'DOWN'
   project            string
   credential         reference to gauth_credential

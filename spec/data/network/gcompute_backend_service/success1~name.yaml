@@ -81,11 +81,9 @@ creationTimestamp: '2045-05-23T12:08:10+00:00'
 description: test description#0 data
 enableCDN: true
 healthChecks:
-- rr
-- ss
-- tt
-- uu
-- vv
+- selflink(resource(http_health_check,0))
+- selflink(resource(http_health_check,1))
+- selflink(resource(http_health_check,2))
 portName: test port_name#0 data
 project: "'test project#0 data'"
 protocol: HTTP

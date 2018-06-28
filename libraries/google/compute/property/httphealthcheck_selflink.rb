@@ -1,3 +1,4 @@
+require 'google/compute/property/array'
 # Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -72,10 +73,16 @@ module Google
         end
 
         def resource
+         options = {
+            gcompute_http_health_check: :self_link,
+            gcompute_https_health_check: :self_link,
+            gcompute_health_check: :self_link          }
           Chef.run_context.resource_collection.each do |entry|
-            return entry.exports[:self_link] if entry.name == @title
+            if entry.name == @title
+              return entry.exports[options[entry.resource_name]]
+            end
           end
-          raise ArgumentError, "gcompute_http_health_check[#{@title}] required"
+          raise ArgumentError, "one of gcompute_http_health_check, gcompute_https_health_check, gcompute_health_check[#{@title}] required"
         end
       end
 
@@ -123,6 +130,32 @@ module Google
           return if value.nil?
           return value if value.is_a? Data::HttHeaCheSelLinRef
           Data::HttHeaCheSelLinRefApi.new(value)
+        end
+      end
+
+      # A Chef property that holds an Array of HttHeaCheSelLinRef
+      class HttHeaCheSelLinRefArray < Google::Compute::Property::Array
+        def self.coerce
+          lambda do |x|
+            type = ::Google::Compute::Property::HttHeaCheSelLinRefArray
+            type.catalog_parse(x)
+          end
+        end
+
+        # Used for parsing Chef catalog
+        def self.catalog_parse(value)
+          return if value.nil?
+          return HttHeaCheSelLinRef.catalog_parse(value) \
+            unless value.is_a?(::Array)
+          value.map { |v| HttHeaCheSelLinRef.catalog_parse(v) }
+        end
+
+        # Used for parsing GCP API responses
+        def self.api_parse(value)
+          return if value.nil?
+          return HttHeaCheSelLinRef.api_parse(value) \
+            unless value.is_a?(::Array)
+          value.map { |v| HttHeaCheSelLinRef.api_parse(v) }
         end
       end
     end

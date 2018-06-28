@@ -203,11 +203,6 @@ module Google
           end
         end
 
-        def self.fetch_export(resource, type, id, property)
-          return if id.nil?
-          resource.resources("#{type}[#{id}]").exports[property]
-        end
-
         def self.resource_to_hash(resource)
           {
             project: resource.project,
