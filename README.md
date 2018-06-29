@@ -4807,6 +4807,7 @@ gcompute_target_https_proxy 'id-for-resource' do
   description        string
   id                 integer
   name               string
+  quic_override      'NONE', 'ENABLE' or 'DISABLE'
   ssl_certificates   [
     reference to a gcompute_ssl_certificate,
     ...
@@ -4846,6 +4847,14 @@ end
   first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
+
+* `quic_override` -
+  Specifies the QUIC override policy for this resource. This determines
+  whether the load balancer will attempt to negotiate QUIC with clients
+  or not. Can specify one of NONE, ENABLE, or DISABLE. If NONE is
+  specified, uses the QUIC policy with no user overrides, which is
+  equivalent to DISABLE. Not specifying this field is equivalent to
+  specifying NONE.
 
 * `ssl_certificates` -
   Required. A list of SslCertificate resources that are used to authenticate
