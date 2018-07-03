@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for current_actions for instance_group_manager.
+      # A class to manage data for CurrentActions for instance_group_manager.
       class InstGrouManaCurrActi
         include Comparable
 
@@ -159,7 +159,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to current_actions for instance_group_manager.
+      # A class to manage input to CurrentActions for instance_group_manager.
       class InstGrouManaCurrActi
         def self.coerce
           lambda do |x|

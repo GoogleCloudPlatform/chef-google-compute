@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for tcp_health_check for health_check.
+      # A class to manage data for TcpHealthCheck for health_check.
       class HealChecTcpHealChec
         include Comparable
 
@@ -128,7 +128,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to tcp_health_check for health_check.
+      # A class to manage input to TcpHealthCheck for health_check.
       class HealChecTcpHealChec
         def self.coerce
           lambda do |x|

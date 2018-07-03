@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for tests for url_map.
+      # A class to manage data for Tests for url_map.
       class UrlMapTests
         include Comparable
 
@@ -122,7 +122,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to tests for url_map.
+      # A class to manage input to Tests for url_map.
       class UrlMapTests
         def self.coerce
           ->(x) { ::Google::Compute::Property::UrlMapTests.catalog_parse(x) }

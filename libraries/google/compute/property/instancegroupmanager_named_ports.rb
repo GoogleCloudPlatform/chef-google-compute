@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for named_ports for instance_group_manager.
+      # A class to manage data for NamedPorts for instance_group_manager.
       class InstGrouManaNamePort
         include Comparable
 
@@ -103,7 +103,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to named_ports for instance_group_manager.
+      # A class to manage input to NamedPorts for instance_group_manager.
       class InstGrouManaNamePort
         def self.coerce
           lambda do |x|

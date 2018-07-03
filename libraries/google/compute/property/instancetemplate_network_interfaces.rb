@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for network_interfaces for instance_template.
+      # A class to manage data for NetworkInterfaces for instance_template.
       class InstaTemplNetwoInter
         include Comparable
 
@@ -158,7 +158,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to network_interfaces for instance_template.
+      # A class to manage input to NetworkInterfaces for instance_template.
       class InstaTemplNetwoInter
         def self.coerce
           lambda do |x|

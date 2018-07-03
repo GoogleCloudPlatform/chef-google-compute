@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for connection_draining for backend_service.
+      # A class to manage data for ConnectionDraining for backend_service.
       class BackeServiConneDrain
         include Comparable
 
@@ -101,7 +101,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to connection_draining for backend_service.
+      # A class to manage input to ConnectionDraining for backend_service.
       class BackeServiConneDrain
         def self.coerce
           lambda do |x|

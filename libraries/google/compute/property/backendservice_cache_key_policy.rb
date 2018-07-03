@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for cache_key_policy for backend_service.
+      # A class to manage data for CacheKeyPolicy for backend_service.
       class BackServCachKeyPoli
         include Comparable
 
@@ -154,7 +154,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to cache_key_policy for backend_service.
+      # A class to manage input to CacheKeyPolicy for backend_service.
       class BackServCachKeyPoli
         def self.coerce
           lambda do |x|

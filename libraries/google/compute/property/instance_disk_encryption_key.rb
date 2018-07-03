@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for disk_encryption_key for instance.
+      # A class to manage data for DiskEncryptionKey for instance.
       class InstaDiskEncryKey
         include Comparable
 
@@ -113,7 +113,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to disk_encryption_key for instance.
+      # A class to manage input to DiskEncryptionKey for instance.
       class InstaDiskEncryKey
         def self.coerce
           lambda do |x|

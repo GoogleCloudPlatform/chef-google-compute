@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for https_health_check for health_check.
+      # A class to manage data for HttpsHealthCheck for health_check.
       class HealChecHttpHealChec
         include Comparable
 
@@ -126,7 +126,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to https_health_check for health_check.
+      # A class to manage input to HttpsHealthCheck for health_check.
       class HealChecHttpHealChec
         def self.coerce
           lambda do |x|

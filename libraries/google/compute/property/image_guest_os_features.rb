@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for guest_os_features for image.
+      # A class to manage data for GuestOsFeatures for image.
       class ImageGuestOsFeatu
         include Comparable
 
@@ -97,7 +97,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to guest_os_features for image.
+      # A class to manage input to GuestOsFeatures for image.
       class ImageGuestOsFeatu
         def self.coerce
           lambda do |x|

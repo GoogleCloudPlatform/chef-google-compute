@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for scheduling for instance.
+      # A class to manage data for Scheduling for instance.
       class InstanceScheduling
         include Comparable
 
@@ -119,7 +119,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to scheduling for instance.
+      # A class to manage input to Scheduling for instance.
       class InstanceScheduling
         def self.coerce
           lambda do |x|

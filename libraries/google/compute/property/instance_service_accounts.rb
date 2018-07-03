@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for service_accounts for instance.
+      # A class to manage data for ServiceAccounts for instance.
       class InstancServiceAccount
         include Comparable
 
@@ -105,7 +105,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to service_accounts for instance.
+      # A class to manage input to ServiceAccounts for instance.
       class InstancServiceAccount
         def self.coerce
           lambda do |x|

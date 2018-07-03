@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for deprecated for disk_type.
+      # A class to manage data for Deprecated for disk_type.
       class DiskTypeDepreca
         include Comparable
 
@@ -127,7 +127,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to deprecated for disk_type.
+      # A class to manage input to Deprecated for disk_type.
       class DiskTypeDepreca
         def self.coerce
           lambda do |x|

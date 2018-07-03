@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for source_disk_encryption_key for image.
+      # A class to manage data for SourceDiskEncryptionKey for image.
       class ImagSourDiskEncrKey
         include Comparable
 
@@ -104,7 +104,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to source_disk_encryption_key for image.
+      # A class to manage input to SourceDiskEncryptionKey for image.
       class ImagSourDiskEncrKey
         def self.coerce
           lambda do |x|
