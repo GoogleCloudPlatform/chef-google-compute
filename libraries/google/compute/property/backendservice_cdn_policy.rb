@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for cdn_policy for backend_service.
+      # A class to manage data for CdnPolicy for backend_service.
       class BackeServiCdnPolic
         include Comparable
 
@@ -102,7 +102,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to cdn_policy for backend_service.
+      # A class to manage input to CdnPolicy for backend_service.
       class BackeServiCdnPolic
         def self.coerce
           lambda do |x|

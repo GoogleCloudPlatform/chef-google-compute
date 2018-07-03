@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for access_configs for instance.
+      # A class to manage data for AccessConfigs for instance.
       class InstancAccessConfigs
         include Comparable
 
@@ -113,7 +113,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to access_configs for instance.
+      # A class to manage input to AccessConfigs for instance.
       class InstancAccessConfigs
         def self.coerce
           lambda do |x|

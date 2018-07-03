@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for initialize_params for instance.
+      # A class to manage data for InitializeParams for instance.
       class InstancInitialParams
         include Comparable
 
@@ -141,7 +141,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to initialize_params for instance.
+      # A class to manage input to InitializeParams for instance.
       class InstancInitialParams
         def self.coerce
           lambda do |x|

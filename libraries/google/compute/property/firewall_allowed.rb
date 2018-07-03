@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for allowed for firewall.
+      # A class to manage data for Allowed for firewall.
       class FirewallAllowed
         include Comparable
 
@@ -107,7 +107,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to allowed for firewall.
+      # A class to manage input to Allowed for firewall.
       class FirewallAllowed
         def self.coerce
           lambda do |x|

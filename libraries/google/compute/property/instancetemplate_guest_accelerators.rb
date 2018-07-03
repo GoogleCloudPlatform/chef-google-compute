@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for guest_accelerators for instance_template.
+      # A class to manage data for GuestAccelerators for instance_template.
       class InstaTemplGuestAccel
         include Comparable
 
@@ -110,7 +110,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to guest_accelerators for instance_template.
+      # A class to manage input to GuestAccelerators for instance_template.
       class InstaTemplGuestAccel
         def self.coerce
           lambda do |x|

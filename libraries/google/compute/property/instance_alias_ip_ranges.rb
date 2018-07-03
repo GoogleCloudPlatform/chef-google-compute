@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for alias_ip_ranges for instance.
+      # A class to manage data for AliasIpRanges for instance.
       class InstaAliasIpRange
         include Comparable
 
@@ -111,7 +111,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to alias_ip_ranges for instance.
+      # A class to manage input to AliasIpRanges for instance.
       class InstaAliasIpRange
         def self.coerce
           lambda do |x|

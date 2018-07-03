@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for image_encryption_key for image.
+      # A class to manage data for ImageEncryptionKey for image.
       class ImageImageEncryKey
         include Comparable
 
@@ -104,7 +104,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to image_encryption_key for image.
+      # A class to manage input to ImageEncryptionKey for image.
       class ImageImageEncryKey
         def self.coerce
           lambda do |x|

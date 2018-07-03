@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for deprecated for zone.
+      # A class to manage data for Deprecated for zone.
       class ZoneDeprecated
         include Comparable
 
@@ -127,7 +127,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to deprecated for zone.
+      # A class to manage input to Deprecated for zone.
       class ZoneDeprecated
         def self.coerce
           ->(x) { ::Google::Compute::Property::ZoneDeprecated.catalog_parse(x) }

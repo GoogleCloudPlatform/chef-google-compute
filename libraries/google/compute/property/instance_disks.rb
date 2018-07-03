@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for disks for instance.
+      # A class to manage data for Disks for instance.
       class InstanceDisks
         include Comparable
 
@@ -177,7 +177,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to disks for instance.
+      # A class to manage input to Disks for instance.
       class InstanceDisks
         def self.coerce
           ->(x) { ::Google::Compute::Property::InstanceDisks.catalog_parse(x) }

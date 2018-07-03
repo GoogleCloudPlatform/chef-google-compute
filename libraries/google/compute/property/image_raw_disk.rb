@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for raw_disk for image.
+      # A class to manage data for RawDisk for image.
       class ImageRawDisk
         include Comparable
 
@@ -114,7 +114,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to raw_disk for image.
+      # A class to manage input to RawDisk for image.
       class ImageRawDisk
         def self.coerce
           ->(x) { ::Google::Compute::Property::ImageRawDisk.catalog_parse(x) }

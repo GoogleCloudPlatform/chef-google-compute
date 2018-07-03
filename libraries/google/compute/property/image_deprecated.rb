@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for deprecated for image.
+      # A class to manage data for Deprecated for image.
       class ImageDeprecated
         include Comparable
 
@@ -127,7 +127,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to deprecated for image.
+      # A class to manage input to Deprecated for image.
       class ImageDeprecated
         def self.coerce
           lambda do |x|

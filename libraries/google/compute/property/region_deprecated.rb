@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for deprecated for region.
+      # A class to manage data for Deprecated for region.
       class RegionDeprecated
         include Comparable
 
@@ -127,7 +127,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to deprecated for region.
+      # A class to manage input to Deprecated for region.
       class RegionDeprecated
         def self.coerce
           lambda do |x|

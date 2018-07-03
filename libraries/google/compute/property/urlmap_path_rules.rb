@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for path_rules for url_map.
+      # A class to manage data for PathRules for url_map.
       class UrlMapPathRules
         include Comparable
 
@@ -110,7 +110,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to path_rules for url_map.
+      # A class to manage input to PathRules for url_map.
       class UrlMapPathRules
         def self.coerce
           lambda do |x|

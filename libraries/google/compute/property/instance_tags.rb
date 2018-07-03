@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for tags for instance.
+      # A class to manage data for Tags for instance.
       class InstanceTags
         include Comparable
 
@@ -106,7 +106,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to tags for instance.
+      # A class to manage input to Tags for instance.
       class InstanceTags
         def self.coerce
           ->(x) { ::Google::Compute::Property::InstanceTags.catalog_parse(x) }

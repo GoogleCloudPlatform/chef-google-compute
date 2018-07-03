@@ -28,7 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for scheduling for instance_template.
+      # A class to manage data for Scheduling for instance_template.
       class InstancTemplatSchedul
         include Comparable
 
@@ -119,7 +119,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to scheduling for instance_template.
+      # A class to manage input to Scheduling for instance_template.
       class InstancTemplatSchedul
         def self.coerce
           lambda do |x|

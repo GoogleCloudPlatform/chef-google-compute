@@ -29,7 +29,7 @@ require 'google/compute/property/array'
 module Google
   module Compute
     module Data
-      # A class to manage data for host_rules for url_map.
+      # A class to manage data for HostRules for url_map.
       class UrlMapHostRules
         include Comparable
 
@@ -115,7 +115,7 @@ module Google
     end
 
     module Property
-      # A class to manage input to host_rules for url_map.
+      # A class to manage input to HostRules for url_map.
       class UrlMapHostRules
         def self.coerce
           lambda do |x|
