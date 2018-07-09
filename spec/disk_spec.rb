@@ -73,6 +73,9 @@ context 'gcompute_disk' do
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
+              expect_network_get_success_disk_type 1, zone: 'test name#0 data'
+              expect_network_get_success_disk_type 2, zone: 'test name#1 data'
+              expect_network_get_success_disk_type 3, zone: 'test name#2 data'
             end
 
             let(:runner) do
@@ -92,7 +95,7 @@ context 'gcompute_disk' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_disk gcompute_zone],
+                step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -123,6 +126,30 @@ context 'gcompute_disk' do
                     credential 'mycred'
                   end
 
+                  gcompute_disk_type 'resource(disk_type,0)' do
+                    action :create
+                    dt_label 'test name#0 data'
+                    zone 'resource(zone,0)'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_disk_type 'resource(disk_type,1)' do
+                    action :create
+                    dt_label 'test name#1 data'
+                    zone 'resource(zone,1)'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_disk_type 'resource(disk_type,2)' do
+                    action :create
+                    dt_label 'test name#2 data'
+                    zone 'resource(zone,2)'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_disk 'title0' do
                     action :create
                     description 'test description#0 data'
@@ -146,7 +173,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
-                    type 'test type#0 data'
+                    type 'resource(disk_type,0)'
                     zone 'resource(zone,0)'
                     project 'test project#0 data'
                     credential 'mycred'
@@ -176,7 +203,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
                     })
-                    type 'test type#1 data'
+                    type 'resource(disk_type,1)'
                     zone 'resource(zone,1)'
                     project 'test project#1 data'
                     credential 'mycred'
@@ -207,7 +234,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
-                    type 'test type#2 data'
+                    type 'resource(disk_type,2)'
                     zone 'resource(zone,2)'
                     project 'test project#2 data'
                     credential 'mycred'
@@ -248,7 +275,10 @@ context 'gcompute_disk' do
                   .to have_attributes(source_image: 'test source_image#0 data')
               end
 
-              it { is_expected.to have_attributes(type: 'test type#0 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -304,7 +334,10 @@ context 'gcompute_disk' do
                   .to have_attributes(source_image: 'test source_image#1 data')
               end
 
-              it { is_expected.to have_attributes(type: 'test type#1 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -360,7 +393,10 @@ context 'gcompute_disk' do
                   .to have_attributes(source_image: 'test source_image#2 data')
               end
 
-              it { is_expected.to have_attributes(type: 'test type#2 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -413,6 +449,9 @@ context 'gcompute_disk' do
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
+              expect_network_get_success_disk_type 1, zone: 'test name#0 data'
+              expect_network_get_success_disk_type 2, zone: 'test name#1 data'
+              expect_network_get_success_disk_type 3, zone: 'test name#2 data'
             end
 
             let(:runner) do
@@ -432,7 +471,7 @@ context 'gcompute_disk' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_disk gcompute_zone],
+                step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -463,6 +502,30 @@ context 'gcompute_disk' do
                     credential 'mycred'
                   end
 
+                  gcompute_disk_type 'resource(disk_type,0)' do
+                    action :create
+                    dt_label 'test name#0 data'
+                    zone 'resource(zone,0)'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_disk_type 'resource(disk_type,1)' do
+                    action :create
+                    dt_label 'test name#1 data'
+                    zone 'resource(zone,1)'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_disk_type 'resource(disk_type,2)' do
+                    action :create
+                    dt_label 'test name#2 data'
+                    zone 'resource(zone,2)'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_disk 'title0' do
                     action :create
                     d_label 'test name#0 data'
@@ -487,7 +550,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
-                    type 'test type#0 data'
+                    type 'resource(disk_type,0)'
                     zone 'resource(zone,0)'
                     project 'test project#0 data'
                     credential 'mycred'
@@ -518,7 +581,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
                     })
-                    type 'test type#1 data'
+                    type 'resource(disk_type,1)'
                     zone 'resource(zone,1)'
                     project 'test project#1 data'
                     credential 'mycred'
@@ -550,7 +613,7 @@ context 'gcompute_disk' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
-                    type 'test type#2 data'
+                    type 'resource(disk_type,2)'
                     zone 'resource(zone,2)'
                     project 'test project#2 data'
                     credential 'mycred'
@@ -591,7 +654,10 @@ context 'gcompute_disk' do
                   .to have_attributes(source_image: 'test source_image#0 data')
               end
 
-              it { is_expected.to have_attributes(type: 'test type#0 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -647,7 +713,10 @@ context 'gcompute_disk' do
                   .to have_attributes(source_image: 'test source_image#1 data')
               end
 
-              it { is_expected.to have_attributes(type: 'test type#1 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -703,7 +772,10 @@ context 'gcompute_disk' do
                   .to have_attributes(source_image: 'test source_image#2 data')
               end
 
-              it { is_expected.to have_attributes(type: 'test type#2 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'zone' do
@@ -799,7 +871,7 @@ context 'gcompute_disk' do
                 'name' => 'title0',
                 'sizeGb' => 2_858_499_398,
                 'sourceImage' => 'test source_image#0 data',
-                'type' => 'test type#0 data',
+                'type' => 'selflink(resource(disk_type,0))',
                 'diskEncryptionKey' => {
                   'rawKey' => 'test raw_key#0 data',
                   'sha256' => 'test sha256#0 data'
@@ -817,6 +889,7 @@ context 'gcompute_disk' do
               zone: 'test name#0 data'
             expect_network_get_async 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_zone 1
+            expect_network_get_success_disk_type 1, zone: 'test name#0 data'
           end
 
           let(:runner) do
@@ -836,7 +909,7 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_zone],
+              step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -849,6 +922,14 @@ context 'gcompute_disk' do
                 gcompute_zone 'resource(zone,0)' do
                   action :create
                   z_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_disk_type 'resource(disk_type,0)' do
+                  action :create
+                  dt_label 'test name#0 data'
+                  zone 'resource(zone,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -876,7 +957,7 @@ context 'gcompute_disk' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
-                  type 'test type#0 data'
+                  type 'resource(disk_type,0)'
                   zone 'resource(zone,0)'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -920,7 +1001,10 @@ context 'gcompute_disk' do
               .to have_attributes(source_image: 'test source_image#0 data')
           end
 
-          it { is_expected.to have_attributes(type: 'test type#0 data') }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'type' do
+          #   # Add test code here
+          # end
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'zone' do
@@ -977,7 +1061,7 @@ context 'gcompute_disk' do
                 'name' => 'test name#0 data',
                 'sizeGb' => 2_858_499_398,
                 'sourceImage' => 'test source_image#0 data',
-                'type' => 'test type#0 data',
+                'type' => 'selflink(resource(disk_type,0))',
                 'diskEncryptionKey' => {
                   'rawKey' => 'test raw_key#0 data',
                   'sha256' => 'test sha256#0 data'
@@ -994,6 +1078,7 @@ context 'gcompute_disk' do
               zone: 'test name#0 data'
             expect_network_get_async 1, zone: 'test name#0 data'
             expect_network_get_success_zone 1
+            expect_network_get_success_disk_type 1, zone: 'test name#0 data'
           end
 
           let(:runner) do
@@ -1013,7 +1098,7 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_zone],
+              step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1026,6 +1111,14 @@ context 'gcompute_disk' do
                 gcompute_zone 'resource(zone,0)' do
                   action :create
                   z_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_disk_type 'resource(disk_type,0)' do
+                  action :create
+                  dt_label 'test name#0 data'
+                  zone 'resource(zone,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1054,7 +1147,7 @@ context 'gcompute_disk' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
-                  type 'test type#0 data'
+                  type 'resource(disk_type,0)'
                   zone 'resource(zone,0)'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -1098,7 +1191,10 @@ context 'gcompute_disk' do
               .to have_attributes(source_image: 'test source_image#0 data')
           end
 
-          it { is_expected.to have_attributes(type: 'test type#0 data') }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'type' do
+          #   # Add test code here
+          # end
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'zone' do
@@ -1168,7 +1264,7 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_zone],
+              step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1240,7 +1336,7 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_zone],
+              step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1319,7 +1415,7 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_zone],
+              step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1397,7 +1493,7 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_zone],
+              step_into: %w[gcompute_disk gcompute_zone gcompute_disk_type],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1562,6 +1658,106 @@ context 'gcompute_disk' do
     data
   end
 
+  def expect_network_get_success_disk_type(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_disk_type("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_disk_type(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_disk_type(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_disk_type(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_disk_type', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_disk_type objects
+  def uri_data_disk_type(id)
+    {
+      project: GoogleTests::Constants::DT_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::DT_PROJECT_DATA.size],
+      zone: GoogleTests::Constants::DT_ZONE_DATA[(id - 1) \
+        % GoogleTests::Constants::DT_ZONE_DATA.size],
+      name: GoogleTests::Constants::DT_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::DT_NAME_DATA.size]
+    }
+  end
+
+  def self_link_disk_type(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_disk_type(
+        'projects/{{project}}/zones/{{zone}}/diskTypes/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_zone(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_zone("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_zone(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_zone(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_zone(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_zone', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_zone objects
+  def uri_data_zone(id)
+    {
+      project: GoogleTests::Constants::Z_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::Z_PROJECT_DATA.size],
+      name: GoogleTests::Constants::Z_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::Z_NAME_DATA.size]
+    }
+  end
+
+  def self_link_zone(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_zone(
+        'projects/{{project}}/zones/{{name}}',
+        data
+      )
+    )
+  end
+
   def expect_network_get_success_zone(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
     body = load_network_result_zone("success#{id}~" \
@@ -1618,6 +1814,16 @@ context 'gcompute_disk' do
   def debug_network(message)
     puts("Network #{message}") \
       if ENV['RSPEC_DEBUG'] || ENV['RSPEC_HTTP_VERBOSE']
+  end
+
+  def expand_variables_disk_type(template, data, ext_dat = {})
+    Google::GCOMPUTE::DiskType
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_zone(template, data, ext_dat = {})
+    Google::GCOMPUTE::Zone
+      .action_class.expand_variables(template, data, ext_dat)
   end
 
   def expand_variables_zone(template, data, ext_dat = {})
