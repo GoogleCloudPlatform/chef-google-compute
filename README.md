@@ -396,6 +396,10 @@ the instance is assigned a new internal IP address, either by Compute
 Engine or by you. External IP addresses can be either ephemeral or
 static.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/beta/addresses)
+* [Reserving a Static External IP Address](https://cloud.google.com/compute/docs/instances-and-network)
+* [Reserving a Static Internal IP Address](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-internal-ip-address)
 
 #### Example
 
@@ -503,6 +507,9 @@ backend bucket rather than a backend service. It can send requests for
 static content to a Cloud Storage bucket and requests for dynamic content
 a virtual machine instance.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/backendBuckets)
+* [Using a Cloud Storage bucket as a load balancer backend](https://cloud.google.com/compute/docs/load-balancing/http/backend-bucket)
 
 #### Example
 
@@ -985,6 +992,9 @@ storage space requirements.
 Add a persistent disk to your instance when you need reliable and
 affordable storage with consistent performance characteristics.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/disks)
+* [Adding a persistent disk](https://cloud.google.com/compute/docs/disks/add-persistent-disk)
 
 #### Example
 
@@ -1373,6 +1383,9 @@ A ForwardingRule resource. A ForwardingRule resource specifies which pool
 of target virtual machines to forward a packet to if it matches the given
 [IPAddress, IPProtocol, portRange] tuple.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/forwardingRule)
+* [Official Documentation](https://cloud.google.com/compute/docs/load-balancing/network/forwarding-rules)
 
 #### Example
 
@@ -1556,6 +1569,9 @@ the resource followed by "_label"
 Represents a Global Address resource. Global addresses are used for
 HTTP(S) load balancing.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/globalAddresses)
+* [Reserving a Static External IP Address](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address)
 
 #### Example
 
@@ -1832,6 +1848,9 @@ the resource followed by "_label"
 An HttpHealthCheck resource. This resource defines a template for how
 individual VMs should be checked for health, via HTTP.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/httpHealthChecks)
+* [Adding Health Checks](https://cloud.google.com/compute/docs/load-balancing/health-checks#legacy_health_checks)
 
 #### Example
 
@@ -1941,6 +1960,9 @@ the resource followed by "_label"
 An HttpsHealthCheck resource. This resource defines a template for how
 individual VMs should be checked for health, via HTTPS.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/httpsHealthChecks)
+* [Adding Health Checks](https://cloud.google.com/compute/docs/load-balancing/health-checks#legacy_health_checks)
 
 #### Example
 
@@ -4205,6 +4227,9 @@ sending virtual machine's routing table will be dropped.
 A Route resource must have exactly one specification of either
 nextHopGateway, nextHopInstance, nextHopIp, or nextHopVpnTunnel.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/routes)
+* [Using Routes](https://cloud.google.com/vpc/docs/using-routes)
 
 #### Example
 
@@ -4612,6 +4637,10 @@ instances in all other subnets of the same VPC network, regardless of
 region, using their RFC1918 private IP addresses. You can isolate portions
 of the network, even entire subnets, using firewall rules.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/beta/subnetworks)
+* [Private Google Access](https://cloud.google.com/vpc/docs/configure-private-google-access)
+* [Cloud Networking](https://cloud.google.com/vpc/docs/using-vpc)
 
 #### Example
 
@@ -4712,6 +4741,9 @@ the resource followed by "_label"
 Represents a TargetHttpProxy resource, which is used by one or more global
 forwarding rule to route incoming HTTP requests to a URL map.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/targetHttpProxies)
+* [Official Documentation](https://cloud.google.com/compute/docs/load-balancing/http/target-proxies)
 
 #### Example
 
@@ -4783,6 +4815,9 @@ the resource followed by "_label"
 Represents a TargetHttpsProxy resource, which is used by one or more
 global forwarding rule to route incoming HTTPS requests to a URL map.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/targetHttpsProxies)
+* [Official Documentation](https://cloud.google.com/compute/docs/load-balancing/http/target-proxies)
 
 #### Example
 
@@ -4873,6 +4908,9 @@ the resource followed by "_label"
 
 ### gcompute_target_pool
 Represents a TargetPool resource, used for Load Balancing.
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/targetPools)
+* [Official Documentation](https://cloud.google.com/compute/docs/load-balancing/network/target-pools)
 
 #### Example
 
@@ -4994,6 +5032,9 @@ Represents a TargetSslProxy resource, which is used by one or more
 global forwarding rule to route incoming SSL requests to a backend
 service.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/targetSslProxies)
+* [Setting Up SSL proxy for Google Cloud Load Balancing](https://cloud.google.com/compute/docs/load-balancing/tcp-ssl/)
 
 #### Example
 
@@ -5082,6 +5123,9 @@ Represents a TargetTcpProxy resource, which is used by one or more
 global forwarding rule to route incoming TCP requests to a Backend
 service.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/latest/targetTcpProxies)
+* [Setting Up TCP proxy for Google Cloud Load Balancing](https://cloud.google.com/compute/docs/load-balancing/tcp-ssl/tcp-proxy)
 
 #### Example
 
