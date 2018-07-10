@@ -36,6 +36,7 @@ require 'google/compute/network/put'
 require 'google/compute/property/disk_disk_encryption_key'
 require 'google/compute/property/disk_source_image_encryption_key'
 require 'google/compute/property/disk_source_snapshot_encryption_key'
+require 'google/compute/property/disktype_selflink'
 require 'google/compute/property/integer'
 require 'google/compute/property/namevalues'
 require 'google/compute/property/string'
@@ -93,8 +94,8 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                desired_state: true
       property :type,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
+               [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
+               coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce,
                desired_state: true
       # users is Array of Google::Compute::Property::StringArray
       property :users,
@@ -182,7 +183,9 @@ module Google
           @current_resource.size_gb =
             ::Google::Compute::Property::Integer.api_parse(fetch['sizeGb'])
           @current_resource.type =
-            ::Google::Compute::Property::String.api_parse(fetch['type'])
+            ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(
+              fetch['type']
+            )
           @current_resource.users =
             ::Google::Compute::Property::StringArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch

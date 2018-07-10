@@ -55,7 +55,7 @@ sourceSnapshotEncryptionKey:
   rawKey: test raw_key#1 data
   sha256: test sha256#1 data
 sourceSnapshotId: test source_snapshot_id#1 data
-type: test type#1 data
+type: selflink(resource(disk_type,1))
 users:
 - uu
 - vv
