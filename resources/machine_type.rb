@@ -29,10 +29,7 @@
 $LOAD_PATH.unshift ::File.expand_path('../libraries', ::File.dirname(__FILE__))
 
 require 'chef/resource'
-require 'google/compute/network/delete'
 require 'google/compute/network/get'
-require 'google/compute/network/post'
-require 'google/compute/network/put'
 require 'google/compute/property/boolean'
 require 'google/compute/property/enum'
 require 'google/compute/property/integer'
