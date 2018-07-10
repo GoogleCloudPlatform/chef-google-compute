@@ -151,8 +151,6 @@ module Google
             ::Google::Compute::Property::Integer.api_parse(fetch['memoryMb'])
           @current_resource.mt_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
-          @current_resource.zone =
-            ::Google::Compute::Property::ZoneNameRef.api_parse(fetch['zone'])
           @new_resource.__fetched = fetch
 
           update
@@ -187,8 +185,7 @@ module Google
         def resource_to_request
           request = {
             kind: 'compute#machineType',
-            name: new_resource.mt_label,
-            zone: new_resource.zone
+            name: new_resource.mt_label
           }.reject { |_, v| v.nil? }
           request.to_json
         end

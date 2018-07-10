@@ -3985,7 +3985,7 @@ end
   Name of the resource.
 
 * `zone` -
-  Required. The zone the machine type is defined.
+  Required. The zone where the machine type is defined
 
 #### Label
 Set the `mt_label` property when attempting to set primary key
@@ -4730,7 +4730,7 @@ end
   assigned external IP addresses.
 
 * `region` -
-  Required. URL of the GCP region for this subnetwork.
+  Required. URL of the region where the subnetwork resides
 
 #### Label
 Set the `s_label` property when attempting to set primary key
