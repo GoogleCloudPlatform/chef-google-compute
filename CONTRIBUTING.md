@@ -163,6 +163,8 @@ chef-codegen:
   * libraries/google/compute/property/region_deprecated.rb
   * libraries/google/compute/property/region_name.rb
   * libraries/google/compute/property/region_selflink.rb
+  * libraries/google/compute/property/router_advertised_ip_ranges.rb
+  * libraries/google/compute/property/router_bgp.rb
   * libraries/google/compute/property/snapshot_snapshot_encryption_key.rb
   * libraries/google/compute/property/snapshot_source_disk_encryption_key.rb
   * libraries/google/compute/property/sslcertificate_selflink.rb
@@ -328,6 +330,7 @@ chef-codegen:
   * resources/network.rb
   * resources/region.rb
   * resources/route.rb
+  * resources/router.rb
   * resources/snapshot.rb
   * resources/ssl_certificate.rb
   * resources/subnetwork.rb
@@ -475,6 +478,12 @@ chef-codegen:
   * spec/data/network/gcompute_route/success2~title.yaml
   * spec/data/network/gcompute_route/success3~name.yaml
   * spec/data/network/gcompute_route/success3~title.yaml
+  * spec/data/network/gcompute_router/success1~name.yaml
+  * spec/data/network/gcompute_router/success1~title.yaml
+  * spec/data/network/gcompute_router/success2~name.yaml
+  * spec/data/network/gcompute_router/success2~title.yaml
+  * spec/data/network/gcompute_router/success3~name.yaml
+  * spec/data/network/gcompute_router/success3~title.yaml
   * spec/data/network/gcompute_snapshot/success1~name.yaml
   * spec/data/network/gcompute_snapshot/success1~title.yaml
   * spec/data/network/gcompute_snapshot/success2~name.yaml
@@ -563,6 +572,7 @@ chef-codegen:
   * spec/network_spec.rb
   * spec/region_spec.rb
   * spec/route_spec.rb
+  * spec/router_spec.rb
   * spec/snapshot_spec.rb
   * spec/spec_helper.rb
   * spec/ssl_certificate_spec.rb

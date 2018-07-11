@@ -435,6 +435,7 @@ module GoogleTests
     # Constants for the following objects:
     # - Region.project
     # - Route.project
+    # - Router.project
     R_PROJECT_DATA = [
       'test project#0 data',
       'test project#1 data',
@@ -446,7 +447,17 @@ module GoogleTests
     # Constants for the following objects:
     # - Region.name
     # - Route.name
+    # - Router.name
     R_NAME_DATA = [
+      'test name#0 data',
+      'test name#1 data',
+      'test name#2 data',
+      'test name#3 data',
+      'test name#4 data'
+    ].freeze
+
+    # Constants for: Router.region
+    R_REGION_DATA = [
       'test name#0 data',
       'test name#1 data',
       'test name#2 data',
