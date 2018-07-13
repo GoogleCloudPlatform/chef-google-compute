@@ -28,8 +28,7 @@
 module Google
   module Compute
     module Data
-      # A class to manage data for SourceImageEncryptionKey for
-      # instance_template.
+      # A class to manage data for SourceImageEncryptionKey for instance_template.
       class InsTemSouImaEncKey
         include Comparable
 
@@ -96,22 +95,17 @@ module Google
       # Data is coming from the Chef catalog
       class InsTemSouImaEncKeyCatalog < InsTemSouImaEncKey
         def initialize(args)
-          @raw_key =
-            Google::Compute::Property::String.catalog_parse(args[:raw_key])
-          @sha256 =
-            Google::Compute::Property::String.catalog_parse(args[:sha256])
+          @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
+          @sha256 = Google::Compute::Property::String.catalog_parse(args[:sha256])
         end
       end
     end
 
     module Property
-      # A class to manage input to SourceImageEncryptionKey for
-      # instance_template.
+      # A class to manage input to SourceImageEncryptionKey for instance_template.
       class InsTemSouImaEncKey
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InsTemSouImaEncKey.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InsTemSouImaEncKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

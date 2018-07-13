@@ -90,14 +90,11 @@ module Google
       # Data is coming from the GCP API
       class InstanceSchedulingApi < InstanceScheduling
         def initialize(args)
-          @automatic_restart = Google::Compute::Property::Boolean.api_parse(
-            args['automaticRestart']
-          )
-          @on_host_maintenance = Google::Compute::Property::String.api_parse(
-            args['onHostMaintenance']
-          )
-          @preemptible =
-            Google::Compute::Property::Boolean.api_parse(args['preemptible'])
+          @automatic_restart =
+            Google::Compute::Property::Boolean.api_parse(args['automaticRestart'])
+          @on_host_maintenance =
+            Google::Compute::Property::String.api_parse(args['onHostMaintenance'])
+          @preemptible = Google::Compute::Property::Boolean.api_parse(args['preemptible'])
         end
       end
 
@@ -105,15 +102,11 @@ module Google
       # Data is coming from the Chef catalog
       class InstanceSchedulingCatalog < InstanceScheduling
         def initialize(args)
-          @automatic_restart = Google::Compute::Property::Boolean.catalog_parse(
-            args[:automatic_restart]
-          )
+          @automatic_restart =
+            Google::Compute::Property::Boolean.catalog_parse(args[:automatic_restart])
           @on_host_maintenance =
-            Google::Compute::Property::String.catalog_parse(
-              args[:on_host_maintenance]
-            )
-          @preemptible =
-            Google::Compute::Property::Boolean.catalog_parse(args[:preemptible])
+            Google::Compute::Property::String.catalog_parse(args[:on_host_maintenance])
+          @preemptible = Google::Compute::Property::Boolean.catalog_parse(args[:preemptible])
         end
       end
     end
@@ -122,9 +115,7 @@ module Google
       # A class to manage input to Scheduling for instance.
       class InstanceScheduling
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstanceScheduling.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstanceScheduling.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

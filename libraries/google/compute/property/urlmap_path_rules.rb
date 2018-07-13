@@ -87,11 +87,8 @@ module Google
       # Data is coming from the GCP API
       class UrlMapPathRulesApi < UrlMapPathRules
         def initialize(args)
-          @paths =
-            Google::Compute::Property::StringArray.api_parse(args['paths'])
-          @service = Google::Compute::Property::BackServSelfLinkRef.api_parse(
-            args['service']
-          )
+          @paths = Google::Compute::Property::StringArray.api_parse(args['paths'])
+          @service = Google::Compute::Property::BackServSelfLinkRef.api_parse(args['service'])
         end
       end
 
@@ -99,12 +96,8 @@ module Google
       # Data is coming from the Chef catalog
       class UrlMapPathRulesCatalog < UrlMapPathRules
         def initialize(args)
-          @paths =
-            Google::Compute::Property::StringArray.catalog_parse(args[:paths])
-          @service =
-            Google::Compute::Property::BackServSelfLinkRef.catalog_parse(
-              args[:service]
-            )
+          @paths = Google::Compute::Property::StringArray.catalog_parse(args[:paths])
+          @service = Google::Compute::Property::BackServSelfLinkRef.catalog_parse(args[:service])
         end
       end
     end
@@ -113,9 +106,7 @@ module Google
       # A class to manage input to PathRules for url_map.
       class UrlMapPathRules
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapPathRules.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapPathRules.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -136,9 +127,7 @@ module Google
       # A Chef property that holds an integer
       class UrlMapPathRulesArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapPathRulesArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapPathRulesArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

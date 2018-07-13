@@ -91,8 +91,7 @@ module Google
       class InstTempDiskEncrKeyApi < InstTempDiskEncrKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.api_parse(args['rawKey'])
-          @rsa_encrypted_key =
-            Google::Compute::Property::String.api_parse(args['rsaEncryptedKey'])
+          @rsa_encrypted_key = Google::Compute::Property::String.api_parse(args['rsaEncryptedKey'])
           @sha256 = Google::Compute::Property::String.api_parse(args['sha256'])
         end
       end
@@ -101,13 +100,10 @@ module Google
       # Data is coming from the Chef catalog
       class InstTempDiskEncrKeyCatalog < InstTempDiskEncrKey
         def initialize(args)
-          @raw_key =
-            Google::Compute::Property::String.catalog_parse(args[:raw_key])
-          @rsa_encrypted_key = Google::Compute::Property::String.catalog_parse(
-            args[:rsa_encrypted_key]
-          )
-          @sha256 =
-            Google::Compute::Property::String.catalog_parse(args[:sha256])
+          @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
+          @rsa_encrypted_key =
+            Google::Compute::Property::String.catalog_parse(args[:rsa_encrypted_key])
+          @sha256 = Google::Compute::Property::String.catalog_parse(args[:sha256])
         end
       end
     end
@@ -116,9 +112,7 @@ module Google
       # A class to manage input to DiskEncryptionKey for instance_template.
       class InstTempDiskEncrKey
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstTempDiskEncrKey.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstTempDiskEncrKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

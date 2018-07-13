@@ -100,9 +100,7 @@ module Google
       # A class to manage input to GuestOsFeatures for image.
       class ImageGuestOsFeatu
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::ImageGuestOsFeatu.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::ImageGuestOsFeatu.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -123,9 +121,7 @@ module Google
       # A Chef property that holds an integer
       class ImageGuestOsFeatuArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::ImageGuestOsFeatuArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::ImageGuestOsFeatuArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

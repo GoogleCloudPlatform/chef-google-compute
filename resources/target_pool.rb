@@ -52,33 +52,22 @@ module Google
 
       property :backup_pool,
                [String, ::Google::Compute::Data::TargPoolSelfLinkRef],
-               coerce: ::Google::Compute::Property::TargPoolSelfLinkRef.coerce,
-               desired_state: true
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :failover_ratio,
-               Float,
-               coerce: ::Google::Compute::Property::Double.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::TargPoolSelfLinkRef.coerce, desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :failover_ratio
+               Float, coerce: ::Google::Compute::Property::Double.coerce, desired_state: true
       property :health_check,
                [String, ::Google::Compute::Data::HttHeaCheSelLinRef],
-               coerce: ::Google::Compute::Property::HttHeaCheSelLinRef.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::HttHeaCheSelLinRef.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # instances is Array of Google::Compute::Property::InstaSelfLinkRefArray
       property :instances,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::InstaSelfLinkRefArray.coerce,
+               coerce: ::Google::Compute::Property::InstaSelfLinkRefArray.coerce,
                desired_state: true
       property :tp_label,
                String,
@@ -86,12 +75,10 @@ module Google
                name_property: true, desired_state: true
       property :session_affinity,
                equal_to: %w[NONE CLIENT_IP CLIENT_IP_PROTO],
-               coerce: ::Google::Compute::Property::Enum.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
-               coerce: ::Google::Compute::Property::RegionNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -119,27 +106,16 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.failover_ratio =
-            ::Google::Compute::Property::Double.api_parse(
-              fetch['failoverRatio']
-            )
+            ::Google::Compute::Property::Double.api_parse(fetch['failoverRatio'])
           @current_resource.health_check =
-            ::Google::Compute::Property::HttHeaCheSelLinRef.api_parse(
-              fetch['healthCheck']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::HttHeaCheSelLinRef.api_parse(fetch['healthCheck'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.instances =
-            ::Google::Compute::Property::InstaSelfLinkRefArray.api_parse(
-              fetch['instances']
-            )
+            ::Google::Compute::Property::InstaSelfLinkRefArray.api_parse(fetch['instances'])
           @new_resource.__fetched = fetch
 
           update
@@ -386,10 +362,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#targetPool'
           )

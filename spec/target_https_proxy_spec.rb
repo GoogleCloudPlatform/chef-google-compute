@@ -92,8 +92,8 @@ context 'gcompute_target_https_proxy' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                              gcompute_url_map gcompute_ssl_certificate],
+                step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                              gcompute_ssl_certificate],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -213,10 +213,7 @@ context 'gcompute_target_https_proxy' do
                 chef_run.find_resource(:gcompute_target_https_proxy, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(thp_label: 'title0') }
 
@@ -238,10 +235,7 @@ context 'gcompute_target_https_proxy' do
                 chef_run.find_resource(:gcompute_target_https_proxy, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(thp_label: 'title1') }
 
@@ -263,10 +257,7 @@ context 'gcompute_target_https_proxy' do
                 chef_run.find_resource(:gcompute_target_https_proxy, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(thp_label: 'title2') }
 
@@ -331,8 +322,8 @@ context 'gcompute_target_https_proxy' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                              gcompute_url_map gcompute_ssl_certificate],
+                step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                              gcompute_ssl_certificate],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -455,14 +446,9 @@ context 'gcompute_target_https_proxy' do
                 chef_run.find_resource(:gcompute_target_https_proxy, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(thp_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(thp_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(quic_override: 'NONE') }
 
@@ -482,14 +468,9 @@ context 'gcompute_target_https_proxy' do
                 chef_run.find_resource(:gcompute_target_https_proxy, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(thp_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(thp_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(quic_override: 'ENABLE') }
 
@@ -509,14 +490,9 @@ context 'gcompute_target_https_proxy' do
                 chef_run.find_resource(:gcompute_target_https_proxy, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(thp_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(thp_label: 'test name#2 data') }
 
               it { is_expected.to have_attributes(quic_override: 'DISABLE') }
 
@@ -618,8 +594,8 @@ context 'gcompute_target_https_proxy' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                            gcompute_url_map gcompute_ssl_certificate],
+              step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                            gcompute_ssl_certificate],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -678,10 +654,7 @@ context 'gcompute_target_https_proxy' do
             expect(chef_run).to create(:gcompute_target_https_proxy,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(thp_label: 'title0') }
 
@@ -745,8 +718,8 @@ context 'gcompute_target_https_proxy' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                            gcompute_url_map gcompute_ssl_certificate],
+              step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                            gcompute_ssl_certificate],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -806,10 +779,7 @@ context 'gcompute_target_https_proxy' do
             expect(chef_run).to create(:gcompute_target_https_proxy,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(thp_label: 'test name#0 data') }
 
@@ -866,8 +836,8 @@ context 'gcompute_target_https_proxy' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                            gcompute_url_map gcompute_ssl_certificate],
+              step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                            gcompute_ssl_certificate],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -957,8 +927,8 @@ context 'gcompute_target_https_proxy' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                            gcompute_url_map gcompute_ssl_certificate],
+              step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                            gcompute_ssl_certificate],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1053,8 +1023,8 @@ context 'gcompute_target_https_proxy' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                            gcompute_url_map gcompute_ssl_certificate],
+              step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                            gcompute_ssl_certificate],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1150,8 +1120,8 @@ context 'gcompute_target_https_proxy' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_https_proxy gcompute_backend_service
-                            gcompute_url_map gcompute_ssl_certificate],
+              step_into: %w[gcompute_target_https_proxy gcompute_backend_service gcompute_url_map
+                            gcompute_ssl_certificate],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'

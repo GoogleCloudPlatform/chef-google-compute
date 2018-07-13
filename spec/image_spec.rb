@@ -269,16 +269,11 @@ context 'gcompute_image' do
                 chef_run.find_resource(:gcompute_image, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(disk_size_gb: 450_092_159) }
 
-              it do
-                is_expected.to have_attributes(family: 'test family#0 data')
-              end
+              it { is_expected.to have_attributes(family: 'test family#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
@@ -309,12 +304,7 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_disk_id: 'test source_disk_id#0 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#0 data') }
 
               it { is_expected.to have_attributes(source_type: 'RAW') }
             end
@@ -324,16 +314,11 @@ context 'gcompute_image' do
                 chef_run.find_resource(:gcompute_image, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(disk_size_gb: 900_184_319) }
 
-              it do
-                is_expected.to have_attributes(family: 'test family#1 data')
-              end
+              it { is_expected.to have_attributes(family: 'test family#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
@@ -364,12 +349,7 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_disk_id: 'test source_disk_id#1 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#1 data') }
 
               it { is_expected.to have_attributes(source_type: 'RAW') }
             end
@@ -379,16 +359,11 @@ context 'gcompute_image' do
                 chef_run.find_resource(:gcompute_image, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(disk_size_gb: 1_350_276_479) }
 
-              it do
-                is_expected.to have_attributes(family: 'test family#2 data')
-              end
+              it { is_expected.to have_attributes(family: 'test family#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
@@ -419,12 +394,7 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_disk_id: 'test source_disk_id#2 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#2 data') }
 
               it { is_expected.to have_attributes(source_type: 'RAW') }
             end
@@ -657,16 +627,11 @@ context 'gcompute_image' do
                 chef_run.find_resource(:gcompute_image, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(disk_size_gb: 450_092_159) }
 
-              it do
-                is_expected.to have_attributes(family: 'test family#0 data')
-              end
+              it { is_expected.to have_attributes(family: 'test family#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
@@ -697,12 +662,7 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_disk_id: 'test source_disk_id#0 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#0 data') }
 
               it { is_expected.to have_attributes(source_type: 'RAW') }
             end
@@ -712,16 +672,11 @@ context 'gcompute_image' do
                 chef_run.find_resource(:gcompute_image, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(disk_size_gb: 900_184_319) }
 
-              it do
-                is_expected.to have_attributes(family: 'test family#1 data')
-              end
+              it { is_expected.to have_attributes(family: 'test family#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
@@ -752,12 +707,7 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_disk_id: 'test source_disk_id#1 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#1 data') }
 
               it { is_expected.to have_attributes(source_type: 'RAW') }
             end
@@ -767,16 +717,11 @@ context 'gcompute_image' do
                 chef_run.find_resource(:gcompute_image, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(disk_size_gb: 1_350_276_479) }
 
-              it do
-                is_expected.to have_attributes(family: 'test family#2 data')
-              end
+              it { is_expected.to have_attributes(family: 'test family#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
@@ -807,12 +752,7 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_disk_id: 'test source_disk_id#2 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#2 data') }
 
               it { is_expected.to have_attributes(source_type: 'RAW') }
             end
@@ -1001,10 +941,7 @@ context 'gcompute_image' do
             expect(chef_run).to create(:gcompute_image,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(disk_size_gb: 450_092_159) }
 
@@ -1039,10 +976,7 @@ context 'gcompute_image' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(source_disk_id: 'test source_disk_id#0 data')
-          end
+          it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#0 data') }
 
           it { is_expected.to have_attributes(source_type: 'RAW') }
         end
@@ -1192,10 +1126,7 @@ context 'gcompute_image' do
             expect(chef_run).to create(:gcompute_image,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(disk_size_gb: 450_092_159) }
 
@@ -1230,10 +1161,7 @@ context 'gcompute_image' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(source_disk_id: 'test source_disk_id#0 data')
-          end
+          it { is_expected.to have_attributes(source_disk_id: 'test source_disk_id#0 data') }
 
           it { is_expected.to have_attributes(source_type: 'RAW') }
         end

@@ -45,30 +45,20 @@ module Google
     class SslCertificate < Chef::Resource
       resource_name :gcompute_ssl_certificate
 
-      property :certificate,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+      property :certificate
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :sc_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :private_key,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :private_key
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -81,8 +71,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#sslCertificate')
         if fetch.nil?
-          converge_by ['Creating gcompute_ssl_certificate',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Creating gcompute_ssl_certificate[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
             # TODO(nelsonjr): Determine how to print green like update converge
             puts # making a newline until we find a better way TODO: find!
@@ -97,19 +86,12 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.certificate =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['certificate']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['certificate'])
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.sc_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @new_resource.__fetched = fetch
@@ -122,8 +104,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#sslCertificate')
         unless fetch.nil?
-          converge_by ['Deleting gcompute_ssl_certificate',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Deleting gcompute_ssl_certificate[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
               self_link(@new_resource), fetch_auth(@new_resource)
             )
@@ -345,10 +326,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#sslCertificate'
           )

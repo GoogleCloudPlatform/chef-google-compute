@@ -47,8 +47,7 @@ module Google
                name_property: true, desired_state: true
       property :charges_use_fee,
                kind_of: [TrueClass, FalseClass],
-               coerce: ::Google::Compute::Property::Boolean.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -75,12 +74,9 @@ module Google
           end
         else
           @current_resource = @new_resource.clone
-          @current_resource.l_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.l_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.charges_use_fee =
-            ::Google::Compute::Property::Boolean.api_parse(
-              fetch['chargesUseFee']
-            )
+            ::Google::Compute::Property::Boolean.api_parse(fetch['chargesUseFee'])
           @new_resource.__fetched = fetch
 
           update

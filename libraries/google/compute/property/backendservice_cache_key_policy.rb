@@ -88,14 +88,8 @@ module Google
             { self: include_host, other: other.include_host },
             { self: include_protocol, other: other.include_protocol },
             { self: include_query_string, other: other.include_query_string },
-            {
-              self: query_string_blacklist,
-              other: other.query_string_blacklist
-            },
-            {
-              self: query_string_whitelist,
-              other: other.query_string_whitelist
-            }
+            { self: query_string_blacklist, other: other.query_string_blacklist },
+            { self: query_string_whitelist, other: other.query_string_whitelist }
           ]
         end
       end
@@ -105,22 +99,14 @@ module Google
       class BackServCachKeyPoliApi < BackServCachKeyPoli
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @include_host =
-            Google::Compute::Property::Boolean.api_parse(args['includeHost'])
-          @include_protocol = Google::Compute::Property::Boolean.api_parse(
-            args['includeProtocol']
-          )
-          @include_query_string = Google::Compute::Property::Boolean.api_parse(
-            args['includeQueryString']
-          )
+          @include_host = Google::Compute::Property::Boolean.api_parse(args['includeHost'])
+          @include_protocol = Google::Compute::Property::Boolean.api_parse(args['includeProtocol'])
+          @include_query_string =
+            Google::Compute::Property::Boolean.api_parse(args['includeQueryString'])
           @query_string_blacklist =
-            Google::Compute::Property::StringArray.api_parse(
-              args['queryStringBlacklist']
-            )
+            Google::Compute::Property::StringArray.api_parse(args['queryStringBlacklist'])
           @query_string_whitelist =
-            Google::Compute::Property::StringArray.api_parse(
-              args['queryStringWhitelist']
-            )
+            Google::Compute::Property::StringArray.api_parse(args['queryStringWhitelist'])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -130,24 +116,15 @@ module Google
       class BackServCachKeyPoliCatalog < BackServCachKeyPoli
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @include_host = Google::Compute::Property::Boolean.catalog_parse(
-            args[:include_host]
-          )
-          @include_protocol = Google::Compute::Property::Boolean.catalog_parse(
-            args[:include_protocol]
-          )
+          @include_host = Google::Compute::Property::Boolean.catalog_parse(args[:include_host])
+          @include_protocol =
+            Google::Compute::Property::Boolean.catalog_parse(args[:include_protocol])
           @include_query_string =
-            Google::Compute::Property::Boolean.catalog_parse(
-              args[:include_query_string]
-            )
+            Google::Compute::Property::Boolean.catalog_parse(args[:include_query_string])
           @query_string_blacklist =
-            Google::Compute::Property::StringArray.catalog_parse(
-              args[:query_string_blacklist]
-            )
+            Google::Compute::Property::StringArray.catalog_parse(args[:query_string_blacklist])
           @query_string_whitelist =
-            Google::Compute::Property::StringArray.catalog_parse(
-              args[:query_string_whitelist]
-            )
+            Google::Compute::Property::StringArray.catalog_parse(args[:query_string_whitelist])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -157,9 +134,7 @@ module Google
       # A class to manage input to CacheKeyPolicy for backend_service.
       class BackServCachKeyPoli
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::BackServCachKeyPoli.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::BackServCachKeyPoli.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

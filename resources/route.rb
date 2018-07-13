@@ -46,51 +46,32 @@ module Google
     class Route < Chef::Resource
       resource_name :gcompute_route
 
-      property :dest_range,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :dest_range
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :r_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :network,
                [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce,
-               desired_state: true
-      property :priority,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
+      property :priority
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # tags is Array of Google::Compute::Property::StringArray
-      property :tags,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
-      property :next_hop_gateway,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :next_hop_instance,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :next_hop_ip,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :next_hop_vpn_tunnel,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :next_hop_network,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :tags
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      property :next_hop_gateway
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :next_hop_instance
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :next_hop_ip
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :next_hop_vpn_tunnel
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :next_hop_network
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -120,15 +101,10 @@ module Google
           @current_resource.dest_range =
             ::Google::Compute::Property::String.api_parse(fetch['destRange'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.r_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.r_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.next_hop_network =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['nextHopNetwork']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['nextHopNetwork'])
           @new_resource.__fetched = fetch
 
           update
@@ -377,10 +353,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#route'
           )

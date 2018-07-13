@@ -51,64 +51,45 @@ module Google
     class InstanceGroupManager < Chef::Resource
       resource_name :gcompute_instance_group_manager
 
-      property :base_instance_name,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
+      property :base_instance_name
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :current_actions,
                [Hash, ::Google::Compute::Data::InstGrouManaCurrActi],
-               coerce: ::Google::Compute::Property::InstGrouManaCurrActi.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::InstGrouManaCurrActi.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :instance_group,
                [String, ::Google::Compute::Data::InstGrouSelfLinkRef],
-               coerce: ::Google::Compute::Property::InstGrouSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::InstGrouSelfLinkRef.coerce, desired_state: true
       property :instance_template,
                [String, ::Google::Compute::Data::InstTempSelfLinkRef],
-               coerce: ::Google::Compute::Property::InstTempSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::InstTempSelfLinkRef.coerce, desired_state: true
       property :igm_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # named_ports is Array of
-      # Google::Compute::Property::InstGrouManaNamePortArray
+      # named_ports is Array of Google::Compute::Property::InstGrouManaNamePortArray
       property :named_ports,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::InstGrouManaNamePortArray.coerce,
+               coerce: ::Google::Compute::Property::InstGrouManaNamePortArray.coerce,
                desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce,
-               desired_state: true
-      # target_pools is Array of
-      # Google::Compute::Property::TargPoolSelfLinkRefArray
+               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
+      # target_pools is Array of Google::Compute::Property::TargPoolSelfLinkRefArray
       property :target_pools,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::TargPoolSelfLinkRefArray.coerce,
+               coerce: ::Google::Compute::Property::TargPoolSelfLinkRefArray.coerce,
                desired_state: true
-      property :target_size,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+      property :target_size
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
-               coerce: ::Google::Compute::Property::ZoneNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -121,8 +102,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#instanceGroupManager')
         if fetch.nil?
-          converge_by ['Creating gcompute_instance_group_manager',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Creating gcompute_instance_group_manager[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
             # TODO(nelsonjr): Determine how to print green like update converge
             puts # making a newline until we find a better way TODO: find!
@@ -137,45 +117,26 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.base_instance_name =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['baseInstanceName']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['baseInstanceName'])
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.current_actions =
-            ::Google::Compute::Property::InstGrouManaCurrActi.api_parse(
-              fetch['currentActions']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::InstGrouManaCurrActi.api_parse(fetch['currentActions'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.instance_group =
-            ::Google::Compute::Property::InstGrouSelfLinkRef.api_parse(
-              fetch['instanceGroup']
-            )
+            ::Google::Compute::Property::InstGrouSelfLinkRef.api_parse(fetch['instanceGroup'])
           @current_resource.instance_template =
-            ::Google::Compute::Property::InstTempSelfLinkRef.api_parse(
-              fetch['instanceTemplate']
-            )
+            ::Google::Compute::Property::InstTempSelfLinkRef.api_parse(fetch['instanceTemplate'])
           @current_resource.igm_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.named_ports =
-            ::Google::Compute::Property::InstGrouManaNamePortArray.api_parse(
-              fetch['namedPorts']
-            )
+            ::Google::Compute::Property::InstGrouManaNamePortArray.api_parse(fetch['namedPorts'])
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(
-              fetch['region']
-            )
+            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
           @current_resource.target_pools =
-            ::Google::Compute::Property::TargPoolSelfLinkRefArray.api_parse(
-              fetch['targetPools']
-            )
+            ::Google::Compute::Property::TargPoolSelfLinkRefArray.api_parse(fetch['targetPools'])
           @current_resource.target_size =
-            ::Google::Compute::Property::Integer.api_parse(
-              fetch['targetSize']
-            )
+            ::Google::Compute::Property::Integer.api_parse(fetch['targetSize'])
           @new_resource.__fetched = fetch
 
           update
@@ -186,8 +147,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#instanceGroupManager')
         unless fetch.nil?
-          converge_by ['Deleting gcompute_instance_group_manager',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Deleting gcompute_instance_group_manager[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
               self_link(@new_resource), fetch_auth(@new_resource)
             )
@@ -424,10 +384,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#instanceGroupManager'
           )

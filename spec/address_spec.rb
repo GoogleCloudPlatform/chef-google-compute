@@ -61,27 +61,18 @@ context 'gcompute_address' do
               allow(Time).to receive(:now).and_return(
                 Time.new(2017, 1, 2, 3, 4, 5)
               )
-              expect_network_get_success 1,
-                                         name: 'title0',
-                                         region: 'test name#0 data'
-              expect_network_get_success 2,
-                                         name: 'title1',
-                                         region: 'test name#1 data'
-              expect_network_get_success 3,
-                                         name: 'title2',
-                                         region: 'test name#2 data'
+              expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
+              expect_network_get_success 2, name: 'title1', region: 'test name#1 data'
+              expect_network_get_success 3, name: 'title2', region: 'test name#2 data'
               expect_network_get_success_network 1
               expect_network_get_success_network 2
               expect_network_get_success_network 3
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -101,8 +92,7 @@ context 'gcompute_address' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_address gcompute_region gcompute_network
-                              gcompute_subnetwork],
+                step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -231,16 +221,11 @@ context 'gcompute_address' do
                 chef_run.find_resource(:gcompute_address, 'title0')
               end
 
-              it do
-                is_expected.to have_attributes(address: 'test address#0 data')
-              end
+              it { is_expected.to have_attributes(address: 'test address#0 data') }
 
               it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(a_label: 'title0') }
 
@@ -260,16 +245,11 @@ context 'gcompute_address' do
                 chef_run.find_resource(:gcompute_address, 'title1')
               end
 
-              it do
-                is_expected.to have_attributes(address: 'test address#1 data')
-              end
+              it { is_expected.to have_attributes(address: 'test address#1 data') }
 
               it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(a_label: 'title1') }
 
@@ -289,16 +269,11 @@ context 'gcompute_address' do
                 chef_run.find_resource(:gcompute_address, 'title2')
               end
 
-              it do
-                is_expected.to have_attributes(address: 'test address#2 data')
-              end
+              it { is_expected.to have_attributes(address: 'test address#2 data') }
 
               it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(a_label: 'title2') }
 
@@ -339,12 +314,9 @@ context 'gcompute_address' do
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -364,8 +336,7 @@ context 'gcompute_address' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_address gcompute_region gcompute_network
-                              gcompute_subnetwork],
+                step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -497,16 +468,11 @@ context 'gcompute_address' do
                 chef_run.find_resource(:gcompute_address, 'title0')
               end
 
-              it do
-                is_expected.to have_attributes(address: 'test address#0 data')
-              end
+              it { is_expected.to have_attributes(address: 'test address#0 data') }
 
               it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(a_label: 'test name#0 data') }
 
@@ -526,16 +492,11 @@ context 'gcompute_address' do
                 chef_run.find_resource(:gcompute_address, 'title1')
               end
 
-              it do
-                is_expected.to have_attributes(address: 'test address#1 data')
-              end
+              it { is_expected.to have_attributes(address: 'test address#1 data') }
 
               it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(a_label: 'test name#1 data') }
 
@@ -555,16 +516,11 @@ context 'gcompute_address' do
                 chef_run.find_resource(:gcompute_address, 'title2')
               end
 
-              it do
-                is_expected.to have_attributes(address: 'test address#2 data')
-              end
+              it { is_expected.to have_attributes(address: 'test address#2 data') }
 
               it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(a_label: 'test name#2 data') }
 
@@ -629,9 +585,7 @@ context 'gcompute_address' do
         # Ensure present: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      region: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
             expect_network_create \
               1,
               {
@@ -644,9 +598,7 @@ context 'gcompute_address' do
               },
               name: 'title0',
               region: 'test name#0 data'
-            expect_network_get_async 1,
-                                     name: 'title0',
-                                     region: 'test name#0 data'
+            expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_network 1
             expect_network_get_success_region 1
             expect_network_get_success_subnetwork 1, region: 'test name#0 data'
@@ -669,8 +621,7 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region gcompute_network
-                            gcompute_subnetwork],
+              step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -736,10 +687,7 @@ context 'gcompute_address' do
 
           it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(a_label: 'title0') }
 
@@ -802,8 +750,7 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region gcompute_network
-                            gcompute_subnetwork],
+              step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -870,10 +817,7 @@ context 'gcompute_address' do
 
           it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(a_label: 'test name#0 data') }
 
@@ -905,9 +849,7 @@ context 'gcompute_address' do
         # Ensure absent: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      region: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_region 1
           end
 
@@ -928,8 +870,7 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region gcompute_network
-                            gcompute_subnetwork],
+              step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1001,8 +942,7 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region gcompute_network
-                            gcompute_subnetwork],
+              step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1056,13 +996,9 @@ context 'gcompute_address' do
         # Ensure absent: resource exists, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_success 1,
-                                       name: 'title0',
-                                       region: 'test name#0 data'
+            expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
             expect_network_delete 1, 'title0', region: 'test name#0 data'
-            expect_network_get_async 1,
-                                     name: 'title0',
-                                     region: 'test name#0 data'
+            expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_region 1
           end
 
@@ -1083,8 +1019,7 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region gcompute_network
-                            gcompute_subnetwork],
+              step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1162,8 +1097,7 @@ context 'gcompute_address' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_address gcompute_region gcompute_network
-                            gcompute_subnetwork],
+              step_into: %w[gcompute_address gcompute_region gcompute_network gcompute_subnetwork],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'

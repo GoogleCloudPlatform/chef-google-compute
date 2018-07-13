@@ -137,26 +137,15 @@ context 'gcompute_network' do
                 chef_run.find_resource(:gcompute_network, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data')
-              end
+              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ipv4_range: 'test ipv4_range#0 data')
-              end
+              it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
               it { is_expected.to have_attributes(n_label: 'title0') }
 
-              it do
-                is_expected.to have_attributes(auto_create_subnetworks: true)
-              end
+              it { is_expected.to have_attributes(auto_create_subnetworks: true) }
             end
 
             context 'gcompute_network[title1]' do
@@ -164,26 +153,15 @@ context 'gcompute_network' do
                 chef_run.find_resource(:gcompute_network, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(gateway_ipv4: 'test gateway_ipv4#1 data')
-              end
+              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ipv4_range: 'test ipv4_range#1 data')
-              end
+              it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#1 data') }
 
               it { is_expected.to have_attributes(n_label: 'title1') }
 
-              it do
-                is_expected.to have_attributes(auto_create_subnetworks: false)
-              end
+              it { is_expected.to have_attributes(auto_create_subnetworks: false) }
             end
 
             context 'gcompute_network[title2]' do
@@ -191,26 +169,15 @@ context 'gcompute_network' do
                 chef_run.find_resource(:gcompute_network, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(gateway_ipv4: 'test gateway_ipv4#2 data')
-              end
+              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ipv4_range: 'test ipv4_range#2 data')
-              end
+              it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#2 data') }
 
               it { is_expected.to have_attributes(n_label: 'title2') }
 
-              it do
-                is_expected.to have_attributes(auto_create_subnetworks: true)
-              end
+              it { is_expected.to have_attributes(auto_create_subnetworks: true) }
             end
           end
 
@@ -309,26 +276,15 @@ context 'gcompute_network' do
                 chef_run.find_resource(:gcompute_network, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data')
-              end
+              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ipv4_range: 'test ipv4_range#0 data')
-              end
+              it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
               it { is_expected.to have_attributes(n_label: 'test name#0 data') }
 
-              it do
-                is_expected.to have_attributes(auto_create_subnetworks: true)
-              end
+              it { is_expected.to have_attributes(auto_create_subnetworks: true) }
             end
 
             context 'gcompute_network[title1]' do
@@ -336,26 +292,15 @@ context 'gcompute_network' do
                 chef_run.find_resource(:gcompute_network, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(gateway_ipv4: 'test gateway_ipv4#1 data')
-              end
+              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ipv4_range: 'test ipv4_range#1 data')
-              end
+              it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#1 data') }
 
               it { is_expected.to have_attributes(n_label: 'test name#1 data') }
 
-              it do
-                is_expected.to have_attributes(auto_create_subnetworks: false)
-              end
+              it { is_expected.to have_attributes(auto_create_subnetworks: false) }
             end
 
             context 'gcompute_network[title2]' do
@@ -363,26 +308,15 @@ context 'gcompute_network' do
                 chef_run.find_resource(:gcompute_network, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(gateway_ipv4: 'test gateway_ipv4#2 data')
-              end
+              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ipv4_range: 'test ipv4_range#2 data')
-              end
+              it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#2 data') }
 
               it { is_expected.to have_attributes(n_label: 'test name#2 data') }
 
-              it do
-                is_expected.to have_attributes(auto_create_subnetworks: true)
-              end
+              it { is_expected.to have_attributes(auto_create_subnetworks: true) }
             end
           end
 
@@ -504,19 +438,11 @@ context 'gcompute_network' do
             expect(chef_run).to create(:gcompute_network,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data')
-          end
+          it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
 
-          it do
-            is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data')
-          end
+          it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
           it { is_expected.to have_attributes(n_label: 'title0') }
 
@@ -603,19 +529,11 @@ context 'gcompute_network' do
             expect(chef_run).to create(:gcompute_network,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data')
-          end
+          it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
 
-          it do
-            is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data')
-          end
+          it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
           it { is_expected.to have_attributes(n_label: 'test name#0 data') }
 

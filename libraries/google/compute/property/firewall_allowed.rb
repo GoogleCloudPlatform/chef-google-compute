@@ -87,10 +87,8 @@ module Google
       # Data is coming from the GCP API
       class FirewallAllowedApi < FirewallAllowed
         def initialize(args)
-          @ip_protocol =
-            Google::Compute::Property::String.api_parse(args['IPProtocol'])
-          @ports =
-            Google::Compute::Property::StringArray.api_parse(args['ports'])
+          @ip_protocol = Google::Compute::Property::String.api_parse(args['IPProtocol'])
+          @ports = Google::Compute::Property::StringArray.api_parse(args['ports'])
         end
       end
 
@@ -98,10 +96,8 @@ module Google
       # Data is coming from the Chef catalog
       class FirewallAllowedCatalog < FirewallAllowed
         def initialize(args)
-          @ip_protocol =
-            Google::Compute::Property::String.catalog_parse(args[:ip_protocol])
-          @ports =
-            Google::Compute::Property::StringArray.catalog_parse(args[:ports])
+          @ip_protocol = Google::Compute::Property::String.catalog_parse(args[:ip_protocol])
+          @ports = Google::Compute::Property::StringArray.catalog_parse(args[:ports])
         end
       end
     end
@@ -110,9 +106,7 @@ module Google
       # A class to manage input to Allowed for firewall.
       class FirewallAllowed
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::FirewallAllowed.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::FirewallAllowed.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -133,9 +127,7 @@ module Google
       # A Chef property that holds an integer
       class FirewallAllowedArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::FirewallAllowedArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::FirewallAllowedArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

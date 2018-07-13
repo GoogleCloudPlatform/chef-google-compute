@@ -102,9 +102,7 @@ module Google
       # A class to manage fetching self_link from a network
       class NetwoSelfLinkRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::NetwoSelfLinkRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::NetwoSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)

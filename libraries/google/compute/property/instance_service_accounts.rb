@@ -88,8 +88,7 @@ module Google
       class InstancServiceAccountApi < InstancServiceAccount
         def initialize(args)
           @email = Google::Compute::Property::String.api_parse(args['email'])
-          @scopes =
-            Google::Compute::Property::StringArray.api_parse(args['scopes'])
+          @scopes = Google::Compute::Property::StringArray.api_parse(args['scopes'])
         end
       end
 
@@ -98,8 +97,7 @@ module Google
       class InstancServiceAccountCatalog < InstancServiceAccount
         def initialize(args)
           @email = Google::Compute::Property::String.catalog_parse(args[:email])
-          @scopes =
-            Google::Compute::Property::StringArray.catalog_parse(args[:scopes])
+          @scopes = Google::Compute::Property::StringArray.catalog_parse(args[:scopes])
         end
       end
     end
@@ -108,9 +106,7 @@ module Google
       # A class to manage input to ServiceAccounts for instance.
       class InstancServiceAccount
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancServiceAccount.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancServiceAccount.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -131,10 +127,7 @@ module Google
       # A Chef property that holds an integer
       class InstancServiceAccountArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstancServiceAccountArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancServiceAccountArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

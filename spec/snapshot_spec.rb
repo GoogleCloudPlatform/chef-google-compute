@@ -92,8 +92,7 @@ context 'gcompute_snapshot' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                              gcompute_license],
+                step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -242,10 +241,7 @@ context 'gcompute_snapshot' do
 
               it { is_expected.to have_attributes(s_label: 'title0') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'licenses' do
@@ -282,10 +278,7 @@ context 'gcompute_snapshot' do
 
               it { is_expected.to have_attributes(s_label: 'title1') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'licenses' do
@@ -322,10 +315,7 @@ context 'gcompute_snapshot' do
 
               it { is_expected.to have_attributes(s_label: 'title2') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'licenses' do
@@ -403,8 +393,7 @@ context 'gcompute_snapshot' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                              gcompute_license],
+                step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -556,10 +545,7 @@ context 'gcompute_snapshot' do
 
               it { is_expected.to have_attributes(s_label: 'test name#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'licenses' do
@@ -596,10 +582,7 @@ context 'gcompute_snapshot' do
 
               it { is_expected.to have_attributes(s_label: 'test name#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'licenses' do
@@ -636,10 +619,7 @@ context 'gcompute_snapshot' do
 
               it { is_expected.to have_attributes(s_label: 'test name#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'licenses' do
@@ -769,8 +749,7 @@ context 'gcompute_snapshot' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                            gcompute_license],
+              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -854,10 +833,7 @@ context 'gcompute_snapshot' do
           end
           it { is_expected.to have_attributes(s_label: 'title0') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'licenses' do
@@ -947,8 +923,7 @@ context 'gcompute_snapshot' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                            gcompute_license],
+              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1033,10 +1008,7 @@ context 'gcompute_snapshot' do
           end
           it { is_expected.to have_attributes(s_label: 'test name#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'licenses' do
@@ -1103,8 +1075,7 @@ context 'gcompute_snapshot' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                            gcompute_license],
+              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1167,8 +1138,7 @@ context 'gcompute_snapshot' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                            gcompute_license],
+              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1236,8 +1206,7 @@ context 'gcompute_snapshot' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                            gcompute_license],
+              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1306,8 +1275,7 @@ context 'gcompute_snapshot' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk
-                            gcompute_license],
+              step_into: %w[gcompute_snapshot gcompute_zone gcompute_disk gcompute_license],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'

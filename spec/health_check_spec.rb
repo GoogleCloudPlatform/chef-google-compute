@@ -229,14 +229,9 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 295_703_256)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
               it { is_expected.to have_attributes(hc_label: 'title0') }
 
@@ -274,14 +269,9 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 591_406_512)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 591_406_512) }
 
               it { is_expected.to have_attributes(hc_label: 'title1') }
 
@@ -319,14 +309,9 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 887_109_769)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 887_109_769) }
 
               it { is_expected.to have_attributes(hc_label: 'title2') }
 
@@ -545,18 +530,11 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 295_703_256)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
-              it do
-                is_expected.to have_attributes(hc_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(hc_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 5) }
 
@@ -592,18 +570,11 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 591_406_512)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 591_406_512) }
 
-              it do
-                is_expected.to have_attributes(hc_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(hc_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 5) }
 
@@ -639,18 +610,11 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 887_109_769)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 887_109_769) }
 
-              it do
-                is_expected.to have_attributes(hc_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(hc_label: 'test name#2 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 5) }
 
@@ -860,10 +824,7 @@ context 'gcompute_health_check' do
           end
           it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
@@ -1038,10 +999,7 @@ context 'gcompute_health_check' do
           end
           it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 

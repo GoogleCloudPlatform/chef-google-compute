@@ -96,10 +96,7 @@ module Google
           [
             { self: abandoning, other: other.abandoning },
             { self: creating, other: other.creating },
-            {
-              self: creating_without_retries,
-              other: other.creating_without_retries
-            },
+            { self: creating_without_retries, other: other.creating_without_retries },
             { self: deleting, other: other.deleting },
             { self: none, other: other.none },
             { self: recreating, other: other.recreating },
@@ -113,23 +110,15 @@ module Google
       # Data is coming from the GCP API
       class InstGrouManaCurrActiApi < InstGrouManaCurrActi
         def initialize(args)
-          @abandoning =
-            Google::Compute::Property::Integer.api_parse(args['abandoning'])
-          @creating =
-            Google::Compute::Property::Integer.api_parse(args['creating'])
+          @abandoning = Google::Compute::Property::Integer.api_parse(args['abandoning'])
+          @creating = Google::Compute::Property::Integer.api_parse(args['creating'])
           @creating_without_retries =
-            Google::Compute::Property::Integer.api_parse(
-              args['creatingWithoutRetries']
-            )
-          @deleting =
-            Google::Compute::Property::Integer.api_parse(args['deleting'])
+            Google::Compute::Property::Integer.api_parse(args['creatingWithoutRetries'])
+          @deleting = Google::Compute::Property::Integer.api_parse(args['deleting'])
           @none = Google::Compute::Property::Integer.api_parse(args['none'])
-          @recreating =
-            Google::Compute::Property::Integer.api_parse(args['recreating'])
-          @refreshing =
-            Google::Compute::Property::Integer.api_parse(args['refreshing'])
-          @restarting =
-            Google::Compute::Property::Integer.api_parse(args['restarting'])
+          @recreating = Google::Compute::Property::Integer.api_parse(args['recreating'])
+          @refreshing = Google::Compute::Property::Integer.api_parse(args['refreshing'])
+          @restarting = Google::Compute::Property::Integer.api_parse(args['restarting'])
         end
       end
 
@@ -137,23 +126,15 @@ module Google
       # Data is coming from the Chef catalog
       class InstGrouManaCurrActiCatalog < InstGrouManaCurrActi
         def initialize(args)
-          @abandoning =
-            Google::Compute::Property::Integer.catalog_parse(args[:abandoning])
-          @creating =
-            Google::Compute::Property::Integer.catalog_parse(args[:creating])
+          @abandoning = Google::Compute::Property::Integer.catalog_parse(args[:abandoning])
+          @creating = Google::Compute::Property::Integer.catalog_parse(args[:creating])
           @creating_without_retries =
-            Google::Compute::Property::Integer.catalog_parse(
-              args[:creating_without_retries]
-            )
-          @deleting =
-            Google::Compute::Property::Integer.catalog_parse(args[:deleting])
+            Google::Compute::Property::Integer.catalog_parse(args[:creating_without_retries])
+          @deleting = Google::Compute::Property::Integer.catalog_parse(args[:deleting])
           @none = Google::Compute::Property::Integer.catalog_parse(args[:none])
-          @recreating =
-            Google::Compute::Property::Integer.catalog_parse(args[:recreating])
-          @refreshing =
-            Google::Compute::Property::Integer.catalog_parse(args[:refreshing])
-          @restarting =
-            Google::Compute::Property::Integer.catalog_parse(args[:restarting])
+          @recreating = Google::Compute::Property::Integer.catalog_parse(args[:recreating])
+          @refreshing = Google::Compute::Property::Integer.catalog_parse(args[:refreshing])
+          @restarting = Google::Compute::Property::Integer.catalog_parse(args[:restarting])
         end
       end
     end
@@ -162,9 +143,7 @@ module Google
       # A class to manage input to CurrentActions for instance_group_manager.
       class InstGrouManaCurrActi
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstGrouManaCurrActi.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstGrouManaCurrActi.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

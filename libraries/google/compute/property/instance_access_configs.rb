@@ -92,9 +92,7 @@ module Google
       class InstancAccessConfigsApi < InstancAccessConfigs
         def initialize(args)
           @name = Google::Compute::Property::String.api_parse(args['name'])
-          @nat_ip = Google::Compute::Property::AddressAddressRef.api_parse(
-            args['natIP']
-          )
+          @nat_ip = Google::Compute::Property::AddressAddressRef.api_parse(args['natIP'])
           @type = Google::Compute::Property::Enum.api_parse(args['type'])
         end
       end
@@ -104,9 +102,7 @@ module Google
       class InstancAccessConfigsCatalog < InstancAccessConfigs
         def initialize(args)
           @name = Google::Compute::Property::String.catalog_parse(args[:name])
-          @nat_ip = Google::Compute::Property::AddressAddressRef.catalog_parse(
-            args[:nat_ip]
-          )
+          @nat_ip = Google::Compute::Property::AddressAddressRef.catalog_parse(args[:nat_ip])
           @type = Google::Compute::Property::Enum.catalog_parse(args[:type])
         end
       end
@@ -116,9 +112,7 @@ module Google
       # A class to manage input to AccessConfigs for instance.
       class InstancAccessConfigs
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancAccessConfigs.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancAccessConfigs.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -139,10 +133,7 @@ module Google
       # A Chef property that holds an integer
       class InstancAccessConfigsArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstancAccessConfigsArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancAccessConfigsArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

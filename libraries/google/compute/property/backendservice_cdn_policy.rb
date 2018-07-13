@@ -83,9 +83,7 @@ module Google
       class BackeServiCdnPolicApi < BackeServiCdnPolic
         def initialize(args)
           @cache_key_policy =
-            Google::Compute::Property::BackServCachKeyPoli.api_parse(
-              args['cacheKeyPolicy']
-            )
+            Google::Compute::Property::BackServCachKeyPoli.api_parse(args['cacheKeyPolicy'])
         end
       end
 
@@ -94,9 +92,7 @@ module Google
       class BackeServiCdnPolicCatalog < BackeServiCdnPolic
         def initialize(args)
           @cache_key_policy =
-            Google::Compute::Property::BackServCachKeyPoli.catalog_parse(
-              args[:cache_key_policy]
-            )
+            Google::Compute::Property::BackServCachKeyPoli.catalog_parse(args[:cache_key_policy])
         end
       end
     end
@@ -105,9 +101,7 @@ module Google
       # A class to manage input to CdnPolicy for backend_service.
       class BackeServiCdnPolic
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::BackeServiCdnPolic.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::BackeServiCdnPolic.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

@@ -73,12 +73,9 @@ context 'gcompute_instance_template' do
               expect_network_get_success_disk 1, zone: 'test name#0 data'
               expect_network_get_success_disk 2, zone: 'test name#1 data'
               expect_network_get_success_disk 3, zone: 'test name#2 data'
-              expect_network_get_success_machine_type 1,
-                                                      zone: 'test name#0 data'
-              expect_network_get_success_machine_type 2,
-                                                      zone: 'test name#1 data'
-              expect_network_get_success_machine_type 3,
-                                                      zone: 'test name#2 data'
+              expect_network_get_success_machine_type 1, zone: 'test name#0 data'
+              expect_network_get_success_machine_type 2, zone: 'test name#1 data'
+              expect_network_get_success_machine_type 3, zone: 'test name#2 data'
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
@@ -88,12 +85,9 @@ context 'gcompute_instance_template' do
               expect_network_get_success_network 1
               expect_network_get_success_network 2
               expect_network_get_success_network 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -878,10 +872,7 @@ context 'gcompute_instance_template' do
                 chef_run.find_resource(:gcompute_instance_template, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(it_label: 'title0') }
 
@@ -896,10 +887,7 @@ context 'gcompute_instance_template' do
                 chef_run.find_resource(:gcompute_instance_template, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(it_label: 'title1') }
 
@@ -914,10 +902,7 @@ context 'gcompute_instance_template' do
                 chef_run.find_resource(:gcompute_instance_template, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(it_label: 'title2') }
 
@@ -956,12 +941,9 @@ context 'gcompute_instance_template' do
               expect_network_get_success_disk 1, zone: 'test name#0 data'
               expect_network_get_success_disk 2, zone: 'test name#1 data'
               expect_network_get_success_disk 3, zone: 'test name#2 data'
-              expect_network_get_success_machine_type 1,
-                                                      zone: 'test name#0 data'
-              expect_network_get_success_machine_type 2,
-                                                      zone: 'test name#1 data'
-              expect_network_get_success_machine_type 3,
-                                                      zone: 'test name#2 data'
+              expect_network_get_success_machine_type 1, zone: 'test name#0 data'
+              expect_network_get_success_machine_type 2, zone: 'test name#1 data'
+              expect_network_get_success_machine_type 3, zone: 'test name#2 data'
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
@@ -971,12 +953,9 @@ context 'gcompute_instance_template' do
               expect_network_get_success_network 1
               expect_network_get_success_network 2
               expect_network_get_success_network 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -1764,14 +1743,9 @@ context 'gcompute_instance_template' do
                 chef_run.find_resource(:gcompute_instance_template, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(it_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(it_label: 'test name#0 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'properties' do
@@ -1784,14 +1758,9 @@ context 'gcompute_instance_template' do
                 chef_run.find_resource(:gcompute_instance_template, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(it_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(it_label: 'test name#1 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'properties' do
@@ -1804,14 +1773,9 @@ context 'gcompute_instance_template' do
                 chef_run.find_resource(:gcompute_instance_template, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(it_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(it_label: 'test name#2 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'properties' do
@@ -2513,10 +2477,7 @@ context 'gcompute_instance_template' do
             expect(chef_run).to create(:gcompute_instance_template,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(it_label: 'title0') }
 
@@ -3181,10 +3142,7 @@ context 'gcompute_instance_template' do
             expect(chef_run).to create(:gcompute_instance_template,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(it_label: 'test name#0 data') }
 

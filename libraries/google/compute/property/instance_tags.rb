@@ -86,10 +86,8 @@ module Google
       # Data is coming from the GCP API
       class InstanceTagsApi < InstanceTags
         def initialize(args)
-          @fingerprint =
-            Google::Compute::Property::String.api_parse(args['fingerprint'])
-          @items =
-            Google::Compute::Property::StringArray.api_parse(args['items'])
+          @fingerprint = Google::Compute::Property::String.api_parse(args['fingerprint'])
+          @items = Google::Compute::Property::StringArray.api_parse(args['items'])
         end
       end
 
@@ -97,10 +95,8 @@ module Google
       # Data is coming from the Chef catalog
       class InstanceTagsCatalog < InstanceTags
         def initialize(args)
-          @fingerprint =
-            Google::Compute::Property::String.catalog_parse(args[:fingerprint])
-          @items =
-            Google::Compute::Property::StringArray.catalog_parse(args[:items])
+          @fingerprint = Google::Compute::Property::String.catalog_parse(args[:fingerprint])
+          @items = Google::Compute::Property::StringArray.catalog_parse(args[:items])
         end
       end
     end

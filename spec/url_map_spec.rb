@@ -377,10 +377,7 @@ context 'gcompute_url_map' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'hostRules' do
@@ -410,10 +407,7 @@ context 'gcompute_url_map' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'hostRules' do
@@ -443,10 +437,7 @@ context 'gcompute_url_map' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'hostRules' do
@@ -802,19 +793,14 @@ context 'gcompute_url_map' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'hostRules' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(um_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(um_label: 'test name#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'pathMatchers' do
@@ -837,19 +823,14 @@ context 'gcompute_url_map' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'hostRules' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(um_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(um_label: 'test name#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'pathMatchers' do
@@ -872,19 +853,14 @@ context 'gcompute_url_map' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'hostRules' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(um_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(um_label: 'test name#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'pathMatchers' do
@@ -1175,10 +1151,7 @@ context 'gcompute_url_map' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'hostRules' do
@@ -1437,10 +1410,7 @@ context 'gcompute_url_map' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'hostRules' do

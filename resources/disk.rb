@@ -52,84 +52,54 @@ module Google
     class Disk < Chef::Resource
       resource_name :gcompute_disk
 
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
-      property :last_attach_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :last_detach_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      property :last_attach_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :last_detach_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :labels,
                [Hash, ::Google::Compute::Property::NameValues],
-               coerce: ::Google::Compute::Property::NameValues.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
       # licenses is Array of Google::Compute::Property::StringArray
-      property :licenses,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
+      property :licenses
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :d_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :size_gb,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
-      property :source_image,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :size_gb
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      property :source_image
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :type,
                [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
-               coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce, desired_state: true
       # users is Array of Google::Compute::Property::StringArray
-      property :users,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
+      property :users
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
-               coerce: ::Google::Compute::Property::ZoneNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
       property :disk_encryption_key,
                [Hash, ::Google::Compute::Data::DiskDiskEncryKey],
-               coerce: ::Google::Compute::Property::DiskDiskEncryKey.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::DiskDiskEncryKey.coerce, desired_state: true
       property :source_image_encryption_key,
                [Hash, ::Google::Compute::Data::DiskSourImagEncrKey],
-               coerce: ::Google::Compute::Property::DiskSourImagEncrKey.coerce,
-               desired_state: true
-      property :source_image_id,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :source_snapshot,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::DiskSourImagEncrKey.coerce, desired_state: true
+      property :source_image_id
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :source_snapshot
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :source_snapshot_encryption_key,
                [Hash, ::Google::Compute::Data::DiskSourSnapEncrKey],
-               coerce: ::Google::Compute::Property::DiskSourSnapEncrKey.coerce,
-               desired_state: true
-      property :source_snapshot_id,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::DiskSourSnapEncrKey.coerce, desired_state: true
+      property :source_snapshot_id
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -157,35 +127,22 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.last_attach_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['lastAttachTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['lastAttachTimestamp'])
           @current_resource.last_detach_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['lastDetachTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['lastDetachTimestamp'])
           @current_resource.labels =
             ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
           @current_resource.licenses =
-            ::Google::Compute::Property::StringArray.api_parse(
-              fetch['licenses']
-            )
+            ::Google::Compute::Property::StringArray.api_parse(fetch['licenses'])
           @current_resource.size_gb =
             ::Google::Compute::Property::Integer.api_parse(fetch['sizeGb'])
           @current_resource.type =
-            ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(
-              fetch['type']
-            )
+            ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(fetch['type'])
           @current_resource.users =
             ::Google::Compute::Property::StringArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch
@@ -231,8 +188,7 @@ module Google
             type: new_resource.type,
             diskEncryptionKey: new_resource.disk_encryption_key,
             sourceImageEncryptionKey: new_resource.source_image_encryption_key,
-            sourceSnapshotEncryptionKey:
-              new_resource.source_snapshot_encryption_key
+            sourceSnapshotEncryptionKey: new_resource.source_snapshot_encryption_key
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -276,8 +232,7 @@ module Google
             source_image_encryption_key: resource.source_image_encryption_key,
             source_image_id: resource.source_image_id,
             source_snapshot: resource.source_snapshot,
-            source_snapshot_encryption_key:
-              resource.source_snapshot_encryption_key,
+            source_snapshot_encryption_key: resource.source_snapshot_encryption_key,
             source_snapshot_id: resource.source_snapshot_id
           }.reject { |_, v| v.nil? }
         end
@@ -446,10 +401,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#disk'
           )

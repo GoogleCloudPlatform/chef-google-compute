@@ -131,10 +131,7 @@ context 'gcompute_global_address' do
                 chef_run.find_resource(:gcompute_global_address, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(ga_label: 'title0') }
 
@@ -146,10 +143,7 @@ context 'gcompute_global_address' do
                 chef_run.find_resource(:gcompute_global_address, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(ga_label: 'title1') }
 
@@ -161,10 +155,7 @@ context 'gcompute_global_address' do
                 chef_run.find_resource(:gcompute_global_address, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(ga_label: 'title2') }
 
@@ -261,14 +252,9 @@ context 'gcompute_global_address' do
                 chef_run.find_resource(:gcompute_global_address, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(ga_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(ga_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
             end
@@ -278,14 +264,9 @@ context 'gcompute_global_address' do
                 chef_run.find_resource(:gcompute_global_address, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(ga_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(ga_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV6') }
             end
@@ -295,14 +276,9 @@ context 'gcompute_global_address' do
                 chef_run.find_resource(:gcompute_global_address, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(ga_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(ga_label: 'test name#2 data') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
             end
@@ -422,10 +398,7 @@ context 'gcompute_global_address' do
             expect(chef_run).to create(:gcompute_global_address,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(ga_label: 'title0') }
 
@@ -508,10 +481,7 @@ context 'gcompute_global_address' do
             expect(chef_run).to create(:gcompute_global_address,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(ga_label: 'test name#0 data') }
 

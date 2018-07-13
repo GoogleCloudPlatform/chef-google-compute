@@ -50,43 +50,28 @@ module Google
       # allowed is Array of Google::Compute::Property::FirewallAllowedArray
       property :allowed,
                Array,
-               coerce: ::Google::Compute::Property::FirewallAllowedArray.coerce,
-               desired_state: true
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::FirewallAllowedArray.coerce, desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :f_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :network,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :network
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # source_ranges is Array of Google::Compute::Property::StringArray
-      property :source_ranges,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
+      property :source_ranges
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       # source_tags is Array of Google::Compute::Property::StringArray
-      property :source_tags,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
+      property :source_tags
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       # target_tags is Array of Google::Compute::Property::StringArray
-      property :target_tags,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
+      property :target_tags
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -109,35 +94,21 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.allowed =
-            ::Google::Compute::Property::FirewallAllowedArray.api_parse(
-              fetch['allowed']
-            )
+            ::Google::Compute::Property::FirewallAllowedArray.api_parse(fetch['allowed'])
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.f_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+          @current_resource.f_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.network =
             ::Google::Compute::Property::String.api_parse(fetch['network'])
           @current_resource.source_ranges =
-            ::Google::Compute::Property::StringArray.api_parse(
-              fetch['sourceRanges']
-            )
+            ::Google::Compute::Property::StringArray.api_parse(fetch['sourceRanges'])
           @current_resource.source_tags =
-            ::Google::Compute::Property::StringArray.api_parse(
-              fetch['sourceTags']
-            )
+            ::Google::Compute::Property::StringArray.api_parse(fetch['sourceTags'])
           @current_resource.target_tags =
-            ::Google::Compute::Property::StringArray.api_parse(
-              fetch['targetTags']
-            )
+            ::Google::Compute::Property::StringArray.api_parse(fetch['targetTags'])
 
           update
         end
@@ -369,10 +340,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#firewall'
           )

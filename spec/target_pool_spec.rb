@@ -61,15 +61,9 @@ context 'gcompute_target_pool' do
               allow(Time).to receive(:now).and_return(
                 Time.new(2017, 1, 2, 3, 4, 5)
               )
-              expect_network_get_success 1,
-                                         name: 'title0',
-                                         region: 'test name#0 data'
-              expect_network_get_success 2,
-                                         name: 'title1',
-                                         region: 'test name#1 data'
-              expect_network_get_success 3,
-                                         name: 'title2',
-                                         region: 'test name#2 data'
+              expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
+              expect_network_get_success 2, name: 'title1', region: 'test name#1 data'
+              expect_network_get_success 3, name: 'title2', region: 'test name#2 data'
               expect_network_get_success_http_health_check 1
               expect_network_get_success_http_health_check 2
               expect_network_get_success_http_health_check 3
@@ -101,8 +95,8 @@ context 'gcompute_target_pool' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                              gcompute_instance gcompute_http_health_check],
+                step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                              gcompute_http_health_check],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -310,8 +304,8 @@ context 'gcompute_target_pool' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                              gcompute_instance gcompute_http_health_check],
+                step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                              gcompute_http_health_check],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -521,9 +515,7 @@ context 'gcompute_target_pool' do
         # Ensure present: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      region: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
             expect_network_create \
               1,
               {
@@ -540,9 +532,7 @@ context 'gcompute_target_pool' do
               },
               name: 'title0',
               region: 'test name#0 data'
-            expect_network_get_async 1,
-                                     name: 'title0',
-                                     region: 'test name#0 data'
+            expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_http_health_check 1
             expect_network_get_success_zone 1
             expect_network_get_success_instance 1, zone: 'test name#0 data'
@@ -566,8 +556,8 @@ context 'gcompute_target_pool' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                            gcompute_instance gcompute_http_health_check],
+              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                            gcompute_http_health_check],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -690,8 +680,8 @@ context 'gcompute_target_pool' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                            gcompute_instance gcompute_http_health_check],
+              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                            gcompute_http_health_check],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -779,9 +769,7 @@ context 'gcompute_target_pool' do
         # Ensure absent: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      region: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_region 1
           end
 
@@ -802,8 +790,8 @@ context 'gcompute_target_pool' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                            gcompute_instance gcompute_http_health_check],
+              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                            gcompute_http_health_check],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -875,8 +863,8 @@ context 'gcompute_target_pool' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                            gcompute_instance gcompute_http_health_check],
+              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                            gcompute_http_health_check],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -930,13 +918,9 @@ context 'gcompute_target_pool' do
         # Ensure absent: resource exists, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_success 1,
-                                       name: 'title0',
-                                       region: 'test name#0 data'
+            expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
             expect_network_delete 1, 'title0', region: 'test name#0 data'
-            expect_network_get_async 1,
-                                     name: 'title0',
-                                     region: 'test name#0 data'
+            expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_region 1
           end
 
@@ -957,8 +941,8 @@ context 'gcompute_target_pool' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                            gcompute_instance gcompute_http_health_check],
+              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                            gcompute_http_health_check],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1036,8 +1020,8 @@ context 'gcompute_target_pool' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone
-                            gcompute_instance gcompute_http_health_check],
+              step_into: %w[gcompute_target_pool gcompute_region gcompute_zone gcompute_instance
+                            gcompute_http_health_check],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'

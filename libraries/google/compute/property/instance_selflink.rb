@@ -103,9 +103,7 @@ module Google
       # A class to manage fetching self_link from a instance
       class InstaSelfLinkRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstaSelfLinkRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -130,9 +128,7 @@ module Google
       # A Chef property that holds an Array of InstaSelfLinkRef
       class InstaSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstaSelfLinkRefArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

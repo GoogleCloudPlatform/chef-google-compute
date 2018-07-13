@@ -102,9 +102,7 @@ module Google
       # A class to manage fetching self_link from a machine_type
       class MachTypeSelfLinkRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::MachTypeSelfLinkRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::MachTypeSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)

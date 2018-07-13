@@ -68,86 +68,59 @@ module Google
 
       property :can_ip_forward,
                kind_of: [TrueClass, FalseClass],
-               coerce: ::Google::Compute::Property::Boolean.coerce,
-               desired_state: true
-      property :cpu_platform,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :creation_timestamp,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
+      property :cpu_platform
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :creation_timestamp
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # disks is Array of Google::Compute::Property::InstanceDisksArray
       property :disks,
                Array,
-               coerce: ::Google::Compute::Property::InstanceDisksArray.coerce,
-               desired_state: true
-      # guest_accelerators is Array of
-      # Google::Compute::Property::InstancGuestAccelerArray
+               coerce: ::Google::Compute::Property::InstanceDisksArray.coerce, desired_state: true
+      # guest_accelerators is Array of Google::Compute::Property::InstancGuestAccelerArray
       property :guest_accelerators,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::InstancGuestAccelerArray.coerce,
+               coerce: ::Google::Compute::Property::InstancGuestAccelerArray.coerce,
                desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
-      property :label_fingerprint,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      property :label_fingerprint
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :metadata,
                [Hash, ::Google::Compute::Property::NameValues],
-               coerce: ::Google::Compute::Property::NameValues.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
       property :machine_type,
                [String, ::Google::Compute::Data::MachTypeSelfLinkRef],
-               coerce: ::Google::Compute::Property::MachTypeSelfLinkRef.coerce,
-               desired_state: true
-      property :min_cpu_platform,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::MachTypeSelfLinkRef.coerce, desired_state: true
+      property :min_cpu_platform
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :i_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # network_interfaces is Array of
-      # Google::Compute::Property::InstancNetworkInterfaArray
+      # network_interfaces is Array of Google::Compute::Property::InstancNetworkInterfaArray
       property :network_interfaces,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::InstancNetworkInterfaArray.coerce,
+               coerce: ::Google::Compute::Property::InstancNetworkInterfaArray.coerce,
                desired_state: true
       property :scheduling,
                [Hash, ::Google::Compute::Data::InstanceScheduling],
-               coerce: ::Google::Compute::Property::InstanceScheduling.coerce,
-               desired_state: true
-      # service_accounts is Array of
-      # Google::Compute::Property::InstancServiceAccountArray
+               coerce: ::Google::Compute::Property::InstanceScheduling.coerce, desired_state: true
+      # service_accounts is Array of Google::Compute::Property::InstancServiceAccountArray
       property :service_accounts,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::InstancServiceAccountArray.coerce,
+               coerce: ::Google::Compute::Property::InstancServiceAccountArray.coerce,
                desired_state: true
-      property :status,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :status_message,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :status
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :status_message
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :tags,
                [Hash, ::Google::Compute::Data::InstanceTags],
-               coerce: ::Google::Compute::Property::InstanceTags.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::InstanceTags.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
-               coerce: ::Google::Compute::Property::ZoneNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -175,49 +148,31 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.can_ip_forward =
-            ::Google::Compute::Property::Boolean.api_parse(
-              fetch['canIpForward']
-            )
+            ::Google::Compute::Property::Boolean.api_parse(fetch['canIpForward'])
           @current_resource.cpu_platform =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['cpuPlatform']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['cpuPlatform'])
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['creationTimestamp'])
           @current_resource.guest_accelerators =
             ::Google::Compute::Property::InstancGuestAccelerArray.api_parse(
               fetch['guestAccelerators']
             )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.label_fingerprint =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['labelFingerprint']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @current_resource.metadata =
-            ::Google::Compute::Property::NameValues.api_parse(
-              fetch['metadata']
-            )
+            ::Google::Compute::Property::NameValues.api_parse(fetch['metadata'])
           @current_resource.machine_type =
-            ::Google::Compute::Property::MachTypeSelfLinkRef.api_parse(
-              fetch['machineType']
-            )
+            ::Google::Compute::Property::MachTypeSelfLinkRef.api_parse(fetch['machineType'])
           @current_resource.min_cpu_platform =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['minCpuPlatform']
-            )
-          @current_resource.i_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
+            ::Google::Compute::Property::String.api_parse(fetch['minCpuPlatform'])
+          @current_resource.i_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.network_interfaces =
             ::Google::Compute::Property::InstancNetworkInterfaArray.api_parse(
               fetch['networkInterfaces']
             )
           @current_resource.scheduling =
-            ::Google::Compute::Property::InstanceScheduling.api_parse(
-              fetch['scheduling']
-            )
+            ::Google::Compute::Property::InstanceScheduling.api_parse(fetch['scheduling'])
           @current_resource.service_accounts =
             ::Google::Compute::Property::InstancServiceAccountArray.api_parse(
               fetch['serviceAccounts']
@@ -225,9 +180,7 @@ module Google
           @current_resource.status =
             ::Google::Compute::Property::String.api_parse(fetch['status'])
           @current_resource.status_message =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['statusMessage']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['statusMessage'])
           @current_resource.tags =
             ::Google::Compute::Property::InstanceTags.api_parse(fetch['tags'])
           @new_resource.__fetched = fetch
@@ -492,10 +445,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#instance'
           )

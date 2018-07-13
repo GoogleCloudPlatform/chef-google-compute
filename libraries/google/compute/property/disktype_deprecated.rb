@@ -99,12 +99,9 @@ module Google
       class DiskTypeDeprecaApi < DiskTypeDepreca
         def initialize(args)
           @deleted = Google::Compute::Property::Time.api_parse(args['deleted'])
-          @deprecated =
-            Google::Compute::Property::Time.api_parse(args['deprecated'])
-          @obsolete =
-            Google::Compute::Property::Time.api_parse(args['obsolete'])
-          @replacement =
-            Google::Compute::Property::String.api_parse(args['replacement'])
+          @deprecated = Google::Compute::Property::Time.api_parse(args['deprecated'])
+          @obsolete = Google::Compute::Property::Time.api_parse(args['obsolete'])
+          @replacement = Google::Compute::Property::String.api_parse(args['replacement'])
           @state = Google::Compute::Property::Enum.api_parse(args['state'])
         end
       end
@@ -113,14 +110,10 @@ module Google
       # Data is coming from the Chef catalog
       class DiskTypeDeprecaCatalog < DiskTypeDepreca
         def initialize(args)
-          @deleted =
-            Google::Compute::Property::Time.catalog_parse(args[:deleted])
-          @deprecated =
-            Google::Compute::Property::Time.catalog_parse(args[:deprecated])
-          @obsolete =
-            Google::Compute::Property::Time.catalog_parse(args[:obsolete])
-          @replacement =
-            Google::Compute::Property::String.catalog_parse(args[:replacement])
+          @deleted = Google::Compute::Property::Time.catalog_parse(args[:deleted])
+          @deprecated = Google::Compute::Property::Time.catalog_parse(args[:deprecated])
+          @obsolete = Google::Compute::Property::Time.catalog_parse(args[:obsolete])
+          @replacement = Google::Compute::Property::String.catalog_parse(args[:replacement])
           @state = Google::Compute::Property::Enum.catalog_parse(args[:state])
         end
       end
@@ -130,9 +123,7 @@ module Google
       # A class to manage input to Deprecated for disk_type.
       class DiskTypeDepreca
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::DiskTypeDepreca.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::DiskTypeDepreca.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

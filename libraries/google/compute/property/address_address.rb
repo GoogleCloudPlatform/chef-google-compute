@@ -102,9 +102,7 @@ module Google
       # A class to manage fetching address from a address
       class AddressAddressRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::AddressAddressRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::AddressAddressRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)

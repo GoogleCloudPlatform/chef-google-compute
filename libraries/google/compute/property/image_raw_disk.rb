@@ -90,10 +90,8 @@ module Google
       # Data is coming from the GCP API
       class ImageRawDiskApi < ImageRawDisk
         def initialize(args)
-          @container_type =
-            Google::Compute::Property::Enum.api_parse(args['containerType'])
-          @sha1_checksum =
-            Google::Compute::Property::String.api_parse(args['sha1Checksum'])
+          @container_type = Google::Compute::Property::Enum.api_parse(args['containerType'])
+          @sha1_checksum = Google::Compute::Property::String.api_parse(args['sha1Checksum'])
           @source = Google::Compute::Property::String.api_parse(args['source'])
         end
       end
@@ -102,13 +100,9 @@ module Google
       # Data is coming from the Chef catalog
       class ImageRawDiskCatalog < ImageRawDisk
         def initialize(args)
-          @container_type =
-            Google::Compute::Property::Enum.catalog_parse(args[:container_type])
-          @sha1_checksum = Google::Compute::Property::String.catalog_parse(
-            args[:sha1_checksum]
-          )
-          @source =
-            Google::Compute::Property::String.catalog_parse(args[:source])
+          @container_type = Google::Compute::Property::Enum.catalog_parse(args[:container_type])
+          @sha1_checksum = Google::Compute::Property::String.catalog_parse(args[:sha1_checksum])
+          @source = Google::Compute::Property::String.catalog_parse(args[:source])
         end
       end
     end

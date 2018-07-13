@@ -61,15 +61,9 @@ context 'gcompute_forwarding_rule' do
               allow(Time).to receive(:now).and_return(
                 Time.new(2017, 1, 2, 3, 4, 5)
               )
-              expect_network_get_success 1,
-                                         name: 'title0',
-                                         region: 'test name#0 data'
-              expect_network_get_success 2,
-                                         name: 'title1',
-                                         region: 'test name#1 data'
-              expect_network_get_success 3,
-                                         name: 'title2',
-                                         region: 'test name#2 data'
+              expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
+              expect_network_get_success 2, name: 'title1', region: 'test name#1 data'
+              expect_network_get_success 3, name: 'title2', region: 'test name#2 data'
               expect_network_get_success_backend_service 1
               expect_network_get_success_backend_service 2
               expect_network_get_success_backend_service 3
@@ -79,12 +73,9 @@ context 'gcompute_forwarding_rule' do
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -104,11 +95,8 @@ context 'gcompute_forwarding_rule' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_forwarding_rule
-                              gcompute_region
-                              gcompute_network
-                              gcompute_subnetwork
-                              gcompute_backend_service],
+                step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                              gcompute_subnetwork gcompute_backend_service],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -276,15 +264,9 @@ context 'gcompute_forwarding_rule' do
                 chef_run.find_resource(:gcompute_forwarding_rule, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ip_address: 'test ip_address#0 data')
-              end
+              it { is_expected.to have_attributes(ip_address: 'test ip_address#0 data') }
 
               it { is_expected.to have_attributes(ip_protocol: 'TCP') }
 
@@ -295,10 +277,7 @@ context 'gcompute_forwarding_rule' do
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
 
-              it do
-                is_expected
-                  .to have_attributes(load_balancing_scheme: 'INTERNAL')
-              end
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
               it { is_expected.to have_attributes(fr_label: 'title0') }
 
@@ -307,10 +286,7 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(port_range: 'test port_range#0 data')
-              end
+              it { is_expected.to have_attributes(port_range: 'test port_range#0 data') }
 
               it { is_expected.to have_attributes(ports: %w[uu vv]) }
 
@@ -330,15 +306,9 @@ context 'gcompute_forwarding_rule' do
                 chef_run.find_resource(:gcompute_forwarding_rule, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ip_address: 'test ip_address#1 data')
-              end
+              it { is_expected.to have_attributes(ip_address: 'test ip_address#1 data') }
 
               it { is_expected.to have_attributes(ip_protocol: 'UDP') }
 
@@ -349,10 +319,7 @@ context 'gcompute_forwarding_rule' do
 
               it { is_expected.to have_attributes(ip_version: 'IPV6') }
 
-              it do
-                is_expected
-                  .to have_attributes(load_balancing_scheme: 'EXTERNAL')
-              end
+              it { is_expected.to have_attributes(load_balancing_scheme: 'EXTERNAL') }
 
               it { is_expected.to have_attributes(fr_label: 'title1') }
 
@@ -361,10 +328,7 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(port_range: 'test port_range#1 data')
-              end
+              it { is_expected.to have_attributes(port_range: 'test port_range#1 data') }
 
               it { is_expected.to have_attributes(ports: %w[qq rr]) }
 
@@ -384,15 +348,9 @@ context 'gcompute_forwarding_rule' do
                 chef_run.find_resource(:gcompute_forwarding_rule, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ip_address: 'test ip_address#2 data')
-              end
+              it { is_expected.to have_attributes(ip_address: 'test ip_address#2 data') }
 
               it { is_expected.to have_attributes(ip_protocol: 'ESP') }
 
@@ -403,10 +361,7 @@ context 'gcompute_forwarding_rule' do
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
 
-              it do
-                is_expected
-                  .to have_attributes(load_balancing_scheme: 'INTERNAL')
-              end
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
               it { is_expected.to have_attributes(fr_label: 'title2') }
 
@@ -415,10 +370,7 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(port_range: 'test port_range#2 data')
-              end
+              it { is_expected.to have_attributes(port_range: 'test port_range#2 data') }
 
               it { is_expected.to have_attributes(ports: %w[mm nn]) }
 
@@ -462,12 +414,9 @@ context 'gcompute_forwarding_rule' do
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -487,11 +436,8 @@ context 'gcompute_forwarding_rule' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_forwarding_rule
-                              gcompute_region
-                              gcompute_network
-                              gcompute_subnetwork
-                              gcompute_backend_service],
+                step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                              gcompute_subnetwork gcompute_backend_service],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -662,15 +608,9 @@ context 'gcompute_forwarding_rule' do
                 chef_run.find_resource(:gcompute_forwarding_rule, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ip_address: 'test ip_address#0 data')
-              end
+              it { is_expected.to have_attributes(ip_address: 'test ip_address#0 data') }
 
               it { is_expected.to have_attributes(ip_protocol: 'TCP') }
 
@@ -681,24 +621,16 @@ context 'gcompute_forwarding_rule' do
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
 
-              it do
-                is_expected
-                  .to have_attributes(load_balancing_scheme: 'INTERNAL')
-              end
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
-              it do
-                is_expected.to have_attributes(fr_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(fr_label: 'test name#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'network' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(port_range: 'test port_range#0 data')
-              end
+              it { is_expected.to have_attributes(port_range: 'test port_range#0 data') }
 
               it { is_expected.to have_attributes(ports: %w[uu vv]) }
 
@@ -718,15 +650,9 @@ context 'gcompute_forwarding_rule' do
                 chef_run.find_resource(:gcompute_forwarding_rule, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ip_address: 'test ip_address#1 data')
-              end
+              it { is_expected.to have_attributes(ip_address: 'test ip_address#1 data') }
 
               it { is_expected.to have_attributes(ip_protocol: 'UDP') }
 
@@ -737,24 +663,16 @@ context 'gcompute_forwarding_rule' do
 
               it { is_expected.to have_attributes(ip_version: 'IPV6') }
 
-              it do
-                is_expected
-                  .to have_attributes(load_balancing_scheme: 'EXTERNAL')
-              end
+              it { is_expected.to have_attributes(load_balancing_scheme: 'EXTERNAL') }
 
-              it do
-                is_expected.to have_attributes(fr_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(fr_label: 'test name#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'network' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(port_range: 'test port_range#1 data')
-              end
+              it { is_expected.to have_attributes(port_range: 'test port_range#1 data') }
 
               it { is_expected.to have_attributes(ports: %w[qq rr]) }
 
@@ -774,15 +692,9 @@ context 'gcompute_forwarding_rule' do
                 chef_run.find_resource(:gcompute_forwarding_rule, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(ip_address: 'test ip_address#2 data')
-              end
+              it { is_expected.to have_attributes(ip_address: 'test ip_address#2 data') }
 
               it { is_expected.to have_attributes(ip_protocol: 'ESP') }
 
@@ -793,24 +705,16 @@ context 'gcompute_forwarding_rule' do
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
 
-              it do
-                is_expected
-                  .to have_attributes(load_balancing_scheme: 'INTERNAL')
-              end
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
-              it do
-                is_expected.to have_attributes(fr_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(fr_label: 'test name#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'network' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(port_range: 'test port_range#2 data')
-              end
+              it { is_expected.to have_attributes(port_range: 'test port_range#2 data') }
 
               it { is_expected.to have_attributes(ports: %w[mm nn]) }
 
@@ -875,9 +779,7 @@ context 'gcompute_forwarding_rule' do
         # Ensure present: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      region: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
             expect_network_create \
               1,
               {
@@ -896,9 +798,7 @@ context 'gcompute_forwarding_rule' do
               },
               name: 'title0',
               region: 'test name#0 data'
-            expect_network_get_async 1,
-                                     name: 'title0',
-                                     region: 'test name#0 data'
+            expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_backend_service 1
             expect_network_get_success_network 1
             expect_network_get_success_region 1
@@ -922,11 +822,8 @@ context 'gcompute_forwarding_rule' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_forwarding_rule
-                            gcompute_region
-                            gcompute_network
-                            gcompute_subnetwork
-                            gcompute_backend_service],
+              step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                            gcompute_subnetwork gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1001,14 +898,9 @@ context 'gcompute_forwarding_rule' do
             expect(chef_run).to create(:gcompute_forwarding_rule,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it do
-            is_expected.to have_attributes(ip_address: 'test ip_address#0 data')
-          end
+          it { is_expected.to have_attributes(ip_address: 'test ip_address#0 data') }
 
           it { is_expected.to have_attributes(ip_protocol: 'TCP') }
 
@@ -1019,9 +911,7 @@ context 'gcompute_forwarding_rule' do
 
           it { is_expected.to have_attributes(ip_version: 'IPV4') }
 
-          it do
-            is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL')
-          end
+          it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
           it { is_expected.to have_attributes(fr_label: 'title0') }
 
@@ -1030,9 +920,7 @@ context 'gcompute_forwarding_rule' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected.to have_attributes(port_range: 'test port_range#0 data')
-          end
+          it { is_expected.to have_attributes(port_range: 'test port_range#0 data') }
 
           it { is_expected.to have_attributes(ports: %w[uu vv]) }
 
@@ -1102,11 +990,8 @@ context 'gcompute_forwarding_rule' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_forwarding_rule
-                            gcompute_region
-                            gcompute_network
-                            gcompute_subnetwork
-                            gcompute_backend_service],
+              step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                            gcompute_subnetwork gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1182,14 +1067,9 @@ context 'gcompute_forwarding_rule' do
             expect(chef_run).to create(:gcompute_forwarding_rule,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it do
-            is_expected.to have_attributes(ip_address: 'test ip_address#0 data')
-          end
+          it { is_expected.to have_attributes(ip_address: 'test ip_address#0 data') }
 
           it { is_expected.to have_attributes(ip_protocol: 'TCP') }
 
@@ -1200,9 +1080,7 @@ context 'gcompute_forwarding_rule' do
 
           it { is_expected.to have_attributes(ip_version: 'IPV4') }
 
-          it do
-            is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL')
-          end
+          it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
           it { is_expected.to have_attributes(fr_label: 'test name#0 data') }
 
@@ -1211,9 +1089,7 @@ context 'gcompute_forwarding_rule' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected.to have_attributes(port_range: 'test port_range#0 data')
-          end
+          it { is_expected.to have_attributes(port_range: 'test port_range#0 data') }
 
           it { is_expected.to have_attributes(ports: %w[uu vv]) }
 
@@ -1245,9 +1121,7 @@ context 'gcompute_forwarding_rule' do
         # Ensure absent: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      region: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_region 1
           end
 
@@ -1268,11 +1142,8 @@ context 'gcompute_forwarding_rule' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_forwarding_rule
-                            gcompute_region
-                            gcompute_network
-                            gcompute_subnetwork
-                            gcompute_backend_service],
+              step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                            gcompute_subnetwork gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1344,11 +1215,8 @@ context 'gcompute_forwarding_rule' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_forwarding_rule
-                            gcompute_region
-                            gcompute_network
-                            gcompute_subnetwork
-                            gcompute_backend_service],
+              step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                            gcompute_subnetwork gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1402,13 +1270,9 @@ context 'gcompute_forwarding_rule' do
         # Ensure absent: resource exists, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_success 1,
-                                       name: 'title0',
-                                       region: 'test name#0 data'
+            expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
             expect_network_delete 1, 'title0', region: 'test name#0 data'
-            expect_network_get_async 1,
-                                     name: 'title0',
-                                     region: 'test name#0 data'
+            expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
             expect_network_get_success_region 1
           end
 
@@ -1429,11 +1293,8 @@ context 'gcompute_forwarding_rule' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_forwarding_rule
-                            gcompute_region
-                            gcompute_network
-                            gcompute_subnetwork
-                            gcompute_backend_service],
+              step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                            gcompute_subnetwork gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1511,11 +1372,8 @@ context 'gcompute_forwarding_rule' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_forwarding_rule
-                            gcompute_region
-                            gcompute_network
-                            gcompute_subnetwork
-                            gcompute_backend_service],
+              step_into: %w[gcompute_forwarding_rule gcompute_region gcompute_network
+                            gcompute_subnetwork gcompute_backend_service],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
