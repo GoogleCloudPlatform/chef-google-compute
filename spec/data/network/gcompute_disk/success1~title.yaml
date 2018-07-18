@@ -49,16 +49,14 @@ sourceImageEncryptionKey:
   rawKey: test raw_key#0 data
   sha256: test sha256#0 data
 sourceImageId: test source_image_id#0 data
-sourceSnapshot: test source_snapshot#0 data
+sourceSnapshot: selflink(resource(snapshot,0))
 sourceSnapshotEncryptionKey:
   rawKey: test raw_key#0 data
   sha256: test sha256#0 data
 sourceSnapshotId: test source_snapshot_id#0 data
 type: selflink(resource(disk_type,0))
 users:
-- ww
-- xx
-- yy
-- zz
+- selflink(resource(instance,0))
+- selflink(resource(instance,1))
 zone: test name#0 data
 selfLink: selflink(resource(disk,0))

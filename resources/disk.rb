@@ -37,8 +37,10 @@ require 'google/compute/property/disk_disk_encryption_key'
 require 'google/compute/property/disk_source_image_encryption_key'
 require 'google/compute/property/disk_source_snapshot_encryption_key'
 require 'google/compute/property/disktype_selflink'
+require 'google/compute/property/instance_selflink'
 require 'google/compute/property/integer'
 require 'google/compute/property/namevalues'
+require 'google/compute/property/snapshot_selflink'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/time'
@@ -74,27 +76,30 @@ module Google
                name_property: true, desired_state: true
       property :size_gb
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :source_image
-               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :type,
                [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
                coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce, desired_state: true
-      # users is Array of Google::Compute::Property::StringArray
-      property :users
-               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      # users is Array of Google::Compute::Property::InstaSelfLinkRefArray
+      property :users,
+               Array,
+               coerce: ::Google::Compute::Property::InstaSelfLinkRefArray.coerce,
+               desired_state: true
+      property :source_image
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
                coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
-      property :disk_encryption_key,
-               [Hash, ::Google::Compute::Data::DiskDiskEncryKey],
-               coerce: ::Google::Compute::Property::DiskDiskEncryKey.coerce, desired_state: true
       property :source_image_encryption_key,
                [Hash, ::Google::Compute::Data::DiskSourImagEncrKey],
                coerce: ::Google::Compute::Property::DiskSourImagEncrKey.coerce, desired_state: true
       property :source_image_id
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :source_snapshot
-               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :disk_encryption_key,
+               [Hash, ::Google::Compute::Data::DiskDiskEncryKey],
+               coerce: ::Google::Compute::Property::DiskDiskEncryKey.coerce, desired_state: true
+      property :source_snapshot,
+               [String, ::Google::Compute::Data::SnapsSelfLinkRef],
+               coerce: ::Google::Compute::Property::SnapsSelfLinkRef.coerce, desired_state: true
       property :source_snapshot_encryption_key,
                [Hash, ::Google::Compute::Data::DiskSourSnapEncrKey],
                coerce: ::Google::Compute::Property::DiskSourSnapEncrKey.coerce, desired_state: true
@@ -144,7 +149,7 @@ module Google
           @current_resource.type =
             ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(fetch['type'])
           @current_resource.users =
-            ::Google::Compute::Property::StringArray.api_parse(fetch['users'])
+            ::Google::Compute::Property::InstaSelfLinkRefArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch
 
           update
@@ -184,10 +189,10 @@ module Google
             licenses: new_resource.licenses,
             name: new_resource.d_label,
             sizeGb: new_resource.size_gb,
-            sourceImage: new_resource.source_image,
             type: new_resource.type,
-            diskEncryptionKey: new_resource.disk_encryption_key,
+            sourceImage: new_resource.source_image,
             sourceImageEncryptionKey: new_resource.source_image_encryption_key,
+            diskEncryptionKey: new_resource.disk_encryption_key,
             sourceSnapshotEncryptionKey: new_resource.source_snapshot_encryption_key
           }.reject { |_, v| v.nil? }
           request.to_json
@@ -224,13 +229,13 @@ module Google
             labels: resource.labels,
             licenses: resource.licenses,
             size_gb: resource.size_gb,
-            source_image: resource.source_image,
             type: resource.type,
             users: resource.users,
+            source_image: resource.source_image,
             zone: resource.zone,
-            disk_encryption_key: resource.disk_encryption_key,
             source_image_encryption_key: resource.source_image_encryption_key,
             source_image_id: resource.source_image_id,
+            disk_encryption_key: resource.disk_encryption_key,
             source_snapshot: resource.source_snapshot,
             source_snapshot_encryption_key: resource.source_snapshot_encryption_key,
             source_snapshot_id: resource.source_snapshot_id
