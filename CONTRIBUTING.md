@@ -165,6 +165,7 @@ chef-codegen:
   * libraries/google/compute/property/region_selflink.rb
   * libraries/google/compute/property/router_advertised_ip_ranges.rb
   * libraries/google/compute/property/router_bgp.rb
+  * libraries/google/compute/property/snapshot_selflink.rb
   * libraries/google/compute/property/snapshot_snapshot_encryption_key.rb
   * libraries/google/compute/property/snapshot_source_disk_encryption_key.rb
   * libraries/google/compute/property/sslcertificate_selflink.rb

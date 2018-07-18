@@ -991,7 +991,7 @@ gcompute_disk 'id-for-resource' do
     sha256  string,
   }
   source_image_id                string
-  source_snapshot                string
+  source_snapshot                reference to gcompute_snapshot
   source_snapshot_encryption_key {
     raw_key string,
     sha256  string,
@@ -999,7 +999,7 @@ gcompute_disk 'id-for-resource' do
   source_snapshot_id             string
   type                           reference to gcompute_disk_type
   users                          [
-    string,
+    reference to a gcompute_instance,
     ...
   ]
   zone                           reference to gcompute_zone
@@ -1060,6 +1060,14 @@ end
   the value of sizeGb must not be less than the size of the sourceImage
   or the size of the snapshot.
 
+* `type` -
+  URL of the disk type resource describing which disk type to use to
+  create the disk. Provide this when creating the disk.
+
+* `users` -
+  Output only. Links to the users of the disk (attached instances) in form:
+  project/zones/zone/instances/instance
+
 * `source_image` -
   The source image used to create this disk. If the source image is
   deleted, this field will not be set.
@@ -1078,35 +1086,8 @@ end
   image name with family/family-name:
   global/images/family/my-private-family
 
-* `type` -
-  URL of the disk type resource describing which disk type to use to
-  create the disk. Provide this when creating the disk.
-
-* `users` -
-  Output only. Links to the users of the disk (attached instances) in form:
-  project/zones/zone/instances/instance
-
 * `zone` -
   Required. A reference to the zone where the disk resides.
-
-* `disk_encryption_key` -
-  Encrypts the disk using a customer-supplied encryption key.
-  After you encrypt a disk with a customer-supplied key, you must
-  provide the same key if you use the disk later (e.g. to create a disk
-  snapshot or an image, or to attach the disk to a virtual machine).
-  Customer-supplied encryption keys do not protect access to metadata of
-  the disk.
-  If you do not provide an encryption key when creating the disk, then
-  the disk will be encrypted using an automatically generated key and
-  you do not need to provide a key to use the disk later.
-
-* `disk_encryption_key/raw_key`
-  Specifies a 256-bit customer-supplied encryption key, encoded in
-  RFC 4648 base64 to either encrypt or decrypt this resource.
-
-* `disk_encryption_key/sha256`
-  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
-  encryption key that protects this resource.
 
 * `source_image_encryption_key` -
   The customer-supplied encryption key of the source image. Required if
@@ -1127,14 +1108,32 @@ end
   that was later deleted and recreated under the same name, the source
   image ID would identify the exact version of the image that was used.
 
+* `disk_encryption_key` -
+  Encrypts the disk using a customer-supplied encryption key.
+  After you encrypt a disk with a customer-supplied key, you must
+  provide the same key if you use the disk later (e.g. to create a disk
+  snapshot or an image, or to attach the disk to a virtual machine).
+  Customer-supplied encryption keys do not protect access to metadata of
+  the disk.
+  If you do not provide an encryption key when creating the disk, then
+  the disk will be encrypted using an automatically generated key and
+  you do not need to provide a key to use the disk later.
+
+* `disk_encryption_key/raw_key`
+  Specifies a 256-bit customer-supplied encryption key, encoded in
+  RFC 4648 base64 to either encrypt or decrypt this resource.
+
+* `disk_encryption_key/sha256`
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
+  encryption key that protects this resource.
+
 * `source_snapshot` -
   The source snapshot used to create this disk. You can provide this as
   a partial or full URL to the resource. For example, the following are
   valid values:
-  * https://www.googleapis.com/compute/v1/projects/project/global/
-  snapshots/snapshot
-  * projects/project/global/snapshots/snapshot
-  * global/snapshots/snapshot
+  * `https://www.googleapis.com/compute/v1/projects/project/global/snapshots/snapshot`
+  * `projects/project/global/snapshots/snapshot`
+  * `global/snapshots/snapshot`
 
 * `source_snapshot_encryption_key` -
   The customer-supplied encryption key of the source snapshot. Required
