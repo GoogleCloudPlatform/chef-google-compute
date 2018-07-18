@@ -45,38 +45,26 @@ module Google
     class DiskType < Chef::Resource
       resource_name :gcompute_disk_type
 
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :default_disk_size_gb,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :default_disk_size_gb
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :_deprecated,
                [Hash, ::Google::Compute::Data::DiskTypeDepreca],
-               coerce: ::Google::Compute::Property::DiskTypeDepreca.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::DiskTypeDepreca.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :dt_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :valid_disk_size,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :valid_disk_size
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
-               coerce: ::Google::Compute::Property::ZoneNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -104,29 +92,18 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.default_disk_size_gb =
-            ::Google::Compute::Property::Integer.api_parse(
-              fetch['defaultDiskSizeGb']
-            )
+            ::Google::Compute::Property::Integer.api_parse(fetch['defaultDiskSizeGb'])
           @current_resource._deprecated =
-            ::Google::Compute::Property::DiskTypeDepreca.api_parse(
-              fetch['deprecated']
-            )
+            ::Google::Compute::Property::DiskTypeDepreca.api_parse(fetch['deprecated'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.dt_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.valid_disk_size =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['validDiskSize']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['validDiskSize'])
           @new_resource.__fetched = fetch
 
           update

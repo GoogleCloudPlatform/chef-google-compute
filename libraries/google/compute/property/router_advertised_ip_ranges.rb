@@ -88,8 +88,7 @@ module Google
       class RouteAdverIpRangeApi < RouteAdverIpRange
         def initialize(args)
           @range = Google::Compute::Property::String.api_parse(args['range'])
-          @description =
-            Google::Compute::Property::String.api_parse(args['description'])
+          @description = Google::Compute::Property::String.api_parse(args['description'])
         end
       end
 
@@ -98,8 +97,7 @@ module Google
       class RouteAdverIpRangeCatalog < RouteAdverIpRange
         def initialize(args)
           @range = Google::Compute::Property::String.catalog_parse(args[:range])
-          @description =
-            Google::Compute::Property::String.catalog_parse(args[:description])
+          @description = Google::Compute::Property::String.catalog_parse(args[:description])
         end
       end
     end
@@ -108,9 +106,7 @@ module Google
       # A class to manage input to AdvertisedIpRanges for router.
       class RouteAdverIpRange
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::RouteAdverIpRange.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::RouteAdverIpRange.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -131,9 +127,7 @@ module Google
       # A Chef property that holds an integer
       class RouteAdverIpRangeArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::RouteAdverIpRangeArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::RouteAdverIpRangeArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

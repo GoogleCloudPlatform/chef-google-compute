@@ -89,10 +89,7 @@ module Google
             { self: disk_size_gb, other: other.disk_size_gb },
             { self: disk_type, other: other.disk_type },
             { self: source_image, other: other.source_image },
-            {
-              self: source_image_encryption_key,
-              other: other.source_image_encryption_key
-            }
+            { self: source_image_encryption_key, other: other.source_image_encryption_key }
           ]
         end
       end
@@ -101,19 +98,13 @@ module Google
       # Data is coming from the GCP API
       class InstancInitialParamsApi < InstancInitialParams
         def initialize(args)
-          @disk_name =
-            Google::Compute::Property::String.api_parse(args['diskName'])
-          @disk_size_gb =
-            Google::Compute::Property::Integer.api_parse(args['diskSizeGb'])
-          @disk_type = Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(
-            args['diskType']
+          @disk_name = Google::Compute::Property::String.api_parse(args['diskName'])
+          @disk_size_gb = Google::Compute::Property::Integer.api_parse(args['diskSizeGb'])
+          @disk_type = Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(args['diskType'])
+          @source_image = Google::Compute::Property::String.api_parse(args['sourceImage'])
+          @source_image_encryption_key = Google::Compute::Property::InstSourImagEncrKey.api_parse(
+            args['sourceImageEncryptionKey']
           )
-          @source_image =
-            Google::Compute::Property::String.api_parse(args['sourceImage'])
-          @source_image_encryption_key =
-            Google::Compute::Property::InstSourImagEncrKey.api_parse(
-              args['sourceImageEncryptionKey']
-            )
         end
       end
 
@@ -121,17 +112,11 @@ module Google
       # Data is coming from the Chef catalog
       class InstancInitialParamsCatalog < InstancInitialParams
         def initialize(args)
-          @disk_name =
-            Google::Compute::Property::String.catalog_parse(args[:disk_name])
-          @disk_size_gb = Google::Compute::Property::Integer.catalog_parse(
-            args[:disk_size_gb]
-          )
+          @disk_name = Google::Compute::Property::String.catalog_parse(args[:disk_name])
+          @disk_size_gb = Google::Compute::Property::Integer.catalog_parse(args[:disk_size_gb])
           @disk_type =
-            Google::Compute::Property::DiskTypeSelfLinkRef.catalog_parse(
-              args[:disk_type]
-            )
-          @source_image =
-            Google::Compute::Property::String.catalog_parse(args[:source_image])
+            Google::Compute::Property::DiskTypeSelfLinkRef.catalog_parse(args[:disk_type])
+          @source_image = Google::Compute::Property::String.catalog_parse(args[:source_image])
           @source_image_encryption_key =
             Google::Compute::Property::InstSourImagEncrKey.catalog_parse(
               args[:source_image_encryption_key]
@@ -144,9 +129,7 @@ module Google
       # A class to manage input to InitializeParams for instance.
       class InstancInitialParams
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancInitialParams.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancInitialParams.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

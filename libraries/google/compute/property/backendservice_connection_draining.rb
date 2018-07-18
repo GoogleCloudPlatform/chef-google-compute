@@ -82,9 +82,8 @@ module Google
       # Data is coming from the GCP API
       class BackeServiConneDrainApi < BackeServiConneDrain
         def initialize(args)
-          @draining_timeout_sec = Google::Compute::Property::Integer.api_parse(
-            args['drainingTimeoutSec']
-          )
+          @draining_timeout_sec =
+            Google::Compute::Property::Integer.api_parse(args['drainingTimeoutSec'])
         end
       end
 
@@ -93,9 +92,7 @@ module Google
       class BackeServiConneDrainCatalog < BackeServiConneDrain
         def initialize(args)
           @draining_timeout_sec =
-            Google::Compute::Property::Integer.catalog_parse(
-              args[:draining_timeout_sec]
-            )
+            Google::Compute::Property::Integer.catalog_parse(args[:draining_timeout_sec])
         end
       end
     end
@@ -104,9 +101,7 @@ module Google
       # A class to manage input to ConnectionDraining for backend_service.
       class BackeServiConneDrain
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::BackeServiConneDrain.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::BackeServiConneDrain.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

@@ -131,38 +131,22 @@ module Google
       class InstancTemplatPropertApi < InstancTemplatPropert
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @can_ip_forward =
-            Google::Compute::Property::Boolean.api_parse(args['canIpForward'])
-          @description =
-            Google::Compute::Property::String.api_parse(args['description'])
-          @disks =
-            Google::Compute::Property::InstancTemplatDisksArray.api_parse(
-              args['disks']
-            )
-          @machine_type = Google::Compute::Property::MachiTypeNameRef.api_parse(
-            args['machineType']
+          @can_ip_forward = Google::Compute::Property::Boolean.api_parse(args['canIpForward'])
+          @description = Google::Compute::Property::String.api_parse(args['description'])
+          @disks = Google::Compute::Property::InstancTemplatDisksArray.api_parse(args['disks'])
+          @machine_type = Google::Compute::Property::MachiTypeNameRef.api_parse(args['machineType'])
+          @metadata = Google::Compute::Property::NameValues.api_parse(args['metadata'])
+          @guest_accelerators = Google::Compute::Property::InstaTemplGuestAccelArray.api_parse(
+            args['guestAccelerators']
           )
-          @metadata =
-            Google::Compute::Property::NameValues.api_parse(args['metadata'])
-          @guest_accelerators =
-            Google::Compute::Property::InstaTemplGuestAccelArray.api_parse(
-              args['guestAccelerators']
-            )
-          @network_interfaces =
-            Google::Compute::Property::InstaTemplNetwoInterArray.api_parse(
-              args['networkInterfaces']
-            )
+          @network_interfaces = Google::Compute::Property::InstaTemplNetwoInterArray.api_parse(
+            args['networkInterfaces']
+          )
           @scheduling =
-            Google::Compute::Property::InstancTemplatSchedul.api_parse(
-              args['scheduling']
-            )
+            Google::Compute::Property::InstancTemplatSchedul.api_parse(args['scheduling'])
           @service_accounts =
-            Google::Compute::Property::InstaTemplServiAccouArray.api_parse(
-              args['serviceAccounts']
-            )
-          @tags = Google::Compute::Property::InstancTemplatTags.api_parse(
-            args['tags']
-          )
+            Google::Compute::Property::InstaTemplServiAccouArray.api_parse(args['serviceAccounts'])
+          @tags = Google::Compute::Property::InstancTemplatTags.api_parse(args['tags'])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -172,40 +156,24 @@ module Google
       class InstancTemplatPropertCatalog < InstancTemplatPropert
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @can_ip_forward = Google::Compute::Property::Boolean.catalog_parse(
-            args[:can_ip_forward]
-          )
-          @description =
-            Google::Compute::Property::String.catalog_parse(args[:description])
-          @disks =
-            Google::Compute::Property::InstancTemplatDisksArray.catalog_parse(
-              args[:disks]
-            )
+          @can_ip_forward = Google::Compute::Property::Boolean.catalog_parse(args[:can_ip_forward])
+          @description = Google::Compute::Property::String.catalog_parse(args[:description])
+          @disks = Google::Compute::Property::InstancTemplatDisksArray.catalog_parse(args[:disks])
           @machine_type =
-            Google::Compute::Property::MachiTypeNameRef.catalog_parse(
-              args[:machine_type]
-            )
-          @metadata =
-            Google::Compute::Property::NameValues.catalog_parse(args[:metadata])
-          @guest_accelerators =
-            Google::Compute::Property::InstaTemplGuestAccelArray.catalog_parse(
-              args[:guest_accelerators]
-            )
-          @network_interfaces =
-            Google::Compute::Property::InstaTemplNetwoInterArray.catalog_parse(
-              args[:network_interfaces]
-            )
-          @scheduling =
-            Google::Compute::Property::InstancTemplatSchedul.catalog_parse(
-              args[:scheduling]
-            )
-          @service_accounts =
-            Google::Compute::Property::InstaTemplServiAccouArray.catalog_parse(
-              args[:service_accounts]
-            )
-          @tags = Google::Compute::Property::InstancTemplatTags.catalog_parse(
-            args[:tags]
+            Google::Compute::Property::MachiTypeNameRef.catalog_parse(args[:machine_type])
+          @metadata = Google::Compute::Property::NameValues.catalog_parse(args[:metadata])
+          @guest_accelerators = Google::Compute::Property::InstaTemplGuestAccelArray.catalog_parse(
+            args[:guest_accelerators]
           )
+          @network_interfaces = Google::Compute::Property::InstaTemplNetwoInterArray.catalog_parse(
+            args[:network_interfaces]
+          )
+          @scheduling =
+            Google::Compute::Property::InstancTemplatSchedul.catalog_parse(args[:scheduling])
+          @service_accounts = Google::Compute::Property::InstaTemplServiAccouArray.catalog_parse(
+            args[:service_accounts]
+          )
+          @tags = Google::Compute::Property::InstancTemplatTags.catalog_parse(args[:tags])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -215,9 +183,7 @@ module Google
       # A class to manage input to Properties for instance_template.
       class InstancTemplatPropert
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancTemplatPropert.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancTemplatPropert.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

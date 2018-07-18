@@ -50,45 +50,33 @@ module Google
     class InstanceGroup < Chef::Resource
       resource_name :gcompute_instance_group
 
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :ig_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # named_ports is Array of
-      # Google::Compute::Property::InstaGroupNamedPortsArray
+      # named_ports is Array of Google::Compute::Property::InstaGroupNamedPortsArray
       property :named_ports,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::InstaGroupNamedPortsArray.coerce,
+               coerce: ::Google::Compute::Property::InstaGroupNamedPortsArray.coerce,
                desired_state: true
       property :network,
                [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
       property :subnetwork,
                [String, ::Google::Compute::Data::SubneSelfLinkRef],
-               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
-               coerce: ::Google::Compute::Property::ZoneNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -101,8 +89,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#instanceGroup')
         if fetch.nil?
-          converge_by ['Creating gcompute_instance_group',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Creating gcompute_instance_group[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
             # TODO(nelsonjr): Determine how to print green like update converge
             puts # making a newline until we find a better way TODO: find!
@@ -117,33 +104,20 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.ig_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.named_ports =
-            ::Google::Compute::Property::InstaGroupNamedPortsArray.api_parse(
-              fetch['namedPorts']
-            )
+            ::Google::Compute::Property::InstaGroupNamedPortsArray.api_parse(fetch['namedPorts'])
           @current_resource.network =
-            ::Google::Compute::Property::NetwoSelfLinkRef.api_parse(
-              fetch['network']
-            )
+            ::Google::Compute::Property::NetwoSelfLinkRef.api_parse(fetch['network'])
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(
-              fetch['region']
-            )
+            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
           @current_resource.subnetwork =
-            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(
-              fetch['subnetwork']
-            )
+            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(fetch['subnetwork'])
           @new_resource.__fetched = fetch
 
           update
@@ -154,8 +128,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#instanceGroup')
         unless fetch.nil?
-          converge_by ['Deleting gcompute_instance_group',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Deleting gcompute_instance_group[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
               self_link(@new_resource), fetch_auth(@new_resource)
             )
@@ -387,10 +360,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#instanceGroup'
           )

@@ -134,22 +134,13 @@ context 'gcompute_ssl_certificate' do
                 chef_run.find_resource(:gcompute_ssl_certificate, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(certificate: 'test certificate#0 data')
-              end
+              it { is_expected.to have_attributes(certificate: 'test certificate#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(sc_label: 'title0') }
 
-              it do
-                is_expected
-                  .to have_attributes(private_key: 'test private_key#0 data')
-              end
+              it { is_expected.to have_attributes(private_key: 'test private_key#0 data') }
             end
 
             context 'gcompute_ssl_certificate[title1]' do
@@ -157,22 +148,13 @@ context 'gcompute_ssl_certificate' do
                 chef_run.find_resource(:gcompute_ssl_certificate, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(certificate: 'test certificate#1 data')
-              end
+              it { is_expected.to have_attributes(certificate: 'test certificate#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(sc_label: 'title1') }
 
-              it do
-                is_expected
-                  .to have_attributes(private_key: 'test private_key#1 data')
-              end
+              it { is_expected.to have_attributes(private_key: 'test private_key#1 data') }
             end
 
             context 'gcompute_ssl_certificate[title2]' do
@@ -180,22 +162,13 @@ context 'gcompute_ssl_certificate' do
                 chef_run.find_resource(:gcompute_ssl_certificate, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(certificate: 'test certificate#2 data')
-              end
+              it { is_expected.to have_attributes(certificate: 'test certificate#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(sc_label: 'title2') }
 
-              it do
-                is_expected
-                  .to have_attributes(private_key: 'test private_key#2 data')
-              end
+              it { is_expected.to have_attributes(private_key: 'test private_key#2 data') }
             end
           end
 
@@ -291,24 +264,13 @@ context 'gcompute_ssl_certificate' do
                 chef_run.find_resource(:gcompute_ssl_certificate, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(certificate: 'test certificate#0 data')
-              end
+              it { is_expected.to have_attributes(certificate: 'test certificate#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(sc_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(sc_label: 'test name#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(private_key: 'test private_key#0 data')
-              end
+              it { is_expected.to have_attributes(private_key: 'test private_key#0 data') }
             end
 
             context 'gcompute_ssl_certificate[title1]' do
@@ -316,24 +278,13 @@ context 'gcompute_ssl_certificate' do
                 chef_run.find_resource(:gcompute_ssl_certificate, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(certificate: 'test certificate#1 data')
-              end
+              it { is_expected.to have_attributes(certificate: 'test certificate#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(sc_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(sc_label: 'test name#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(private_key: 'test private_key#1 data')
-              end
+              it { is_expected.to have_attributes(private_key: 'test private_key#1 data') }
             end
 
             context 'gcompute_ssl_certificate[title2]' do
@@ -341,24 +292,13 @@ context 'gcompute_ssl_certificate' do
                 chef_run.find_resource(:gcompute_ssl_certificate, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(certificate: 'test certificate#2 data')
-              end
+              it { is_expected.to have_attributes(certificate: 'test certificate#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(sc_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(sc_label: 'test name#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(private_key: 'test private_key#2 data')
-              end
+              it { is_expected.to have_attributes(private_key: 'test private_key#2 data') }
             end
           end
 
@@ -478,22 +418,13 @@ context 'gcompute_ssl_certificate' do
             expect(chef_run).to create(:gcompute_ssl_certificate,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(certificate: 'test certificate#0 data')
-          end
+          it { is_expected.to have_attributes(certificate: 'test certificate#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(sc_label: 'title0') }
 
-          it do
-            is_expected
-              .to have_attributes(private_key: 'test private_key#0 data')
-          end
+          it { is_expected.to have_attributes(private_key: 'test private_key#0 data') }
         end
 
         # Ensure present: resource missing, ignore, no name, fail
@@ -574,22 +505,13 @@ context 'gcompute_ssl_certificate' do
             expect(chef_run).to create(:gcompute_ssl_certificate,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(certificate: 'test certificate#0 data')
-          end
+          it { is_expected.to have_attributes(certificate: 'test certificate#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(sc_label: 'test name#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(private_key: 'test private_key#0 data')
-          end
+          it { is_expected.to have_attributes(private_key: 'test private_key#0 data') }
         end
 
         # Ensure present: resource missing, ignore, has name, fail

@@ -88,8 +88,7 @@ module Google
       class InstaTemplServiAccouApi < InstaTemplServiAccou
         def initialize(args)
           @email = Google::Compute::Property::String.api_parse(args['email'])
-          @scopes =
-            Google::Compute::Property::StringArray.api_parse(args['scopes'])
+          @scopes = Google::Compute::Property::StringArray.api_parse(args['scopes'])
         end
       end
 
@@ -98,8 +97,7 @@ module Google
       class InstaTemplServiAccouCatalog < InstaTemplServiAccou
         def initialize(args)
           @email = Google::Compute::Property::String.catalog_parse(args[:email])
-          @scopes =
-            Google::Compute::Property::StringArray.catalog_parse(args[:scopes])
+          @scopes = Google::Compute::Property::StringArray.catalog_parse(args[:scopes])
         end
       end
     end
@@ -108,9 +106,7 @@ module Google
       # A class to manage input to ServiceAccounts for instance_template.
       class InstaTemplServiAccou
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstaTemplServiAccou.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaTemplServiAccou.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -131,10 +127,7 @@ module Google
       # A Chef property that holds an integer
       class InstaTemplServiAccouArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstaTemplServiAccouArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaTemplServiAccouArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

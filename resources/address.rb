@@ -49,43 +49,31 @@ module Google
     class Address < Chef::Resource
       resource_name :gcompute_address
 
-      property :address,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :address
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :address_type,
                equal_to: %w[INTERNAL EXTERNAL],
                coerce: ::Google::Compute::Property::Enum.coerce,
                default: 'EXTERNAL', desired_state: true
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :a_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :subnetwork,
                [String, ::Google::Compute::Data::SubneSelfLinkRef],
-               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
       # users is Array of Google::Compute::Property::StringArray
-      property :users,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
+      property :users
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
-               coerce: ::Google::Compute::Property::RegionNameRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -117,21 +105,13 @@ module Google
           @current_resource.address_type =
             ::Google::Compute::Property::Enum.api_parse(fetch['addressType'])
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.a_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+          @current_resource.a_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.subnetwork =
-            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(
-              fetch['subnetwork']
-            )
+            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(fetch['subnetwork'])
           @current_resource.users =
             ::Google::Compute::Property::StringArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch
@@ -376,10 +356,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#address'
           )

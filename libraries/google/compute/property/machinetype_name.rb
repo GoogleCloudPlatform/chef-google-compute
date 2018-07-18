@@ -102,9 +102,7 @@ module Google
       # A class to manage fetching name from a machine_type
       class MachiTypeNameRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::MachiTypeNameRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::MachiTypeNameRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)

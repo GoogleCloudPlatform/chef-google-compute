@@ -102,9 +102,7 @@ module Google
       # A class to manage fetching self_link from a disk
       class DiskSelfLinkRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::DiskSelfLinkRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::DiskSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)

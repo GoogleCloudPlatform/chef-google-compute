@@ -86,10 +86,8 @@ module Google
       # Data is coming from the GCP API
       class InstancTemplatTagsApi < InstancTemplatTags
         def initialize(args)
-          @fingerprint =
-            Google::Compute::Property::String.api_parse(args['fingerprint'])
-          @items =
-            Google::Compute::Property::StringArray.api_parse(args['items'])
+          @fingerprint = Google::Compute::Property::String.api_parse(args['fingerprint'])
+          @items = Google::Compute::Property::StringArray.api_parse(args['items'])
         end
       end
 
@@ -97,10 +95,8 @@ module Google
       # Data is coming from the Chef catalog
       class InstancTemplatTagsCatalog < InstancTemplatTags
         def initialize(args)
-          @fingerprint =
-            Google::Compute::Property::String.catalog_parse(args[:fingerprint])
-          @items =
-            Google::Compute::Property::StringArray.catalog_parse(args[:items])
+          @fingerprint = Google::Compute::Property::String.catalog_parse(args[:fingerprint])
+          @items = Google::Compute::Property::StringArray.catalog_parse(args[:items])
         end
       end
     end
@@ -109,9 +105,7 @@ module Google
       # A class to manage input to Tags for instance_template.
       class InstancTemplatTags
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancTemplatTags.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancTemplatTags.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

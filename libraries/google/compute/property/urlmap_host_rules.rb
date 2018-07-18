@@ -91,12 +91,9 @@ module Google
       # Data is coming from the GCP API
       class UrlMapHostRulesApi < UrlMapHostRules
         def initialize(args)
-          @description =
-            Google::Compute::Property::String.api_parse(args['description'])
-          @hosts =
-            Google::Compute::Property::StringArray.api_parse(args['hosts'])
-          @path_matcher =
-            Google::Compute::Property::String.api_parse(args['pathMatcher'])
+          @description = Google::Compute::Property::String.api_parse(args['description'])
+          @hosts = Google::Compute::Property::StringArray.api_parse(args['hosts'])
+          @path_matcher = Google::Compute::Property::String.api_parse(args['pathMatcher'])
         end
       end
 
@@ -104,12 +101,9 @@ module Google
       # Data is coming from the Chef catalog
       class UrlMapHostRulesCatalog < UrlMapHostRules
         def initialize(args)
-          @description =
-            Google::Compute::Property::String.catalog_parse(args[:description])
-          @hosts =
-            Google::Compute::Property::StringArray.catalog_parse(args[:hosts])
-          @path_matcher =
-            Google::Compute::Property::String.catalog_parse(args[:path_matcher])
+          @description = Google::Compute::Property::String.catalog_parse(args[:description])
+          @hosts = Google::Compute::Property::StringArray.catalog_parse(args[:hosts])
+          @path_matcher = Google::Compute::Property::String.catalog_parse(args[:path_matcher])
         end
       end
     end
@@ -118,9 +112,7 @@ module Google
       # A class to manage input to HostRules for url_map.
       class UrlMapHostRules
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapHostRules.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapHostRules.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -141,9 +133,7 @@ module Google
       # A Chef property that holds an integer
       class UrlMapHostRulesArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapHostRulesArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapHostRulesArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

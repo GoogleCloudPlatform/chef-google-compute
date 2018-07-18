@@ -120,25 +120,17 @@ module Google
       class InstancTemplatDisksApi < InstancTemplatDisks
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @auto_delete =
-            Google::Compute::Property::Boolean.api_parse(args['autoDelete'])
+          @auto_delete = Google::Compute::Property::Boolean.api_parse(args['autoDelete'])
           @boot = Google::Compute::Property::Boolean.api_parse(args['boot'])
-          @device_name =
-            Google::Compute::Property::String.api_parse(args['deviceName'])
+          @device_name = Google::Compute::Property::String.api_parse(args['deviceName'])
           @disk_encryption_key =
-            Google::Compute::Property::InstTempDiskEncrKey.api_parse(
-              args['diskEncryptionKey']
-            )
+            Google::Compute::Property::InstTempDiskEncrKey.api_parse(args['diskEncryptionKey'])
           @index = Google::Compute::Property::Integer.api_parse(args['index'])
           @initialize_params =
-            Google::Compute::Property::InstaTemplInitiParam.api_parse(
-              args['initializeParams']
-            )
-          @interface =
-            Google::Compute::Property::Enum.api_parse(args['interface'])
+            Google::Compute::Property::InstaTemplInitiParam.api_parse(args['initializeParams'])
+          @interface = Google::Compute::Property::Enum.api_parse(args['interface'])
           @mode = Google::Compute::Property::Enum.api_parse(args['mode'])
-          @source =
-            Google::Compute::Property::DiskNameRef.api_parse(args['source'])
+          @source = Google::Compute::Property::DiskNameRef.api_parse(args['source'])
           @type = Google::Compute::Property::Enum.api_parse(args['type'])
         end
         # rubocop:enable Metrics/MethodLength
@@ -149,26 +141,17 @@ module Google
       class InstancTemplatDisksCatalog < InstancTemplatDisks
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @auto_delete =
-            Google::Compute::Property::Boolean.catalog_parse(args[:auto_delete])
+          @auto_delete = Google::Compute::Property::Boolean.catalog_parse(args[:auto_delete])
           @boot = Google::Compute::Property::Boolean.catalog_parse(args[:boot])
-          @device_name =
-            Google::Compute::Property::String.catalog_parse(args[:device_name])
+          @device_name = Google::Compute::Property::String.catalog_parse(args[:device_name])
           @disk_encryption_key =
-            Google::Compute::Property::InstTempDiskEncrKey.catalog_parse(
-              args[:disk_encryption_key]
-            )
-          @index =
-            Google::Compute::Property::Integer.catalog_parse(args[:index])
+            Google::Compute::Property::InstTempDiskEncrKey.catalog_parse(args[:disk_encryption_key])
+          @index = Google::Compute::Property::Integer.catalog_parse(args[:index])
           @initialize_params =
-            Google::Compute::Property::InstaTemplInitiParam.catalog_parse(
-              args[:initialize_params]
-            )
-          @interface =
-            Google::Compute::Property::Enum.catalog_parse(args[:interface])
+            Google::Compute::Property::InstaTemplInitiParam.catalog_parse(args[:initialize_params])
+          @interface = Google::Compute::Property::Enum.catalog_parse(args[:interface])
           @mode = Google::Compute::Property::Enum.catalog_parse(args[:mode])
-          @source =
-            Google::Compute::Property::DiskNameRef.catalog_parse(args[:source])
+          @source = Google::Compute::Property::DiskNameRef.catalog_parse(args[:source])
           @type = Google::Compute::Property::Enum.catalog_parse(args[:type])
         end
         # rubocop:enable Metrics/MethodLength
@@ -179,9 +162,7 @@ module Google
       # A class to manage input to Disks for instance_template.
       class InstancTemplatDisks
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancTemplatDisks.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancTemplatDisks.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -202,10 +183,7 @@ module Google
       # A Chef property that holds an integer
       class InstancTemplatDisksArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstancTemplatDisksArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancTemplatDisksArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

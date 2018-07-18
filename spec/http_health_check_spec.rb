@@ -151,14 +151,9 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 295_703_256)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
               it { is_expected.to have_attributes(host: 'test host#0 data') }
 
@@ -166,17 +161,11 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(port: 759_512_136) }
 
-              it do
-                is_expected
-                  .to have_attributes(request_path: 'test request_path#0 data')
-              end
+              it { is_expected.to have_attributes(request_path: 'test request_path#0 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 1_604_513_019)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019) }
             end
 
             context 'gcompute_http_health_check[title1]' do
@@ -186,14 +175,9 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 591_406_512)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 591_406_512) }
 
               it { is_expected.to have_attributes(host: 'test host#1 data') }
 
@@ -201,17 +185,11 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(port: 1_519_024_273) }
 
-              it do
-                is_expected
-                  .to have_attributes(request_path: 'test request_path#1 data')
-              end
+              it { is_expected.to have_attributes(request_path: 'test request_path#1 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 5_408_063_442) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 3_209_026_038)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 3_209_026_038) }
             end
 
             context 'gcompute_http_health_check[title2]' do
@@ -221,14 +199,9 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 887_109_769)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 887_109_769) }
 
               it { is_expected.to have_attributes(host: 'test host#2 data') }
 
@@ -236,17 +209,11 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(port: 2_278_536_410) }
 
-              it do
-                is_expected
-                  .to have_attributes(request_path: 'test request_path#2 data')
-              end
+              it { is_expected.to have_attributes(request_path: 'test request_path#2 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 8_112_095_164) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 4_813_539_057)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 4_813_539_057) }
             end
           end
 
@@ -359,34 +326,21 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 295_703_256)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
               it { is_expected.to have_attributes(host: 'test host#0 data') }
 
-              it do
-                is_expected.to have_attributes(hhc_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(hhc_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(port: 759_512_136) }
 
-              it do
-                is_expected
-                  .to have_attributes(request_path: 'test request_path#0 data')
-              end
+              it { is_expected.to have_attributes(request_path: 'test request_path#0 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 1_604_513_019)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019) }
             end
 
             context 'gcompute_http_health_check[title1]' do
@@ -396,34 +350,21 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 591_406_512)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 591_406_512) }
 
               it { is_expected.to have_attributes(host: 'test host#1 data') }
 
-              it do
-                is_expected.to have_attributes(hhc_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(hhc_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(port: 1_519_024_273) }
 
-              it do
-                is_expected
-                  .to have_attributes(request_path: 'test request_path#1 data')
-              end
+              it { is_expected.to have_attributes(request_path: 'test request_path#1 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 5_408_063_442) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 3_209_026_038)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 3_209_026_038) }
             end
 
             context 'gcompute_http_health_check[title2]' do
@@ -433,34 +374,21 @@ context 'gcompute_http_health_check' do
 
               it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it do
-                is_expected.to have_attributes(healthy_threshold: 887_109_769)
-              end
+              it { is_expected.to have_attributes(healthy_threshold: 887_109_769) }
 
               it { is_expected.to have_attributes(host: 'test host#2 data') }
 
-              it do
-                is_expected.to have_attributes(hhc_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(hhc_label: 'test name#2 data') }
 
               it { is_expected.to have_attributes(port: 2_278_536_410) }
 
-              it do
-                is_expected
-                  .to have_attributes(request_path: 'test request_path#2 data')
-              end
+              it { is_expected.to have_attributes(request_path: 'test request_path#2 data') }
 
               it { is_expected.to have_attributes(timeout_sec: 8_112_095_164) }
 
-              it do
-                is_expected
-                  .to have_attributes(unhealthy_threshold: 4_813_539_057)
-              end
+              it { is_expected.to have_attributes(unhealthy_threshold: 4_813_539_057) }
             end
           end
 
@@ -592,10 +520,7 @@ context 'gcompute_http_health_check' do
           end
           it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
@@ -605,16 +530,11 @@ context 'gcompute_http_health_check' do
 
           it { is_expected.to have_attributes(port: 759_512_136) }
 
-          it do
-            is_expected
-              .to have_attributes(request_path: 'test request_path#0 data')
-          end
+          it { is_expected.to have_attributes(request_path: 'test request_path#0 data') }
 
           it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
 
-          it do
-            is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019)
-          end
+          it { is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019) }
         end
 
         # Ensure present: resource missing, ignore, no name, fail
@@ -707,10 +627,7 @@ context 'gcompute_http_health_check' do
           end
           it { is_expected.to have_attributes(check_interval_sec: 5) }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
 
@@ -720,16 +637,11 @@ context 'gcompute_http_health_check' do
 
           it { is_expected.to have_attributes(port: 759_512_136) }
 
-          it do
-            is_expected
-              .to have_attributes(request_path: 'test request_path#0 data')
-          end
+          it { is_expected.to have_attributes(request_path: 'test request_path#0 data') }
 
           it { is_expected.to have_attributes(timeout_sec: 2_704_031_721) }
 
-          it do
-            is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019)
-          end
+          it { is_expected.to have_attributes(unhealthy_threshold: 1_604_513_019) }
         end
 
         # Ensure present: resource missing, ignore, has name, fail

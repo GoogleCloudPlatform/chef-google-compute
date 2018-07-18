@@ -103,9 +103,7 @@ module Google
       # A class to manage fetching self_link from a license
       class LicenSelfLinkRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::LicenSelfLinkRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::LicenSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -130,9 +128,7 @@ module Google
       # A Chef property that holds an Array of LicenSelfLinkRef
       class LicenSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::LicenSelfLinkRefArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::LicenSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

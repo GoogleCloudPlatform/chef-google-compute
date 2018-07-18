@@ -50,42 +50,31 @@ module Google
     class UrlMap < Chef::Resource
       resource_name :gcompute_url_map
 
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :default_service,
                [String, ::Google::Compute::Data::BackServSelfLinkRef],
-               coerce: ::Google::Compute::Property::BackServSelfLinkRef.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::BackServSelfLinkRef.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # host_rules is Array of Google::Compute::Property::UrlMapHostRulesArray
       property :host_rules,
                Array,
-               coerce: ::Google::Compute::Property::UrlMapHostRulesArray.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::UrlMapHostRulesArray.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :um_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # path_matchers is Array of
-      # Google::Compute::Property::UrlMapPathMatchArray
+      # path_matchers is Array of Google::Compute::Property::UrlMapPathMatchArray
       property :path_matchers,
                Array,
-               coerce: ::Google::Compute::Property::UrlMapPathMatchArray.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::UrlMapPathMatchArray.coerce, desired_state: true
       # tests is Array of Google::Compute::Property::UrlMapTestsArray
       property :tests,
                Array,
-               coerce: ::Google::Compute::Property::UrlMapTestsArray.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::UrlMapTestsArray.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -113,33 +102,20 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.default_service =
-            ::Google::Compute::Property::BackServSelfLinkRef.api_parse(
-              fetch['defaultService']
-            )
+            ::Google::Compute::Property::BackServSelfLinkRef.api_parse(fetch['defaultService'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.host_rules =
-            ::Google::Compute::Property::UrlMapHostRulesArray.api_parse(
-              fetch['hostRules']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::UrlMapHostRulesArray.api_parse(fetch['hostRules'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.um_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.path_matchers =
-            ::Google::Compute::Property::UrlMapPathMatchArray.api_parse(
-              fetch['pathMatchers']
-            )
+            ::Google::Compute::Property::UrlMapPathMatchArray.api_parse(fetch['pathMatchers'])
           @current_resource.tests =
-            ::Google::Compute::Property::UrlMapTestsArray.api_parse(
-              fetch['tests']
-            )
+            ::Google::Compute::Property::UrlMapTestsArray.api_parse(fetch['tests'])
           @new_resource.__fetched = fetch
 
           update
@@ -381,10 +357,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#urlMap'
           )

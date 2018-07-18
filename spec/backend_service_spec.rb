@@ -67,12 +67,9 @@ context 'gcompute_backend_service' do
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
-              expect_network_get_success_instance_group 1,
-                                                        zone: 'test name#0 data'
-              expect_network_get_success_instance_group 2,
-                                                        zone: 'test name#1 data'
-              expect_network_get_success_instance_group 3,
-                                                        zone: 'test name#2 data'
+              expect_network_get_success_instance_group 1, zone: 'test name#0 data'
+              expect_network_get_success_instance_group 2, zone: 'test name#1 data'
+              expect_network_get_success_instance_group 3, zone: 'test name#2 data'
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
@@ -95,8 +92,8 @@ context 'gcompute_backend_service' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_backend_service gcompute_region
-                              gcompute_zone gcompute_instance_group],
+                step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                              gcompute_instance_group],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -372,10 +369,7 @@ context 'gcompute_backend_service' do
                 chef_run.find_resource(:gcompute_backend_service, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832)
-              end
+              it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832) }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'backends' do
@@ -392,24 +386,15 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
-              it do
-                is_expected
-                  .to have_attributes(health_checks: %w[rr ss tt uu vv])
-              end
+              it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
 
               it { is_expected.to have_attributes(bs_label: 'title0') }
 
-              it do
-                is_expected
-                  .to have_attributes(port_name: 'test port_name#0 data')
-              end
+              it { is_expected.to have_attributes(port_name: 'test port_name#0 data') }
 
               it { is_expected.to have_attributes(protocol: 'HTTP') }
 
@@ -428,10 +413,7 @@ context 'gcompute_backend_service' do
                 chef_run.find_resource(:gcompute_backend_service, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(affinity_cookie_ttl_sec: 3_225_465_664)
-              end
+              it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 3_225_465_664) }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'backends' do
@@ -448,23 +430,15 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(enable_cdn: false) }
 
-              it do
-                is_expected.to have_attributes(health_checks: %w[kk ll mm nn])
-              end
+              it { is_expected.to have_attributes(health_checks: %w[kk ll mm nn]) }
 
               it { is_expected.to have_attributes(bs_label: 'title1') }
 
-              it do
-                is_expected
-                  .to have_attributes(port_name: 'test port_name#1 data')
-              end
+              it { is_expected.to have_attributes(port_name: 'test port_name#1 data') }
 
               it { is_expected.to have_attributes(protocol: 'HTTPS') }
 
@@ -473,9 +447,7 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(session_affinity: 'CLIENT_IP')
-              end
+              it { is_expected.to have_attributes(session_affinity: 'CLIENT_IP') }
 
               it { is_expected.to have_attributes(timeout_sec: 5_408_063_442) }
             end
@@ -485,10 +457,7 @@ context 'gcompute_backend_service' do
                 chef_run.find_resource(:gcompute_backend_service, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(affinity_cookie_ttl_sec: 4_838_198_497)
-              end
+              it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 4_838_198_497) }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'backends' do
@@ -505,23 +474,15 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
-              it do
-                is_expected.to have_attributes(health_checks: %w[ee ff gg hh])
-              end
+              it { is_expected.to have_attributes(health_checks: %w[ee ff gg hh]) }
 
               it { is_expected.to have_attributes(bs_label: 'title2') }
 
-              it do
-                is_expected
-                  .to have_attributes(port_name: 'test port_name#2 data')
-              end
+              it { is_expected.to have_attributes(port_name: 'test port_name#2 data') }
 
               it { is_expected.to have_attributes(protocol: 'TCP') }
 
@@ -530,10 +491,7 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(session_affinity: 'GENERATED_COOKIE')
-              end
+              it { is_expected.to have_attributes(session_affinity: 'GENERATED_COOKIE') }
 
               it { is_expected.to have_attributes(timeout_sec: 8_112_095_164) }
             end
@@ -561,12 +519,9 @@ context 'gcompute_backend_service' do
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
-              expect_network_get_success_instance_group 1,
-                                                        zone: 'test name#0 data'
-              expect_network_get_success_instance_group 2,
-                                                        zone: 'test name#1 data'
-              expect_network_get_success_instance_group 3,
-                                                        zone: 'test name#2 data'
+              expect_network_get_success_instance_group 1, zone: 'test name#0 data'
+              expect_network_get_success_instance_group 2, zone: 'test name#1 data'
+              expect_network_get_success_instance_group 3, zone: 'test name#2 data'
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
@@ -589,8 +544,8 @@ context 'gcompute_backend_service' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_backend_service gcompute_region
-                              gcompute_zone gcompute_instance_group],
+                step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                              gcompute_instance_group],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -869,10 +824,7 @@ context 'gcompute_backend_service' do
                 chef_run.find_resource(:gcompute_backend_service, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832)
-              end
+              it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832) }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'backends' do
@@ -889,26 +841,15 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
-              it do
-                is_expected
-                  .to have_attributes(health_checks: %w[rr ss tt uu vv])
-              end
+              it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
 
-              it do
-                is_expected.to have_attributes(bs_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(bs_label: 'test name#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(port_name: 'test port_name#0 data')
-              end
+              it { is_expected.to have_attributes(port_name: 'test port_name#0 data') }
 
               it { is_expected.to have_attributes(protocol: 'HTTP') }
 
@@ -927,10 +868,7 @@ context 'gcompute_backend_service' do
                 chef_run.find_resource(:gcompute_backend_service, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(affinity_cookie_ttl_sec: 3_225_465_664)
-              end
+              it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 3_225_465_664) }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'backends' do
@@ -947,25 +885,15 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(enable_cdn: false) }
 
-              it do
-                is_expected.to have_attributes(health_checks: %w[kk ll mm nn])
-              end
+              it { is_expected.to have_attributes(health_checks: %w[kk ll mm nn]) }
 
-              it do
-                is_expected.to have_attributes(bs_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(bs_label: 'test name#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(port_name: 'test port_name#1 data')
-              end
+              it { is_expected.to have_attributes(port_name: 'test port_name#1 data') }
 
               it { is_expected.to have_attributes(protocol: 'HTTPS') }
 
@@ -974,9 +902,7 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(session_affinity: 'CLIENT_IP')
-              end
+              it { is_expected.to have_attributes(session_affinity: 'CLIENT_IP') }
 
               it { is_expected.to have_attributes(timeout_sec: 5_408_063_442) }
             end
@@ -986,10 +912,7 @@ context 'gcompute_backend_service' do
                 chef_run.find_resource(:gcompute_backend_service, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(affinity_cookie_ttl_sec: 4_838_198_497)
-              end
+              it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 4_838_198_497) }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'backends' do
@@ -1006,25 +929,15 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
-              it do
-                is_expected.to have_attributes(health_checks: %w[ee ff gg hh])
-              end
+              it { is_expected.to have_attributes(health_checks: %w[ee ff gg hh]) }
 
-              it do
-                is_expected.to have_attributes(bs_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(bs_label: 'test name#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(port_name: 'test port_name#2 data')
-              end
+              it { is_expected.to have_attributes(port_name: 'test port_name#2 data') }
 
               it { is_expected.to have_attributes(protocol: 'TCP') }
 
@@ -1033,10 +946,7 @@ context 'gcompute_backend_service' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(session_affinity: 'GENERATED_COOKIE')
-              end
+              it { is_expected.to have_attributes(session_affinity: 'GENERATED_COOKIE') }
 
               it { is_expected.to have_attributes(timeout_sec: 8_112_095_164) }
             end
@@ -1159,12 +1069,9 @@ context 'gcompute_backend_service' do
             expect_network_get_success_zone 1
             expect_network_get_success_zone 2
             expect_network_get_success_zone 3
-            expect_network_get_success_instance_group 1,
-                                                      zone: 'test name#0 data'
-            expect_network_get_success_instance_group 2,
-                                                      zone: 'test name#1 data'
-            expect_network_get_success_instance_group 3,
-                                                      zone: 'test name#2 data'
+            expect_network_get_success_instance_group 1, zone: 'test name#0 data'
+            expect_network_get_success_instance_group 2, zone: 'test name#1 data'
+            expect_network_get_success_instance_group 3, zone: 'test name#2 data'
             expect_network_get_success_region 1
           end
 
@@ -1185,8 +1092,8 @@ context 'gcompute_backend_service' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_backend_service gcompute_region
-                            gcompute_zone gcompute_instance_group],
+              step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                            gcompute_instance_group],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1327,10 +1234,7 @@ context 'gcompute_backend_service' do
             expect(chef_run).to create(:gcompute_backend_service,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832)
-          end
+          it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832) }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'backends' do
@@ -1347,22 +1251,15 @@ context 'gcompute_backend_service' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(enable_cdn: true) }
 
-          it do
-            is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv])
-          end
+          it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
 
           it { is_expected.to have_attributes(bs_label: 'title0') }
 
-          it do
-            is_expected.to have_attributes(port_name: 'test port_name#0 data')
-          end
+          it { is_expected.to have_attributes(port_name: 'test port_name#0 data') }
 
           it { is_expected.to have_attributes(protocol: 'HTTP') }
 
@@ -1454,12 +1351,9 @@ context 'gcompute_backend_service' do
             expect_network_get_success_zone 1
             expect_network_get_success_zone 2
             expect_network_get_success_zone 3
-            expect_network_get_success_instance_group 1,
-                                                      zone: 'test name#0 data'
-            expect_network_get_success_instance_group 2,
-                                                      zone: 'test name#1 data'
-            expect_network_get_success_instance_group 3,
-                                                      zone: 'test name#2 data'
+            expect_network_get_success_instance_group 1, zone: 'test name#0 data'
+            expect_network_get_success_instance_group 2, zone: 'test name#1 data'
+            expect_network_get_success_instance_group 3, zone: 'test name#2 data'
             expect_network_get_success_region 1
           end
 
@@ -1480,8 +1374,8 @@ context 'gcompute_backend_service' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_backend_service gcompute_region
-                            gcompute_zone gcompute_instance_group],
+              step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                            gcompute_instance_group],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1623,10 +1517,7 @@ context 'gcompute_backend_service' do
             expect(chef_run).to create(:gcompute_backend_service,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832)
-          end
+          it { is_expected.to have_attributes(affinity_cookie_ttl_sec: 1_612_732_832) }
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'backends' do
@@ -1643,22 +1534,15 @@ context 'gcompute_backend_service' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(enable_cdn: true) }
 
-          it do
-            is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv])
-          end
+          it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
 
           it { is_expected.to have_attributes(bs_label: 'test name#0 data') }
 
-          it do
-            is_expected.to have_attributes(port_name: 'test port_name#0 data')
-          end
+          it { is_expected.to have_attributes(port_name: 'test port_name#0 data') }
 
           it { is_expected.to have_attributes(protocol: 'HTTP') }
 
@@ -1709,8 +1593,8 @@ context 'gcompute_backend_service' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_backend_service gcompute_region
-                            gcompute_zone gcompute_instance_group],
+              step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                            gcompute_instance_group],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1773,8 +1657,8 @@ context 'gcompute_backend_service' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_backend_service gcompute_region
-                            gcompute_zone gcompute_instance_group],
+              step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                            gcompute_instance_group],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1842,8 +1726,8 @@ context 'gcompute_backend_service' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_backend_service gcompute_region
-                            gcompute_zone gcompute_instance_group],
+              step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                            gcompute_instance_group],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1912,8 +1796,8 @@ context 'gcompute_backend_service' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_backend_service gcompute_region
-                            gcompute_zone gcompute_instance_group],
+              step_into: %w[gcompute_backend_service gcompute_region gcompute_zone
+                            gcompute_instance_group],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'

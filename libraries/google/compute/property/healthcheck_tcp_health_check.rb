@@ -98,15 +98,11 @@ module Google
       # Data is coming from the GCP API
       class HealChecTcpHealChecApi < HealChecTcpHealChec
         def initialize(args)
-          @request =
-            Google::Compute::Property::String.api_parse(args['request'])
-          @response =
-            Google::Compute::Property::String.api_parse(args['response'])
+          @request = Google::Compute::Property::String.api_parse(args['request'])
+          @response = Google::Compute::Property::String.api_parse(args['response'])
           @port = Google::Compute::Property::Integer.api_parse(args['port'])
-          @port_name =
-            Google::Compute::Property::String.api_parse(args['portName'])
-          @proxy_header =
-            Google::Compute::Property::Enum.api_parse(args['proxyHeader'])
+          @port_name = Google::Compute::Property::String.api_parse(args['portName'])
+          @proxy_header = Google::Compute::Property::Enum.api_parse(args['proxyHeader'])
         end
       end
 
@@ -114,15 +110,11 @@ module Google
       # Data is coming from the Chef catalog
       class HealChecTcpHealChecCatalog < HealChecTcpHealChec
         def initialize(args)
-          @request =
-            Google::Compute::Property::String.catalog_parse(args[:request])
-          @response =
-            Google::Compute::Property::String.catalog_parse(args[:response])
+          @request = Google::Compute::Property::String.catalog_parse(args[:request])
+          @response = Google::Compute::Property::String.catalog_parse(args[:response])
           @port = Google::Compute::Property::Integer.catalog_parse(args[:port])
-          @port_name =
-            Google::Compute::Property::String.catalog_parse(args[:port_name])
-          @proxy_header =
-            Google::Compute::Property::Enum.catalog_parse(args[:proxy_header])
+          @port_name = Google::Compute::Property::String.catalog_parse(args[:port_name])
+          @proxy_header = Google::Compute::Property::Enum.catalog_parse(args[:proxy_header])
         end
       end
     end
@@ -131,9 +123,7 @@ module Google
       # A class to manage input to TcpHealthCheck for health_check.
       class HealChecTcpHealChec
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::HealChecTcpHealChec.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::HealChecTcpHealChec.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

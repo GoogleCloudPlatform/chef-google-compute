@@ -55,71 +55,48 @@ module Google
     class BackendService < Chef::Resource
       resource_name :gcompute_backend_service
 
-      property :affinity_cookie_ttl_sec,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
-      # backends is Array of
-      # Google::Compute::Property::BackendServiceBackendArray
+      property :affinity_cookie_ttl_sec
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      # backends is Array of Google::Compute::Property::BackendServiceBackendArray
       property :backends,
                Array,
-               coerce: \
-                 ::Google::Compute::Property::BackendServiceBackendArray.coerce,
+               coerce: ::Google::Compute::Property::BackendServiceBackendArray.coerce,
                desired_state: true
       property :cdn_policy,
                [Hash, ::Google::Compute::Data::BackeServiCdnPolic],
-               coerce: ::Google::Compute::Property::BackeServiCdnPolic.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::BackeServiCdnPolic.coerce, desired_state: true
       property :connection_draining,
                [Hash, ::Google::Compute::Data::BackeServiConneDrain],
-               coerce: ::Google::Compute::Property::BackeServiConneDrain.coerce,
-               desired_state: true
-      property :creation_timestamp,
-               Time,
-               coerce: ::Google::Compute::Property::Time.coerce,
-               desired_state: true
-      property :description,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::BackeServiConneDrain.coerce, desired_state: true
+      property :creation_timestamp
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :description
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :enable_cdn,
                kind_of: [TrueClass, FalseClass],
-               coerce: ::Google::Compute::Property::Boolean.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
       # health_checks is Array of Google::Compute::Property::StringArray
-      property :health_checks,
-               Array,
-               coerce: ::Google::Compute::Property::StringArray.coerce,
-               desired_state: true
-      property :id,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+      property :health_checks
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      property :id
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :bs_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :port_name,
-               String,
-               coerce: ::Google::Compute::Property::String.coerce,
-               desired_state: true
+      property :port_name
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :protocol,
                equal_to: %w[HTTP HTTPS TCP SSL],
-               coerce: ::Google::Compute::Property::Enum.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce,
-               desired_state: true
+               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
       property :session_affinity,
-               equal_to: %w[NONE CLIENT_IP GENERATED_COOKIE
-                            CLIENT_IP_PROTO CLIENT_IP_PORT_PROTO],
-               coerce: ::Google::Compute::Property::Enum.coerce,
-               desired_state: true
-      property :timeout_sec,
-               Integer,
-               coerce: ::Google::Compute::Property::Integer.coerce,
-               desired_state: true
+               equal_to: %w[NONE CLIENT_IP GENERATED_COOKIE CLIENT_IP_PROTO CLIENT_IP_PORT_PROTO],
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
+      property :timeout_sec
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -132,8 +109,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#backendService')
         if fetch.nil?
-          converge_by ['Creating gcompute_backend_service',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Creating gcompute_backend_service[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
             # TODO(nelsonjr): Determine how to print green like update converge
             puts # making a newline until we find a better way TODO: find!
@@ -148,37 +124,24 @@ module Google
         else
           @current_resource = @new_resource.clone
           @current_resource.affinity_cookie_ttl_sec =
-            ::Google::Compute::Property::Integer.api_parse(
-              fetch['affinityCookieTtlSec']
-            )
+            ::Google::Compute::Property::Integer.api_parse(fetch['affinityCookieTtlSec'])
           @current_resource.backends =
-            ::Google::Compute::Property::BackendServiceBackendArray.api_parse(
-              fetch['backends']
-            )
+            ::Google::Compute::Property::BackendServiceBackendArray.api_parse(fetch['backends'])
           @current_resource.cdn_policy =
-            ::Google::Compute::Property::BackeServiCdnPolic.api_parse(
-              fetch['cdnPolicy']
-            )
+            ::Google::Compute::Property::BackeServiCdnPolic.api_parse(fetch['cdnPolicy'])
           @current_resource.connection_draining =
             ::Google::Compute::Property::BackeServiConneDrain.api_parse(
               fetch['connectionDraining']
             )
           @current_resource.creation_timestamp =
-            ::Google::Compute::Property::Time.api_parse(
-              fetch['creationTimestamp']
-            )
+            ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(
-              fetch['description']
-            )
+            ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.enable_cdn =
             ::Google::Compute::Property::Boolean.api_parse(fetch['enableCDN'])
           @current_resource.health_checks =
-            ::Google::Compute::Property::StringArray.api_parse(
-              fetch['healthChecks']
-            )
-          @current_resource.id =
-            ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+            ::Google::Compute::Property::StringArray.api_parse(fetch['healthChecks'])
+          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.bs_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.port_name =
@@ -186,17 +149,11 @@ module Google
           @current_resource.protocol =
             ::Google::Compute::Property::Enum.api_parse(fetch['protocol'])
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(
-              fetch['region']
-            )
+            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
           @current_resource.session_affinity =
-            ::Google::Compute::Property::Enum.api_parse(
-              fetch['sessionAffinity']
-            )
+            ::Google::Compute::Property::Enum.api_parse(fetch['sessionAffinity'])
           @current_resource.timeout_sec =
-            ::Google::Compute::Property::Integer.api_parse(
-              fetch['timeoutSec']
-            )
+            ::Google::Compute::Property::Integer.api_parse(fetch['timeoutSec'])
           @new_resource.__fetched = fetch
 
           update
@@ -207,8 +164,7 @@ module Google
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#backendService')
         unless fetch.nil?
-          converge_by ['Deleting gcompute_backend_service',
-                       "[#{new_resource.name}]"].join do
+          converge_by "Deleting gcompute_backend_service[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
               self_link(@new_resource), fetch_auth(@new_resource)
             )
@@ -459,10 +415,11 @@ module Google
           op_result = return_if_object(response, 'compute#operation')
           return if op_result.nil?
           status = ::Google::HashUtils.navigate(op_result, %w[status])
-          wait_done = wait_for_completion(status, op_result, resource)
           fetch_resource(
             resource,
-            URI.parse(::Google::HashUtils.navigate(wait_done,
+            URI.parse(::Google::HashUtils.navigate(wait_for_completion(status,
+                                                                       op_result,
+                                                                       resource),
                                                    %w[targetLink])),
             'compute#backendService'
           )

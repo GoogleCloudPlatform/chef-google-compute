@@ -95,10 +95,8 @@ module Google
       # Data is coming from the Chef catalog
       class DiskDiskEncryKeyCatalog < DiskDiskEncryKey
         def initialize(args)
-          @raw_key =
-            Google::Compute::Property::String.catalog_parse(args[:raw_key])
-          @sha256 =
-            Google::Compute::Property::String.catalog_parse(args[:sha256])
+          @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
+          @sha256 = Google::Compute::Property::String.catalog_parse(args[:sha256])
         end
       end
     end
@@ -107,9 +105,7 @@ module Google
       # A class to manage input to DiskEncryptionKey for disk.
       class DiskDiskEncryKey
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::DiskDiskEncryKey.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::DiskDiskEncryKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

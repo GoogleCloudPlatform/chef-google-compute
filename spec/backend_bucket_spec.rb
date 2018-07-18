@@ -134,15 +134,9 @@ context 'gcompute_backend_bucket' do
                 chef_run.find_resource(:gcompute_backend_bucket, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(bucket_name: 'test bucket_name#0 data')
-              end
+              it { is_expected.to have_attributes(bucket_name: 'test bucket_name#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
@@ -154,15 +148,9 @@ context 'gcompute_backend_bucket' do
                 chef_run.find_resource(:gcompute_backend_bucket, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(bucket_name: 'test bucket_name#1 data')
-              end
+              it { is_expected.to have_attributes(bucket_name: 'test bucket_name#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(enable_cdn: false) }
 
@@ -174,15 +162,9 @@ context 'gcompute_backend_bucket' do
                 chef_run.find_resource(:gcompute_backend_bucket, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(bucket_name: 'test bucket_name#2 data')
-              end
+              it { is_expected.to have_attributes(bucket_name: 'test bucket_name#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
@@ -282,21 +264,13 @@ context 'gcompute_backend_bucket' do
                 chef_run.find_resource(:gcompute_backend_bucket, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(bucket_name: 'test bucket_name#0 data')
-              end
+              it { is_expected.to have_attributes(bucket_name: 'test bucket_name#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
-              it do
-                is_expected.to have_attributes(bb_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(bb_label: 'test name#0 data') }
             end
 
             context 'gcompute_backend_bucket[title1]' do
@@ -304,21 +278,13 @@ context 'gcompute_backend_bucket' do
                 chef_run.find_resource(:gcompute_backend_bucket, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(bucket_name: 'test bucket_name#1 data')
-              end
+              it { is_expected.to have_attributes(bucket_name: 'test bucket_name#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(enable_cdn: false) }
 
-              it do
-                is_expected.to have_attributes(bb_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(bb_label: 'test name#1 data') }
             end
 
             context 'gcompute_backend_bucket[title2]' do
@@ -326,21 +292,13 @@ context 'gcompute_backend_bucket' do
                 chef_run.find_resource(:gcompute_backend_bucket, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(bucket_name: 'test bucket_name#2 data')
-              end
+              it { is_expected.to have_attributes(bucket_name: 'test bucket_name#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(enable_cdn: true) }
 
-              it do
-                is_expected.to have_attributes(bb_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(bb_label: 'test name#2 data') }
             end
           end
 
@@ -460,15 +418,9 @@ context 'gcompute_backend_bucket' do
             expect(chef_run).to create(:gcompute_backend_bucket,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(bucket_name: 'test bucket_name#0 data')
-          end
+          it { is_expected.to have_attributes(bucket_name: 'test bucket_name#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(enable_cdn: true) }
 
@@ -553,15 +505,9 @@ context 'gcompute_backend_bucket' do
             expect(chef_run).to create(:gcompute_backend_bucket,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(bucket_name: 'test bucket_name#0 data')
-          end
+          it { is_expected.to have_attributes(bucket_name: 'test bucket_name#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(enable_cdn: true) }
 

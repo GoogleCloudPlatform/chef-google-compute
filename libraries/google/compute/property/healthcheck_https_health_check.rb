@@ -99,13 +99,10 @@ module Google
       class HealChecHttpHealChecApi < HealChecHttpHealChec
         def initialize(args)
           @host = Google::Compute::Property::String.api_parse(args['host'])
-          @request_path =
-            Google::Compute::Property::String.api_parse(args['requestPath'])
+          @request_path = Google::Compute::Property::String.api_parse(args['requestPath'])
           @port = Google::Compute::Property::Integer.api_parse(args['port'])
-          @port_name =
-            Google::Compute::Property::String.api_parse(args['portName'])
-          @proxy_header =
-            Google::Compute::Property::Enum.api_parse(args['proxyHeader'])
+          @port_name = Google::Compute::Property::String.api_parse(args['portName'])
+          @proxy_header = Google::Compute::Property::Enum.api_parse(args['proxyHeader'])
         end
       end
 
@@ -114,13 +111,10 @@ module Google
       class HealChecHttpHealChecCatalog < HealChecHttpHealChec
         def initialize(args)
           @host = Google::Compute::Property::String.catalog_parse(args[:host])
-          @request_path =
-            Google::Compute::Property::String.catalog_parse(args[:request_path])
+          @request_path = Google::Compute::Property::String.catalog_parse(args[:request_path])
           @port = Google::Compute::Property::Integer.catalog_parse(args[:port])
-          @port_name =
-            Google::Compute::Property::String.catalog_parse(args[:port_name])
-          @proxy_header =
-            Google::Compute::Property::Enum.catalog_parse(args[:proxy_header])
+          @port_name = Google::Compute::Property::String.catalog_parse(args[:port_name])
+          @proxy_header = Google::Compute::Property::Enum.catalog_parse(args[:proxy_header])
         end
       end
     end
@@ -129,9 +123,7 @@ module Google
       # A class to manage input to HttpsHealthCheck for health_check.
       class HealChecHttpHealChec
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::HealChecHttpHealChec.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::HealChecHttpHealChec.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

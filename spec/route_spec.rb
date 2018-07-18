@@ -176,15 +176,9 @@ context 'gcompute_route' do
                 chef_run.find_resource(:gcompute_route, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(dest_range: 'test dest_range#0 data')
-              end
+              it { is_expected.to have_attributes(dest_range: 'test dest_range#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(r_label: 'title0') }
 
@@ -198,29 +192,18 @@ context 'gcompute_route' do
               it { is_expected.to have_attributes(tags: %w[mm nn oo pp]) }
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_gateway: 'test next_hop_gateway#0 data'
-                  )
+                is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#0 data')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_instance: 'test next_hop_instance#0 data'
-                  )
+                is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#0 data')
               end
+
+              it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#0 data') }
 
               it do
                 is_expected
-                  .to have_attributes(next_hop_ip: 'test next_hop_ip#0 data')
-              end
-
-              it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data'
-                  )
+                  .to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data')
               end
             end
 
@@ -229,15 +212,9 @@ context 'gcompute_route' do
                 chef_run.find_resource(:gcompute_route, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(dest_range: 'test dest_range#1 data')
-              end
+              it { is_expected.to have_attributes(dest_range: 'test dest_range#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(r_label: 'title1') }
 
@@ -251,29 +228,18 @@ context 'gcompute_route' do
               it { is_expected.to have_attributes(tags: %w[bb cc dd]) }
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_gateway: 'test next_hop_gateway#1 data'
-                  )
+                is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#1 data')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_instance: 'test next_hop_instance#1 data'
-                  )
+                is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#1 data')
               end
+
+              it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#1 data') }
 
               it do
                 is_expected
-                  .to have_attributes(next_hop_ip: 'test next_hop_ip#1 data')
-              end
-
-              it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#1 data'
-                  )
+                  .to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#1 data')
               end
             end
 
@@ -282,15 +248,9 @@ context 'gcompute_route' do
                 chef_run.find_resource(:gcompute_route, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(dest_range: 'test dest_range#2 data')
-              end
+              it { is_expected.to have_attributes(dest_range: 'test dest_range#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(r_label: 'title2') }
 
@@ -304,29 +264,18 @@ context 'gcompute_route' do
               it { is_expected.to have_attributes(tags: %w[qq rr]) }
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_gateway: 'test next_hop_gateway#2 data'
-                  )
+                is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#2 data')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_instance: 'test next_hop_instance#2 data'
-                  )
+                is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#2 data')
               end
+
+              it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#2 data') }
 
               it do
                 is_expected
-                  .to have_attributes(next_hop_ip: 'test next_hop_ip#2 data')
-              end
-
-              it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#2 data'
-                  )
+                  .to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#2 data')
               end
             end
           end
@@ -465,15 +414,9 @@ context 'gcompute_route' do
                 chef_run.find_resource(:gcompute_route, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(dest_range: 'test dest_range#0 data')
-              end
+              it { is_expected.to have_attributes(dest_range: 'test dest_range#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(r_label: 'test name#0 data') }
 
@@ -487,29 +430,18 @@ context 'gcompute_route' do
               it { is_expected.to have_attributes(tags: %w[mm nn oo pp]) }
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_gateway: 'test next_hop_gateway#0 data'
-                  )
+                is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#0 data')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_instance: 'test next_hop_instance#0 data'
-                  )
+                is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#0 data')
               end
+
+              it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#0 data') }
 
               it do
                 is_expected
-                  .to have_attributes(next_hop_ip: 'test next_hop_ip#0 data')
-              end
-
-              it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data'
-                  )
+                  .to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data')
               end
             end
 
@@ -518,15 +450,9 @@ context 'gcompute_route' do
                 chef_run.find_resource(:gcompute_route, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(dest_range: 'test dest_range#1 data')
-              end
+              it { is_expected.to have_attributes(dest_range: 'test dest_range#1 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(r_label: 'test name#1 data') }
 
@@ -540,29 +466,18 @@ context 'gcompute_route' do
               it { is_expected.to have_attributes(tags: %w[bb cc dd]) }
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_gateway: 'test next_hop_gateway#1 data'
-                  )
+                is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#1 data')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_instance: 'test next_hop_instance#1 data'
-                  )
+                is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#1 data')
               end
+
+              it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#1 data') }
 
               it do
                 is_expected
-                  .to have_attributes(next_hop_ip: 'test next_hop_ip#1 data')
-              end
-
-              it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#1 data'
-                  )
+                  .to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#1 data')
               end
             end
 
@@ -571,15 +486,9 @@ context 'gcompute_route' do
                 chef_run.find_resource(:gcompute_route, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(dest_range: 'test dest_range#2 data')
-              end
+              it { is_expected.to have_attributes(dest_range: 'test dest_range#2 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(r_label: 'test name#2 data') }
 
@@ -593,29 +502,18 @@ context 'gcompute_route' do
               it { is_expected.to have_attributes(tags: %w[qq rr]) }
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_gateway: 'test next_hop_gateway#2 data'
-                  )
+                is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#2 data')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_instance: 'test next_hop_instance#2 data'
-                  )
+                is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#2 data')
               end
+
+              it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#2 data') }
 
               it do
                 is_expected
-                  .to have_attributes(next_hop_ip: 'test next_hop_ip#2 data')
-              end
-
-              it do
-                is_expected
-                  .to have_attributes(
-                    next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#2 data'
-                  )
+                  .to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#2 data')
               end
             end
           end
@@ -756,14 +654,9 @@ context 'gcompute_route' do
             expect(chef_run).to create(:gcompute_route,
                                        'title0')
           end
-          it do
-            is_expected.to have_attributes(dest_range: 'test dest_range#0 data')
-          end
+          it { is_expected.to have_attributes(dest_range: 'test dest_range#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(r_label: 'title0') }
 
@@ -776,30 +669,14 @@ context 'gcompute_route' do
 
           it { is_expected.to have_attributes(tags: %w[mm nn oo pp]) }
 
-          it do
-            is_expected
-              .to have_attributes(
-                next_hop_gateway: 'test next_hop_gateway#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#0 data') }
+
+          it { is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#0 data') }
+
+          it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#0 data') }
 
           it do
-            is_expected
-              .to have_attributes(
-                next_hop_instance: 'test next_hop_instance#0 data'
-              )
-          end
-
-          it do
-            is_expected
-              .to have_attributes(next_hop_ip: 'test next_hop_ip#0 data')
-          end
-
-          it do
-            is_expected
-              .to have_attributes(
-                next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data'
-              )
+            is_expected.to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data')
           end
         end
 
@@ -901,14 +778,9 @@ context 'gcompute_route' do
             expect(chef_run).to create(:gcompute_route,
                                        'title0')
           end
-          it do
-            is_expected.to have_attributes(dest_range: 'test dest_range#0 data')
-          end
+          it { is_expected.to have_attributes(dest_range: 'test dest_range#0 data') }
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(r_label: 'test name#0 data') }
 
@@ -921,30 +793,14 @@ context 'gcompute_route' do
 
           it { is_expected.to have_attributes(tags: %w[mm nn oo pp]) }
 
-          it do
-            is_expected
-              .to have_attributes(
-                next_hop_gateway: 'test next_hop_gateway#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(next_hop_gateway: 'test next_hop_gateway#0 data') }
+
+          it { is_expected.to have_attributes(next_hop_instance: 'test next_hop_instance#0 data') }
+
+          it { is_expected.to have_attributes(next_hop_ip: 'test next_hop_ip#0 data') }
 
           it do
-            is_expected
-              .to have_attributes(
-                next_hop_instance: 'test next_hop_instance#0 data'
-              )
-          end
-
-          it do
-            is_expected
-              .to have_attributes(next_hop_ip: 'test next_hop_ip#0 data')
-          end
-
-          it do
-            is_expected
-              .to have_attributes(
-                next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data'
-              )
+            is_expected.to have_attributes(next_hop_vpn_tunnel: 'test next_hop_vpn_tunnel#0 data')
           end
         end
 

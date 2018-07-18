@@ -103,9 +103,7 @@ module Google
       # A class to manage fetching self_link from a target_pool
       class TargPoolSelfLinkRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::TargPoolSelfLinkRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::TargPoolSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -130,10 +128,7 @@ module Google
       # A Chef property that holds an Array of TargPoolSelfLinkRef
       class TargPoolSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::TargPoolSelfLinkRefArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::TargPoolSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

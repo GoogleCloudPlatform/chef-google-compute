@@ -98,16 +98,10 @@ module Google
       class UrlMapPathMatchApi < UrlMapPathMatch
         def initialize(args)
           @default_service =
-            Google::Compute::Property::BackServSelfLinkRef.api_parse(
-              args['defaultService']
-            )
-          @description =
-            Google::Compute::Property::String.api_parse(args['description'])
+            Google::Compute::Property::BackServSelfLinkRef.api_parse(args['defaultService'])
+          @description = Google::Compute::Property::String.api_parse(args['description'])
           @name = Google::Compute::Property::String.api_parse(args['name'])
-          @path_rules =
-            Google::Compute::Property::UrlMapPathRulesArray.api_parse(
-              args['pathRules']
-            )
+          @path_rules = Google::Compute::Property::UrlMapPathRulesArray.api_parse(args['pathRules'])
         end
       end
 
@@ -116,16 +110,11 @@ module Google
       class UrlMapPathMatchCatalog < UrlMapPathMatch
         def initialize(args)
           @default_service =
-            Google::Compute::Property::BackServSelfLinkRef.catalog_parse(
-              args[:default_service]
-            )
-          @description =
-            Google::Compute::Property::String.catalog_parse(args[:description])
+            Google::Compute::Property::BackServSelfLinkRef.catalog_parse(args[:default_service])
+          @description = Google::Compute::Property::String.catalog_parse(args[:description])
           @name = Google::Compute::Property::String.catalog_parse(args[:name])
           @path_rules =
-            Google::Compute::Property::UrlMapPathRulesArray.catalog_parse(
-              args[:path_rules]
-            )
+            Google::Compute::Property::UrlMapPathRulesArray.catalog_parse(args[:path_rules])
         end
       end
     end
@@ -134,9 +123,7 @@ module Google
       # A class to manage input to PathMatchers for url_map.
       class UrlMapPathMatch
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapPathMatch.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapPathMatch.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -157,9 +144,7 @@ module Google
       # A Chef property that holds an integer
       class UrlMapPathMatchArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapPathMatchArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapPathMatchArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

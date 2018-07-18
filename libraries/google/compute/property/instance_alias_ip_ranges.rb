@@ -87,11 +87,9 @@ module Google
       # Data is coming from the GCP API
       class InstaAliasIpRangeApi < InstaAliasIpRange
         def initialize(args)
-          @ip_cidr_range =
-            Google::Compute::Property::String.api_parse(args['ipCidrRange'])
-          @subnetwork_range_name = Google::Compute::Property::String.api_parse(
-            args['subnetworkRangeName']
-          )
+          @ip_cidr_range = Google::Compute::Property::String.api_parse(args['ipCidrRange'])
+          @subnetwork_range_name =
+            Google::Compute::Property::String.api_parse(args['subnetworkRangeName'])
         end
       end
 
@@ -99,13 +97,9 @@ module Google
       # Data is coming from the Chef catalog
       class InstaAliasIpRangeCatalog < InstaAliasIpRange
         def initialize(args)
-          @ip_cidr_range = Google::Compute::Property::String.catalog_parse(
-            args[:ip_cidr_range]
-          )
+          @ip_cidr_range = Google::Compute::Property::String.catalog_parse(args[:ip_cidr_range])
           @subnetwork_range_name =
-            Google::Compute::Property::String.catalog_parse(
-              args[:subnetwork_range_name]
-            )
+            Google::Compute::Property::String.catalog_parse(args[:subnetwork_range_name])
         end
       end
     end
@@ -114,9 +108,7 @@ module Google
       # A class to manage input to AliasIpRanges for instance.
       class InstaAliasIpRange
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstaAliasIpRange.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaAliasIpRange.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -137,9 +129,7 @@ module Google
       # A Chef property that holds an integer
       class InstaAliasIpRangeArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstaAliasIpRangeArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaAliasIpRangeArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

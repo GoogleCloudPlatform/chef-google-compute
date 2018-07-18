@@ -195,29 +195,17 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(f_label: 'title0') }
 
-              it do
-                is_expected.to have_attributes(network: 'test network#0 data')
-              end
+              it { is_expected.to have_attributes(network: 'test network#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(source_ranges: %w[dd ee ff gg hh])
-              end
+              it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
-              it do
-                is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz])
-              end
+              it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
 
-              it do
-                is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx])
-              end
+              it { is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx]) }
             end
 
             context 'gcompute_firewall[title1]' do
@@ -230,28 +218,17 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(f_label: 'title1') }
 
-              it do
-                is_expected.to have_attributes(network: 'test network#1 data')
-              end
+              it { is_expected.to have_attributes(network: 'test network#1 data') }
 
-              it do
-                is_expected.to have_attributes(source_ranges: %w[ii jj kk ll])
-              end
+              it { is_expected.to have_attributes(source_ranges: %w[ii jj kk ll]) }
 
-              it do
-                is_expected.to have_attributes(source_tags: %w[ss tt uu vv])
-              end
+              it { is_expected.to have_attributes(source_tags: %w[ss tt uu vv]) }
 
-              it do
-                is_expected.to have_attributes(target_tags: %w[oo pp qq rr])
-              end
+              it { is_expected.to have_attributes(target_tags: %w[oo pp qq rr]) }
             end
 
             context 'gcompute_firewall[title2]' do
@@ -264,22 +241,15 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(f_label: 'title2') }
 
-              it do
-                is_expected.to have_attributes(network: 'test network#2 data')
-              end
+              it { is_expected.to have_attributes(network: 'test network#2 data') }
 
               it { is_expected.to have_attributes(source_ranges: %w[nn oo pp]) }
 
-              it do
-                is_expected.to have_attributes(source_tags: %w[qq rr ss tt])
-              end
+              it { is_expected.to have_attributes(source_tags: %w[qq rr ss tt]) }
 
               it { is_expected.to have_attributes(target_tags: %w[jj kk ll]) }
             end
@@ -438,29 +408,17 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               it { is_expected.to have_attributes(f_label: 'test name#0 data') }
 
-              it do
-                is_expected.to have_attributes(network: 'test network#0 data')
-              end
+              it { is_expected.to have_attributes(network: 'test network#0 data') }
 
-              it do
-                is_expected
-                  .to have_attributes(source_ranges: %w[dd ee ff gg hh])
-              end
+              it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
-              it do
-                is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz])
-              end
+              it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
 
-              it do
-                is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx])
-              end
+              it { is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx]) }
             end
 
             context 'gcompute_firewall[title1]' do
@@ -473,28 +431,17 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               it { is_expected.to have_attributes(f_label: 'test name#1 data') }
 
-              it do
-                is_expected.to have_attributes(network: 'test network#1 data')
-              end
+              it { is_expected.to have_attributes(network: 'test network#1 data') }
 
-              it do
-                is_expected.to have_attributes(source_ranges: %w[ii jj kk ll])
-              end
+              it { is_expected.to have_attributes(source_ranges: %w[ii jj kk ll]) }
 
-              it do
-                is_expected.to have_attributes(source_tags: %w[ss tt uu vv])
-              end
+              it { is_expected.to have_attributes(source_tags: %w[ss tt uu vv]) }
 
-              it do
-                is_expected.to have_attributes(target_tags: %w[oo pp qq rr])
-              end
+              it { is_expected.to have_attributes(target_tags: %w[oo pp qq rr]) }
             end
 
             context 'gcompute_firewall[title2]' do
@@ -507,22 +454,15 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               it { is_expected.to have_attributes(f_label: 'test name#2 data') }
 
-              it do
-                is_expected.to have_attributes(network: 'test network#2 data')
-              end
+              it { is_expected.to have_attributes(network: 'test network#2 data') }
 
               it { is_expected.to have_attributes(source_ranges: %w[nn oo pp]) }
 
-              it do
-                is_expected.to have_attributes(source_tags: %w[qq rr ss tt])
-              end
+              it { is_expected.to have_attributes(source_tags: %w[qq rr ss tt]) }
 
               it { is_expected.to have_attributes(target_tags: %w[jj kk ll]) }
             end
@@ -681,18 +621,13 @@ context 'gcompute_firewall' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(f_label: 'title0') }
 
           it { is_expected.to have_attributes(network: 'test network#0 data') }
 
-          it do
-            is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh])
-          end
+          it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
           it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
 
@@ -814,18 +749,13 @@ context 'gcompute_firewall' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           it { is_expected.to have_attributes(f_label: 'test name#0 data') }
 
           it { is_expected.to have_attributes(network: 'test network#0 data') }
 
-          it do
-            is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh])
-          end
+          it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
           it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
 

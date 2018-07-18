@@ -95,10 +95,8 @@ module Google
       # Data is coming from the Chef catalog
       class ImagSourDiskEncrKeyCatalog < ImagSourDiskEncrKey
         def initialize(args)
-          @raw_key =
-            Google::Compute::Property::String.catalog_parse(args[:raw_key])
-          @sha256 =
-            Google::Compute::Property::String.catalog_parse(args[:sha256])
+          @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
+          @sha256 = Google::Compute::Property::String.catalog_parse(args[:sha256])
         end
       end
     end
@@ -107,9 +105,7 @@ module Google
       # A class to manage input to SourceDiskEncryptionKey for image.
       class ImagSourDiskEncrKey
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::ImagSourDiskEncrKey.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::ImagSourDiskEncrKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

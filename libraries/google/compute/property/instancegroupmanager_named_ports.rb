@@ -106,9 +106,7 @@ module Google
       # A class to manage input to NamedPorts for instance_group_manager.
       class InstGrouManaNamePort
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstGrouManaNamePort.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstGrouManaNamePort.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -129,10 +127,7 @@ module Google
       # A Chef property that holds an integer
       class InstGrouManaNamePortArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstGrouManaNamePortArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstGrouManaNamePortArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

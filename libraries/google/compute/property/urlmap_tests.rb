@@ -95,13 +95,10 @@ module Google
       # Data is coming from the GCP API
       class UrlMapTestsApi < UrlMapTests
         def initialize(args)
-          @description =
-            Google::Compute::Property::String.api_parse(args['description'])
+          @description = Google::Compute::Property::String.api_parse(args['description'])
           @host = Google::Compute::Property::String.api_parse(args['host'])
           @path = Google::Compute::Property::String.api_parse(args['path'])
-          @service = Google::Compute::Property::BackServSelfLinkRef.api_parse(
-            args['service']
-          )
+          @service = Google::Compute::Property::BackServSelfLinkRef.api_parse(args['service'])
         end
       end
 
@@ -109,14 +106,10 @@ module Google
       # Data is coming from the Chef catalog
       class UrlMapTestsCatalog < UrlMapTests
         def initialize(args)
-          @description =
-            Google::Compute::Property::String.catalog_parse(args[:description])
+          @description = Google::Compute::Property::String.catalog_parse(args[:description])
           @host = Google::Compute::Property::String.catalog_parse(args[:host])
           @path = Google::Compute::Property::String.catalog_parse(args[:path])
-          @service =
-            Google::Compute::Property::BackServSelfLinkRef.catalog_parse(
-              args[:service]
-            )
+          @service = Google::Compute::Property::BackServSelfLinkRef.catalog_parse(args[:service])
         end
       end
     end
@@ -146,9 +139,7 @@ module Google
       # A Chef property that holds an integer
       class UrlMapTestsArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::UrlMapTestsArray.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::UrlMapTestsArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

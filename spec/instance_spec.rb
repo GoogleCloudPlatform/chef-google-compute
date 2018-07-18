@@ -61,15 +61,9 @@ context 'gcompute_instance' do
               allow(Time).to receive(:now).and_return(
                 Time.new(2017, 1, 2, 3, 4, 5)
               )
-              expect_network_get_success 1,
-                                         name: 'title0',
-                                         zone: 'test name#0 data'
-              expect_network_get_success 2,
-                                         name: 'title1',
-                                         zone: 'test name#1 data'
-              expect_network_get_success 3,
-                                         name: 'title2',
-                                         zone: 'test name#2 data'
+              expect_network_get_success 1, name: 'title0', zone: 'test name#0 data'
+              expect_network_get_success 2, name: 'title1', zone: 'test name#1 data'
+              expect_network_get_success 3, name: 'title2', zone: 'test name#2 data'
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
@@ -79,12 +73,9 @@ context 'gcompute_instance' do
               expect_network_get_success_disk 1, zone: 'test name#0 data'
               expect_network_get_success_disk 2, zone: 'test name#1 data'
               expect_network_get_success_disk 3, zone: 'test name#2 data'
-              expect_network_get_success_machine_type 1,
-                                                      zone: 'test name#0 data'
-              expect_network_get_success_machine_type 2,
-                                                      zone: 'test name#1 data'
-              expect_network_get_success_machine_type 3,
-                                                      zone: 'test name#2 data'
+              expect_network_get_success_machine_type 1, zone: 'test name#0 data'
+              expect_network_get_success_machine_type 2, zone: 'test name#1 data'
+              expect_network_get_success_machine_type 3, zone: 'test name#2 data'
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
@@ -94,12 +85,9 @@ context 'gcompute_instance' do
               expect_network_get_success_network 1
               expect_network_get_success_network 2
               expect_network_get_success_network 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -894,10 +882,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    label_fingerprint: 'test label_fingerprint#0 data'
-                  )
+                is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data')
               end
 
               # TODO(nelsonjr): Implement complex namevalues property test.
@@ -911,10 +896,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    min_cpu_platform: 'test min_cpu_platform#0 data'
-                  )
+                is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#0 data')
               end
 
               it { is_expected.to have_attributes(i_label: 'title0') }
@@ -963,10 +945,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    label_fingerprint: 'test label_fingerprint#1 data'
-                  )
+                is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#1 data')
               end
 
               # TODO(nelsonjr): Implement complex namevalues property test.
@@ -980,10 +959,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    min_cpu_platform: 'test min_cpu_platform#1 data'
-                  )
+                is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#1 data')
               end
 
               it { is_expected.to have_attributes(i_label: 'title1') }
@@ -1032,10 +1008,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    label_fingerprint: 'test label_fingerprint#2 data'
-                  )
+                is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#2 data')
               end
 
               # TODO(nelsonjr): Implement complex namevalues property test.
@@ -1049,10 +1022,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    min_cpu_platform: 'test min_cpu_platform#2 data'
-                  )
+                is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#2 data')
               end
 
               it { is_expected.to have_attributes(i_label: 'title2') }
@@ -1112,12 +1082,9 @@ context 'gcompute_instance' do
               expect_network_get_success_disk 1, zone: 'test name#0 data'
               expect_network_get_success_disk 2, zone: 'test name#1 data'
               expect_network_get_success_disk 3, zone: 'test name#2 data'
-              expect_network_get_success_machine_type 1,
-                                                      zone: 'test name#0 data'
-              expect_network_get_success_machine_type 2,
-                                                      zone: 'test name#1 data'
-              expect_network_get_success_machine_type 3,
-                                                      zone: 'test name#2 data'
+              expect_network_get_success_machine_type 1, zone: 'test name#0 data'
+              expect_network_get_success_machine_type 2, zone: 'test name#1 data'
+              expect_network_get_success_machine_type 3, zone: 'test name#2 data'
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
@@ -1127,12 +1094,9 @@ context 'gcompute_instance' do
               expect_network_get_success_network 1
               expect_network_get_success_network 2
               expect_network_get_success_network 3
-              expect_network_get_success_subnetwork 1,
-                                                    region: 'test name#0 data'
-              expect_network_get_success_subnetwork 2,
-                                                    region: 'test name#1 data'
-              expect_network_get_success_subnetwork 3,
-                                                    region: 'test name#2 data'
+              expect_network_get_success_subnetwork 1, region: 'test name#0 data'
+              expect_network_get_success_subnetwork 2, region: 'test name#1 data'
+              expect_network_get_success_subnetwork 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -1930,10 +1894,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    label_fingerprint: 'test label_fingerprint#0 data'
-                  )
+                is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data')
               end
 
               # TODO(nelsonjr): Implement complex namevalues property test.
@@ -1947,10 +1908,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    min_cpu_platform: 'test min_cpu_platform#0 data'
-                  )
+                is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#0 data')
               end
 
               it { is_expected.to have_attributes(i_label: 'test name#0 data') }
@@ -1999,10 +1957,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    label_fingerprint: 'test label_fingerprint#1 data'
-                  )
+                is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#1 data')
               end
 
               # TODO(nelsonjr): Implement complex namevalues property test.
@@ -2016,10 +1971,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    min_cpu_platform: 'test min_cpu_platform#1 data'
-                  )
+                is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#1 data')
               end
 
               it { is_expected.to have_attributes(i_label: 'test name#1 data') }
@@ -2068,10 +2020,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    label_fingerprint: 'test label_fingerprint#2 data'
-                  )
+                is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#2 data')
               end
 
               # TODO(nelsonjr): Implement complex namevalues property test.
@@ -2085,10 +2034,7 @@ context 'gcompute_instance' do
               # end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    min_cpu_platform: 'test min_cpu_platform#2 data'
-                  )
+                is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#2 data')
               end
 
               it { is_expected.to have_attributes(i_label: 'test name#2 data') }
@@ -2170,9 +2116,7 @@ context 'gcompute_instance' do
         context 'title == name (pass)' do
           before do
             # rubocop:disable Metrics/LineLength
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      zone: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', zone: 'test name#0 data'
             expect_network_create \
               1,
               {
@@ -2825,12 +2769,7 @@ context 'gcompute_instance' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(
-                label_fingerprint: 'test label_fingerprint#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data') }
 
           # TODO(nelsonjr): Implement complex namevalues property test.
           # it 'metadata' do
@@ -2842,12 +2781,7 @@ context 'gcompute_instance' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(
-                min_cpu_platform: 'test min_cpu_platform#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#0 data') }
 
           it { is_expected.to have_attributes(i_label: 'title0') }
 
@@ -3544,12 +3478,7 @@ context 'gcompute_instance' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(
-                label_fingerprint: 'test label_fingerprint#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data') }
 
           # TODO(nelsonjr): Implement complex namevalues property test.
           # it 'metadata' do
@@ -3561,12 +3490,7 @@ context 'gcompute_instance' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(
-                min_cpu_platform: 'test min_cpu_platform#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(min_cpu_platform: 'test min_cpu_platform#0 data') }
 
           it { is_expected.to have_attributes(i_label: 'test name#0 data') }
 
@@ -3613,9 +3537,7 @@ context 'gcompute_instance' do
         # Ensure absent: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      zone: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_zone 1
           end
 
@@ -3778,9 +3700,7 @@ context 'gcompute_instance' do
         # Ensure absent: resource exists, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_success 1,
-                                       name: 'title0',
-                                       zone: 'test name#0 data'
+            expect_network_get_success 1, name: 'title0', zone: 'test name#0 data'
             expect_network_delete 1, 'title0', zone: 'test name#0 data'
             expect_network_get_async 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_zone 1

@@ -61,15 +61,9 @@ context 'gcompute_disk' do
               allow(Time).to receive(:now).and_return(
                 Time.new(2017, 1, 2, 3, 4, 5)
               )
-              expect_network_get_success 1,
-                                         name: 'title0',
-                                         zone: 'test name#0 data'
-              expect_network_get_success 2,
-                                         name: 'title1',
-                                         zone: 'test name#1 data'
-              expect_network_get_success 3,
-                                         name: 'title2',
-                                         zone: 'test name#2 data'
+              expect_network_get_success 1, name: 'title0', zone: 'test name#0 data'
+              expect_network_get_success 2, name: 'title1', zone: 'test name#1 data'
+              expect_network_get_success 3, name: 'title2', zone: 'test name#2 data'
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
@@ -254,10 +248,7 @@ context 'gcompute_disk' do
                 chef_run.find_resource(:gcompute_disk, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(nelsonjr): Implement complex namevalues property test.
               # it 'labels' do
@@ -270,10 +261,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
-              it do
-                is_expected
-                  .to have_attributes(source_image: 'test source_image#0 data')
-              end
+              it { is_expected.to have_attributes(source_image: 'test source_image#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'type' do
@@ -295,12 +283,7 @@ context 'gcompute_disk' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_snapshot: 'test source_snapshot#0 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#0 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'sourceSnapshotEncryptionKey' do
@@ -313,10 +296,7 @@ context 'gcompute_disk' do
                 chef_run.find_resource(:gcompute_disk, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(nelsonjr): Implement complex namevalues property test.
               # it 'labels' do
@@ -329,10 +309,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(size_gb: 5_716_998_797) }
 
-              it do
-                is_expected
-                  .to have_attributes(source_image: 'test source_image#1 data')
-              end
+              it { is_expected.to have_attributes(source_image: 'test source_image#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'type' do
@@ -354,12 +331,7 @@ context 'gcompute_disk' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_snapshot: 'test source_snapshot#1 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#1 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'sourceSnapshotEncryptionKey' do
@@ -372,10 +344,7 @@ context 'gcompute_disk' do
                 chef_run.find_resource(:gcompute_disk, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(nelsonjr): Implement complex namevalues property test.
               # it 'labels' do
@@ -388,10 +357,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(size_gb: 8_575_498_196) }
 
-              it do
-                is_expected
-                  .to have_attributes(source_image: 'test source_image#2 data')
-              end
+              it { is_expected.to have_attributes(source_image: 'test source_image#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'type' do
@@ -413,12 +379,7 @@ context 'gcompute_disk' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_snapshot: 'test source_snapshot#2 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#2 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'sourceSnapshotEncryptionKey' do
@@ -633,10 +594,7 @@ context 'gcompute_disk' do
                 chef_run.find_resource(:gcompute_disk, 'title0')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(nelsonjr): Implement complex namevalues property test.
               # it 'labels' do
@@ -649,10 +607,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
-              it do
-                is_expected
-                  .to have_attributes(source_image: 'test source_image#0 data')
-              end
+              it { is_expected.to have_attributes(source_image: 'test source_image#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'type' do
@@ -674,12 +629,7 @@ context 'gcompute_disk' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_snapshot: 'test source_snapshot#0 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#0 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'sourceSnapshotEncryptionKey' do
@@ -692,10 +642,7 @@ context 'gcompute_disk' do
                 chef_run.find_resource(:gcompute_disk, 'title1')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(nelsonjr): Implement complex namevalues property test.
               # it 'labels' do
@@ -708,10 +655,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(size_gb: 5_716_998_797) }
 
-              it do
-                is_expected
-                  .to have_attributes(source_image: 'test source_image#1 data')
-              end
+              it { is_expected.to have_attributes(source_image: 'test source_image#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'type' do
@@ -733,12 +677,7 @@ context 'gcompute_disk' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_snapshot: 'test source_snapshot#1 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#1 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'sourceSnapshotEncryptionKey' do
@@ -751,10 +690,7 @@ context 'gcompute_disk' do
                 chef_run.find_resource(:gcompute_disk, 'title2')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(nelsonjr): Implement complex namevalues property test.
               # it 'labels' do
@@ -767,10 +703,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(size_gb: 8_575_498_196) }
 
-              it do
-                is_expected
-                  .to have_attributes(source_image: 'test source_image#2 data')
-              end
+              it { is_expected.to have_attributes(source_image: 'test source_image#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'type' do
@@ -792,12 +725,7 @@ context 'gcompute_disk' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected
-                  .to have_attributes(
-                    source_snapshot: 'test source_snapshot#2 data'
-                  )
-              end
+              it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#2 data') }
 
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'sourceSnapshotEncryptionKey' do
@@ -855,9 +783,7 @@ context 'gcompute_disk' do
         # Ensure present: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      zone: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', zone: 'test name#0 data'
             expect_network_create \
               1,
               {
@@ -980,10 +906,7 @@ context 'gcompute_disk' do
             expect(chef_run).to create(:gcompute_disk,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(nelsonjr): Implement complex namevalues property test.
           # it 'labels' do
@@ -996,10 +919,7 @@ context 'gcompute_disk' do
 
           it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
-          it do
-            is_expected
-              .to have_attributes(source_image: 'test source_image#0 data')
-          end
+          it { is_expected.to have_attributes(source_image: 'test source_image#0 data') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'type' do
@@ -1021,12 +941,7 @@ context 'gcompute_disk' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(
-                source_snapshot: 'test source_snapshot#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#0 data') }
 
           # TODO(nelsonjr): Implement complex nested property object test.
           # it 'sourceSnapshotEncryptionKey' do
@@ -1170,10 +1085,7 @@ context 'gcompute_disk' do
             expect(chef_run).to create(:gcompute_disk,
                                        'title0')
           end
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(nelsonjr): Implement complex namevalues property test.
           # it 'labels' do
@@ -1186,10 +1098,7 @@ context 'gcompute_disk' do
 
           it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
-          it do
-            is_expected
-              .to have_attributes(source_image: 'test source_image#0 data')
-          end
+          it { is_expected.to have_attributes(source_image: 'test source_image#0 data') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'type' do
@@ -1211,12 +1120,7 @@ context 'gcompute_disk' do
           #   # Add test code here
           # end
 
-          it do
-            is_expected
-              .to have_attributes(
-                source_snapshot: 'test source_snapshot#0 data'
-              )
-          end
+          it { is_expected.to have_attributes(source_snapshot: 'test source_snapshot#0 data') }
 
           # TODO(nelsonjr): Implement complex nested property object test.
           # it 'sourceSnapshotEncryptionKey' do
@@ -1241,9 +1145,7 @@ context 'gcompute_disk' do
         # Ensure absent: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      zone: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_zone 1
           end
 
@@ -1390,9 +1292,7 @@ context 'gcompute_disk' do
         # Ensure absent: resource exists, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_success 1,
-                                       name: 'title0',
-                                       zone: 'test name#0 data'
+            expect_network_get_success 1, name: 'title0', zone: 'test name#0 data'
             expect_network_delete 1, 'title0', zone: 'test name#0 data'
             expect_network_get_async 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_zone 1

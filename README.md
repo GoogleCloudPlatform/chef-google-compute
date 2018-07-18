@@ -127,8 +127,7 @@ For complete details of the authentication cookbook, visit the
     Each virtual machine instance has an ephemeral internal IP address and,
     optionally, an external IP address. To communicate between instances on
     the same network, you can use an instance's internal IP address. To
-    communicate with the Internet and instances outside of the same
-    network,
+    communicate with the Internet and instances outside of the same network,
     you must specify the instance's external IP address.
     Internal IP addresses are ephemeral and only belong to an instance for
     the lifetime of the instance; if the instance is deleted and recreated,
@@ -136,17 +135,14 @@ For complete details of the authentication cookbook, visit the
     Engine or by you. External IP addresses can be either ephemeral or
     static.
 * [`gcompute_backend_bucket`](#gcompute_backend_bucket) -
-    Backend buckets allow you to use Google Cloud Storage buckets with
-    HTTP(S)
+    Backend buckets allow you to use Google Cloud Storage buckets with HTTP(S)
     load balancing.
     An HTTP(S) load balancer can direct traffic to specified URLs to a
     backend bucket rather than a backend service. It can send requests for
-    static content to a Cloud Storage bucket and requests for dynamic
-    content
+    static content to a Cloud Storage bucket and requests for dynamic content
     a virtual machine instance.
 * [`gcompute_backend_service`](#gcompute_backend_service) -
-    Creates a BackendService resource in the specified project using the
-    data
+    Creates a BackendService resource in the specified project using the data
     included in the request.
 * [`gcompute_disk_type`](#gcompute_disk_type) -
     Represents a DiskType resource. A DiskType resource represents the type
@@ -160,12 +156,9 @@ For complete details of the authentication cookbook, visit the
     hard disk drives (HDD) or solid-state drives (SSD).
     Persistent disks are located independently from your virtual machine
     instances, so you can detach or move persistent disks to keep your data
-    even after you delete your instances. Persistent disk performance
-    scales
-    automatically with size, so you can resize your existing persistent
-    disks
-    or add more persistent disks to an instance to meet your performance
-    and
+    even after you delete your instances. Persistent disk performance scales
+    automatically with size, so you can resize your existing persistent disks
+    or add more persistent disks to an instance to meet your performance and
     storage space requirements.
     Add a persistent disk to your instance when you need reliable and
     affordable storage with consistent performance characteristics.
@@ -176,16 +169,13 @@ For complete details of the authentication cookbook, visit the
     firewall unless firewall rules are created to allow it.
     The default network has automatically created firewall rules that are
     shown in default firewall rules. No manually created network has
-    automatically created firewall rules except for a default "allow" rule
-    for
+    automatically created firewall rules except for a default "allow" rule for
     outgoing traffic and a default "deny" for incoming traffic. For all
     networks except the default network, you must create any firewall rules
     you need.
 * [`gcompute_forwarding_rule`](#gcompute_forwarding_rule) -
-    A ForwardingRule resource. A ForwardingRule resource specifies which
-    pool
-    of target virtual machines to forward a packet to if it matches the
-    given
+    A ForwardingRule resource. A ForwardingRule resource specifies which pool
+    of target virtual machines to forward a packet to if it matches the given
     [IPAddress, IPProtocol, portRange] tuple.
 * [`gcompute_global_address`](#gcompute_global_address) -
     Represents a Global Address resource. Global addresses are used for
@@ -204,32 +194,25 @@ For complete details of the authentication cookbook, visit the
     An HttpsHealthCheck resource. This resource defines a template for how
     individual VMs should be checked for health, via HTTPS.
 * [`gcompute_health_check`](#gcompute_health_check) -
-    An HealthCheck resource. This resource defines a template for how
-    individual virtual machines should be checked for health, via one of
-    the supported protocols.
+    An HealthCheck resource. This resource defines a template for how individual virtual
+    machines should be checked for health, via one of the supported protocols.
 * [`gcompute_instance_template`](#gcompute_instance_template) -
-    Defines an Instance Template resource that provides configuration
-    settings
-    for your virtual machine instances. Instance templates are not tied to
-    the
+    Defines an Instance Template resource that provides configuration settings
+    for your virtual machine instances. Instance templates are not tied to the
     lifetime of an instance and can be used and reused as to deploy virtual
-    machines. You can also use different templates to create different
-    virtual
-    machine configurations. Instance templates are required when you create
-    a
+    machines. You can also use different templates to create different virtual
+    machine configurations. Instance templates are required when you create a
     managed instance group.
     Tip: Disks should be set to autoDelete=true
     so that leftover disks are not left behind on machine deletion.
 * [`gcompute_license`](#gcompute_license) -
     A License resource represents a software license. Licenses are used to
-    track software usage in images, persistent disks, snapshots, and
-    virtual
+    track software usage in images, persistent disks, snapshots, and virtual
     machine instances.
 * [`gcompute_image`](#gcompute_image) -
     Represents an Image resource.
     Google Compute Engine uses operating system images to create the root
-    persistent disks for your instances. You specify an image when you
-    create
+    persistent disks for your instances. You specify an image when you create
     an instance. Images contain a boot loader, an operating system, and a
     root file system. Linux operating system images are also capable of
     running containers on Compute Engine.
@@ -237,52 +220,40 @@ For complete details of the authentication cookbook, visit the
     Public images are provided and maintained by Google, open-source
     communities, and third-party vendors. By default, all projects have
     access to these images and can use them to create instances.  Custom
-    images are available only to your project. You can create a custom
-    image
+    images are available only to your project. You can create a custom image
     from root persistent disks and other images. Then, use the custom image
     to create an instance.
 * [`gcompute_instance`](#gcompute_instance) -
-    An instance is a virtual machine (VM) hosted on Google's
-    infrastructure.
+    An instance is a virtual machine (VM) hosted on Google's infrastructure.
 * [`gcompute_instance_group`](#gcompute_instance_group) -
     Represents an Instance Group resource. Instance groups are self-managed
-    and can contain identical or different instances. Instance groups do
-    not
-    use an instance template. Unlike managed instance groups, you must
-    create
+    and can contain identical or different instances. Instance groups do not
+    use an instance template. Unlike managed instance groups, you must create
     and add instances to an instance group manually.
 * [`gcompute_instance_group_manager`](#gcompute_instance_group_manager) -
-    Creates a managed instance group using the information that you specify
-    in
-    the request. After the group is created, it schedules an action to
-    create
+    Creates a managed instance group using the information that you specify in
+    the request. After the group is created, it schedules an action to create
     instances in the group using the specified instance template. This
     operation is marked as DONE when the group is created even if the
     instances in the group have not yet been created. You must separately
     verify the status of the individual instances.
     A managed instance group can have up to 1000 VM instances per group.
 * [`gcompute_machine_type`](#gcompute_machine_type) -
-    Represents a MachineType resource. Machine types determine the
-    virtualized
+    Represents a MachineType resource. Machine types determine the virtualized
     hardware specifications of your virtual machine instances, such as the
     amount of memory or number of virtual CPUs.
 * [`gcompute_network`](#gcompute_network) -
     Represents a Network resource.
     Your Cloud Platform Console project can contain multiple networks, and
-    each network can have multiple instances attached to it. A network
-    allows
+    each network can have multiple instances attached to it. A network allows
     you to define a gateway IP and the network range for the instances
-    attached to that network. Every project is provided with a default
-    network
-    with preset configurations and firewall rules. You can choose to
-    customize
+    attached to that network. Every project is provided with a default network
+    with preset configurations and firewall rules. You can choose to customize
     the default network by adding or removing rules, or you can create new
     networks in that project. Generally, most users only need one network,
     although you can have up to five networks per project by default.
-    A network belongs to only one project, and each instance can only
-    belong
-    to one network. All Compute Engine networks use the IPv4 protocol.
-    Compute
+    A network belongs to only one project, and each instance can only belong
+    to one network. All Compute Engine networks use the IPv4 protocol. Compute
     Engine currently does not support IPv6. However, Google is a major
     advocate of IPv6 and it is an important future direction.
 * [`gcompute_region`](#gcompute_region) -
@@ -291,17 +262,13 @@ For complete details of the authentication cookbook, visit the
     zones
 * [`gcompute_route`](#gcompute_route) -
     Represents a Route resource.
-    A route is a rule that specifies how certain packets should be handled
-    by
-    the virtual network. Routes are associated with virtual machines by
-    tag,
+    A route is a rule that specifies how certain packets should be handled by
+    the virtual network. Routes are associated with virtual machines by tag,
     and the set of routes for a particular virtual machine is called its
     routing table. For each packet leaving a virtual machine, the system
-    searches that virtual machine's routing table for a single best
-    matching
+    searches that virtual machine's routing table for a single best matching
     route.
-    Routes match packets by destination IP address, preferring smaller or
-    more
+    Routes match packets by destination IP address, preferring smaller or more
     specific ranges over larger ones. If there is a tie, the system selects
     the route with the smallest priority value. If there is still a tie, it
     uses the layer three and four packet headers to select just one of the
@@ -317,20 +284,16 @@ For complete details of the authentication cookbook, visit the
 * [`gcompute_snapshot`](#gcompute_snapshot) -
     Represents a Persistent Disk Snapshot resource.
     Use snapshots to back up data from your persistent disks. Snapshots are
-    different from public images and custom images, which are used
-    primarily
-    to create instances or configure instance templates. Snapshots are
-    useful
-    for periodic backup of the data on your persistent disks. You can
-    create
+    different from public images and custom images, which are used primarily
+    to create instances or configure instance templates. Snapshots are useful
+    for periodic backup of the data on your persistent disks. You can create
     snapshots from persistent disks even while they are attached to running
     instances.
     Snapshots are incremental, so you can create regular snapshots on a
     persistent disk faster and at a much lower cost than if you regularly
     created a full image of the disk.
 * [`gcompute_ssl_certificate`](#gcompute_ssl_certificate) -
-    An SslCertificate resource. This resource provides a mechanism to
-    upload
+    An SslCertificate resource. This resource provides a mechanism to upload
     an SSL key and certificate to the load balancer to serve secure
     connections from the user.
 * [`gcompute_subnetwork`](#gcompute_subnetwork) -
@@ -339,29 +302,22 @@ For complete details of the authentication cookbook, visit the
     provides connectivity for your Compute Engine virtual machine (VM)
     instances, Container Engine containers, App Engine Flex services, and
     other network-related resources.
-    Each GCP project contains one or more VPC networks. Each VPC network is
-    a
-    global entity spanning all GCP regions. This global VPC network allows
-    VM
-    instances and other resources to communicate with each other via
-    internal,
+    Each GCP project contains one or more VPC networks. Each VPC network is a
+    global entity spanning all GCP regions. This global VPC network allows VM
+    instances and other resources to communicate with each other via internal,
     private IP addresses.
-    Each VPC network is subdivided into subnets, and each subnet is
-    contained
-    within a single region. You can have more than one subnet in a region
-    for
+    Each VPC network is subdivided into subnets, and each subnet is contained
+    within a single region. You can have more than one subnet in a region for
     a given VPC network. Each subnet has a contiguous private RFC1918 IP
     space. You create instances, containers, and the like in these subnets.
     When you create an instance, you must create it in a subnet, and the
     instance draws its internal IP address from that subnet.
     Virtual machine (VM) instances in a VPC network can communicate with
     instances in all other subnets of the same VPC network, regardless of
-    region, using their RFC1918 private IP addresses. You can isolate
-    portions
+    region, using their RFC1918 private IP addresses. You can isolate portions
     of the network, even entire subnets, using firewall rules.
 * [`gcompute_target_http_proxy`](#gcompute_target_http_proxy) -
-    Represents a TargetHttpProxy resource, which is used by one or more
-    global
+    Represents a TargetHttpProxy resource, which is used by one or more global
     forwarding rule to route incoming HTTP requests to a URL map.
 * [`gcompute_target_https_proxy`](#gcompute_target_https_proxy) -
     Represents a TargetHttpsProxy resource, which is used by one or more
@@ -927,23 +883,19 @@ end
   Output only. The deprecation status associated with this disk type.
 
 * `deprecated/deleted`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation
-  state
+  Output only. An optional RFC3339 timestamp on or after which the deprecation state
   of this resource will be changed to DELETED.
 
 * `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation
-  state
+  Output only. An optional RFC3339 timestamp on or after which the deprecation state
   of this resource will be changed to DEPRECATED.
 
 * `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation
-  state
+  Output only. An optional RFC3339 timestamp on or after which the deprecation state
   of this resource will be changed to OBSOLETE.
 
 * `deprecated/replacement`
-  Output only. The URL of the suggested replacement for a deprecated resource.
-  The
+  Output only. The URL of the suggested replacement for a deprecated resource. The
   suggested replacement resource must be the same kind of resource as
   the deprecated resource.
 
@@ -965,8 +917,7 @@ end
   Name of the resource.
 
 * `valid_disk_size` -
-  Output only. An optional textual description of the valid disk size, such
-  as
+  Output only. An optional textual description of the valid disk size, such as
   "10GB-10TB".
 
 * `zone` -
@@ -1154,8 +1105,7 @@ end
   RFC 4648 base64 to either encrypt or decrypt this resource.
 
 * `disk_encryption_key/sha256`
-  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
-  customer-supplied
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
   encryption key that protects this resource.
 
 * `source_image_encryption_key` -
@@ -1167,8 +1117,7 @@ end
   RFC 4648 base64 to either encrypt or decrypt this resource.
 
 * `source_image_encryption_key/sha256`
-  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
-  customer-supplied
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
   encryption key that protects this resource.
 
 * `source_image_id` -
@@ -1197,13 +1146,11 @@ end
   RFC 4648 base64 to either encrypt or decrypt this resource.
 
 * `source_snapshot_encryption_key/sha256`
-  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
-  customer-supplied
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
   encryption key that protects this resource.
 
 * `source_snapshot_id` -
-  Output only. The unique ID of the snapshot used to create this disk. This
-  value
+  Output only. The unique ID of the snapshot used to create this disk. This value
   identifies the exact snapshot that was used to create this persistent
   disk. For example, if you created the persistent disk from a snapshot
   that was later deleted and recreated under the same name, the source
@@ -1558,8 +1505,7 @@ end
   This field is not used for external load balancing.
 
 * `region` -
-  Required. A reference to the region where the regional forwarding rule
-  resides.
+  Required. A reference to the region where the regional forwarding rule resides.
   This field is not applicable to global forwarding rules.
 
 #### Label
@@ -1625,8 +1571,7 @@ end
   Provide this property when you create the resource.
 
 * `id` -
-  Output only. The unique identifier for the resource. This identifier is
-  defined by
+  Output only. The unique identifier for the resource. This identifier is defined by
   the server.
 
 * `name` -
@@ -1832,8 +1777,7 @@ end
   This field is not used for external load balancing.
 
 * `region` -
-  Output only. A reference to the region where the regional forwarding rule
-  resides.
+  Output only. A reference to the region where the regional forwarding rule resides.
   This field is not applicable to global forwarding rules.
 
 * `target` -
@@ -1923,8 +1867,7 @@ end
   health check is performed will be used.
 
 * `id` -
-  Output only. The unique identifier for the resource. This identifier is
-  defined by
+  Output only. The unique identifier for the resource. This identifier is defined by
   the server.
 
 * `name` -
@@ -2035,8 +1978,7 @@ end
   health check is performed will be used.
 
 * `id` -
-  Output only. The unique identifier for the resource. This identifier is
-  defined by
+  Output only. The unique identifier for the resource. This identifier is defined by
   the server.
 
 * `name` -
@@ -2167,8 +2109,7 @@ end
   consecutive successes. The default value is 2.
 
 * `id` -
-  Output only. The unique identifier for the resource. This identifier is
-  defined by
+  Output only. The unique identifier for the resource. This identifier is defined by
   the server.
 
 * `name` -
@@ -2919,8 +2860,7 @@ end
 #### Properties
 
 * `archive_size_bytes` -
-  Output only. Size of the image tar.gz archive stored in Google Cloud
-  Storage (in
+  Output only. Size of the image tar.gz archive stored in Google Cloud Storage (in
   bytes).
 
 * `creation_timestamp` -
@@ -3380,8 +3320,7 @@ end
   to this instance.
 
 * `id` -
-  Output only. The unique identifier for the resource. This identifier is
-  defined by
+  Output only. The unique identifier for the resource. This identifier is defined by
   the server.
 
 * `label_fingerprint` -
@@ -3749,20 +3688,17 @@ end
 #### Properties
 
 * `base_instance_name` -
-  Required. The base instance name to use for instances in this group. The
-  value
+  Required. The base instance name to use for instances in this group. The value
   must be 1-58 characters long. Instances are named by appending a
   hyphen and a random four-character string to the base instance name.
   The base instance name must comply with RFC1035.
 
 * `creation_timestamp` -
-  Output only. The creation timestamp for this managed instance group in
-  RFC3339
+  Output only. The creation timestamp for this managed instance group in RFC3339
   text format.
 
 * `current_actions` -
-  Output only. The list of instance actions and the number of instances in
-  this
+  Output only. The list of instance actions and the number of instances in this
   managed instance group that are scheduled for each of those actions.
 
 * `current_actions/abandoning`
@@ -3830,8 +3766,7 @@ end
   characters long, and comply with RFC1035.
 
 * `named_ports` -
-  Named ports configured for the Instance Groups complementary to this
-  Instance Group Manager.
+  Named ports configured for the Instance Groups complementary to this Instance Group Manager.
 
 * `named_ports[]/name`
   The name for this named port. The name must be 1-63 characters
@@ -3925,22 +3860,19 @@ end
   Output only. The deprecation status associated with this machine type.
 
 * `deprecated/deleted`
-  Output only. An optional RFC3339 timestamp on or after which the state of
-  this
+  Output only. An optional RFC3339 timestamp on or after which the state of this
   resource is intended to change to DELETED. This is only
   informational and the status will not change unless the client
   explicitly changes it.
 
 * `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the state of
-  this
+  Output only. An optional RFC3339 timestamp on or after which the state of this
   resource is intended to change to DEPRECATED. This is only
   informational and the status will not change unless the client
   explicitly changes it.
 
 * `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the state of
-  this
+  Output only. An optional RFC3339 timestamp on or after which the state of this
   resource is intended to change to OBSOLETE. This is only
   informational and the status will not change unless the client
   explicitly changes it.
@@ -3968,8 +3900,7 @@ end
   Output only. The unique identifier for the resource.
 
 * `is_shared_cpu` -
-  Output only. Whether this machine type has a shared CPU. See Shared-core
-  machine
+  Output only. Whether this machine type has a shared CPU. See Shared-core machine
   types for more information.
 
 * `maximum_persistent_disks` -
@@ -3979,8 +3910,7 @@ end
   Output only. Maximum total persistent disks size (GB) allowed.
 
 * `memory_mb` -
-  Output only. The amount of physical memory available to the instance,
-  defined in
+  Output only. The amount of physical memory available to the instance, defined in
   MB.
 
 * `name` -
@@ -4083,8 +4013,7 @@ end
   character, which cannot be a dash.
 
 * `subnetworks` -
-  Output only. Server-defined fully-qualified URLs for all subnetworks in
-  this
+  Output only. Server-defined fully-qualified URLs for all subnetworks in this
   network.
 
 * `auto_create_subnetworks` -
@@ -4166,18 +4095,15 @@ end
   of this resource will be changed to DELETED.
 
 * `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation
-  state
+  Output only. An optional RFC3339 timestamp on or after which the deprecation state
   of this resource will be changed to DEPRECATED.
 
 * `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation
-  state
+  Output only. An optional RFC3339 timestamp on or after which the deprecation state
   of this resource will be changed to OBSOLETE.
 
 * `deprecated/replacement`
-  Output only. The URL of the suggested replacement for a deprecated resource.
-  The
+  Output only. The URL of the suggested replacement for a deprecated resource. The
   suggested replacement resource must be the same kind of resource as
   the deprecated resource.
 
@@ -4287,8 +4213,7 @@ end
 #### Properties
 
 * `dest_range` -
-  Required. The destination range of outgoing packets that this route applies
-  to.
+  Required. The destination range of outgoing packets that this route applies to.
   Only IPv4 is supported.
 
 * `description` -
@@ -4590,8 +4515,7 @@ end
   An optional description of this resource.
 
 * `storage_bytes` -
-  Output only. A size of the the storage used by the snapshot. As snapshots
-  share
+  Output only. A size of the the storage used by the snapshot. As snapshots share
   storage, this number is expected to change with snapshot
   creation/deletion.
 
@@ -4619,8 +4543,7 @@ end
   RFC 4648 base64 to either encrypt or decrypt this resource.
 
 * `snapshot_encryption_key/sha256`
-  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
-  customer-supplied
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
   encryption key that protects this resource.
 
 * `source_disk_encryption_key` -
@@ -4633,8 +4556,7 @@ end
   RFC 4648 base64 to either encrypt or decrypt this resource.
 
 * `source_disk_encryption_key/sha256`
-  Output only. The RFC 4648 base64 encoded SHA-256 hash of the
-  customer-supplied
+  Output only. The RFC 4648 base64 encoded SHA-256 hash of the customer-supplied
   encryption key that protects this resource.
 
 #### Label
@@ -4841,16 +4763,14 @@ end
   creation time.
 
 * `gateway_address` -
-  Output only. The gateway address for default routes to reach destination
-  addresses
+  Output only. The gateway address for default routes to reach destination addresses
   outside this subnetwork.
 
 * `id` -
   Output only. The unique identifier for the resource.
 
 * `ip_cidr_range` -
-  Required. The range of internal addresses that are owned by this
-  subnetwork.
+  Required. The range of internal addresses that are owned by this subnetwork.
   Provide this property when you create the subnetwork. For example,
   10.0.0.0/8 or 192.168.0.0/16. Ranges must be unique and
   non-overlapping within a network. Only IPv4 is supported.
@@ -4945,8 +4865,7 @@ end
   character, which cannot be a dash.
 
 * `url_map` -
-  Required. A reference to the UrlMap resource that defines the mapping from
-  URL
+  Required. A reference to the UrlMap resource that defines the mapping from URL
   to the BackendService.
 
 #### Label
@@ -5040,8 +4959,7 @@ end
   one SSL certificate must be specified.
 
 * `url_map` -
-  Required. A reference to the UrlMap resource that defines the mapping from
-  URL
+  Required. A reference to the UrlMap resource that defines the mapping from URL
   to the BackendService.
 
 #### Label
@@ -5425,8 +5343,7 @@ end
   Output only. Creation timestamp in RFC3339 text format.
 
 * `default_service` -
-  Required. A reference to BackendService resource if none of the hostRules
-  match.
+  Required. A reference to BackendService resource if none of the hostRules match.
 
 * `description` -
   An optional description of this resource. Provide this property when
@@ -5503,8 +5420,7 @@ end
   Path portion of the URL.
 
 * `tests[]/service`
-  A reference to expected BackendService resource the given URL should be
-  mapped to.
+  A reference to expected BackendService resource the given URL should be mapped to.
 
 #### Label
 Set the `um_label` property when attempting to set primary key
@@ -5566,22 +5482,19 @@ end
   Output only. The deprecation status associated with this machine type.
 
 * `deprecated/deleted`
-  Output only. An optional RFC3339 timestamp on or after which the state of
-  this
+  Output only. An optional RFC3339 timestamp on or after which the state of this
   resource is intended to change to DELETED. This is only
   informational and the status will not change unless the client
   explicitly changes it.
 
 * `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the state of
-  this
+  Output only. An optional RFC3339 timestamp on or after which the state of this
   resource is intended to change to DEPRECATED. This is only
   informational and the status will not change unless the client
   explicitly changes it.
 
 * `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the state of
-  this
+  Output only. An optional RFC3339 timestamp on or after which the state of this
   resource is intended to change to OBSOLETE. This is only
   informational and the status will not change unless the client
   explicitly changes it.

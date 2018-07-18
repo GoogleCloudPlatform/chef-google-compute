@@ -87,11 +87,9 @@ module Google
       # Data is coming from the GCP API
       class InstancGuestAccelerApi < InstancGuestAcceler
         def initialize(args)
-          @accelerator_count = Google::Compute::Property::Integer.api_parse(
-            args['acceleratorCount']
-          )
-          @accelerator_type =
-            Google::Compute::Property::String.api_parse(args['acceleratorType'])
+          @accelerator_count =
+            Google::Compute::Property::Integer.api_parse(args['acceleratorCount'])
+          @accelerator_type = Google::Compute::Property::String.api_parse(args['acceleratorType'])
         end
       end
 
@@ -99,12 +97,10 @@ module Google
       # Data is coming from the Chef catalog
       class InstancGuestAccelerCatalog < InstancGuestAcceler
         def initialize(args)
-          @accelerator_count = Google::Compute::Property::Integer.catalog_parse(
-            args[:accelerator_count]
-          )
-          @accelerator_type = Google::Compute::Property::String.catalog_parse(
-            args[:accelerator_type]
-          )
+          @accelerator_count =
+            Google::Compute::Property::Integer.catalog_parse(args[:accelerator_count])
+          @accelerator_type =
+            Google::Compute::Property::String.catalog_parse(args[:accelerator_type])
         end
       end
     end
@@ -113,9 +109,7 @@ module Google
       # A class to manage input to GuestAccelerators for instance.
       class InstancGuestAcceler
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstancGuestAcceler.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancGuestAcceler.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -136,10 +130,7 @@ module Google
       # A Chef property that holds an integer
       class InstancGuestAccelerArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstancGuestAccelerArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstancGuestAccelerArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog

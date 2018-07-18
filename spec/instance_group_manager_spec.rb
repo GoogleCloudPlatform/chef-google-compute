@@ -61,27 +61,18 @@ context 'gcompute_instance_group_manager' do
               allow(Time).to receive(:now).and_return(
                 Time.new(2017, 1, 2, 3, 4, 5)
               )
-              expect_network_get_success 1,
-                                         name: 'title0',
-                                         zone: 'test name#0 data'
-              expect_network_get_success 2,
-                                         name: 'title1',
-                                         zone: 'test name#1 data'
-              expect_network_get_success 3,
-                                         name: 'title2',
-                                         zone: 'test name#2 data'
+              expect_network_get_success 1, name: 'title0', zone: 'test name#0 data'
+              expect_network_get_success 2, name: 'title1', zone: 'test name#1 data'
+              expect_network_get_success 3, name: 'title2', zone: 'test name#2 data'
               expect_network_get_success_instance_template 1
               expect_network_get_success_instance_template 2
               expect_network_get_success_instance_template 3
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
-              expect_network_get_success_target_pool 1,
-                                                     region: 'test name#0 data'
-              expect_network_get_success_target_pool 2,
-                                                     region: 'test name#1 data'
-              expect_network_get_success_target_pool 3,
-                                                     region: 'test name#2 data'
+              expect_network_get_success_target_pool 1, region: 'test name#0 data'
+              expect_network_get_success_target_pool 2, region: 'test name#1 data'
+              expect_network_get_success_target_pool 3, region: 'test name#2 data'
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
@@ -319,21 +310,14 @@ context 'gcompute_instance_group_manager' do
 
             context 'gcompute_instance_group_manager[title0]' do
               subject do
-                chef_run.find_resource(:gcompute_instance_group_manager,
-                                       'title0')
+                chef_run.find_resource(:gcompute_instance_group_manager, 'title0')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    base_instance_name: 'test base_instance_name#0 data'
-                  )
+                is_expected.to have_attributes(base_instance_name: 'test base_instance_name#0 data')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'instanceTemplate' do
@@ -362,21 +346,14 @@ context 'gcompute_instance_group_manager' do
 
             context 'gcompute_instance_group_manager[title1]' do
               subject do
-                chef_run.find_resource(:gcompute_instance_group_manager,
-                                       'title1')
+                chef_run.find_resource(:gcompute_instance_group_manager, 'title1')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    base_instance_name: 'test base_instance_name#1 data'
-                  )
+                is_expected.to have_attributes(base_instance_name: 'test base_instance_name#1 data')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'instanceTemplate' do
@@ -405,21 +382,14 @@ context 'gcompute_instance_group_manager' do
 
             context 'gcompute_instance_group_manager[title2]' do
               subject do
-                chef_run.find_resource(:gcompute_instance_group_manager,
-                                       'title2')
+                chef_run.find_resource(:gcompute_instance_group_manager, 'title2')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    base_instance_name: 'test base_instance_name#2 data'
-                  )
+                is_expected.to have_attributes(base_instance_name: 'test base_instance_name#2 data')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'instanceTemplate' do
@@ -472,12 +442,9 @@ context 'gcompute_instance_group_manager' do
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
-              expect_network_get_success_target_pool 1,
-                                                     region: 'test name#0 data'
-              expect_network_get_success_target_pool 2,
-                                                     region: 'test name#1 data'
-              expect_network_get_success_target_pool 3,
-                                                     region: 'test name#2 data'
+              expect_network_get_success_target_pool 1, region: 'test name#0 data'
+              expect_network_get_success_target_pool 2, region: 'test name#1 data'
+              expect_network_get_success_target_pool 3, region: 'test name#2 data'
               expect_network_get_success_zone 1
               expect_network_get_success_zone 2
               expect_network_get_success_zone 3
@@ -718,30 +685,21 @@ context 'gcompute_instance_group_manager' do
 
             context 'gcompute_instance_group_manager[title0]' do
               subject do
-                chef_run.find_resource(:gcompute_instance_group_manager,
-                                       'title0')
+                chef_run.find_resource(:gcompute_instance_group_manager, 'title0')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    base_instance_name: 'test base_instance_name#0 data'
-                  )
+                is_expected.to have_attributes(base_instance_name: 'test base_instance_name#0 data')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#0 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'instanceTemplate' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(igm_label: 'test name#0 data')
-              end
+              it { is_expected.to have_attributes(igm_label: 'test name#0 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'namedPorts' do
@@ -763,30 +721,21 @@ context 'gcompute_instance_group_manager' do
 
             context 'gcompute_instance_group_manager[title1]' do
               subject do
-                chef_run.find_resource(:gcompute_instance_group_manager,
-                                       'title1')
+                chef_run.find_resource(:gcompute_instance_group_manager, 'title1')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    base_instance_name: 'test base_instance_name#1 data'
-                  )
+                is_expected.to have_attributes(base_instance_name: 'test base_instance_name#1 data')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#1 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'instanceTemplate' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(igm_label: 'test name#1 data')
-              end
+              it { is_expected.to have_attributes(igm_label: 'test name#1 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'namedPorts' do
@@ -808,30 +757,21 @@ context 'gcompute_instance_group_manager' do
 
             context 'gcompute_instance_group_manager[title2]' do
               subject do
-                chef_run.find_resource(:gcompute_instance_group_manager,
-                                       'title2')
+                chef_run.find_resource(:gcompute_instance_group_manager, 'title2')
               end
 
               it do
-                is_expected
-                  .to have_attributes(
-                    base_instance_name: 'test base_instance_name#2 data'
-                  )
+                is_expected.to have_attributes(base_instance_name: 'test base_instance_name#2 data')
               end
 
-              it do
-                is_expected
-                  .to have_attributes(description: 'test description#2 data')
-              end
+              it { is_expected.to have_attributes(description: 'test description#2 data') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'instanceTemplate' do
               #   # Add test code here
               # end
 
-              it do
-                is_expected.to have_attributes(igm_label: 'test name#2 data')
-              end
+              it { is_expected.to have_attributes(igm_label: 'test name#2 data') }
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'namedPorts' do
@@ -901,9 +841,7 @@ context 'gcompute_instance_group_manager' do
         # Ensure present: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      zone: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', zone: 'test name#0 data'
             expect_network_create \
               1,
               {
@@ -1097,16 +1035,10 @@ context 'gcompute_instance_group_manager' do
                                        'title0')
           end
           it do
-            is_expected
-              .to have_attributes(
-                base_instance_name: 'test base_instance_name#0 data'
-              )
+            is_expected.to have_attributes(base_instance_name: 'test base_instance_name#0 data')
           end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'instanceTemplate' do
@@ -1340,16 +1272,10 @@ context 'gcompute_instance_group_manager' do
                                        'title0')
           end
           it do
-            is_expected
-              .to have_attributes(
-                base_instance_name: 'test base_instance_name#0 data'
-              )
+            is_expected.to have_attributes(base_instance_name: 'test base_instance_name#0 data')
           end
 
-          it do
-            is_expected
-              .to have_attributes(description: 'test description#0 data')
-          end
+          it { is_expected.to have_attributes(description: 'test description#0 data') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'instanceTemplate' do
@@ -1393,9 +1319,7 @@ context 'gcompute_instance_group_manager' do
         # Ensure absent: resource missing, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_failed 1,
-                                      name: 'title0',
-                                      zone: 'test name#0 data'
+            expect_network_get_failed 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_instance_template 1
             expect_network_get_success_zone 1
           end
@@ -1572,9 +1496,7 @@ context 'gcompute_instance_group_manager' do
         # Ensure absent: resource exists, ignore, no name, pass
         context 'title == name (pass)' do
           before do
-            expect_network_get_success 1,
-                                       name: 'title0',
-                                       zone: 'test name#0 data'
+            expect_network_get_success 1, name: 'title0', zone: 'test name#0 data'
             expect_network_delete 1, 'title0', zone: 'test name#0 data'
             expect_network_get_async 1, name: 'title0', zone: 'test name#0 data'
             expect_network_get_success_instance_template 1

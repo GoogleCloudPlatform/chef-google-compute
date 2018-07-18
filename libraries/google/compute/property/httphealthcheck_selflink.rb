@@ -102,9 +102,7 @@ module Google
       # A class to manage fetching self_link from a http_health_check
       class HttHeaCheSelLinRef
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::HttHeaCheSelLinRef.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::HttHeaCheSelLinRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)

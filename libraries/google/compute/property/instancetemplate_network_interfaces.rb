@@ -109,22 +109,13 @@ module Google
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @access_configs =
-            Google::Compute::Property::InstaTemplAccesConfiArray.api_parse(
-              args['accessConfigs']
-            )
+            Google::Compute::Property::InstaTemplAccesConfiArray.api_parse(args['accessConfigs'])
           @alias_ip_ranges =
-            Google::Compute::Property::InstTempAliaIpRangArray.api_parse(
-              args['aliasIpRanges']
-            )
+            Google::Compute::Property::InstTempAliaIpRangArray.api_parse(args['aliasIpRanges'])
           @name = Google::Compute::Property::String.api_parse(args['name'])
-          @network = Google::Compute::Property::NetwoSelfLinkRef.api_parse(
-            args['network']
-          )
-          @network_ip =
-            Google::Compute::Property::String.api_parse(args['networkIP'])
-          @subnetwork = Google::Compute::Property::SubneSelfLinkRef.api_parse(
-            args['subnetwork']
-          )
+          @network = Google::Compute::Property::NetwoSelfLinkRef.api_parse(args['network'])
+          @network_ip = Google::Compute::Property::String.api_parse(args['networkIP'])
+          @subnetwork = Google::Compute::Property::SubneSelfLinkRef.api_parse(args['subnetwork'])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -134,24 +125,15 @@ module Google
       class InstaTemplNetwoInterCatalog < InstaTemplNetwoInter
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
-          @access_configs =
-            Google::Compute::Property::InstaTemplAccesConfiArray.catalog_parse(
-              args[:access_configs]
-            )
-          @alias_ip_ranges =
-            Google::Compute::Property::InstTempAliaIpRangArray.catalog_parse(
-              args[:alias_ip_ranges]
-            )
-          @name = Google::Compute::Property::String.catalog_parse(args[:name])
-          @network = Google::Compute::Property::NetwoSelfLinkRef.catalog_parse(
-            args[:network]
+          @access_configs = Google::Compute::Property::InstaTemplAccesConfiArray.catalog_parse(
+            args[:access_configs]
           )
-          @network_ip =
-            Google::Compute::Property::String.catalog_parse(args[:network_ip])
-          @subnetwork =
-            Google::Compute::Property::SubneSelfLinkRef.catalog_parse(
-              args[:subnetwork]
-            )
+          @alias_ip_ranges =
+            Google::Compute::Property::InstTempAliaIpRangArray.catalog_parse(args[:alias_ip_ranges])
+          @name = Google::Compute::Property::String.catalog_parse(args[:name])
+          @network = Google::Compute::Property::NetwoSelfLinkRef.catalog_parse(args[:network])
+          @network_ip = Google::Compute::Property::String.catalog_parse(args[:network_ip])
+          @subnetwork = Google::Compute::Property::SubneSelfLinkRef.catalog_parse(args[:subnetwork])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -161,9 +143,7 @@ module Google
       # A class to manage input to NetworkInterfaces for instance_template.
       class InstaTemplNetwoInter
         def self.coerce
-          lambda do |x|
-            ::Google::Compute::Property::InstaTemplNetwoInter.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaTemplNetwoInter.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
@@ -184,10 +164,7 @@ module Google
       # A Chef property that holds an integer
       class InstaTemplNetwoInterArray < Google::Compute::Property::Array
         def self.coerce
-          lambda do |x|
-            type = ::Google::Compute::Property::InstaTemplNetwoInterArray
-            type.catalog_parse(x)
-          end
+          ->(x) { ::Google::Compute::Property::InstaTemplNetwoInterArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
