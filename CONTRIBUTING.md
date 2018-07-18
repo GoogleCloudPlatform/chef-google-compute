@@ -97,6 +97,7 @@ chef-codegen:
   * libraries/google/compute/network/post.rb
   * libraries/google/compute/network/put.rb
   * libraries/google/compute/property/address_address.rb
+  * libraries/google/compute/property/address_address_type.rb
   * libraries/google/compute/property/array.rb
   * libraries/google/compute/property/backendservice_backends.rb
   * libraries/google/compute/property/backendservice_cache_key_policy.rb
@@ -163,6 +164,7 @@ chef-codegen:
   * libraries/google/compute/property/region_deprecated.rb
   * libraries/google/compute/property/region_name.rb
   * libraries/google/compute/property/region_selflink.rb
+  * libraries/google/compute/property/router_advertise_mode.rb
   * libraries/google/compute/property/router_advertised_ip_ranges.rb
   * libraries/google/compute/property/router_bgp.rb
   * libraries/google/compute/property/snapshot_selflink.rb

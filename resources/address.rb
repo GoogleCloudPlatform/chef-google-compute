@@ -33,7 +33,7 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
-require 'google/compute/property/enum'
+require 'google/compute/property/address_address_type'
 require 'google/compute/property/integer'
 require 'google/compute/property/region_name'
 require 'google/compute/property/string'
@@ -53,7 +53,7 @@ module Google
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :address_type,
                equal_to: %w[INTERNAL EXTERNAL],
-               coerce: ::Google::Compute::Property::Enum.coerce,
+               coerce: ::Google::Compute::Property::AddressTypeEnum.coerce,
                default: 'EXTERNAL', desired_state: true
       property :creation_timestamp
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
@@ -103,7 +103,7 @@ module Google
           @current_resource.address =
             ::Google::Compute::Property::String.api_parse(fetch['address'])
           @current_resource.address_type =
-            ::Google::Compute::Property::Enum.api_parse(fetch['addressType'])
+            ::Google::Compute::Property::AddressTypeEnum.api_parse(fetch['addressType'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
