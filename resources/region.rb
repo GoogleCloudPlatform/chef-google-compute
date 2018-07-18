@@ -70,6 +70,11 @@ module Google
       property :__fetched, Hash, desired_state: false, required: false
 
       action :create do
+        Chef.deprecated(:generic,
+                        ["gcompute_region has been deprecated.",
+                         "Please use the Region Name instead."
+                        ].join(" "))
+
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#region')
         if fetch.nil?
