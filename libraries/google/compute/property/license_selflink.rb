@@ -76,7 +76,7 @@ module Google
           Chef.run_context.resource_collection.each do |entry|
             return entry.exports[:self_link] if entry.name == @title
           end
-          raise ArgumentError, "gcompute_license[#{@title}] required"
+          @title
         end
       end
 
