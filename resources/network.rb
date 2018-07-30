@@ -47,25 +47,25 @@ module Google
     class Network < Chef::Resource
       resource_name :gcompute_network
 
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :gateway_ipv4
+      property :gateway_ipv4,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :ipv4_range
+      property :ipv4_range,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :n_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       # subnetworks is Array of Google::Compute::Property::StringArray
-      property :subnetworks
+      property :subnetworks,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :auto_create_subnetworks,
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

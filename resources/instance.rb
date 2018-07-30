@@ -69,9 +69,9 @@ module Google
       property :can_ip_forward,
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
-      property :cpu_platform
+      property :cpu_platform,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # disks is Array of Google::Compute::Property::InstanceDisksArray
       property :disks,
@@ -82,9 +82,9 @@ module Google
                Array,
                coerce: ::Google::Compute::Property::InstancGuestAccelerArray.coerce,
                desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :label_fingerprint
+      property :label_fingerprint,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :metadata,
                [Hash, ::Google::Compute::Property::NameValues],
@@ -92,7 +92,7 @@ module Google
       property :machine_type,
                [String, ::Google::Compute::Data::MachTypeSelfLinkRef],
                coerce: ::Google::Compute::Property::MachTypeSelfLinkRef.coerce, desired_state: true
-      property :min_cpu_platform
+      property :min_cpu_platform,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :i_label,
                String,
@@ -111,9 +111,9 @@ module Google
                Array,
                coerce: ::Google::Compute::Property::InstancServiceAccountArray.coerce,
                desired_state: true
-      property :status
+      property :status,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :status_message
+      property :status_message,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :tags,
                [Hash, ::Google::Compute::Data::InstanceTags],

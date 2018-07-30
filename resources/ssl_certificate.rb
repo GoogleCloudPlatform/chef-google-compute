@@ -45,19 +45,19 @@ module Google
     class SslCertificate < Chef::Resource
       resource_name :gcompute_ssl_certificate
 
-      property :certificate
+      property :certificate,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :sc_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :private_key
+      property :private_key,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

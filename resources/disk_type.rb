@@ -45,22 +45,22 @@ module Google
     class DiskType < Chef::Resource
       resource_name :gcompute_disk_type
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :default_disk_size_gb
+      property :default_disk_size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :_deprecated,
                [Hash, ::Google::Compute::Data::DiskTypeDepreca],
                coerce: ::Google::Compute::Property::DiskTypeDepreca.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :dt_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :valid_disk_size
+      property :valid_disk_size,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],

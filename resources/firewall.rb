@@ -51,26 +51,26 @@ module Google
       property :allowed,
                Array,
                coerce: ::Google::Compute::Property::FirewallAllowedArray.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :f_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :network
+      property :network,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # source_ranges is Array of Google::Compute::Property::StringArray
-      property :source_ranges
+      property :source_ranges,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       # source_tags is Array of Google::Compute::Property::StringArray
-      property :source_tags
+      property :source_tags,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       # target_tags is Array of Google::Compute::Property::StringArray
-      property :target_tags
+      property :target_tags,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

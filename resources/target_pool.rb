@@ -53,16 +53,16 @@ module Google
       property :backup_pool,
                [String, ::Google::Compute::Data::TargPoolSelfLinkRef],
                coerce: ::Google::Compute::Property::TargPoolSelfLinkRef.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :failover_ratio
+      property :failover_ratio,
                Float, coerce: ::Google::Compute::Property::Double.coerce, desired_state: true
       property :health_check,
                [String, ::Google::Compute::Data::HttHeaCheSelLinRef],
                coerce: ::Google::Compute::Property::HttHeaCheSelLinRef.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # instances is Array of Google::Compute::Property::InstaSelfLinkRefArray
       property :instances,

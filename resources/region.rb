@@ -45,21 +45,21 @@ module Google
     class Region < Chef::Resource
       resource_name :gcompute_region
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :_deprecated,
                [Hash, ::Google::Compute::Data::RegionDeprecated],
                coerce: ::Google::Compute::Property::RegionDeprecated.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :r_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       # zones is Array of Google::Compute::Property::StringArray
-      property :zones
+      property :zones,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

@@ -48,15 +48,15 @@ module Google
     class Subnetwork < Chef::Resource
       resource_name :gcompute_subnetwork
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :gateway_address
+      property :gateway_address,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :ip_cidr_range
+      property :ip_cidr_range,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :s_label,
                String,

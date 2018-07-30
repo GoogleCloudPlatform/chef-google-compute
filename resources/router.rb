@@ -50,15 +50,15 @@ module Google
     class Router < Chef::Resource
       resource_name :gcompute_router
 
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :r_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :network,
                [String, ::Google::Compute::Data::NetwoSelfLinkRef],

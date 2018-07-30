@@ -47,13 +47,13 @@ module Google
     class GlobalAddress < Chef::Resource
       resource_name :gcompute_global_address
 
-      property :address
+      property :address,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :ga_label,
                String,

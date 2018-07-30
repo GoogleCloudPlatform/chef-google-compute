@@ -51,16 +51,16 @@ module Google
     class InstanceGroupManager < Chef::Resource
       resource_name :gcompute_instance_group_manager
 
-      property :base_instance_name
+      property :base_instance_name,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :current_actions,
                [Hash, ::Google::Compute::Data::InstGrouManaCurrActi],
                coerce: ::Google::Compute::Property::InstGrouManaCurrActi.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :instance_group,
                [String, ::Google::Compute::Data::InstGrouSelfLinkRef],
@@ -85,7 +85,7 @@ module Google
                Array,
                coerce: ::Google::Compute::Property::TargPoolSelfLinkRefArray.coerce,
                desired_state: true
-      property :target_size
+      property :target_size,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],

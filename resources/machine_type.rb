@@ -46,25 +46,25 @@ module Google
     class MachineType < Chef::Resource
       resource_name :gcompute_machine_type
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :_deprecated,
                [Hash, ::Google::Compute::Data::MachineTypeDepreca],
                coerce: ::Google::Compute::Property::MachineTypeDepreca.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :guest_cpus
+      property :guest_cpus,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :is_shared_cpu,
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
-      property :maximum_persistent_disks
+      property :maximum_persistent_disks,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :maximum_persistent_disks_size_gb
+      property :maximum_persistent_disks_size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :memory_mb
+      property :memory_mb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :mt_label,
                String,

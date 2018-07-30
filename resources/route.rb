@@ -46,9 +46,9 @@ module Google
     class Route < Chef::Resource
       resource_name :gcompute_route
 
-      property :dest_range
+      property :dest_range,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :r_label,
                String,
@@ -57,20 +57,20 @@ module Google
       property :network,
                [String, ::Google::Compute::Data::NetwoSelfLinkRef],
                coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
-      property :priority
+      property :priority,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # tags is Array of Google::Compute::Property::StringArray
-      property :tags
+      property :tags,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
-      property :next_hop_gateway
+      property :next_hop_gateway,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :next_hop_instance
+      property :next_hop_instance,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :next_hop_ip
+      property :next_hop_ip,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :next_hop_vpn_tunnel
+      property :next_hop_vpn_tunnel,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :next_hop_network
+      property :next_hop_network,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

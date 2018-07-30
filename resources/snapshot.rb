@@ -50,19 +50,19 @@ module Google
     class Snapshot < Chef::Resource
       resource_name :gcompute_snapshot
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :disk_size_gb
+      property :disk_size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :s_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :storage_bytes
+      property :storage_bytes,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # licenses is Array of Google::Compute::Property::LicenSelfLinkRefArray
       property :licenses,
@@ -70,7 +70,7 @@ module Google
                coerce: ::Google::Compute::Property::LicenSelfLinkRefArray.coerce,
                desired_state: true
       # labels is Array of Google::Compute::Property::StringArray
-      property :labels
+      property :labels,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :source,
                [String, ::Google::Compute::Data::DiskNameRef],
