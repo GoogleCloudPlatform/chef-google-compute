@@ -44,4 +44,5 @@ ports:
 project: "'test project#2 data'"
 region: test name#2 data
 subnetwork: selflink(resource(subnetwork,2))
+target: selflink(resource(target_pool,2))
 selfLink: selflink(resource(forwarding_rule,2))

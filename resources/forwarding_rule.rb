@@ -41,6 +41,7 @@ require 'google/compute/property/region_name'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/subnetwork_selflink'
+require 'google/compute/property/targetpool_selflink'
 require 'google/compute/property/time'
 require 'google/hash_utils'
 
@@ -85,6 +86,9 @@ module Google
       property :subnetwork,
                [String, ::Google::Compute::Data::SubneSelfLinkRef],
                coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
+      property :target,
+               [String, ::Google::Compute::Data::TargPoolSelfLinkRef],
+               coerce: ::Google::Compute::Property::TargPoolSelfLinkRef.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
                coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
@@ -139,6 +143,8 @@ module Google
             ::Google::Compute::Property::StringArray.api_parse(fetch['ports'])
           @current_resource.subnetwork =
             ::Google::Compute::Property::SubneSelfLinkRef.api_parse(fetch['subnetwork'])
+          @current_resource.target =
+            ::Google::Compute::Property::TargPoolSelfLinkRef.api_parse(fetch['target'])
           @new_resource.__fetched = fetch
 
           update
@@ -182,7 +188,8 @@ module Google
             network: new_resource.network,
             portRange: new_resource.port_range,
             ports: new_resource.ports,
-            subnetwork: new_resource.subnetwork
+            subnetwork: new_resource.subnetwork,
+            target: new_resource.target
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -224,6 +231,7 @@ module Google
             port_range: resource.port_range,
             ports: resource.ports,
             subnetwork: resource.subnetwork,
+            target: resource.target,
             region: resource.region
           }.reject { |_, v| v.nil? }
         end
