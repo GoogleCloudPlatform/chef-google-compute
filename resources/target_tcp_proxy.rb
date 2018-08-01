@@ -46,11 +46,11 @@ module Google
     class TargetTcpProxy < Chef::Resource
       resource_name :gcompute_target_tcp_proxy
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :ttp_label,
                String,

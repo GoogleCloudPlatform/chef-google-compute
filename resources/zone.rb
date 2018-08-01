@@ -45,14 +45,14 @@ module Google
     class Zone < Chef::Resource
       resource_name :gcompute_zone
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :_deprecated,
                [Hash, ::Google::Compute::Data::ZoneDeprecated],
                coerce: ::Google::Compute::Property::ZoneDeprecated.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :z_label,
                String,

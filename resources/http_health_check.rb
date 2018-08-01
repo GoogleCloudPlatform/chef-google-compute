@@ -48,27 +48,27 @@ module Google
       property :check_interval_sec,
                Integer,
                coerce: ::Google::Compute::Property::Integer.coerce, default: 5, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :healthy_threshold
+      property :healthy_threshold,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :host
+      property :host,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :hhc_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :port
+      property :port,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :request_path
+      property :request_path,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :timeout_sec
+      property :timeout_sec,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :unhealthy_threshold
+      property :unhealthy_threshold,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

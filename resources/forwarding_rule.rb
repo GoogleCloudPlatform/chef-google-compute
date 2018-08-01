@@ -50,13 +50,13 @@ module Google
     class ForwardingRule < Chef::Resource
       resource_name :gcompute_forwarding_rule
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :ip_address
+      property :ip_address,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :ip_protocol,
                equal_to: %w[TCP UDP ESP AH SCTP ICMP],
@@ -77,10 +77,10 @@ module Google
       property :network,
                [String, ::Google::Compute::Data::NetwoSelfLinkRef],
                coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
-      property :port_range
+      property :port_range,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # ports is Array of Google::Compute::Property::StringArray
-      property :ports
+      property :ports,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :subnetwork,
                [String, ::Google::Compute::Data::SubneSelfLinkRef],

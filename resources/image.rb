@@ -53,31 +53,31 @@ module Google
     class Image < Chef::Resource
       resource_name :gcompute_image
 
-      property :archive_size_bytes
+      property :archive_size_bytes,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :_deprecated,
                [Hash, ::Google::Compute::Data::ImageDeprecated],
                coerce: ::Google::Compute::Property::ImageDeprecated.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :disk_size_gb
+      property :disk_size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :family
+      property :family,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # guest_os_features is Array of Google::Compute::Property::ImageGuestOsFeatuArray
       property :guest_os_features,
                Array,
                coerce: ::Google::Compute::Property::ImageGuestOsFeatuArray.coerce,
                desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :image_encryption_key,
                [Hash, ::Google::Compute::Data::ImageImageEncryKey],
                coerce: ::Google::Compute::Property::ImageImageEncryKey.coerce, desired_state: true
       # licenses is Array of Google::Compute::Property::StringArray
-      property :licenses
+      property :licenses,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :i_label,
                String,
@@ -92,7 +92,7 @@ module Google
       property :source_disk_encryption_key,
                [Hash, ::Google::Compute::Data::ImagSourDiskEncrKey],
                coerce: ::Google::Compute::Property::ImagSourDiskEncrKey.coerce, desired_state: true
-      property :source_disk_id
+      property :source_disk_id,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :source_type,
                equal_to: %w[RAW],

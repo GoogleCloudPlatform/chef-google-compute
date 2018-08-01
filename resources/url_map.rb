@@ -50,18 +50,18 @@ module Google
     class UrlMap < Chef::Resource
       resource_name :gcompute_url_map
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :default_service,
                [String, ::Google::Compute::Data::BackServSelfLinkRef],
                coerce: ::Google::Compute::Property::BackServSelfLinkRef.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # host_rules is Array of Google::Compute::Property::UrlMapHostRulesArray
       property :host_rules,
                Array,
                coerce: ::Google::Compute::Property::UrlMapHostRulesArray.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :um_label,
                String,

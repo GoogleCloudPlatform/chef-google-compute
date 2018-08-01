@@ -55,7 +55,7 @@ module Google
     class BackendService < Chef::Resource
       resource_name :gcompute_backend_service
 
-      property :affinity_cookie_ttl_sec
+      property :affinity_cookie_ttl_sec,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # backends is Array of Google::Compute::Property::BackendServiceBackendArray
       property :backends,
@@ -68,23 +68,23 @@ module Google
       property :connection_draining,
                [Hash, ::Google::Compute::Data::BackeServiConneDrain],
                coerce: ::Google::Compute::Property::BackeServiConneDrain.coerce, desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :enable_cdn,
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
       # health_checks is Array of Google::Compute::Property::StringArray
-      property :health_checks
+      property :health_checks,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :bs_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :port_name
+      property :port_name,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :protocol,
                equal_to: %w[HTTP HTTPS TCP SSL],
@@ -95,7 +95,7 @@ module Google
       property :session_affinity,
                equal_to: %w[NONE CLIENT_IP GENERATED_COOKIE CLIENT_IP_PROTO CLIENT_IP_PORT_PROTO],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
-      property :timeout_sec
+      property :timeout_sec,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true

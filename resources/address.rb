@@ -49,17 +49,17 @@ module Google
     class Address < Chef::Resource
       resource_name :gcompute_address
 
-      property :address
+      property :address,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :address_type,
                equal_to: %w[INTERNAL EXTERNAL],
                coerce: ::Google::Compute::Property::AddressTypeEnum.coerce,
                default: 'EXTERNAL', desired_state: true
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :a_label,
                String,
@@ -69,7 +69,7 @@ module Google
                [String, ::Google::Compute::Data::SubneSelfLinkRef],
                coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
       # users is Array of Google::Compute::Property::StringArray
-      property :users
+      property :users,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],

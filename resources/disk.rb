@@ -54,27 +54,27 @@ module Google
     class Disk < Chef::Resource
       resource_name :gcompute_disk
 
-      property :creation_timestamp
+      property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :description
+      property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :id
+      property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :last_attach_timestamp
+      property :last_attach_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :last_detach_timestamp
+      property :last_detach_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :labels,
                [Hash, ::Google::Compute::Property::NameValues],
                coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
       # licenses is Array of Google::Compute::Property::StringArray
-      property :licenses
+      property :licenses,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :d_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :size_gb
+      property :size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :type,
                [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
@@ -84,7 +84,7 @@ module Google
                Array,
                coerce: ::Google::Compute::Property::InstaSelfLinkRefArray.coerce,
                desired_state: true
-      property :source_image
+      property :source_image,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
@@ -92,7 +92,7 @@ module Google
       property :source_image_encryption_key,
                [Hash, ::Google::Compute::Data::DiskSourImagEncrKey],
                coerce: ::Google::Compute::Property::DiskSourImagEncrKey.coerce, desired_state: true
-      property :source_image_id
+      property :source_image_id,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :disk_encryption_key,
                [Hash, ::Google::Compute::Data::DiskDiskEncryKey],
@@ -103,7 +103,7 @@ module Google
       property :source_snapshot_encryption_key,
                [Hash, ::Google::Compute::Data::DiskSourSnapEncrKey],
                coerce: ::Google::Compute::Property::DiskSourSnapEncrKey.coerce, desired_state: true
-      property :source_snapshot_id
+      property :source_snapshot_id,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
