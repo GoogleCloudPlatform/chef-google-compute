@@ -332,9 +332,14 @@ For complete details of the authentication cookbook, visit the
     Represents a TargetTcpProxy resource, which is used by one or more
     global forwarding rule to route incoming TCP requests to a Backend
     service.
+* [`gcompute_target_vpn_gateway`](#gcompute_target_vpn_gateway) -
+    Represents a VPN gateway running in GCP. This virtual device is managed
+    by Google, but used only by you.
 * [`gcompute_url_map`](#gcompute_url_map) -
     UrlMaps are used to route requests to a backend service based on rules
     that you define for the host and path of an incoming URL.
+* [`gcompute_vpn_tunnel`](#gcompute_vpn_tunnel) -
+    VPN tunnel resource.
 * [`gcompute_zone`](#gcompute_zone) -
     Represents a Zone resource.
 
@@ -5266,6 +5271,111 @@ Set the `ttp_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
+### gcompute_target_vpn_gateway
+Represents a VPN gateway running in GCP. This virtual device is managed
+by Google, but used only by you.
+
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/targetVpnGateways)
+
+#### Example
+
+```ruby
+gcompute_network 'mynetwork' do
+  action :create
+  auto_create_subnetworks false
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+end
+
+gcompute_region 'some-region' do
+  action :create
+  r_label 'us-west1'
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+end
+
+gcompute_target_vpn_gateway 'mygateway' do
+  action :create
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+  network 'mynetwork'
+  region 'some-region'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_target_vpn_gateway 'id-for-resource' do
+  creation_timestamp time
+  description        string
+  forwarding_rules   [
+    reference to a gcompute_forwarding_rule,
+    ...
+  ]
+  id                 integer
+  name               string
+  network            reference to gcompute_network
+  region             reference to gcompute_region
+  tunnels            [
+    string,
+    ...
+  ]
+  project            string
+  credential         reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_target_vpn_gateway` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_target_vpn_gateway` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `description` -
+  An optional description of this resource.
+
+* `name` -
+  Required. Name of the resource. Provided by the client when the resource is
+  created. The name must be 1-63 characters long, and comply with
+  RFC1035.  Specifically, the name must be 1-63 characters long and
+  match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
+  the first character must be a lowercase letter, and all following
+  characters must be a dash, lowercase letter, or digit, except the last
+  character, which cannot be a dash.
+
+* `id` -
+  Output only. The unique identifier for the resource.
+
+* `network` -
+  Required. The network this VPN gateway is accepting traffic for.
+
+* `tunnels` -
+  Output only. A list of references to VpnTunnel resources associated to this VPN gateway.
+
+* `forwarding_rules` -
+  Output only. A list of references to the ForwardingRule resources associated to this VPN
+  gateway.
+
+* `region` -
+  Required. The region this gateway should sit in.
+
+#### Label
+Set the `tvg_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
 ### gcompute_url_map
 UrlMaps are used to route requests to a backend service based on rules
 that you define for the host and path of an incoming URL.
@@ -5432,6 +5542,148 @@ end
 
 #### Label
 Set the `um_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_vpn_tunnel
+VPN tunnel resource.
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/vpnTunnels)
+* [Cloud VPN Overview](https://cloud.google.com/vpn/docs/concepts/overview)
+* [Networks and Tunnel Routing](https://cloud.google.com/vpn/docs/concepts/choosing-networks-routing)
+
+#### Example
+
+```ruby
+gcompute_network 'mynetwork' do
+  action :create
+  auto_create_subnetworks false
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+end
+
+gcompute_region 'some-region' do
+  action :create
+  r_label 'us-west1'
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+end
+
+gcompute_target_vpn_gateway 'mygateway' do
+  action :create
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+  network 'mynetwork'
+  region 'some-region'
+end
+
+gcompute_vpn_tunnel 'mytunnel' do
+  action :create
+  project ENV['PROJECT'] # ex: 'my-test-project'
+  credential 'mycred'
+  target_vpn_gateway 'mygateway'
+  region 'some-region'
+end
+
+```
+
+#### Reference
+
+```ruby
+gcompute_vpn_tunnel 'id-for-resource' do
+  creation_timestamp      time
+  description             string
+  ike_version             integer
+  labels                  namevalues
+  local_traffic_selector  [
+    string,
+    ...
+  ]
+  name                    string
+  peer_ip                 string
+  region                  reference to gcompute_region
+  remote_traffic_selector [
+    string,
+    ...
+  ]
+  router                  string
+  shared_secret           string
+  shared_secret_hash      string
+  target_vpn_gateway      reference to gcompute_target_vpn_gateway
+  project                 string
+  credential              reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_vpn_tunnel` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_vpn_tunnel` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `name` -
+  Required. Name of the resource. The name must be 1-63 characters long, and
+  comply with RFC1035. Specifically, the name must be 1-63
+  characters long and match the regular expression
+  `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
+  must be a lowercase letter, and all following characters must
+  be a dash, lowercase letter, or digit,
+  except the last character, which cannot be a dash.
+
+* `description` -
+  An optional description of this resource.
+
+* `target_vpn_gateway` -
+  Required. URL of the Target VPN gateway with which this VPN tunnel is
+  associated.
+
+* `router` -
+  URL of router resource to be used for dynamic routing.
+
+* `peer_ip` -
+  Required. IP address of the peer VPN gateway. Only IPv4 is supported.
+
+* `shared_secret` -
+  Required. Shared secret used to set the secure session between the Cloud VPN
+  gateway and the peer VPN gateway.
+
+* `shared_secret_hash` -
+  Output only. Hash of the shared secret.
+
+* `ike_version` -
+  IKE protocol version to use when establishing the VPN tunnel with
+  peer VPN gateway.
+  Acceptable IKE versions are 1 or 2. Default version is 2.
+
+* `local_traffic_selector` -
+  Local traffic selector to use when establishing the VPN tunnel with
+  peer VPN gateway. The value should be a CIDR formatted string,
+  for example `192.168.0.0/16`. The ranges should be disjoint.
+  Only IPv4 is supported.
+
+* `remote_traffic_selector` -
+  Remote traffic selector to use when establishing the VPN tunnel with
+  peer VPN gateway. The value should be a CIDR formatted string,
+  for example `192.168.0.0/16`. The ranges should be disjoint.
+  Only IPv4 is supported.
+
+* `labels` -
+  Labels to apply to this VpnTunnel.
+
+* `region` -
+  Required. The region where the tunnel is located.
+
+#### Label
+Set the `vt_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 

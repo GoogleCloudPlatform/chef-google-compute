@@ -34,38 +34,51 @@ require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/integer'
-require 'google/compute/property/network_selflink'
+require 'google/compute/property/namevalues'
 require 'google/compute/property/region_name'
-require 'google/compute/property/router_advertise_mode'
-require 'google/compute/property/router_advertised_ip_ranges'
-require 'google/compute/property/router_bgp'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
+require 'google/compute/property/targetvpngateway_selflink'
 require 'google/compute/property/time'
 require 'google/hash_utils'
 
 module Google
   module GCOMPUTE
     # A provider to manage Google Compute Engine resources.
-    class Router < Chef::Resource
-      resource_name :gcompute_router
+    class VpnTunnel < Chef::Resource
+      resource_name :gcompute_vpn_tunnel
 
-      property :id,
-               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
-      property :r_label,
+      property :vt_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :network,
-               [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
-      property :bgp,
-               [Hash, ::Google::Compute::Data::RouterBgp],
-               coerce: ::Google::Compute::Property::RouterBgp.coerce, desired_state: true
+      property :target_vpn_gateway,
+               [String, ::Google::Compute::Data::TarVpnGatSelLinRef],
+               coerce: ::Google::Compute::Property::TarVpnGatSelLinRef.coerce, desired_state: true
+      property :router,
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :peer_ip,
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :shared_secret,
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :shared_secret_hash,
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :ike_version,
+               Integer,
+               coerce: ::Google::Compute::Property::Integer.coerce, default: 2, desired_state: true
+      # local_traffic_selector is Array of Google::Compute::Property::StringArray
+      property :local_traffic_selector,
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      # remote_traffic_selector is Array of Google::Compute::Property::StringArray
+      property :remote_traffic_selector,
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      property :labels,
+               [Hash, ::Google::Compute::Property::NameValues],
+               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
                coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
@@ -79,9 +92,9 @@ module Google
 
       action :create do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#router')
+                               'compute#vpnTunnel')
         if fetch.nil?
-          converge_by "Creating gcompute_router[#{new_resource.name}]" do
+          converge_by "Creating gcompute_vpn_tunnel[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
             # TODO(nelsonjr): Determine how to print green like update converge
             puts # making a newline until we find a better way TODO: find!
@@ -95,12 +108,24 @@ module Google
           end
         else
           @current_resource = @new_resource.clone
-          @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
-          @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(fetch['description'])
-          @current_resource.bgp = ::Google::Compute::Property::RouterBgp.api_parse(fetch['bgp'])
+          @current_resource.vt_label =
+            ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.peer_ip =
+            ::Google::Compute::Property::String.api_parse(fetch['peerIp'])
+          @current_resource.shared_secret =
+            ::Google::Compute::Property::String.api_parse(fetch['sharedSecret'])
+          @current_resource.shared_secret_hash =
+            ::Google::Compute::Property::String.api_parse(fetch['sharedSecretHash'])
+          @current_resource.ike_version =
+            ::Google::Compute::Property::Integer.api_parse(fetch['ikeVersion'])
+          @current_resource.local_traffic_selector =
+            ::Google::Compute::Property::StringArray.api_parse(fetch['localTrafficSelector'])
+          @current_resource.remote_traffic_selector =
+            ::Google::Compute::Property::StringArray.api_parse(fetch['remoteTrafficSelector'])
+          @current_resource.labels =
+            ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
           @new_resource.__fetched = fetch
 
           update
@@ -109,9 +134,9 @@ module Google
 
       action :delete do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#router')
+                               'compute#vpnTunnel')
         unless fetch.nil?
-          converge_by "Deleting gcompute_router[#{new_resource.name}]" do
+          converge_by "Deleting gcompute_vpn_tunnel[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
               self_link(@new_resource), fetch_auth(@new_resource)
             )
@@ -133,12 +158,17 @@ module Google
       action_class do
         def resource_to_request
           request = {
-            kind: 'compute#router',
-            name: new_resource.r_label,
+            kind: 'compute#vpnTunnel',
+            name: new_resource.vt_label,
             description: new_resource.description,
-            network: new_resource.network,
-            bgp: new_resource.bgp,
-            region: new_resource.region
+            targetVpnGateway: new_resource.target_vpn_gateway,
+            router: new_resource.router,
+            peerIp: new_resource.peer_ip,
+            sharedSecret: new_resource.shared_secret,
+            ikeVersion: new_resource.ike_version,
+            localTrafficSelector: new_resource.local_traffic_selector,
+            remoteTrafficSelector: new_resource.remote_traffic_selector,
+            labels: new_resource.labels
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -150,10 +180,10 @@ module Google
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
             update_req =
-              ::Google::Compute::Network::Patch.new(self_link(@new_resource),
-                                                    fetch_auth(@new_resource),
-                                                    'application/json',
-                                                    resource_to_request)
+              ::Google::Compute::Network::Put.new(self_link(@new_resource),
+                                                  fetch_auth(@new_resource),
+                                                  'application/json',
+                                                  resource_to_request)
             wait_for_operation update_req.send, @new_resource
           end
         end
@@ -166,13 +196,19 @@ module Google
         def self.resource_to_hash(resource)
           {
             project: resource.project,
-            name: resource.r_label,
-            kind: 'compute#router',
-            id: resource.id,
+            name: resource.vt_label,
+            kind: 'compute#vpnTunnel',
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
-            network: resource.network,
-            bgp: resource.bgp,
+            target_vpn_gateway: resource.target_vpn_gateway,
+            router: resource.router,
+            peer_ip: resource.peer_ip,
+            shared_secret: resource.shared_secret,
+            shared_secret_hash: resource.shared_secret_hash,
+            ike_version: resource.ike_version,
+            local_traffic_selector: resource.local_traffic_selector,
+            remote_traffic_selector: resource.remote_traffic_selector,
+            labels: resource.labels,
             region: resource.region
           }.reject { |_, v| v.nil? }
         end
@@ -253,7 +289,7 @@ module Google
           URI.join(
             'https://www.googleapis.com/compute/v1/',
             expand_variables(
-              'projects/{{project}}/regions/{{region}}/routers',
+              'projects/{{project}}/regions/{{region}}/vpnTunnels',
               data
             )
           )
@@ -267,7 +303,7 @@ module Google
           URI.join(
             'https://www.googleapis.com/compute/v1/',
             expand_variables(
-              'projects/{{project}}/regions/{{region}}/routers/{{name}}',
+              'projects/{{project}}/regions/{{region}}/vpnTunnels/{{name}}',
               data
             )
           )
@@ -346,7 +382,7 @@ module Google
                                                                        op_result,
                                                                        resource),
                                                    %w[targetLink])),
-            'compute#router'
+            'compute#vpnTunnel'
           )
         end
 
@@ -357,7 +393,7 @@ module Google
             debug("Waiting for completion of operation #{op_id}")
             raise_if_errors op_result, %w[error errors], 'message'
             sleep 1.0
-            raise "Invalid result '#{status}' on gcompute_router." \
+            raise "Invalid result '#{status}' on gcompute_vpn_tunnel." \
               unless %w[PENDING RUNNING DONE].include?(status)
             op_result = fetch_resource(resource, op_uri, 'compute#operation')
             status = ::Google::HashUtils.navigate(op_result, %w[status])
