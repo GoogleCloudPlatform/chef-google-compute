@@ -115,6 +115,7 @@ chef-codegen:
   * libraries/google/compute/property/double.rb
   * libraries/google/compute/property/enum.rb
   * libraries/google/compute/property/firewall_allowed.rb
+  * libraries/google/compute/property/forwardingrule_selflink.rb
   * libraries/google/compute/property/healthcheck_http_health_check.rb
   * libraries/google/compute/property/healthcheck_https_health_check.rb
   * libraries/google/compute/property/healthcheck_ssl_health_check.rb
@@ -175,6 +176,7 @@ chef-codegen:
   * libraries/google/compute/property/string_array.rb
   * libraries/google/compute/property/subnetwork_selflink.rb
   * libraries/google/compute/property/targetpool_selflink.rb
+  * libraries/google/compute/property/targetvpngateway_selflink.rb
   * libraries/google/compute/property/time.rb
   * libraries/google/compute/property/urlmap_host_rules.rb
   * libraries/google/compute/property/urlmap_path_matchers.rb
@@ -247,7 +249,9 @@ chef-codegen:
   * recipes/examples~target_https_proxy.rb
   * recipes/examples~target_ssl_proxy.rb
   * recipes/examples~target_tcp_proxy.rb
+  * recipes/examples~target_vpn_gateway.rb
   * recipes/examples~url_map.rb
+  * recipes/examples~vpn_tunnel.rb
   * recipes/examples~zone.rb
   * recipes/README.md
   * recipes/tests~address.rb
@@ -309,7 +313,9 @@ chef-codegen:
   * recipes/tests~target_https_proxy.rb
   * recipes/tests~target_ssl_proxy.rb
   * recipes/tests~target_tcp_proxy.rb
+  * recipes/tests~target_vpn_gateway.rb
   * recipes/tests~url_map.rb
+  * recipes/tests~vpn_tunnel.rb
   * recipes/tests~zone.rb
   * resources/address.rb
   * resources/backend_bucket.rb
@@ -342,7 +348,9 @@ chef-codegen:
   * resources/target_pool.rb
   * resources/target_ssl_proxy.rb
   * resources/target_tcp_proxy.rb
+  * resources/target_vpn_gateway.rb
   * resources/url_map.rb
+  * resources/vpn_tunnel.rb
   * resources/zone.rb
   * spec/address_spec.rb
   * spec/backend_bucket_spec.rb
@@ -535,12 +543,24 @@ chef-codegen:
   * spec/data/network/gcompute_target_tcp_proxy/success2~title.yaml
   * spec/data/network/gcompute_target_tcp_proxy/success3~name.yaml
   * spec/data/network/gcompute_target_tcp_proxy/success3~title.yaml
+  * spec/data/network/gcompute_target_vpn_gateway/success1~name.yaml
+  * spec/data/network/gcompute_target_vpn_gateway/success1~title.yaml
+  * spec/data/network/gcompute_target_vpn_gateway/success2~name.yaml
+  * spec/data/network/gcompute_target_vpn_gateway/success2~title.yaml
+  * spec/data/network/gcompute_target_vpn_gateway/success3~name.yaml
+  * spec/data/network/gcompute_target_vpn_gateway/success3~title.yaml
   * spec/data/network/gcompute_url_map/success1~name.yaml
   * spec/data/network/gcompute_url_map/success1~title.yaml
   * spec/data/network/gcompute_url_map/success2~name.yaml
   * spec/data/network/gcompute_url_map/success2~title.yaml
   * spec/data/network/gcompute_url_map/success3~name.yaml
   * spec/data/network/gcompute_url_map/success3~title.yaml
+  * spec/data/network/gcompute_vpn_tunnel/success1~name.yaml
+  * spec/data/network/gcompute_vpn_tunnel/success1~title.yaml
+  * spec/data/network/gcompute_vpn_tunnel/success2~name.yaml
+  * spec/data/network/gcompute_vpn_tunnel/success2~title.yaml
+  * spec/data/network/gcompute_vpn_tunnel/success3~name.yaml
+  * spec/data/network/gcompute_vpn_tunnel/success3~title.yaml
   * spec/data/network/gcompute_zone/success1~name.yaml
   * spec/data/network/gcompute_zone/success1~title.yaml
   * spec/data/network/gcompute_zone/success2~name.yaml
@@ -585,8 +605,10 @@ chef-codegen:
   * spec/target_pool_spec.rb
   * spec/target_ssl_proxy_spec.rb
   * spec/target_tcp_proxy_spec.rb
+  * spec/target_vpn_gateway_spec.rb
   * spec/test_constants.rb
   * spec/url_map_spec.rb
+  * spec/vpn_tunnel_spec.rb
   * spec/zone_spec.rb
 
 The list below contains all the files that were automatically sourced from a

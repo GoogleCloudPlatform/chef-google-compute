@@ -599,6 +599,33 @@ module GoogleTests
       'test name#4 data'
     ].freeze
 
+    # Constants for: TargetVpnGateway.project
+    TVG_PROJECT_DATA = [
+      'test project#0 data',
+      'test project#1 data',
+      'test project#2 data',
+      'test project#3 data',
+      'test project#4 data'
+    ].freeze
+
+    # Constants for: TargetVpnGateway.region
+    TVG_REGION_DATA = [
+      'test name#0 data',
+      'test name#1 data',
+      'test name#2 data',
+      'test name#3 data',
+      'test name#4 data'
+    ].freeze
+
+    # Constants for: TargetVpnGateway.name
+    TVG_NAME_DATA = [
+      'test name#0 data',
+      'test name#1 data',
+      'test name#2 data',
+      'test name#3 data',
+      'test name#4 data'
+    ].freeze
+
     # Constants for: UrlMap.project
     UM_PROJECT_DATA = [
       'test project#0 data',
@@ -610,6 +637,33 @@ module GoogleTests
 
     # Constants for: UrlMap.name
     UM_NAME_DATA = [
+      'test name#0 data',
+      'test name#1 data',
+      'test name#2 data',
+      'test name#3 data',
+      'test name#4 data'
+    ].freeze
+
+    # Constants for: VpnTunnel.project
+    VT_PROJECT_DATA = [
+      'test project#0 data',
+      'test project#1 data',
+      'test project#2 data',
+      'test project#3 data',
+      'test project#4 data'
+    ].freeze
+
+    # Constants for: VpnTunnel.region
+    VT_REGION_DATA = [
+      'test name#0 data',
+      'test name#1 data',
+      'test name#2 data',
+      'test name#3 data',
+      'test name#4 data'
+    ].freeze
+
+    # Constants for: VpnTunnel.name
+    VT_NAME_DATA = [
       'test name#0 data',
       'test name#1 data',
       'test name#2 data',
