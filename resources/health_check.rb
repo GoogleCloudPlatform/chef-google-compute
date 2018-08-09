@@ -75,17 +75,21 @@ module Google
                equal_to: %w[TCP SSL HTTP],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :http_health_check,
-               [Hash, ::Google::Compute::Data::HealChecHttpHealChec],
-               coerce: ::Google::Compute::Property::HealChecHttpHealChec.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::HealthCheckHttpHealthCheck],
+               coerce: ::Google::Compute::Property::HealthCheckHttpHealthCheck.coerce,
+               desired_state: true
       property :https_health_check,
-               [Hash, ::Google::Compute::Data::HealChecHttpHealChec],
-               coerce: ::Google::Compute::Property::HealChecHttpHealChec.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::HealthCheckHttpsHealthCheck],
+               coerce: ::Google::Compute::Property::HealthCheckHttpsHealthCheck.coerce,
+               desired_state: true
       property :tcp_health_check,
-               [Hash, ::Google::Compute::Data::HealChecTcpHealChec],
-               coerce: ::Google::Compute::Property::HealChecTcpHealChec.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::HealthCheckTcpHealthCheck],
+               coerce: ::Google::Compute::Property::HealthCheckTcpHealthCheck.coerce,
+               desired_state: true
       property :ssl_health_check,
-               [Hash, ::Google::Compute::Data::HealChecSslHealChec],
-               coerce: ::Google::Compute::Property::HealChecSslHealChec.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::HealthCheckSslHealthCheck],
+               coerce: ::Google::Compute::Property::HealthCheckSslHealthCheck.coerce,
+               desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -124,13 +128,21 @@ module Google
             ::Google::Compute::Property::Integer.api_parse(fetch['unhealthyThreshold'])
           @current_resource.type = ::Google::Compute::Property::Enum.api_parse(fetch['type'])
           @current_resource.http_health_check =
-            ::Google::Compute::Property::HealChecHttpHealChec.api_parse(fetch['httpHealthCheck'])
+            ::Google::Compute::Property::HealthCheckHttpHealthCheck.api_parse(
+              fetch['httpHealthCheck']
+            )
           @current_resource.https_health_check =
-            ::Google::Compute::Property::HealChecHttpHealChec.api_parse(fetch['httpsHealthCheck'])
+            ::Google::Compute::Property::HealthCheckHttpsHealthCheck.api_parse(
+              fetch['httpsHealthCheck']
+            )
           @current_resource.tcp_health_check =
-            ::Google::Compute::Property::HealChecTcpHealChec.api_parse(fetch['tcpHealthCheck'])
+            ::Google::Compute::Property::HealthCheckTcpHealthCheck.api_parse(
+              fetch['tcpHealthCheck']
+            )
           @current_resource.ssl_health_check =
-            ::Google::Compute::Property::HealChecSslHealChec.api_parse(fetch['sslHealthCheck'])
+            ::Google::Compute::Property::HealthCheckSslHealthCheck.api_parse(
+              fetch['sslHealthCheck']
+            )
 
           update
         end

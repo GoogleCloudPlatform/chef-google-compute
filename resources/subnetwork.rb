@@ -63,8 +63,8 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :network,
-               [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::NetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::NetworkSelfLinkRef.coerce, desired_state: true
       property :private_ip_google_access,
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true

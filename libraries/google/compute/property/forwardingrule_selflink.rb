@@ -31,11 +31,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from forwarding_rule
-      class ForwRuleSelfLinkRef
+      class ForwardingRuleSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? ForwRuleSelfLinkRef
+          return false unless other.is_a? ForwardingRuleSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -53,7 +53,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class ForwRuleSelfLinkRefCatalog < ForwRuleSelfLinkRef
+      class ForwardingRuleSelfLinkRefCatalog < ForwardingRuleSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -82,7 +82,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class ForwRuleSelfLinkRefApi < ForwRuleSelfLinkRef
+      class ForwardingRuleSelfLinkRefApi < ForwardingRuleSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -101,9 +101,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a forwarding_rule
-      class ForwRuleSelfLinkRef
+      class ForwardingRuleSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::ForwRuleSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::ForwardingRuleSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -113,38 +113,38 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ForwRuleSelfLinkRef
-          Data::ForwRuleSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::ForwardingRuleSelfLinkRef
+          Data::ForwardingRuleSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ForwRuleSelfLinkRef
-          Data::ForwRuleSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::ForwardingRuleSelfLinkRef
+          Data::ForwardingRuleSelfLinkRefApi.new(value)
         end
       end
 
-      # A Chef property that holds an Array of ForwRuleSelfLinkRef
-      class ForwRuleSelfLinkRefArray < Google::Compute::Property::Array
+      # A Chef property that holds an Array of ForwardingRuleSelfLinkRef
+      class ForwardingRuleSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::ForwRuleSelfLinkRefArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::ForwardingRuleSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return ForwRuleSelfLinkRef.catalog_parse(value) \
+          return ForwardingRuleSelfLinkRef.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| ForwRuleSelfLinkRef.catalog_parse(v) }
+          value.map { |v| ForwardingRuleSelfLinkRef.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return ForwRuleSelfLinkRef.api_parse(value) \
+          return ForwardingRuleSelfLinkRef.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| ForwRuleSelfLinkRef.api_parse(v) }
+          value.map { |v| ForwardingRuleSelfLinkRef.api_parse(v) }
         end
       end
     end

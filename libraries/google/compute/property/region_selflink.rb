@@ -30,11 +30,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from region
-      class RegioSelfLinkRef
+      class RegionSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? RegioSelfLinkRef
+          return false unless other.is_a? RegionSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -52,7 +52,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class RegioSelfLinkRefCatalog < RegioSelfLinkRef
+      class RegionSelfLinkRefCatalog < RegionSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -81,7 +81,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class RegioSelfLinkRefApi < RegioSelfLinkRef
+      class RegionSelfLinkRefApi < RegionSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -100,9 +100,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a region
-      class RegioSelfLinkRef
+      class RegionSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::RegioSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::RegionSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -112,15 +112,15 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::RegioSelfLinkRef
-          Data::RegioSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::RegionSelfLinkRef
+          Data::RegionSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::RegioSelfLinkRef
-          Data::RegioSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::RegionSelfLinkRef
+          Data::RegionSelfLinkRefApi.new(value)
         end
       end
     end

@@ -57,17 +57,19 @@ module Google
 
       property :affinity_cookie_ttl_sec,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      # backends is Array of Google::Compute::Property::BackendServiceBackendArray
+      # backends is Array of Google::Compute::Property::BackendServiceBackendsArray
       property :backends,
                Array,
-               coerce: ::Google::Compute::Property::BackendServiceBackendArray.coerce,
+               coerce: ::Google::Compute::Property::BackendServiceBackendsArray.coerce,
                desired_state: true
       property :cdn_policy,
-               [Hash, ::Google::Compute::Data::BackeServiCdnPolic],
-               coerce: ::Google::Compute::Property::BackeServiCdnPolic.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::BackendServiceCdnPolicy],
+               coerce: ::Google::Compute::Property::BackendServiceCdnPolicy.coerce,
+               desired_state: true
       property :connection_draining,
-               [Hash, ::Google::Compute::Data::BackeServiConneDrain],
-               coerce: ::Google::Compute::Property::BackeServiConneDrain.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::BackendServiceConnectionDraining],
+               coerce: ::Google::Compute::Property::BackendServiceConnectionDraining.coerce,
+               desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :description,
@@ -90,8 +92,8 @@ module Google
                equal_to: %w[HTTP HTTPS TCP SSL],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :region,
-               [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::RegionSelfLinkRef],
+               coerce: ::Google::Compute::Property::RegionSelfLinkRef.coerce, desired_state: true
       property :session_affinity,
                equal_to: %w[NONE CLIENT_IP GENERATED_COOKIE CLIENT_IP_PROTO CLIENT_IP_PORT_PROTO],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
@@ -126,11 +128,11 @@ module Google
           @current_resource.affinity_cookie_ttl_sec =
             ::Google::Compute::Property::Integer.api_parse(fetch['affinityCookieTtlSec'])
           @current_resource.backends =
-            ::Google::Compute::Property::BackendServiceBackendArray.api_parse(fetch['backends'])
+            ::Google::Compute::Property::BackendServiceBackendsArray.api_parse(fetch['backends'])
           @current_resource.cdn_policy =
-            ::Google::Compute::Property::BackeServiCdnPolic.api_parse(fetch['cdnPolicy'])
+            ::Google::Compute::Property::BackendServiceCdnPolicy.api_parse(fetch['cdnPolicy'])
           @current_resource.connection_draining =
-            ::Google::Compute::Property::BackeServiConneDrain.api_parse(
+            ::Google::Compute::Property::BackendServiceConnectionDraining.api_parse(
               fetch['connectionDraining']
             )
           @current_resource.creation_timestamp =
@@ -149,7 +151,7 @@ module Google
           @current_resource.protocol =
             ::Google::Compute::Property::Enum.api_parse(fetch['protocol'])
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
+            ::Google::Compute::Property::RegionSelfLinkRef.api_parse(fetch['region'])
           @current_resource.session_affinity =
             ::Google::Compute::Property::Enum.api_parse(fetch['sessionAffinity'])
           @current_resource.timeout_sec =

@@ -63,8 +63,9 @@ module Google
                equal_to: %w[TCP UDP ESP AH SCTP ICMP],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :backend_service,
-               [String, ::Google::Compute::Data::BackServSelfLinkRef],
-               coerce: ::Google::Compute::Property::BackServSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::BackendServiceSelfLinkRef],
+               coerce: ::Google::Compute::Property::BackendServiceSelfLinkRef.coerce,
+               desired_state: true
       property :ip_version,
                equal_to: %w[IPV4 IPV6],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
@@ -76,19 +77,21 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :network,
-               [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::NetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::NetworkSelfLinkRef.coerce, desired_state: true
       property :port_range,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # ports is Array of Google::Compute::Property::StringArray
       property :ports,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :subnetwork,
-               [String, ::Google::Compute::Data::SubneSelfLinkRef],
-               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::SubnetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::SubnetworkSelfLinkRef.coerce,
+               desired_state: true
       property :target,
-               [String, ::Google::Compute::Data::TargPoolSelfLinkRef],
-               coerce: ::Google::Compute::Property::TargPoolSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::TargetPoolSelfLinkRef],
+               coerce: ::Google::Compute::Property::TargetPoolSelfLinkRef.coerce,
+               desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
                coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
@@ -128,7 +131,9 @@ module Google
           @current_resource.ip_protocol =
             ::Google::Compute::Property::Enum.api_parse(fetch['IPProtocol'])
           @current_resource.backend_service =
-            ::Google::Compute::Property::BackServSelfLinkRef.api_parse(fetch['backendService'])
+            ::Google::Compute::Property::BackendServiceSelfLinkRef.api_parse(
+              fetch['backendService']
+            )
           @current_resource.ip_version =
             ::Google::Compute::Property::Enum.api_parse(fetch['ipVersion'])
           @current_resource.load_balancing_scheme =
@@ -136,15 +141,15 @@ module Google
           @current_resource.fr_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.network =
-            ::Google::Compute::Property::NetwoSelfLinkRef.api_parse(fetch['network'])
+            ::Google::Compute::Property::NetworkSelfLinkRef.api_parse(fetch['network'])
           @current_resource.port_range =
             ::Google::Compute::Property::String.api_parse(fetch['portRange'])
           @current_resource.ports =
             ::Google::Compute::Property::StringArray.api_parse(fetch['ports'])
           @current_resource.subnetwork =
-            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(fetch['subnetwork'])
+            ::Google::Compute::Property::SubnetworkSelfLinkRef.api_parse(fetch['subnetwork'])
           @current_resource.target =
-            ::Google::Compute::Property::TargPoolSelfLinkRef.api_parse(fetch['target'])
+            ::Google::Compute::Property::TargetPoolSelfLinkRef.api_parse(fetch['target'])
           @new_resource.__fetched = fetch
 
           update

@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for ImageEncryptionKey for image.
-      class ImageImageEncryKey
+      class ImageImageEncryptionKey
         include Comparable
 
         attr_reader :raw_key
@@ -50,7 +50,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? ImageImageEncryKey
+          return false unless other.is_a? ImageImageEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -59,7 +59,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? ImageImageEncryKey
+          return false unless other.is_a? ImageImageEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -82,18 +82,18 @@ module Google
         end
       end
 
-      # Manages a ImageImageEncryKey nested object
+      # Manages a ImageImageEncryptionKey nested object
       # Data is coming from the GCP API
-      class ImageImageEncryKeyApi < ImageImageEncryKey
+      class ImageImageEncryptionKeyApi < ImageImageEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.api_parse(args['rawKey'])
           @sha256 = Google::Compute::Property::String.api_parse(args['sha256'])
         end
       end
 
-      # Manages a ImageImageEncryKey nested object
+      # Manages a ImageImageEncryptionKey nested object
       # Data is coming from the Chef catalog
-      class ImageImageEncryKeyCatalog < ImageImageEncryKey
+      class ImageImageEncryptionKeyCatalog < ImageImageEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
           @sha256 = Google::Compute::Property::String.catalog_parse(args[:sha256])
@@ -103,23 +103,23 @@ module Google
 
     module Property
       # A class to manage input to ImageEncryptionKey for image.
-      class ImageImageEncryKey
+      class ImageImageEncryptionKey
         def self.coerce
-          ->(x) { ::Google::Compute::Property::ImageImageEncryKey.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::ImageImageEncryptionKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ImageImageEncryKey
-          Data::ImageImageEncryKeyCatalog.new(value)
+          return value if value.is_a? Data::ImageImageEncryptionKey
+          Data::ImageImageEncryptionKeyCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ImageImageEncryKey
-          Data::ImageImageEncryKeyApi.new(value)
+          return value if value.is_a? Data::ImageImageEncryptionKey
+          Data::ImageImageEncryptionKeyApi.new(value)
         end
       end
     end

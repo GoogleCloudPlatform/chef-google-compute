@@ -88,7 +88,7 @@ module Google
       class UrlMapPathRulesApi < UrlMapPathRules
         def initialize(args)
           @paths = Google::Compute::Property::StringArray.api_parse(args['paths'])
-          @service = Google::Compute::Property::BackServSelfLinkRef.api_parse(args['service'])
+          @service = Google::Compute::Property::BackendServiceSelfLinkRef.api_parse(args['service'])
         end
       end
 
@@ -97,7 +97,8 @@ module Google
       class UrlMapPathRulesCatalog < UrlMapPathRules
         def initialize(args)
           @paths = Google::Compute::Property::StringArray.catalog_parse(args[:paths])
-          @service = Google::Compute::Property::BackServSelfLinkRef.catalog_parse(args[:service])
+          @service =
+            Google::Compute::Property::BackendServiceSelfLinkRef.catalog_parse(args[:service])
         end
       end
     end

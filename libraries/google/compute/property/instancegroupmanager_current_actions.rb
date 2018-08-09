@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for CurrentActions for instance_group_manager.
-      class InstGrouManaCurrActi
+      class InstanceGroupManagerCurrentActions
         include Comparable
 
         attr_reader :abandoning
@@ -68,7 +68,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstGrouManaCurrActi
+          return false unless other.is_a? InstanceGroupManagerCurrentActions
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -77,7 +77,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstGrouManaCurrActi
+          return false unless other.is_a? InstanceGroupManagerCurrentActions
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -106,9 +106,9 @@ module Google
         end
       end
 
-      # Manages a InstGrouManaCurrActi nested object
+      # Manages a InstanceGroupManagerCurrentActions nested object
       # Data is coming from the GCP API
-      class InstGrouManaCurrActiApi < InstGrouManaCurrActi
+      class InstanceGroupManagerCurrentActionsApi < InstanceGroupManagerCurrentActions
         def initialize(args)
           @abandoning = Google::Compute::Property::Integer.api_parse(args['abandoning'])
           @creating = Google::Compute::Property::Integer.api_parse(args['creating'])
@@ -122,9 +122,9 @@ module Google
         end
       end
 
-      # Manages a InstGrouManaCurrActi nested object
+      # Manages a InstanceGroupManagerCurrentActions nested object
       # Data is coming from the Chef catalog
-      class InstGrouManaCurrActiCatalog < InstGrouManaCurrActi
+      class InstanceGroupManagerCurrentActionsCatalog < InstanceGroupManagerCurrentActions
         def initialize(args)
           @abandoning = Google::Compute::Property::Integer.catalog_parse(args[:abandoning])
           @creating = Google::Compute::Property::Integer.catalog_parse(args[:creating])
@@ -141,23 +141,23 @@ module Google
 
     module Property
       # A class to manage input to CurrentActions for instance_group_manager.
-      class InstGrouManaCurrActi
+      class InstanceGroupManagerCurrentActions
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstGrouManaCurrActi.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceGroupManagerCurrentActions.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstGrouManaCurrActi
-          Data::InstGrouManaCurrActiCatalog.new(value)
+          return value if value.is_a? Data::InstanceGroupManagerCurrentActions
+          Data::InstanceGroupManagerCurrentActionsCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstGrouManaCurrActi
-          Data::InstGrouManaCurrActiApi.new(value)
+          return value if value.is_a? Data::InstanceGroupManagerCurrentActions
+          Data::InstanceGroupManagerCurrentActionsApi.new(value)
         end
       end
     end

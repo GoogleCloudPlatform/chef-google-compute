@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for AliasIpRanges for instance.
-      class InstaAliasIpRange
+      class InstanceAliasIpRanges
         include Comparable
 
         attr_reader :ip_cidr_range
@@ -51,7 +51,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstaAliasIpRange
+          return false unless other.is_a? InstanceAliasIpRanges
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -60,7 +60,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstaAliasIpRange
+          return false unless other.is_a? InstanceAliasIpRanges
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -83,9 +83,9 @@ module Google
         end
       end
 
-      # Manages a InstaAliasIpRange nested object
+      # Manages a InstanceAliasIpRanges nested object
       # Data is coming from the GCP API
-      class InstaAliasIpRangeApi < InstaAliasIpRange
+      class InstanceAliasIpRangesApi < InstanceAliasIpRanges
         def initialize(args)
           @ip_cidr_range = Google::Compute::Property::String.api_parse(args['ipCidrRange'])
           @subnetwork_range_name =
@@ -93,9 +93,9 @@ module Google
         end
       end
 
-      # Manages a InstaAliasIpRange nested object
+      # Manages a InstanceAliasIpRanges nested object
       # Data is coming from the Chef catalog
-      class InstaAliasIpRangeCatalog < InstaAliasIpRange
+      class InstanceAliasIpRangesCatalog < InstanceAliasIpRanges
         def initialize(args)
           @ip_cidr_range = Google::Compute::Property::String.catalog_parse(args[:ip_cidr_range])
           @subnetwork_range_name =
@@ -106,46 +106,46 @@ module Google
 
     module Property
       # A class to manage input to AliasIpRanges for instance.
-      class InstaAliasIpRange
+      class InstanceAliasIpRanges
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstaAliasIpRange.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceAliasIpRanges.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstaAliasIpRange
-          Data::InstaAliasIpRangeCatalog.new(value)
+          return value if value.is_a? Data::InstanceAliasIpRanges
+          Data::InstanceAliasIpRangesCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstaAliasIpRange
-          Data::InstaAliasIpRangeApi.new(value)
+          return value if value.is_a? Data::InstanceAliasIpRanges
+          Data::InstanceAliasIpRangesApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class InstaAliasIpRangeArray < Google::Compute::Property::Array
+      class InstanceAliasIpRangesArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstaAliasIpRangeArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceAliasIpRangesArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return InstaAliasIpRange.catalog_parse(value) \
+          return InstanceAliasIpRanges.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstaAliasIpRange.catalog_parse(v) }
+          value.map { |v| InstanceAliasIpRanges.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return InstaAliasIpRange.api_parse(value) \
+          return InstanceAliasIpRanges.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstaAliasIpRange.api_parse(v) }
+          value.map { |v| InstanceAliasIpRanges.api_parse(v) }
         end
       end
     end

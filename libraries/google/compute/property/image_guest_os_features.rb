@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for GuestOsFeatures for image.
-      class ImageGuestOsFeatu
+      class ImageGuestOsFeatures
         include Comparable
 
         attr_reader :type
@@ -48,7 +48,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? ImageGuestOsFeatu
+          return false unless other.is_a? ImageGuestOsFeatures
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -57,7 +57,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? ImageGuestOsFeatu
+          return false unless other.is_a? ImageGuestOsFeatures
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -79,17 +79,17 @@ module Google
         end
       end
 
-      # Manages a ImageGuestOsFeatu nested object
+      # Manages a ImageGuestOsFeatures nested object
       # Data is coming from the GCP API
-      class ImageGuestOsFeatuApi < ImageGuestOsFeatu
+      class ImageGuestOsFeaturesApi < ImageGuestOsFeatures
         def initialize(args)
           @type = Google::Compute::Property::Enum.api_parse(args['type'])
         end
       end
 
-      # Manages a ImageGuestOsFeatu nested object
+      # Manages a ImageGuestOsFeatures nested object
       # Data is coming from the Chef catalog
-      class ImageGuestOsFeatuCatalog < ImageGuestOsFeatu
+      class ImageGuestOsFeaturesCatalog < ImageGuestOsFeatures
         def initialize(args)
           @type = Google::Compute::Property::Enum.catalog_parse(args[:type])
         end
@@ -98,46 +98,46 @@ module Google
 
     module Property
       # A class to manage input to GuestOsFeatures for image.
-      class ImageGuestOsFeatu
+      class ImageGuestOsFeatures
         def self.coerce
-          ->(x) { ::Google::Compute::Property::ImageGuestOsFeatu.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::ImageGuestOsFeatures.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ImageGuestOsFeatu
-          Data::ImageGuestOsFeatuCatalog.new(value)
+          return value if value.is_a? Data::ImageGuestOsFeatures
+          Data::ImageGuestOsFeaturesCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ImageGuestOsFeatu
-          Data::ImageGuestOsFeatuApi.new(value)
+          return value if value.is_a? Data::ImageGuestOsFeatures
+          Data::ImageGuestOsFeaturesApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class ImageGuestOsFeatuArray < Google::Compute::Property::Array
+      class ImageGuestOsFeaturesArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::ImageGuestOsFeatuArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::ImageGuestOsFeaturesArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return ImageGuestOsFeatu.catalog_parse(value) \
+          return ImageGuestOsFeatures.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| ImageGuestOsFeatu.catalog_parse(v) }
+          value.map { |v| ImageGuestOsFeatures.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return ImageGuestOsFeatu.api_parse(value) \
+          return ImageGuestOsFeatures.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| ImageGuestOsFeatu.api_parse(v) }
+          value.map { |v| ImageGuestOsFeatures.api_parse(v) }
         end
       end
     end

@@ -31,11 +31,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from license
-      class LicenSelfLinkRef
+      class LicenseSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? LicenSelfLinkRef
+          return false unless other.is_a? LicenseSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -53,7 +53,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class LicenSelfLinkRefCatalog < LicenSelfLinkRef
+      class LicenseSelfLinkRefCatalog < LicenseSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -82,7 +82,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class LicenSelfLinkRefApi < LicenSelfLinkRef
+      class LicenseSelfLinkRefApi < LicenseSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -101,9 +101,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a license
-      class LicenSelfLinkRef
+      class LicenseSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::LicenSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::LicenseSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -113,38 +113,38 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::LicenSelfLinkRef
-          Data::LicenSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::LicenseSelfLinkRef
+          Data::LicenseSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::LicenSelfLinkRef
-          Data::LicenSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::LicenseSelfLinkRef
+          Data::LicenseSelfLinkRefApi.new(value)
         end
       end
 
-      # A Chef property that holds an Array of LicenSelfLinkRef
-      class LicenSelfLinkRefArray < Google::Compute::Property::Array
+      # A Chef property that holds an Array of LicenseSelfLinkRef
+      class LicenseSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::LicenSelfLinkRefArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::LicenseSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return LicenSelfLinkRef.catalog_parse(value) \
+          return LicenseSelfLinkRef.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| LicenSelfLinkRef.catalog_parse(v) }
+          value.map { |v| LicenseSelfLinkRef.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return LicenSelfLinkRef.api_parse(value) \
+          return LicenseSelfLinkRef.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| LicenSelfLinkRef.api_parse(v) }
+          value.map { |v| LicenseSelfLinkRef.api_parse(v) }
         end
       end
     end

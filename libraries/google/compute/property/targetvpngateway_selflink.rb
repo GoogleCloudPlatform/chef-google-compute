@@ -30,11 +30,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from target_vpn_gateway
-      class TarVpnGatSelLinRef
+      class TargetVpnGatewaySelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? TarVpnGatSelLinRef
+          return false unless other.is_a? TargetVpnGatewaySelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -52,7 +52,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class TarVpnGatSelLinRefCatalog < TarVpnGatSelLinRef
+      class TargetVpnGatewaySelfLinkRefCatalog < TargetVpnGatewaySelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -81,7 +81,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class TarVpnGatSelLinRefApi < TarVpnGatSelLinRef
+      class TargetVpnGatewaySelfLinkRefApi < TargetVpnGatewaySelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -100,9 +100,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a target_vpn_gateway
-      class TarVpnGatSelLinRef
+      class TargetVpnGatewaySelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::TarVpnGatSelLinRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::TargetVpnGatewaySelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -112,15 +112,15 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::TarVpnGatSelLinRef
-          Data::TarVpnGatSelLinRefCatalog.new(value)
+          return value if value.is_a? Data::TargetVpnGatewaySelfLinkRef
+          Data::TargetVpnGatewaySelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::TarVpnGatSelLinRef
-          Data::TarVpnGatSelLinRefApi.new(value)
+          return value if value.is_a? Data::TargetVpnGatewaySelfLinkRef
+          Data::TargetVpnGatewaySelfLinkRefApi.new(value)
         end
       end
     end

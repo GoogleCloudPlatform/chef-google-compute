@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for DiskEncryptionKey for instance_template.
-      class InstTempDiskEncrKey
+      class InstanceTemplateDiskEncryptionKey
         include Comparable
 
         attr_reader :raw_key
@@ -53,7 +53,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstTempDiskEncrKey
+          return false unless other.is_a? InstanceTemplateDiskEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -62,7 +62,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstTempDiskEncrKey
+          return false unless other.is_a? InstanceTemplateDiskEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -86,9 +86,9 @@ module Google
         end
       end
 
-      # Manages a InstTempDiskEncrKey nested object
+      # Manages a InstanceTemplateDiskEncryptionKey nested object
       # Data is coming from the GCP API
-      class InstTempDiskEncrKeyApi < InstTempDiskEncrKey
+      class InstanceTemplateDiskEncryptionKeyApi < InstanceTemplateDiskEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.api_parse(args['rawKey'])
           @rsa_encrypted_key = Google::Compute::Property::String.api_parse(args['rsaEncryptedKey'])
@@ -96,9 +96,9 @@ module Google
         end
       end
 
-      # Manages a InstTempDiskEncrKey nested object
+      # Manages a InstanceTemplateDiskEncryptionKey nested object
       # Data is coming from the Chef catalog
-      class InstTempDiskEncrKeyCatalog < InstTempDiskEncrKey
+      class InstanceTemplateDiskEncryptionKeyCatalog < InstanceTemplateDiskEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
           @rsa_encrypted_key =
@@ -110,23 +110,23 @@ module Google
 
     module Property
       # A class to manage input to DiskEncryptionKey for instance_template.
-      class InstTempDiskEncrKey
+      class InstanceTemplateDiskEncryptionKey
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstTempDiskEncrKey.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateDiskEncryptionKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstTempDiskEncrKey
-          Data::InstTempDiskEncrKeyCatalog.new(value)
+          return value if value.is_a? Data::InstanceTemplateDiskEncryptionKey
+          Data::InstanceTemplateDiskEncryptionKeyCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstTempDiskEncrKey
-          Data::InstTempDiskEncrKeyApi.new(value)
+          return value if value.is_a? Data::InstanceTemplateDiskEncryptionKey
+          Data::InstanceTemplateDiskEncryptionKeyApi.new(value)
         end
       end
     end

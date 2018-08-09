@@ -51,8 +51,9 @@ module Google
       resource_name :gcompute_target_pool
 
       property :backup_pool,
-               [String, ::Google::Compute::Data::TargPoolSelfLinkRef],
-               coerce: ::Google::Compute::Property::TargPoolSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::TargetPoolSelfLinkRef],
+               coerce: ::Google::Compute::Property::TargetPoolSelfLinkRef.coerce,
+               desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :description,
@@ -60,14 +61,15 @@ module Google
       property :failover_ratio,
                Float, coerce: ::Google::Compute::Property::Double.coerce, desired_state: true
       property :health_check,
-               [String, ::Google::Compute::Data::HttHeaCheSelLinRef],
-               coerce: ::Google::Compute::Property::HttHeaCheSelLinRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::HttpHealthCheckSelfLinkRef],
+               coerce: ::Google::Compute::Property::HttpHealthCheckSelfLinkRef.coerce,
+               desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      # instances is Array of Google::Compute::Property::InstaSelfLinkRefArray
+      # instances is Array of Google::Compute::Property::InstanceSelfLinkRefArray
       property :instances,
                Array,
-               coerce: ::Google::Compute::Property::InstaSelfLinkRefArray.coerce,
+               coerce: ::Google::Compute::Property::InstanceSelfLinkRefArray.coerce,
                desired_state: true
       property :tp_label,
                String,
@@ -112,10 +114,12 @@ module Google
           @current_resource.failover_ratio =
             ::Google::Compute::Property::Double.api_parse(fetch['failoverRatio'])
           @current_resource.health_check =
-            ::Google::Compute::Property::HttHeaCheSelLinRef.api_parse(fetch['healthCheck'])
+            ::Google::Compute::Property::HttpHealthCheckSelfLinkRef.api_parse(
+              fetch['healthCheck']
+            )
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.instances =
-            ::Google::Compute::Property::InstaSelfLinkRefArray.api_parse(fetch['instances'])
+            ::Google::Compute::Property::InstanceSelfLinkRefArray.api_parse(fetch['instances'])
           @new_resource.__fetched = fetch
 
           update

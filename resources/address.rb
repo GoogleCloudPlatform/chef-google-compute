@@ -66,8 +66,9 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :subnetwork,
-               [String, ::Google::Compute::Data::SubneSelfLinkRef],
-               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::SubnetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::SubnetworkSelfLinkRef.coerce,
+               desired_state: true
       # users is Array of Google::Compute::Property::StringArray
       property :users,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
@@ -111,7 +112,7 @@ module Google
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.a_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.subnetwork =
-            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(fetch['subnetwork'])
+            ::Google::Compute::Property::SubnetworkSelfLinkRef.api_parse(fetch['subnetwork'])
           @current_resource.users =
             ::Google::Compute::Property::StringArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch

@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Properties for instance_template.
-      class InstancTemplatPropert
+      class InstanceTemplateProperties
         include Comparable
 
         attr_reader :can_ip_forward
@@ -86,7 +86,7 @@ module Google
         # rubocop:enable Metrics/AbcSize
 
         def ==(other)
-          return false unless other.is_a? InstancTemplatPropert
+          return false unless other.is_a? InstanceTemplateProperties
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -95,7 +95,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancTemplatPropert
+          return false unless other.is_a? InstanceTemplateProperties
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -126,54 +126,62 @@ module Google
         end
       end
 
-      # Manages a InstancTemplatPropert nested object
+      # Manages a InstanceTemplateProperties nested object
       # Data is coming from the GCP API
-      class InstancTemplatPropertApi < InstancTemplatPropert
+      class InstanceTemplatePropertiesApi < InstanceTemplateProperties
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @can_ip_forward = Google::Compute::Property::Boolean.api_parse(args['canIpForward'])
           @description = Google::Compute::Property::String.api_parse(args['description'])
-          @disks = Google::Compute::Property::InstancTemplatDisksArray.api_parse(args['disks'])
-          @machine_type = Google::Compute::Property::MachiTypeNameRef.api_parse(args['machineType'])
+          @disks = Google::Compute::Property::InstanceTemplateDisksArray.api_parse(args['disks'])
+          @machine_type =
+            Google::Compute::Property::MachineTypeNameRef.api_parse(args['machineType'])
           @metadata = Google::Compute::Property::NameValues.api_parse(args['metadata'])
-          @guest_accelerators = Google::Compute::Property::InstaTemplGuestAccelArray.api_parse(
-            args['guestAccelerators']
-          )
-          @network_interfaces = Google::Compute::Property::InstaTemplNetwoInterArray.api_parse(
-            args['networkInterfaces']
-          )
+          @guest_accelerators =
+            Google::Compute::Property::InstanceTemplateGuestAcceleratorsArray.api_parse(
+              args['guestAccelerators']
+            )
+          @network_interfaces =
+            Google::Compute::Property::InstanceTemplateNetworkInterfacesArray.api_parse(
+              args['networkInterfaces']
+            )
           @scheduling =
-            Google::Compute::Property::InstancTemplatSchedul.api_parse(args['scheduling'])
+            Google::Compute::Property::InstanceTemplateScheduling.api_parse(args['scheduling'])
           @service_accounts =
-            Google::Compute::Property::InstaTemplServiAccouArray.api_parse(args['serviceAccounts'])
-          @tags = Google::Compute::Property::InstancTemplatTags.api_parse(args['tags'])
+            Google::Compute::Property::InstanceTemplateServiceAccountsArray.api_parse(
+              args['serviceAccounts']
+            )
+          @tags = Google::Compute::Property::InstanceTemplateTags.api_parse(args['tags'])
         end
         # rubocop:enable Metrics/MethodLength
       end
 
-      # Manages a InstancTemplatPropert nested object
+      # Manages a InstanceTemplateProperties nested object
       # Data is coming from the Chef catalog
-      class InstancTemplatPropertCatalog < InstancTemplatPropert
+      class InstanceTemplatePropertiesCatalog < InstanceTemplateProperties
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @can_ip_forward = Google::Compute::Property::Boolean.catalog_parse(args[:can_ip_forward])
           @description = Google::Compute::Property::String.catalog_parse(args[:description])
-          @disks = Google::Compute::Property::InstancTemplatDisksArray.catalog_parse(args[:disks])
+          @disks = Google::Compute::Property::InstanceTemplateDisksArray.catalog_parse(args[:disks])
           @machine_type =
-            Google::Compute::Property::MachiTypeNameRef.catalog_parse(args[:machine_type])
+            Google::Compute::Property::MachineTypeNameRef.catalog_parse(args[:machine_type])
           @metadata = Google::Compute::Property::NameValues.catalog_parse(args[:metadata])
-          @guest_accelerators = Google::Compute::Property::InstaTemplGuestAccelArray.catalog_parse(
-            args[:guest_accelerators]
-          )
-          @network_interfaces = Google::Compute::Property::InstaTemplNetwoInterArray.catalog_parse(
-            args[:network_interfaces]
-          )
+          @guest_accelerators =
+            Google::Compute::Property::InstanceTemplateGuestAcceleratorsArray.catalog_parse(
+              args[:guest_accelerators]
+            )
+          @network_interfaces =
+            Google::Compute::Property::InstanceTemplateNetworkInterfacesArray.catalog_parse(
+              args[:network_interfaces]
+            )
           @scheduling =
-            Google::Compute::Property::InstancTemplatSchedul.catalog_parse(args[:scheduling])
-          @service_accounts = Google::Compute::Property::InstaTemplServiAccouArray.catalog_parse(
-            args[:service_accounts]
-          )
-          @tags = Google::Compute::Property::InstancTemplatTags.catalog_parse(args[:tags])
+            Google::Compute::Property::InstanceTemplateScheduling.catalog_parse(args[:scheduling])
+          @service_accounts =
+            Google::Compute::Property::InstanceTemplateServiceAccountsArray.catalog_parse(
+              args[:service_accounts]
+            )
+          @tags = Google::Compute::Property::InstanceTemplateTags.catalog_parse(args[:tags])
         end
         # rubocop:enable Metrics/MethodLength
       end
@@ -181,23 +189,23 @@ module Google
 
     module Property
       # A class to manage input to Properties for instance_template.
-      class InstancTemplatPropert
+      class InstanceTemplateProperties
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancTemplatPropert.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateProperties.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatPropert
-          Data::InstancTemplatPropertCatalog.new(value)
+          return value if value.is_a? Data::InstanceTemplateProperties
+          Data::InstanceTemplatePropertiesCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatPropert
-          Data::InstancTemplatPropertApi.new(value)
+          return value if value.is_a? Data::InstanceTemplateProperties
+          Data::InstanceTemplatePropertiesApi.new(value)
         end
       end
     end

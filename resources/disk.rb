@@ -79,10 +79,10 @@ module Google
       property :type,
                [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
                coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce, desired_state: true
-      # users is Array of Google::Compute::Property::InstaSelfLinkRefArray
+      # users is Array of Google::Compute::Property::InstanceSelfLinkRefArray
       property :users,
                Array,
-               coerce: ::Google::Compute::Property::InstaSelfLinkRefArray.coerce,
+               coerce: ::Google::Compute::Property::InstanceSelfLinkRefArray.coerce,
                desired_state: true
       property :source_image,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
@@ -90,19 +90,22 @@ module Google
                [String, ::Google::Compute::Data::ZoneNameRef],
                coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
       property :source_image_encryption_key,
-               [Hash, ::Google::Compute::Data::DiskSourImagEncrKey],
-               coerce: ::Google::Compute::Property::DiskSourImagEncrKey.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::DiskSourceImageEncryptionKey],
+               coerce: ::Google::Compute::Property::DiskSourceImageEncryptionKey.coerce,
+               desired_state: true
       property :source_image_id,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :disk_encryption_key,
-               [Hash, ::Google::Compute::Data::DiskDiskEncryKey],
-               coerce: ::Google::Compute::Property::DiskDiskEncryKey.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::DiskDiskEncryptionKey],
+               coerce: ::Google::Compute::Property::DiskDiskEncryptionKey.coerce,
+               desired_state: true
       property :source_snapshot,
-               [String, ::Google::Compute::Data::SnapsSelfLinkRef],
-               coerce: ::Google::Compute::Property::SnapsSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::SnapshotSelfLinkRef],
+               coerce: ::Google::Compute::Property::SnapshotSelfLinkRef.coerce, desired_state: true
       property :source_snapshot_encryption_key,
-               [Hash, ::Google::Compute::Data::DiskSourSnapEncrKey],
-               coerce: ::Google::Compute::Property::DiskSourSnapEncrKey.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::DiskSourceSnapshotEncryptionKey],
+               coerce: ::Google::Compute::Property::DiskSourceSnapshotEncryptionKey.coerce,
+               desired_state: true
       property :source_snapshot_id,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
@@ -149,7 +152,7 @@ module Google
           @current_resource.type =
             ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(fetch['type'])
           @current_resource.users =
-            ::Google::Compute::Property::InstaSelfLinkRefArray.api_parse(fetch['users'])
+            ::Google::Compute::Property::InstanceSelfLinkRefArray.api_parse(fetch['users'])
           @new_resource.__fetched = fetch
 
           update

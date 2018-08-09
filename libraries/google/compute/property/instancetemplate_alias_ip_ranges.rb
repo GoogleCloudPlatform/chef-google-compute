@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for AliasIpRanges for instance_template.
-      class InstTempAliaIpRang
+      class InstanceTemplateAliasIpRanges
         include Comparable
 
         attr_reader :ip_cidr_range
@@ -51,7 +51,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstTempAliaIpRang
+          return false unless other.is_a? InstanceTemplateAliasIpRanges
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -60,7 +60,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstTempAliaIpRang
+          return false unless other.is_a? InstanceTemplateAliasIpRanges
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -83,9 +83,9 @@ module Google
         end
       end
 
-      # Manages a InstTempAliaIpRang nested object
+      # Manages a InstanceTemplateAliasIpRanges nested object
       # Data is coming from the GCP API
-      class InstTempAliaIpRangApi < InstTempAliaIpRang
+      class InstanceTemplateAliasIpRangesApi < InstanceTemplateAliasIpRanges
         def initialize(args)
           @ip_cidr_range = Google::Compute::Property::String.api_parse(args['ipCidrRange'])
           @subnetwork_range_name =
@@ -93,9 +93,9 @@ module Google
         end
       end
 
-      # Manages a InstTempAliaIpRang nested object
+      # Manages a InstanceTemplateAliasIpRanges nested object
       # Data is coming from the Chef catalog
-      class InstTempAliaIpRangCatalog < InstTempAliaIpRang
+      class InstanceTemplateAliasIpRangesCatalog < InstanceTemplateAliasIpRanges
         def initialize(args)
           @ip_cidr_range = Google::Compute::Property::String.catalog_parse(args[:ip_cidr_range])
           @subnetwork_range_name =
@@ -106,46 +106,46 @@ module Google
 
     module Property
       # A class to manage input to AliasIpRanges for instance_template.
-      class InstTempAliaIpRang
+      class InstanceTemplateAliasIpRanges
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstTempAliaIpRang.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateAliasIpRanges.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstTempAliaIpRang
-          Data::InstTempAliaIpRangCatalog.new(value)
+          return value if value.is_a? Data::InstanceTemplateAliasIpRanges
+          Data::InstanceTemplateAliasIpRangesCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstTempAliaIpRang
-          Data::InstTempAliaIpRangApi.new(value)
+          return value if value.is_a? Data::InstanceTemplateAliasIpRanges
+          Data::InstanceTemplateAliasIpRangesApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class InstTempAliaIpRangArray < Google::Compute::Property::Array
+      class InstanceTemplateAliasIpRangesArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstTempAliaIpRangArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateAliasIpRangesArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return InstTempAliaIpRang.catalog_parse(value) \
+          return InstanceTemplateAliasIpRanges.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstTempAliaIpRang.catalog_parse(v) }
+          value.map { |v| InstanceTemplateAliasIpRanges.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return InstTempAliaIpRang.api_parse(value) \
+          return InstanceTemplateAliasIpRanges.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstTempAliaIpRang.api_parse(v) }
+          value.map { |v| InstanceTemplateAliasIpRanges.api_parse(v) }
         end
       end
     end

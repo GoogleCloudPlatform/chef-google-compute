@@ -30,11 +30,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from instance_group
-      class InstGrouSelfLinkRef
+      class InstanceGroupSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? InstGrouSelfLinkRef
+          return false unless other.is_a? InstanceGroupSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -52,7 +52,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class InstGrouSelfLinkRefCatalog < InstGrouSelfLinkRef
+      class InstanceGroupSelfLinkRefCatalog < InstanceGroupSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -81,7 +81,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class InstGrouSelfLinkRefApi < InstGrouSelfLinkRef
+      class InstanceGroupSelfLinkRefApi < InstanceGroupSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -100,9 +100,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a instance_group
-      class InstGrouSelfLinkRef
+      class InstanceGroupSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstGrouSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceGroupSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -112,15 +112,15 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstGrouSelfLinkRef
-          Data::InstGrouSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::InstanceGroupSelfLinkRef
+          Data::InstanceGroupSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstGrouSelfLinkRef
-          Data::InstGrouSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::InstanceGroupSelfLinkRef
+          Data::InstanceGroupSelfLinkRefApi.new(value)
         end
       end
     end

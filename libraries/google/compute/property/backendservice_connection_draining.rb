@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for ConnectionDraining for backend_service.
-      class BackeServiConneDrain
+      class BackendServiceConnectionDraining
         include Comparable
 
         attr_reader :draining_timeout_sec
@@ -47,7 +47,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? BackeServiConneDrain
+          return false unless other.is_a? BackendServiceConnectionDraining
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -56,7 +56,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? BackeServiConneDrain
+          return false unless other.is_a? BackendServiceConnectionDraining
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -78,18 +78,18 @@ module Google
         end
       end
 
-      # Manages a BackeServiConneDrain nested object
+      # Manages a BackendServiceConnectionDraining nested object
       # Data is coming from the GCP API
-      class BackeServiConneDrainApi < BackeServiConneDrain
+      class BackendServiceConnectionDrainingApi < BackendServiceConnectionDraining
         def initialize(args)
           @draining_timeout_sec =
             Google::Compute::Property::Integer.api_parse(args['drainingTimeoutSec'])
         end
       end
 
-      # Manages a BackeServiConneDrain nested object
+      # Manages a BackendServiceConnectionDraining nested object
       # Data is coming from the Chef catalog
-      class BackeServiConneDrainCatalog < BackeServiConneDrain
+      class BackendServiceConnectionDrainingCatalog < BackendServiceConnectionDraining
         def initialize(args)
           @draining_timeout_sec =
             Google::Compute::Property::Integer.catalog_parse(args[:draining_timeout_sec])
@@ -99,23 +99,23 @@ module Google
 
     module Property
       # A class to manage input to ConnectionDraining for backend_service.
-      class BackeServiConneDrain
+      class BackendServiceConnectionDraining
         def self.coerce
-          ->(x) { ::Google::Compute::Property::BackeServiConneDrain.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::BackendServiceConnectionDraining.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::BackeServiConneDrain
-          Data::BackeServiConneDrainCatalog.new(value)
+          return value if value.is_a? Data::BackendServiceConnectionDraining
+          Data::BackendServiceConnectionDrainingCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::BackeServiConneDrain
-          Data::BackeServiConneDrainApi.new(value)
+          return value if value.is_a? Data::BackendServiceConnectionDraining
+          Data::BackendServiceConnectionDrainingApi.new(value)
         end
       end
     end

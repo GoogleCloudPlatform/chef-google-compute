@@ -63,8 +63,8 @@ module Google
                equal_to: %w[IPV4 IPV6],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :region,
-               [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::RegionSelfLinkRef],
+               coerce: ::Google::Compute::Property::RegionSelfLinkRef.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -103,7 +103,7 @@ module Google
           @current_resource.ip_version =
             ::Google::Compute::Property::Enum.api_parse(fetch['ipVersion'])
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
+            ::Google::Compute::Property::RegionSelfLinkRef.api_parse(fetch['region'])
           @new_resource.__fetched = fetch
 
           update

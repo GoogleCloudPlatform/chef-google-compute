@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for AccessConfigs for instance.
-      class InstancAccessConfigs
+      class InstanceAccessConfigs
         include Comparable
 
         attr_reader :name
@@ -54,7 +54,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstancAccessConfigs
+          return false unless other.is_a? InstanceAccessConfigs
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -63,7 +63,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancAccessConfigs
+          return false unless other.is_a? InstanceAccessConfigs
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -87,9 +87,9 @@ module Google
         end
       end
 
-      # Manages a InstancAccessConfigs nested object
+      # Manages a InstanceAccessConfigs nested object
       # Data is coming from the GCP API
-      class InstancAccessConfigsApi < InstancAccessConfigs
+      class InstanceAccessConfigsApi < InstanceAccessConfigs
         def initialize(args)
           @name = Google::Compute::Property::String.api_parse(args['name'])
           @nat_ip = Google::Compute::Property::AddressAddressRef.api_parse(args['natIP'])
@@ -97,9 +97,9 @@ module Google
         end
       end
 
-      # Manages a InstancAccessConfigs nested object
+      # Manages a InstanceAccessConfigs nested object
       # Data is coming from the Chef catalog
-      class InstancAccessConfigsCatalog < InstancAccessConfigs
+      class InstanceAccessConfigsCatalog < InstanceAccessConfigs
         def initialize(args)
           @name = Google::Compute::Property::String.catalog_parse(args[:name])
           @nat_ip = Google::Compute::Property::AddressAddressRef.catalog_parse(args[:nat_ip])
@@ -110,46 +110,46 @@ module Google
 
     module Property
       # A class to manage input to AccessConfigs for instance.
-      class InstancAccessConfigs
+      class InstanceAccessConfigs
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancAccessConfigs.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceAccessConfigs.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancAccessConfigs
-          Data::InstancAccessConfigsCatalog.new(value)
+          return value if value.is_a? Data::InstanceAccessConfigs
+          Data::InstanceAccessConfigsCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancAccessConfigs
-          Data::InstancAccessConfigsApi.new(value)
+          return value if value.is_a? Data::InstanceAccessConfigs
+          Data::InstanceAccessConfigsApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class InstancAccessConfigsArray < Google::Compute::Property::Array
+      class InstanceAccessConfigsArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancAccessConfigsArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceAccessConfigsArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return InstancAccessConfigs.catalog_parse(value) \
+          return InstanceAccessConfigs.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstancAccessConfigs.catalog_parse(v) }
+          value.map { |v| InstanceAccessConfigs.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return InstancAccessConfigs.api_parse(value) \
+          return InstanceAccessConfigs.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstancAccessConfigs.api_parse(v) }
+          value.map { |v| InstanceAccessConfigs.api_parse(v) }
         end
       end
     end

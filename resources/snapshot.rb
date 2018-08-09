@@ -64,10 +64,10 @@ module Google
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :storage_bytes,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      # licenses is Array of Google::Compute::Property::LicenSelfLinkRefArray
+      # licenses is Array of Google::Compute::Property::LicenseSelfLinkRefArray
       property :licenses,
                Array,
-               coerce: ::Google::Compute::Property::LicenSelfLinkRefArray.coerce,
+               coerce: ::Google::Compute::Property::LicenseSelfLinkRefArray.coerce,
                desired_state: true
       # labels is Array of Google::Compute::Property::StringArray
       property :labels,
@@ -79,11 +79,13 @@ module Google
                [String, ::Google::Compute::Data::ZoneNameRef],
                coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
       property :snapshot_encryption_key,
-               [Hash, ::Google::Compute::Data::SnapsSnapsEncryKey],
-               coerce: ::Google::Compute::Property::SnapsSnapsEncryKey.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::SnapshotSnapshotEncryptionKey],
+               coerce: ::Google::Compute::Property::SnapshotSnapshotEncryptionKey.coerce,
+               desired_state: true
       property :source_disk_encryption_key,
-               [Hash, ::Google::Compute::Data::SnapSourDiskEncrKey],
-               coerce: ::Google::Compute::Property::SnapSourDiskEncrKey.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::SnapshotSourceDiskEncryptionKey],
+               coerce: ::Google::Compute::Property::SnapshotSourceDiskEncryptionKey.coerce,
+               desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -121,7 +123,7 @@ module Google
           @current_resource.storage_bytes =
             ::Google::Compute::Property::Integer.api_parse(fetch['storageBytes'])
           @current_resource.licenses =
-            ::Google::Compute::Property::LicenSelfLinkRefArray.api_parse(fetch['licenses'])
+            ::Google::Compute::Property::LicenseSelfLinkRefArray.api_parse(fetch['licenses'])
           @current_resource.labels =
             ::Google::Compute::Property::StringArray.api_parse(fetch['labels'])
           @new_resource.__fetched = fetch

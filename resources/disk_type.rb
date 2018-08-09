@@ -50,8 +50,8 @@ module Google
       property :default_disk_size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :_deprecated,
-               [Hash, ::Google::Compute::Data::DiskTypeDepreca],
-               coerce: ::Google::Compute::Property::DiskTypeDepreca.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::DiskTypeDeprecated],
+               coerce: ::Google::Compute::Property::DiskTypeDeprecated.coerce, desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :id,
@@ -101,7 +101,7 @@ module Google
           @current_resource.default_disk_size_gb =
             ::Google::Compute::Property::Integer.api_parse(fetch['defaultDiskSizeGb'])
           @current_resource._deprecated =
-            ::Google::Compute::Property::DiskTypeDepreca.api_parse(fetch['deprecated'])
+            ::Google::Compute::Property::DiskTypeDeprecated.api_parse(fetch['deprecated'])
           @current_resource.description =
             ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
