@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Scheduling for instance_template.
-      class InstancTemplatSchedul
+      class InstanceTemplateScheduling
         include Comparable
 
         attr_reader :automatic_restart
@@ -53,7 +53,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstancTemplatSchedul
+          return false unless other.is_a? InstanceTemplateScheduling
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -62,7 +62,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancTemplatSchedul
+          return false unless other.is_a? InstanceTemplateScheduling
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -86,9 +86,9 @@ module Google
         end
       end
 
-      # Manages a InstancTemplatSchedul nested object
+      # Manages a InstanceTemplateScheduling nested object
       # Data is coming from the GCP API
-      class InstancTemplatSchedulApi < InstancTemplatSchedul
+      class InstanceTemplateSchedulingApi < InstanceTemplateScheduling
         def initialize(args)
           @automatic_restart =
             Google::Compute::Property::Boolean.api_parse(args['automaticRestart'])
@@ -98,9 +98,9 @@ module Google
         end
       end
 
-      # Manages a InstancTemplatSchedul nested object
+      # Manages a InstanceTemplateScheduling nested object
       # Data is coming from the Chef catalog
-      class InstancTemplatSchedulCatalog < InstancTemplatSchedul
+      class InstanceTemplateSchedulingCatalog < InstanceTemplateScheduling
         def initialize(args)
           @automatic_restart =
             Google::Compute::Property::Boolean.catalog_parse(args[:automatic_restart])
@@ -113,23 +113,23 @@ module Google
 
     module Property
       # A class to manage input to Scheduling for instance_template.
-      class InstancTemplatSchedul
+      class InstanceTemplateScheduling
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancTemplatSchedul.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateScheduling.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatSchedul
-          Data::InstancTemplatSchedulCatalog.new(value)
+          return value if value.is_a? Data::InstanceTemplateScheduling
+          Data::InstanceTemplateSchedulingCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatSchedul
-          Data::InstancTemplatSchedulApi.new(value)
+          return value if value.is_a? Data::InstanceTemplateScheduling
+          Data::InstanceTemplateSchedulingApi.new(value)
         end
       end
     end

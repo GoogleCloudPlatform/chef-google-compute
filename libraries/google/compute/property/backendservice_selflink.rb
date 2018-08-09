@@ -30,11 +30,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from backend_service
-      class BackServSelfLinkRef
+      class BackendServiceSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? BackServSelfLinkRef
+          return false unless other.is_a? BackendServiceSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -52,7 +52,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class BackServSelfLinkRefCatalog < BackServSelfLinkRef
+      class BackendServiceSelfLinkRefCatalog < BackendServiceSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -81,7 +81,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class BackServSelfLinkRefApi < BackServSelfLinkRef
+      class BackendServiceSelfLinkRefApi < BackendServiceSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -100,9 +100,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a backend_service
-      class BackServSelfLinkRef
+      class BackendServiceSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::BackServSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::BackendServiceSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -112,15 +112,15 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::BackServSelfLinkRef
-          Data::BackServSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::BackendServiceSelfLinkRef
+          Data::BackendServiceSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::BackServSelfLinkRef
-          Data::BackServSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::BackendServiceSelfLinkRef
+          Data::BackendServiceSelfLinkRefApi.new(value)
         end
       end
     end

@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Tags for instance_template.
-      class InstancTemplatTags
+      class InstanceTemplateTags
         include Comparable
 
         attr_reader :fingerprint
@@ -50,7 +50,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstancTemplatTags
+          return false unless other.is_a? InstanceTemplateTags
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -59,7 +59,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancTemplatTags
+          return false unless other.is_a? InstanceTemplateTags
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -82,18 +82,18 @@ module Google
         end
       end
 
-      # Manages a InstancTemplatTags nested object
+      # Manages a InstanceTemplateTags nested object
       # Data is coming from the GCP API
-      class InstancTemplatTagsApi < InstancTemplatTags
+      class InstanceTemplateTagsApi < InstanceTemplateTags
         def initialize(args)
           @fingerprint = Google::Compute::Property::String.api_parse(args['fingerprint'])
           @items = Google::Compute::Property::StringArray.api_parse(args['items'])
         end
       end
 
-      # Manages a InstancTemplatTags nested object
+      # Manages a InstanceTemplateTags nested object
       # Data is coming from the Chef catalog
-      class InstancTemplatTagsCatalog < InstancTemplatTags
+      class InstanceTemplateTagsCatalog < InstanceTemplateTags
         def initialize(args)
           @fingerprint = Google::Compute::Property::String.catalog_parse(args[:fingerprint])
           @items = Google::Compute::Property::StringArray.catalog_parse(args[:items])
@@ -103,23 +103,23 @@ module Google
 
     module Property
       # A class to manage input to Tags for instance_template.
-      class InstancTemplatTags
+      class InstanceTemplateTags
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancTemplatTags.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateTags.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatTags
-          Data::InstancTemplatTagsCatalog.new(value)
+          return value if value.is_a? Data::InstanceTemplateTags
+          Data::InstanceTemplateTagsCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatTags
-          Data::InstancTemplatTagsApi.new(value)
+          return value if value.is_a? Data::InstanceTemplateTags
+          Data::InstanceTemplateTagsApi.new(value)
         end
       end
     end

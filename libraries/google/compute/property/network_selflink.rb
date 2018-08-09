@@ -30,11 +30,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from network
-      class NetwoSelfLinkRef
+      class NetworkSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? NetwoSelfLinkRef
+          return false unless other.is_a? NetworkSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -52,7 +52,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class NetwoSelfLinkRefCatalog < NetwoSelfLinkRef
+      class NetworkSelfLinkRefCatalog < NetworkSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -81,7 +81,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class NetwoSelfLinkRefApi < NetwoSelfLinkRef
+      class NetworkSelfLinkRefApi < NetworkSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -100,9 +100,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a network
-      class NetwoSelfLinkRef
+      class NetworkSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::NetwoSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::NetworkSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -112,15 +112,15 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::NetwoSelfLinkRef
-          Data::NetwoSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::NetworkSelfLinkRef
+          Data::NetworkSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::NetwoSelfLinkRef
-          Data::NetwoSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::NetworkSelfLinkRef
+          Data::NetworkSelfLinkRefApi.new(value)
         end
       end
     end

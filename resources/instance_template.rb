@@ -78,8 +78,8 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :properties,
-               [Hash, ::Google::Compute::Data::InstancTemplatPropert],
-               coerce: ::Google::Compute::Property::InstancTemplatPropert.coerce,
+               [Hash, ::Google::Compute::Data::InstanceTemplateProperties],
+               coerce: ::Google::Compute::Property::InstanceTemplateProperties.coerce,
                desired_state: true
 
       property :credential, String, desired_state: false, required: true
@@ -115,7 +115,7 @@ module Google
           @current_resource.it_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.properties =
-            ::Google::Compute::Property::InstancTemplatPropert.api_parse(fetch['properties'])
+            ::Google::Compute::Property::InstanceTemplateProperties.api_parse(fetch['properties'])
           @new_resource.__fetched = fetch
 
           update

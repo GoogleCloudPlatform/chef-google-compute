@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Backends for backend_service.
-      class BackendServiceBackend
+      class BackendServiceBackends
         include Comparable
 
         attr_reader :balancing_mode
@@ -72,7 +72,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? BackendServiceBackend
+          return false unless other.is_a? BackendServiceBackends
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -81,7 +81,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? BackendServiceBackend
+          return false unless other.is_a? BackendServiceBackends
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -111,15 +111,15 @@ module Google
         end
       end
 
-      # Manages a BackendServiceBackend nested object
+      # Manages a BackendServiceBackends nested object
       # Data is coming from the GCP API
-      class BackendServiceBackendApi < BackendServiceBackend
+      class BackendServiceBackendsApi < BackendServiceBackends
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @balancing_mode = Google::Compute::Property::Enum.api_parse(args['balancingMode'])
           @capacity_scaler = Google::Compute::Property::Double.api_parse(args['capacityScaler'])
           @description = Google::Compute::Property::String.api_parse(args['description'])
-          @group = Google::Compute::Property::InstGrouSelfLinkRef.api_parse(args['group'])
+          @group = Google::Compute::Property::InstanceGroupSelfLinkRef.api_parse(args['group'])
           @max_connections = Google::Compute::Property::Integer.api_parse(args['maxConnections'])
           @max_connections_per_instance =
             Google::Compute::Property::Integer.api_parse(args['maxConnectionsPerInstance'])
@@ -131,15 +131,15 @@ module Google
         # rubocop:enable Metrics/MethodLength
       end
 
-      # Manages a BackendServiceBackend nested object
+      # Manages a BackendServiceBackends nested object
       # Data is coming from the Chef catalog
-      class BackendServiceBackendCatalog < BackendServiceBackend
+      class BackendServiceBackendsCatalog < BackendServiceBackends
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @balancing_mode = Google::Compute::Property::Enum.catalog_parse(args[:balancing_mode])
           @capacity_scaler = Google::Compute::Property::Double.catalog_parse(args[:capacity_scaler])
           @description = Google::Compute::Property::String.catalog_parse(args[:description])
-          @group = Google::Compute::Property::InstGrouSelfLinkRef.catalog_parse(args[:group])
+          @group = Google::Compute::Property::InstanceGroupSelfLinkRef.catalog_parse(args[:group])
           @max_connections =
             Google::Compute::Property::Integer.catalog_parse(args[:max_connections])
           @max_connections_per_instance =
@@ -155,46 +155,46 @@ module Google
 
     module Property
       # A class to manage input to Backends for backend_service.
-      class BackendServiceBackend
+      class BackendServiceBackends
         def self.coerce
-          ->(x) { ::Google::Compute::Property::BackendServiceBackend.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::BackendServiceBackends.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::BackendServiceBackend
-          Data::BackendServiceBackendCatalog.new(value)
+          return value if value.is_a? Data::BackendServiceBackends
+          Data::BackendServiceBackendsCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::BackendServiceBackend
-          Data::BackendServiceBackendApi.new(value)
+          return value if value.is_a? Data::BackendServiceBackends
+          Data::BackendServiceBackendsApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class BackendServiceBackendArray < Google::Compute::Property::Array
+      class BackendServiceBackendsArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::BackendServiceBackendArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::BackendServiceBackendsArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return BackendServiceBackend.catalog_parse(value) \
+          return BackendServiceBackends.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| BackendServiceBackend.catalog_parse(v) }
+          value.map { |v| BackendServiceBackends.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return BackendServiceBackend.api_parse(value) \
+          return BackendServiceBackends.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| BackendServiceBackend.api_parse(v) }
+          value.map { |v| BackendServiceBackends.api_parse(v) }
         end
       end
     end

@@ -31,11 +31,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from ssl_certificate
-      class SslCertSelfLinkRef
+      class SslCertificateSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? SslCertSelfLinkRef
+          return false unless other.is_a? SslCertificateSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -53,7 +53,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class SslCertSelfLinkRefCatalog < SslCertSelfLinkRef
+      class SslCertificateSelfLinkRefCatalog < SslCertificateSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -82,7 +82,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class SslCertSelfLinkRefApi < SslCertSelfLinkRef
+      class SslCertificateSelfLinkRefApi < SslCertificateSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -101,9 +101,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a ssl_certificate
-      class SslCertSelfLinkRef
+      class SslCertificateSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::SslCertSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::SslCertificateSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -113,38 +113,38 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::SslCertSelfLinkRef
-          Data::SslCertSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::SslCertificateSelfLinkRef
+          Data::SslCertificateSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::SslCertSelfLinkRef
-          Data::SslCertSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::SslCertificateSelfLinkRef
+          Data::SslCertificateSelfLinkRefApi.new(value)
         end
       end
 
-      # A Chef property that holds an Array of SslCertSelfLinkRef
-      class SslCertSelfLinkRefArray < Google::Compute::Property::Array
+      # A Chef property that holds an Array of SslCertificateSelfLinkRef
+      class SslCertificateSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::SslCertSelfLinkRefArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::SslCertificateSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return SslCertSelfLinkRef.catalog_parse(value) \
+          return SslCertificateSelfLinkRef.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| SslCertSelfLinkRef.catalog_parse(v) }
+          value.map { |v| SslCertificateSelfLinkRef.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return SslCertSelfLinkRef.api_parse(value) \
+          return SslCertificateSelfLinkRef.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| SslCertSelfLinkRef.api_parse(v) }
+          value.map { |v| SslCertificateSelfLinkRef.api_parse(v) }
         end
       end
     end

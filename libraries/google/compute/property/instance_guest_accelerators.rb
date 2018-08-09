@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for GuestAccelerators for instance.
-      class InstancGuestAcceler
+      class InstanceGuestAccelerators
         include Comparable
 
         attr_reader :accelerator_count
@@ -51,7 +51,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstancGuestAcceler
+          return false unless other.is_a? InstanceGuestAccelerators
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -60,7 +60,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancGuestAcceler
+          return false unless other.is_a? InstanceGuestAccelerators
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -83,9 +83,9 @@ module Google
         end
       end
 
-      # Manages a InstancGuestAcceler nested object
+      # Manages a InstanceGuestAccelerators nested object
       # Data is coming from the GCP API
-      class InstancGuestAccelerApi < InstancGuestAcceler
+      class InstanceGuestAcceleratorsApi < InstanceGuestAccelerators
         def initialize(args)
           @accelerator_count =
             Google::Compute::Property::Integer.api_parse(args['acceleratorCount'])
@@ -93,9 +93,9 @@ module Google
         end
       end
 
-      # Manages a InstancGuestAcceler nested object
+      # Manages a InstanceGuestAccelerators nested object
       # Data is coming from the Chef catalog
-      class InstancGuestAccelerCatalog < InstancGuestAcceler
+      class InstanceGuestAcceleratorsCatalog < InstanceGuestAccelerators
         def initialize(args)
           @accelerator_count =
             Google::Compute::Property::Integer.catalog_parse(args[:accelerator_count])
@@ -107,46 +107,46 @@ module Google
 
     module Property
       # A class to manage input to GuestAccelerators for instance.
-      class InstancGuestAcceler
+      class InstanceGuestAccelerators
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancGuestAcceler.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceGuestAccelerators.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancGuestAcceler
-          Data::InstancGuestAccelerCatalog.new(value)
+          return value if value.is_a? Data::InstanceGuestAccelerators
+          Data::InstanceGuestAcceleratorsCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancGuestAcceler
-          Data::InstancGuestAccelerApi.new(value)
+          return value if value.is_a? Data::InstanceGuestAccelerators
+          Data::InstanceGuestAcceleratorsApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class InstancGuestAccelerArray < Google::Compute::Property::Array
+      class InstanceGuestAcceleratorsArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancGuestAccelerArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceGuestAcceleratorsArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return InstancGuestAcceler.catalog_parse(value) \
+          return InstanceGuestAccelerators.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstancGuestAcceler.catalog_parse(v) }
+          value.map { |v| InstanceGuestAccelerators.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return InstancGuestAcceler.api_parse(value) \
+          return InstanceGuestAccelerators.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstancGuestAcceler.api_parse(v) }
+          value.map { |v| InstanceGuestAccelerators.api_parse(v) }
         end
       end
     end

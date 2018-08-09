@@ -55,8 +55,8 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :network,
-               [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::NetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::NetworkSelfLinkRef.coerce, desired_state: true
       property :priority,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       # tags is Array of Google::Compute::Property::StringArray

@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Deprecated for machine_type.
-      class MachineTypeDepreca
+      class MachineTypeDeprecated
         include Comparable
 
         attr_reader :deleted
@@ -59,7 +59,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? MachineTypeDepreca
+          return false unless other.is_a? MachineTypeDeprecated
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -68,7 +68,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? MachineTypeDepreca
+          return false unless other.is_a? MachineTypeDeprecated
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -94,9 +94,9 @@ module Google
         end
       end
 
-      # Manages a MachineTypeDepreca nested object
+      # Manages a MachineTypeDeprecated nested object
       # Data is coming from the GCP API
-      class MachineTypeDeprecaApi < MachineTypeDepreca
+      class MachineTypeDeprecatedApi < MachineTypeDeprecated
         def initialize(args)
           @deleted = Google::Compute::Property::Time.api_parse(args['deleted'])
           @deprecated = Google::Compute::Property::Time.api_parse(args['deprecated'])
@@ -106,9 +106,9 @@ module Google
         end
       end
 
-      # Manages a MachineTypeDepreca nested object
+      # Manages a MachineTypeDeprecated nested object
       # Data is coming from the Chef catalog
-      class MachineTypeDeprecaCatalog < MachineTypeDepreca
+      class MachineTypeDeprecatedCatalog < MachineTypeDeprecated
         def initialize(args)
           @deleted = Google::Compute::Property::Time.catalog_parse(args[:deleted])
           @deprecated = Google::Compute::Property::Time.catalog_parse(args[:deprecated])
@@ -121,23 +121,23 @@ module Google
 
     module Property
       # A class to manage input to Deprecated for machine_type.
-      class MachineTypeDepreca
+      class MachineTypeDeprecated
         def self.coerce
-          ->(x) { ::Google::Compute::Property::MachineTypeDepreca.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::MachineTypeDeprecated.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::MachineTypeDepreca
-          Data::MachineTypeDeprecaCatalog.new(value)
+          return value if value.is_a? Data::MachineTypeDeprecated
+          Data::MachineTypeDeprecatedCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::MachineTypeDepreca
-          Data::MachineTypeDeprecaApi.new(value)
+          return value if value.is_a? Data::MachineTypeDeprecated
+          Data::MachineTypeDeprecatedApi.new(value)
         end
       end
     end

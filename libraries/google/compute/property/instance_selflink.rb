@@ -31,11 +31,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from instance
-      class InstaSelfLinkRef
+      class InstanceSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? InstaSelfLinkRef
+          return false unless other.is_a? InstanceSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -53,7 +53,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class InstaSelfLinkRefCatalog < InstaSelfLinkRef
+      class InstanceSelfLinkRefCatalog < InstanceSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -82,7 +82,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class InstaSelfLinkRefApi < InstaSelfLinkRef
+      class InstanceSelfLinkRefApi < InstanceSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -101,9 +101,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a instance
-      class InstaSelfLinkRef
+      class InstanceSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstaSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -113,38 +113,38 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstaSelfLinkRef
-          Data::InstaSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::InstanceSelfLinkRef
+          Data::InstanceSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstaSelfLinkRef
-          Data::InstaSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::InstanceSelfLinkRef
+          Data::InstanceSelfLinkRefApi.new(value)
         end
       end
 
-      # A Chef property that holds an Array of InstaSelfLinkRef
-      class InstaSelfLinkRefArray < Google::Compute::Property::Array
+      # A Chef property that holds an Array of InstanceSelfLinkRef
+      class InstanceSelfLinkRefArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstaSelfLinkRefArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceSelfLinkRefArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return InstaSelfLinkRef.catalog_parse(value) \
+          return InstanceSelfLinkRef.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstaSelfLinkRef.catalog_parse(v) }
+          value.map { |v| InstanceSelfLinkRef.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return InstaSelfLinkRef.api_parse(value) \
+          return InstanceSelfLinkRef.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstaSelfLinkRef.api_parse(v) }
+          value.map { |v| InstanceSelfLinkRef.api_parse(v) }
         end
       end
     end

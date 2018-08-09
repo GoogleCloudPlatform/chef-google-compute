@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for TcpHealthCheck for health_check.
-      class HealChecTcpHealChec
+      class HealthCheckTcpHealthCheck
         include Comparable
 
         attr_reader :request
@@ -59,7 +59,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? HealChecTcpHealChec
+          return false unless other.is_a? HealthCheckTcpHealthCheck
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -68,7 +68,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? HealChecTcpHealChec
+          return false unless other.is_a? HealthCheckTcpHealthCheck
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -94,9 +94,9 @@ module Google
         end
       end
 
-      # Manages a HealChecTcpHealChec nested object
+      # Manages a HealthCheckTcpHealthCheck nested object
       # Data is coming from the GCP API
-      class HealChecTcpHealChecApi < HealChecTcpHealChec
+      class HealthCheckTcpHealthCheckApi < HealthCheckTcpHealthCheck
         def initialize(args)
           @request = Google::Compute::Property::String.api_parse(args['request'])
           @response = Google::Compute::Property::String.api_parse(args['response'])
@@ -106,9 +106,9 @@ module Google
         end
       end
 
-      # Manages a HealChecTcpHealChec nested object
+      # Manages a HealthCheckTcpHealthCheck nested object
       # Data is coming from the Chef catalog
-      class HealChecTcpHealChecCatalog < HealChecTcpHealChec
+      class HealthCheckTcpHealthCheckCatalog < HealthCheckTcpHealthCheck
         def initialize(args)
           @request = Google::Compute::Property::String.catalog_parse(args[:request])
           @response = Google::Compute::Property::String.catalog_parse(args[:response])
@@ -121,23 +121,23 @@ module Google
 
     module Property
       # A class to manage input to TcpHealthCheck for health_check.
-      class HealChecTcpHealChec
+      class HealthCheckTcpHealthCheck
         def self.coerce
-          ->(x) { ::Google::Compute::Property::HealChecTcpHealChec.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::HealthCheckTcpHealthCheck.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::HealChecTcpHealChec
-          Data::HealChecTcpHealChecCatalog.new(value)
+          return value if value.is_a? Data::HealthCheckTcpHealthCheck
+          Data::HealthCheckTcpHealthCheckCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::HealChecTcpHealChec
-          Data::HealChecTcpHealChecApi.new(value)
+          return value if value.is_a? Data::HealthCheckTcpHealthCheck
+          Data::HealthCheckTcpHealthCheckApi.new(value)
         end
       end
     end

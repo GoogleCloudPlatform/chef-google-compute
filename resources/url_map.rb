@@ -53,8 +53,9 @@ module Google
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :default_service,
-               [String, ::Google::Compute::Data::BackServSelfLinkRef],
-               coerce: ::Google::Compute::Property::BackServSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::BackendServiceSelfLinkRef],
+               coerce: ::Google::Compute::Property::BackendServiceSelfLinkRef.coerce,
+               desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       # host_rules is Array of Google::Compute::Property::UrlMapHostRulesArray
@@ -67,10 +68,11 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # path_matchers is Array of Google::Compute::Property::UrlMapPathMatchArray
+      # path_matchers is Array of Google::Compute::Property::UrlMapPathMatchersArray
       property :path_matchers,
                Array,
-               coerce: ::Google::Compute::Property::UrlMapPathMatchArray.coerce, desired_state: true
+               coerce: ::Google::Compute::Property::UrlMapPathMatchersArray.coerce,
+               desired_state: true
       # tests is Array of Google::Compute::Property::UrlMapTestsArray
       property :tests,
                Array,
@@ -104,7 +106,9 @@ module Google
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.default_service =
-            ::Google::Compute::Property::BackServSelfLinkRef.api_parse(fetch['defaultService'])
+            ::Google::Compute::Property::BackendServiceSelfLinkRef.api_parse(
+              fetch['defaultService']
+            )
           @current_resource.description =
             ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.host_rules =
@@ -113,7 +117,7 @@ module Google
           @current_resource.um_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.path_matchers =
-            ::Google::Compute::Property::UrlMapPathMatchArray.api_parse(fetch['pathMatchers'])
+            ::Google::Compute::Property::UrlMapPathMatchersArray.api_parse(fetch['pathMatchers'])
           @current_resource.tests =
             ::Google::Compute::Property::UrlMapTestsArray.api_parse(fetch['tests'])
           @new_resource.__fetched = fetch

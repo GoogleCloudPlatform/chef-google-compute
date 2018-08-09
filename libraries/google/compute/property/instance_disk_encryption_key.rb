@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for DiskEncryptionKey for instance.
-      class InstaDiskEncryKey
+      class InstanceDiskEncryptionKey
         include Comparable
 
         attr_reader :raw_key
@@ -53,7 +53,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstaDiskEncryKey
+          return false unless other.is_a? InstanceDiskEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -62,7 +62,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstaDiskEncryKey
+          return false unless other.is_a? InstanceDiskEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -86,9 +86,9 @@ module Google
         end
       end
 
-      # Manages a InstaDiskEncryKey nested object
+      # Manages a InstanceDiskEncryptionKey nested object
       # Data is coming from the GCP API
-      class InstaDiskEncryKeyApi < InstaDiskEncryKey
+      class InstanceDiskEncryptionKeyApi < InstanceDiskEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.api_parse(args['rawKey'])
           @rsa_encrypted_key = Google::Compute::Property::String.api_parse(args['rsaEncryptedKey'])
@@ -96,9 +96,9 @@ module Google
         end
       end
 
-      # Manages a InstaDiskEncryKey nested object
+      # Manages a InstanceDiskEncryptionKey nested object
       # Data is coming from the Chef catalog
-      class InstaDiskEncryKeyCatalog < InstaDiskEncryKey
+      class InstanceDiskEncryptionKeyCatalog < InstanceDiskEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
           @rsa_encrypted_key =
@@ -110,23 +110,23 @@ module Google
 
     module Property
       # A class to manage input to DiskEncryptionKey for instance.
-      class InstaDiskEncryKey
+      class InstanceDiskEncryptionKey
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstaDiskEncryKey.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceDiskEncryptionKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstaDiskEncryKey
-          Data::InstaDiskEncryKeyCatalog.new(value)
+          return value if value.is_a? Data::InstanceDiskEncryptionKey
+          Data::InstanceDiskEncryptionKeyCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstaDiskEncryKey
-          Data::InstaDiskEncryKeyApi.new(value)
+          return value if value.is_a? Data::InstanceDiskEncryptionKey
+          Data::InstanceDiskEncryptionKeyApi.new(value)
         end
       end
     end

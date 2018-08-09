@@ -123,11 +123,12 @@ module Google
           @auto_delete = Google::Compute::Property::Boolean.api_parse(args['autoDelete'])
           @boot = Google::Compute::Property::Boolean.api_parse(args['boot'])
           @device_name = Google::Compute::Property::String.api_parse(args['deviceName'])
-          @disk_encryption_key =
-            Google::Compute::Property::InstaDiskEncryKey.api_parse(args['diskEncryptionKey'])
+          @disk_encryption_key = Google::Compute::Property::InstanceDiskEncryptionKey.api_parse(
+            args['diskEncryptionKey']
+          )
           @index = Google::Compute::Property::Integer.api_parse(args['index'])
           @initialize_params =
-            Google::Compute::Property::InstancInitialParams.api_parse(args['initializeParams'])
+            Google::Compute::Property::InstanceInitializeParams.api_parse(args['initializeParams'])
           @interface = Google::Compute::Property::Enum.api_parse(args['interface'])
           @mode = Google::Compute::Property::Enum.api_parse(args['mode'])
           @source = Google::Compute::Property::DiskSelfLinkRef.api_parse(args['source'])
@@ -144,11 +145,13 @@ module Google
           @auto_delete = Google::Compute::Property::Boolean.catalog_parse(args[:auto_delete])
           @boot = Google::Compute::Property::Boolean.catalog_parse(args[:boot])
           @device_name = Google::Compute::Property::String.catalog_parse(args[:device_name])
-          @disk_encryption_key =
-            Google::Compute::Property::InstaDiskEncryKey.catalog_parse(args[:disk_encryption_key])
+          @disk_encryption_key = Google::Compute::Property::InstanceDiskEncryptionKey.catalog_parse(
+            args[:disk_encryption_key]
+          )
           @index = Google::Compute::Property::Integer.catalog_parse(args[:index])
-          @initialize_params =
-            Google::Compute::Property::InstancInitialParams.catalog_parse(args[:initialize_params])
+          @initialize_params = Google::Compute::Property::InstanceInitializeParams.catalog_parse(
+            args[:initialize_params]
+          )
           @interface = Google::Compute::Property::Enum.catalog_parse(args[:interface])
           @mode = Google::Compute::Property::Enum.catalog_parse(args[:mode])
           @source = Google::Compute::Property::DiskSelfLinkRef.catalog_parse(args[:source])

@@ -60,20 +60,21 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # named_ports is Array of Google::Compute::Property::InstaGroupNamedPortsArray
+      # named_ports is Array of Google::Compute::Property::InstanceGroupNamedPortsArray
       property :named_ports,
                Array,
-               coerce: ::Google::Compute::Property::InstaGroupNamedPortsArray.coerce,
+               coerce: ::Google::Compute::Property::InstanceGroupNamedPortsArray.coerce,
                desired_state: true
       property :network,
-               [String, ::Google::Compute::Data::NetwoSelfLinkRef],
-               coerce: ::Google::Compute::Property::NetwoSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::NetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::NetworkSelfLinkRef.coerce, desired_state: true
       property :region,
-               [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::RegionSelfLinkRef],
+               coerce: ::Google::Compute::Property::RegionSelfLinkRef.coerce, desired_state: true
       property :subnetwork,
-               [String, ::Google::Compute::Data::SubneSelfLinkRef],
-               coerce: ::Google::Compute::Property::SubneSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::SubnetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::SubnetworkSelfLinkRef.coerce,
+               desired_state: true
       property :zone,
                [String, ::Google::Compute::Data::ZoneNameRef],
                coerce: ::Google::Compute::Property::ZoneNameRef.coerce, desired_state: true
@@ -111,13 +112,15 @@ module Google
           @current_resource.ig_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.named_ports =
-            ::Google::Compute::Property::InstaGroupNamedPortsArray.api_parse(fetch['namedPorts'])
+            ::Google::Compute::Property::InstanceGroupNamedPortsArray.api_parse(
+              fetch['namedPorts']
+            )
           @current_resource.network =
-            ::Google::Compute::Property::NetwoSelfLinkRef.api_parse(fetch['network'])
+            ::Google::Compute::Property::NetworkSelfLinkRef.api_parse(fetch['network'])
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
+            ::Google::Compute::Property::RegionSelfLinkRef.api_parse(fetch['region'])
           @current_resource.subnetwork =
-            ::Google::Compute::Property::SubneSelfLinkRef.api_parse(fetch['subnetwork'])
+            ::Google::Compute::Property::SubnetworkSelfLinkRef.api_parse(fetch['subnetwork'])
           @new_resource.__fetched = fetch
 
           update

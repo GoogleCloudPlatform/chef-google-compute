@@ -30,7 +30,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Disks for instance_template.
-      class InstancTemplatDisks
+      class InstanceTemplateDisks
         include Comparable
 
         attr_reader :auto_delete
@@ -75,7 +75,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? InstancTemplatDisks
+          return false unless other.is_a? InstanceTemplateDisks
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -84,7 +84,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? InstancTemplatDisks
+          return false unless other.is_a? InstanceTemplateDisks
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -115,19 +115,23 @@ module Google
         end
       end
 
-      # Manages a InstancTemplatDisks nested object
+      # Manages a InstanceTemplateDisks nested object
       # Data is coming from the GCP API
-      class InstancTemplatDisksApi < InstancTemplatDisks
+      class InstanceTemplateDisksApi < InstanceTemplateDisks
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @auto_delete = Google::Compute::Property::Boolean.api_parse(args['autoDelete'])
           @boot = Google::Compute::Property::Boolean.api_parse(args['boot'])
           @device_name = Google::Compute::Property::String.api_parse(args['deviceName'])
           @disk_encryption_key =
-            Google::Compute::Property::InstTempDiskEncrKey.api_parse(args['diskEncryptionKey'])
+            Google::Compute::Property::InstanceTemplateDiskEncryptionKey.api_parse(
+              args['diskEncryptionKey']
+            )
           @index = Google::Compute::Property::Integer.api_parse(args['index'])
           @initialize_params =
-            Google::Compute::Property::InstaTemplInitiParam.api_parse(args['initializeParams'])
+            Google::Compute::Property::InstanceTemplateInitializeParams.api_parse(
+              args['initializeParams']
+            )
           @interface = Google::Compute::Property::Enum.api_parse(args['interface'])
           @mode = Google::Compute::Property::Enum.api_parse(args['mode'])
           @source = Google::Compute::Property::DiskNameRef.api_parse(args['source'])
@@ -136,19 +140,23 @@ module Google
         # rubocop:enable Metrics/MethodLength
       end
 
-      # Manages a InstancTemplatDisks nested object
+      # Manages a InstanceTemplateDisks nested object
       # Data is coming from the Chef catalog
-      class InstancTemplatDisksCatalog < InstancTemplatDisks
+      class InstanceTemplateDisksCatalog < InstanceTemplateDisks
         # rubocop:disable Metrics/MethodLength
         def initialize(args)
           @auto_delete = Google::Compute::Property::Boolean.catalog_parse(args[:auto_delete])
           @boot = Google::Compute::Property::Boolean.catalog_parse(args[:boot])
           @device_name = Google::Compute::Property::String.catalog_parse(args[:device_name])
           @disk_encryption_key =
-            Google::Compute::Property::InstTempDiskEncrKey.catalog_parse(args[:disk_encryption_key])
+            Google::Compute::Property::InstanceTemplateDiskEncryptionKey.catalog_parse(
+              args[:disk_encryption_key]
+            )
           @index = Google::Compute::Property::Integer.catalog_parse(args[:index])
           @initialize_params =
-            Google::Compute::Property::InstaTemplInitiParam.catalog_parse(args[:initialize_params])
+            Google::Compute::Property::InstanceTemplateInitializeParams.catalog_parse(
+              args[:initialize_params]
+            )
           @interface = Google::Compute::Property::Enum.catalog_parse(args[:interface])
           @mode = Google::Compute::Property::Enum.catalog_parse(args[:mode])
           @source = Google::Compute::Property::DiskNameRef.catalog_parse(args[:source])
@@ -160,46 +168,46 @@ module Google
 
     module Property
       # A class to manage input to Disks for instance_template.
-      class InstancTemplatDisks
+      class InstanceTemplateDisks
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancTemplatDisks.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateDisks.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatDisks
-          Data::InstancTemplatDisksCatalog.new(value)
+          return value if value.is_a? Data::InstanceTemplateDisks
+          Data::InstanceTemplateDisksCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::InstancTemplatDisks
-          Data::InstancTemplatDisksApi.new(value)
+          return value if value.is_a? Data::InstanceTemplateDisks
+          Data::InstanceTemplateDisksApi.new(value)
         end
       end
 
       # A Chef property that holds an integer
-      class InstancTemplatDisksArray < Google::Compute::Property::Array
+      class InstanceTemplateDisksArray < Google::Compute::Property::Array
         def self.coerce
-          ->(x) { ::Google::Compute::Property::InstancTemplatDisksArray.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::InstanceTemplateDisksArray.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return InstancTemplatDisks.catalog_parse(value) \
+          return InstanceTemplateDisks.catalog_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstancTemplatDisks.catalog_parse(v) }
+          value.map { |v| InstanceTemplateDisks.catalog_parse(v) }
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return InstancTemplatDisks.api_parse(value) \
+          return InstanceTemplateDisks.api_parse(value) \
             unless value.is_a?(::Array)
-          value.map { |v| InstancTemplatDisks.api_parse(v) }
+          value.map { |v| InstanceTemplateDisks.api_parse(v) }
         end
       end
     end

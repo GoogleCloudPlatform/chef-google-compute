@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for Deprecated for disk_type.
-      class DiskTypeDepreca
+      class DiskTypeDeprecated
         include Comparable
 
         attr_reader :deleted
@@ -59,7 +59,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? DiskTypeDepreca
+          return false unless other.is_a? DiskTypeDeprecated
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -68,7 +68,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? DiskTypeDepreca
+          return false unless other.is_a? DiskTypeDeprecated
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -94,9 +94,9 @@ module Google
         end
       end
 
-      # Manages a DiskTypeDepreca nested object
+      # Manages a DiskTypeDeprecated nested object
       # Data is coming from the GCP API
-      class DiskTypeDeprecaApi < DiskTypeDepreca
+      class DiskTypeDeprecatedApi < DiskTypeDeprecated
         def initialize(args)
           @deleted = Google::Compute::Property::Time.api_parse(args['deleted'])
           @deprecated = Google::Compute::Property::Time.api_parse(args['deprecated'])
@@ -106,9 +106,9 @@ module Google
         end
       end
 
-      # Manages a DiskTypeDepreca nested object
+      # Manages a DiskTypeDeprecated nested object
       # Data is coming from the Chef catalog
-      class DiskTypeDeprecaCatalog < DiskTypeDepreca
+      class DiskTypeDeprecatedCatalog < DiskTypeDeprecated
         def initialize(args)
           @deleted = Google::Compute::Property::Time.catalog_parse(args[:deleted])
           @deprecated = Google::Compute::Property::Time.catalog_parse(args[:deprecated])
@@ -121,23 +121,23 @@ module Google
 
     module Property
       # A class to manage input to Deprecated for disk_type.
-      class DiskTypeDepreca
+      class DiskTypeDeprecated
         def self.coerce
-          ->(x) { ::Google::Compute::Property::DiskTypeDepreca.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::DiskTypeDeprecated.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::DiskTypeDepreca
-          Data::DiskTypeDeprecaCatalog.new(value)
+          return value if value.is_a? Data::DiskTypeDeprecated
+          Data::DiskTypeDeprecatedCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::DiskTypeDepreca
-          Data::DiskTypeDeprecaApi.new(value)
+          return value if value.is_a? Data::DiskTypeDeprecated
+          Data::DiskTypeDeprecatedApi.new(value)
         end
       end
     end

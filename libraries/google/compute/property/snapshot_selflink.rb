@@ -30,11 +30,11 @@ module Google
     module Data
       # Base class for ResourceRefs
       # Imports self_link from snapshot
-      class SnapsSelfLinkRef
+      class SnapshotSelfLinkRef
         include Comparable
 
         def ==(other)
-          return false unless other.is_a? SnapsSelfLinkRef
+          return false unless other.is_a? SnapshotSelfLinkRef
           return false if resource != other.resource
           true
         end
@@ -52,7 +52,7 @@ module Google
 
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
-      class SnapsSelfLinkRefCatalog < SnapsSelfLinkRef
+      class SnapshotSelfLinkRefCatalog < SnapshotSelfLinkRef
         def initialize(title)
           @title = title
         end
@@ -81,7 +81,7 @@ module Google
 
       # A class to manage a JSON blob from GCP API
       # Will immediately return value from JSON blob without changes
-      class SnapsSelfLinkRefApi < SnapsSelfLinkRef
+      class SnapshotSelfLinkRefApi < SnapshotSelfLinkRef
         attr_reader :resource
 
         def initialize(resource)
@@ -100,9 +100,9 @@ module Google
 
     module Property
       # A class to manage fetching self_link from a snapshot
-      class SnapsSelfLinkRef
+      class SnapshotSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::SnapsSelfLinkRef.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::SnapshotSelfLinkRef.catalog_parse(x) }
         end
 
         def catalog_parse(value)
@@ -112,15 +112,15 @@ module Google
 
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::SnapsSelfLinkRef
-          Data::SnapsSelfLinkRefCatalog.new(value)
+          return value if value.is_a? Data::SnapshotSelfLinkRef
+          Data::SnapshotSelfLinkRefCatalog.new(value)
         end
 
         # Used for fetched JSON values
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::SnapsSelfLinkRef
-          Data::SnapsSelfLinkRefApi.new(value)
+          return value if value.is_a? Data::SnapshotSelfLinkRef
+          Data::SnapshotSelfLinkRefApi.new(value)
         end
       end
     end

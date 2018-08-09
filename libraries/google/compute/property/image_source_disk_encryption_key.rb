@@ -29,7 +29,7 @@ module Google
   module Compute
     module Data
       # A class to manage data for SourceDiskEncryptionKey for image.
-      class ImagSourDiskEncrKey
+      class ImageSourceDiskEncryptionKey
         include Comparable
 
         attr_reader :raw_key
@@ -50,7 +50,7 @@ module Google
         end
 
         def ==(other)
-          return false unless other.is_a? ImagSourDiskEncrKey
+          return false unless other.is_a? ImageSourceDiskEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             return false if compare[:self] != compare[:other]
@@ -59,7 +59,7 @@ module Google
         end
 
         def <=>(other)
-          return false unless other.is_a? ImagSourDiskEncrKey
+          return false unless other.is_a? ImageSourceDiskEncryptionKey
           compare_fields(other).each do |compare|
             next if compare[:self].nil? || compare[:other].nil?
             result = compare[:self] <=> compare[:other]
@@ -82,18 +82,18 @@ module Google
         end
       end
 
-      # Manages a ImagSourDiskEncrKey nested object
+      # Manages a ImageSourceDiskEncryptionKey nested object
       # Data is coming from the GCP API
-      class ImagSourDiskEncrKeyApi < ImagSourDiskEncrKey
+      class ImageSourceDiskEncryptionKeyApi < ImageSourceDiskEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.api_parse(args['rawKey'])
           @sha256 = Google::Compute::Property::String.api_parse(args['sha256'])
         end
       end
 
-      # Manages a ImagSourDiskEncrKey nested object
+      # Manages a ImageSourceDiskEncryptionKey nested object
       # Data is coming from the Chef catalog
-      class ImagSourDiskEncrKeyCatalog < ImagSourDiskEncrKey
+      class ImageSourceDiskEncryptionKeyCatalog < ImageSourceDiskEncryptionKey
         def initialize(args)
           @raw_key = Google::Compute::Property::String.catalog_parse(args[:raw_key])
           @sha256 = Google::Compute::Property::String.catalog_parse(args[:sha256])
@@ -103,23 +103,23 @@ module Google
 
     module Property
       # A class to manage input to SourceDiskEncryptionKey for image.
-      class ImagSourDiskEncrKey
+      class ImageSourceDiskEncryptionKey
         def self.coerce
-          ->(x) { ::Google::Compute::Property::ImagSourDiskEncrKey.catalog_parse(x) }
+          ->(x) { ::Google::Compute::Property::ImageSourceDiskEncryptionKey.catalog_parse(x) }
         end
 
         # Used for parsing Chef catalog
         def self.catalog_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ImagSourDiskEncrKey
-          Data::ImagSourDiskEncrKeyCatalog.new(value)
+          return value if value.is_a? Data::ImageSourceDiskEncryptionKey
+          Data::ImageSourceDiskEncryptionKeyCatalog.new(value)
         end
 
         # Used for parsing GCP API responses
         def self.api_parse(value)
           return if value.nil?
-          return value if value.is_a? Data::ImagSourDiskEncrKey
-          Data::ImagSourDiskEncrKeyApi.new(value)
+          return value if value.is_a? Data::ImageSourceDiskEncryptionKey
+          Data::ImageSourceDiskEncryptionKeyApi.new(value)
         end
       end
     end

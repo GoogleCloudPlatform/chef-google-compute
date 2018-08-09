@@ -56,34 +56,37 @@ module Google
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :current_actions,
-               [Hash, ::Google::Compute::Data::InstGrouManaCurrActi],
-               coerce: ::Google::Compute::Property::InstGrouManaCurrActi.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::InstanceGroupManagerCurrentActions],
+               coerce: ::Google::Compute::Property::InstanceGroupManagerCurrentActions.coerce,
+               desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :instance_group,
-               [String, ::Google::Compute::Data::InstGrouSelfLinkRef],
-               coerce: ::Google::Compute::Property::InstGrouSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::InstanceGroupSelfLinkRef],
+               coerce: ::Google::Compute::Property::InstanceGroupSelfLinkRef.coerce,
+               desired_state: true
       property :instance_template,
-               [String, ::Google::Compute::Data::InstTempSelfLinkRef],
-               coerce: ::Google::Compute::Property::InstTempSelfLinkRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::InstanceTemplateSelfLinkRef],
+               coerce: ::Google::Compute::Property::InstanceTemplateSelfLinkRef.coerce,
+               desired_state: true
       property :igm_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      # named_ports is Array of Google::Compute::Property::InstGrouManaNamePortArray
+      # named_ports is Array of Google::Compute::Property::InstanceGroupManagerNamedPortsArray
       property :named_ports,
                Array,
-               coerce: ::Google::Compute::Property::InstGrouManaNamePortArray.coerce,
+               coerce: ::Google::Compute::Property::InstanceGroupManagerNamedPortsArray.coerce,
                desired_state: true
       property :region,
-               [String, ::Google::Compute::Data::RegioSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegioSelfLinkRef.coerce, desired_state: true
-      # target_pools is Array of Google::Compute::Property::TargPoolSelfLinkRefArray
+               [String, ::Google::Compute::Data::RegionSelfLinkRef],
+               coerce: ::Google::Compute::Property::RegionSelfLinkRef.coerce, desired_state: true
+      # target_pools is Array of Google::Compute::Property::TargetPoolSelfLinkRefArray
       property :target_pools,
                Array,
-               coerce: ::Google::Compute::Property::TargPoolSelfLinkRefArray.coerce,
+               coerce: ::Google::Compute::Property::TargetPoolSelfLinkRefArray.coerce,
                desired_state: true
       property :target_size,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
@@ -121,20 +124,30 @@ module Google
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.current_actions =
-            ::Google::Compute::Property::InstGrouManaCurrActi.api_parse(fetch['currentActions'])
+            ::Google::Compute::Property::InstanceGroupManagerCurrentActions.api_parse(
+              fetch['currentActions']
+            )
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.instance_group =
-            ::Google::Compute::Property::InstGrouSelfLinkRef.api_parse(fetch['instanceGroup'])
+            ::Google::Compute::Property::InstanceGroupSelfLinkRef.api_parse(
+              fetch['instanceGroup']
+            )
           @current_resource.instance_template =
-            ::Google::Compute::Property::InstTempSelfLinkRef.api_parse(fetch['instanceTemplate'])
+            ::Google::Compute::Property::InstanceTemplateSelfLinkRef.api_parse(
+              fetch['instanceTemplate']
+            )
           @current_resource.igm_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.named_ports =
-            ::Google::Compute::Property::InstGrouManaNamePortArray.api_parse(fetch['namedPorts'])
+            ::Google::Compute::Property::InstanceGroupManagerNamedPortsArray.api_parse(
+              fetch['namedPorts']
+            )
           @current_resource.region =
-            ::Google::Compute::Property::RegioSelfLinkRef.api_parse(fetch['region'])
+            ::Google::Compute::Property::RegionSelfLinkRef.api_parse(fetch['region'])
           @current_resource.target_pools =
-            ::Google::Compute::Property::TargPoolSelfLinkRefArray.api_parse(fetch['targetPools'])
+            ::Google::Compute::Property::TargetPoolSelfLinkRefArray.api_parse(
+              fetch['targetPools']
+            )
           @current_resource.target_size =
             ::Google::Compute::Property::Integer.api_parse(fetch['targetSize'])
           @new_resource.__fetched = fetch

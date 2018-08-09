@@ -57,8 +57,9 @@ module Google
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :target_vpn_gateway,
-               [String, ::Google::Compute::Data::TarVpnGatSelLinRef],
-               coerce: ::Google::Compute::Property::TarVpnGatSelLinRef.coerce, desired_state: true
+               [String, ::Google::Compute::Data::TargetVpnGatewaySelfLinkRef],
+               coerce: ::Google::Compute::Property::TargetVpnGatewaySelfLinkRef.coerce,
+               desired_state: true
       property :router,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :peer_ip,

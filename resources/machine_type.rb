@@ -49,8 +49,9 @@ module Google
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :_deprecated,
-               [Hash, ::Google::Compute::Data::MachineTypeDepreca],
-               coerce: ::Google::Compute::Property::MachineTypeDepreca.coerce, desired_state: true
+               [Hash, ::Google::Compute::Data::MachineTypeDeprecated],
+               coerce: ::Google::Compute::Property::MachineTypeDeprecated.coerce,
+               desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :guest_cpus,
@@ -107,7 +108,7 @@ module Google
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource._deprecated =
-            ::Google::Compute::Property::MachineTypeDepreca.api_parse(fetch['deprecated'])
+            ::Google::Compute::Property::MachineTypeDeprecated.api_parse(fetch['deprecated'])
           @current_resource.description =
             ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.guest_cpus =
