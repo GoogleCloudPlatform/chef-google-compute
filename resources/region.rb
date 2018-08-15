@@ -147,9 +147,12 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'Region cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            update_req =
+              ::Google::Compute::Network::Put.new(self_link(@new_resource),
+                                                  fetch_auth(@new_resource),
+                                                  'application/json',
+                                                  resource_to_request)
+            return_if_object update_req.send, 'compute#region'
           end
         end
 
