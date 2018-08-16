@@ -1065,13 +1065,13 @@ end
   the value of sizeGb must not be less than the size of the sourceImage
   or the size of the snapshot.
 
-* `type` -
-  URL of the disk type resource describing which disk type to use to
-  create the disk. Provide this when creating the disk.
-
 * `users` -
   Output only. Links to the users of the disk (attached instances) in form:
   project/zones/zone/instances/instance
+
+* `type` -
+  URL of the disk type resource describing which disk type to use to
+  create the disk. Provide this when creating the disk.
 
 * `source_image` -
   The source image used to create this disk. If the source image is

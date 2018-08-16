@@ -92,8 +92,8 @@ context 'gcompute_disk' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                              gcompute_disk_type],
+                step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                              gcompute_instance],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -469,8 +469,8 @@ context 'gcompute_disk' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                              gcompute_disk_type],
+                step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                              gcompute_instance],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -904,8 +904,8 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                            gcompute_disk_type],
+              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1094,8 +1094,8 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                            gcompute_disk_type],
+              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1258,8 +1258,8 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                            gcompute_disk_type],
+              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1331,8 +1331,8 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                            gcompute_disk_type],
+              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1409,8 +1409,8 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                            gcompute_disk_type],
+              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1488,8 +1488,8 @@ context 'gcompute_disk' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_instance
-                            gcompute_disk_type],
+              step_into: %w[gcompute_disk gcompute_snapshot gcompute_zone gcompute_disk_type
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1654,28 +1654,28 @@ context 'gcompute_disk' do
     data
   end
 
-  def expect_network_get_success_disk_type(id, data = {})
+  def expect_network_get_success_instance(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
-    body = load_network_result_disk_type("success#{id}~" \
+    body = load_network_result_instance("success#{id}~" \
                                                            "#{id_data}.yaml")
            .to_json
-    uri = uri_data_disk_type(id).merge(data)
+    uri = uri_data_instance(id).merge(data)
 
     request = double('request')
     allow(request).to receive(:send).and_return(http_success(body))
 
     debug_network "!! GET #{uri}"
     expect(Google::Compute::Network::Get).to receive(:new)
-      .with(self_link_disk_type(uri),
+      .with(self_link_instance(uri),
             instance_of(Google::FakeAuthorization)) do |args|
       debug_network ">> GET #{args}"
       request
     end
   end
 
-  def load_network_result_disk_type(file)
+  def load_network_result_instance(file)
     results = File.join(File.dirname(__FILE__), 'data', 'network',
-                        'gcompute_disk_type', file)
+                        'gcompute_instance', file)
     raise "Network result data file #{results}" unless File.exist?(results)
     data = YAML.safe_load(File.read(results))
     raise "Invalid network results #{results}" unless data.class <= Hash
@@ -1683,23 +1683,23 @@ context 'gcompute_disk' do
   end
 
   # Creates variable test data to comply with self_link URI parameters
-  # Only used for gcompute_disk_type objects
-  def uri_data_disk_type(id)
+  # Only used for gcompute_instance objects
+  def uri_data_instance(id)
     {
-      project: GoogleTests::Constants::DT_PROJECT_DATA[(id - 1) \
-        % GoogleTests::Constants::DT_PROJECT_DATA.size],
-      zone: GoogleTests::Constants::DT_ZONE_DATA[(id - 1) \
-        % GoogleTests::Constants::DT_ZONE_DATA.size],
-      name: GoogleTests::Constants::DT_NAME_DATA[(id - 1) \
-        % GoogleTests::Constants::DT_NAME_DATA.size]
+      project: GoogleTests::Constants::I_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::I_PROJECT_DATA.size],
+      zone: GoogleTests::Constants::I_ZONE_DATA[(id - 1) \
+        % GoogleTests::Constants::I_ZONE_DATA.size],
+      name: GoogleTests::Constants::I_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::I_NAME_DATA.size]
     }
   end
 
-  def self_link_disk_type(data)
+  def self_link_instance(data)
     URI.join(
       'https://www.googleapis.com/compute/v1/',
-      expand_variables_disk_type(
-        'projects/{{project}}/zones/{{zone}}/diskTypes/{{name}}',
+      expand_variables_instance(
+        'projects/{{project}}/zones/{{zone}}/instances/{{name}}',
         data
       )
     )
@@ -1754,28 +1754,28 @@ context 'gcompute_disk' do
     )
   end
 
-  def expect_network_get_success_instance(id, data = {})
+  def expect_network_get_success_disk_type(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
-    body = load_network_result_instance("success#{id}~" \
+    body = load_network_result_disk_type("success#{id}~" \
                                                            "#{id_data}.yaml")
            .to_json
-    uri = uri_data_instance(id).merge(data)
+    uri = uri_data_disk_type(id).merge(data)
 
     request = double('request')
     allow(request).to receive(:send).and_return(http_success(body))
 
     debug_network "!! GET #{uri}"
     expect(Google::Compute::Network::Get).to receive(:new)
-      .with(self_link_instance(uri),
+      .with(self_link_disk_type(uri),
             instance_of(Google::FakeAuthorization)) do |args|
       debug_network ">> GET #{args}"
       request
     end
   end
 
-  def load_network_result_instance(file)
+  def load_network_result_disk_type(file)
     results = File.join(File.dirname(__FILE__), 'data', 'network',
-                        'gcompute_instance', file)
+                        'gcompute_disk_type', file)
     raise "Network result data file #{results}" unless File.exist?(results)
     data = YAML.safe_load(File.read(results))
     raise "Invalid network results #{results}" unless data.class <= Hash
@@ -1783,23 +1783,23 @@ context 'gcompute_disk' do
   end
 
   # Creates variable test data to comply with self_link URI parameters
-  # Only used for gcompute_instance objects
-  def uri_data_instance(id)
+  # Only used for gcompute_disk_type objects
+  def uri_data_disk_type(id)
     {
-      project: GoogleTests::Constants::I_PROJECT_DATA[(id - 1) \
-        % GoogleTests::Constants::I_PROJECT_DATA.size],
-      zone: GoogleTests::Constants::I_ZONE_DATA[(id - 1) \
-        % GoogleTests::Constants::I_ZONE_DATA.size],
-      name: GoogleTests::Constants::I_NAME_DATA[(id - 1) \
-        % GoogleTests::Constants::I_NAME_DATA.size]
+      project: GoogleTests::Constants::DT_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::DT_PROJECT_DATA.size],
+      zone: GoogleTests::Constants::DT_ZONE_DATA[(id - 1) \
+        % GoogleTests::Constants::DT_ZONE_DATA.size],
+      name: GoogleTests::Constants::DT_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::DT_NAME_DATA.size]
     }
   end
 
-  def self_link_instance(data)
+  def self_link_disk_type(data)
     URI.join(
       'https://www.googleapis.com/compute/v1/',
-      expand_variables_instance(
-        'projects/{{project}}/zones/{{zone}}/instances/{{name}}',
+      expand_variables_disk_type(
+        'projects/{{project}}/zones/{{zone}}/diskTypes/{{name}}',
         data
       )
     )
@@ -1961,8 +1961,8 @@ context 'gcompute_disk' do
       if ENV['RSPEC_DEBUG'] || ENV['RSPEC_HTTP_VERBOSE']
   end
 
-  def expand_variables_disk_type(template, data, ext_dat = {})
-    Google::GCOMPUTE::DiskType
+  def expand_variables_instance(template, data, ext_dat = {})
+    Google::GCOMPUTE::Instance
       .action_class.expand_variables(template, data, ext_dat)
   end
 
@@ -1971,8 +1971,8 @@ context 'gcompute_disk' do
       .action_class.expand_variables(template, data, ext_dat)
   end
 
-  def expand_variables_instance(template, data, ext_dat = {})
-    Google::GCOMPUTE::Instance
+  def expand_variables_disk_type(template, data, ext_dat = {})
+    Google::GCOMPUTE::DiskType
       .action_class.expand_variables(template, data, ext_dat)
   end
 

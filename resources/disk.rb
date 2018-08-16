@@ -76,14 +76,14 @@ module Google
                name_property: true, desired_state: true
       property :size_gb,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :type,
-               [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
-               coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce, desired_state: true
       # users is Array of Google::Compute::Property::InstanceSelfLinkRefArray
       property :users,
                Array,
                coerce: ::Google::Compute::Property::InstanceSelfLinkRefArray.coerce,
                desired_state: true
+      property :type,
+               [String, ::Google::Compute::Data::DiskTypeSelfLinkRef],
+               coerce: ::Google::Compute::Property::DiskTypeSelfLinkRef.coerce, desired_state: true
       property :source_image,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :zone,
@@ -149,10 +149,10 @@ module Google
             ::Google::Compute::Property::StringArray.api_parse(fetch['licenses'])
           @current_resource.size_gb =
             ::Google::Compute::Property::Integer.api_parse(fetch['sizeGb'])
-          @current_resource.type =
-            ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(fetch['type'])
           @current_resource.users =
             ::Google::Compute::Property::InstanceSelfLinkRefArray.api_parse(fetch['users'])
+          @current_resource.type =
+            ::Google::Compute::Property::DiskTypeSelfLinkRef.api_parse(fetch['type'])
           @new_resource.__fetched = fetch
 
           update
@@ -232,8 +232,8 @@ module Google
             labels: resource.labels,
             licenses: resource.licenses,
             size_gb: resource.size_gb,
-            type: resource.type,
             users: resource.users,
+            type: resource.type,
             source_image: resource.source_image,
             zone: resource.zone,
             source_image_encryption_key: resource.source_image_encryption_key,
