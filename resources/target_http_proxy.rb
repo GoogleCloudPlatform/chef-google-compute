@@ -139,9 +139,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'TargetHttpProxy cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if (@current_resource.url_map != @new_resource.url_map)
+              url_map_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#targetHttpProxy')
           end
         end
 
@@ -162,6 +164,22 @@ module Google
           }.reject { |_, v| v.nil? }
         end
 
+  def url_map_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/targetHttpProxies/{{name}}/setUrlMap',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        urlMap: @new_resource.url_map
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

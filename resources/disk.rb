@@ -54,6 +54,9 @@ module Google
     class Disk < Chef::Resource
       resource_name :gcompute_disk
 
+      property :label_fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :description,
@@ -134,6 +137,8 @@ module Google
           end
         else
           @current_resource = @new_resource.clone
+          @current_resource.label_fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
@@ -207,9 +212,14 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'Disk cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if (@current_resource.labels != @new_resource.labels)
+              label_fingerprint_update(@current_resource)
+            end
+            if (@current_resource.size_gb != @new_resource.size_gb)
+              size_gb_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#disk')
           end
         end
 
@@ -224,6 +234,7 @@ module Google
             project: resource.project,
             name: resource.d_label,
             kind: 'compute#disk',
+            label_fingerprint: resource.label_fingerprint,
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
@@ -246,6 +257,40 @@ module Google
         end
         # rubocop:enable Metrics/MethodLength
 
+  def label_fingerprint_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/zones/{{zone}}/disks/{{name}}/setLabels',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        labelFingerprint: @new_resource.__fetched['labelFingerprint'],
+        labels: @new_resource.labels
+      }.to_json
+    ).send
+  end
+
+  def size_gb_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/zones/{{zone}}/disks/{{name}}/resize',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        sizeGb: @new_resource.size_gb
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

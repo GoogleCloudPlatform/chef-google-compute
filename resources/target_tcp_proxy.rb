@@ -143,9 +143,14 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'TargetTcpProxy cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if (@current_resource.proxy_header != @new_resource.proxy_header)
+              proxy_header_update(@current_resource)
+            end
+            if (@current_resource.service != @new_resource.service)
+              service_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#targetTcpProxy')
           end
         end
 
@@ -167,6 +172,39 @@ module Google
           }.reject { |_, v| v.nil? }
         end
 
+  def proxy_header_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/global/targetTcpProxies/{{name}}/setProxyHeader',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        proxyHeader: @new_resource.proxy_header
+      }.to_json
+    ).send
+  end
+
+  def service_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/global/targetTcpProxies/{{name}}/setBackendService',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        service: @new_resource.service
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

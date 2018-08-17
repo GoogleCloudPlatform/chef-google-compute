@@ -153,9 +153,17 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'TargetHttpsProxy cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if (@current_resource.quic_override != @new_resource.quic_override)
+              quic_override_update(@current_resource)
+            end
+            if (@current_resource.ssl_certificates != @new_resource.ssl_certificates)
+              ssl_certificates_update(@current_resource)
+            end
+            if (@current_resource.url_map != @new_resource.url_map)
+              url_map_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#targetHttpsProxy')
           end
         end
 
@@ -178,6 +186,56 @@ module Google
           }.reject { |_, v| v.nil? }
         end
 
+  def quic_override_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/global/targetHttpsProxies/{{name}}/setQuicOverride',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        quicOverride: @new_resource.quic_override
+      }.to_json
+    ).send
+  end
+
+  def ssl_certificates_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/targetHttpsProxies/{{name}}/setSslCertificates',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        sslCertificates: @new_resource.ssl_certificates
+      }.to_json
+    ).send
+  end
+
+  def url_map_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/targetHttpsProxies/{{name}}/setUrlMap',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        urlMap: @new_resource.url_map
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

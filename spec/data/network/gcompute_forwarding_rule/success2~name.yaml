@@ -35,6 +35,7 @@ backendService: selflink(resource(backend_service,1))
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 description: test description#1 data
 ipVersion: IPV6
+labelFingerprint: test label_fingerprint#1 data
 loadBalancingScheme: EXTERNAL
 network: selflink(resource(network,1))
 portRange: test port_range#1 data

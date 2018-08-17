@@ -59,6 +59,9 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
+      property :label_fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :ip_version,
                equal_to: %w[IPV4 IPV6],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
@@ -100,6 +103,8 @@ module Google
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.ga_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.label_fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @current_resource.ip_version =
             ::Google::Compute::Property::Enum.api_parse(fetch['ipVersion'])
           @current_resource.region =
@@ -150,9 +155,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'GlobalAddress cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if 
+              label_fingerprint_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#address')
           end
         end
 
@@ -170,11 +177,28 @@ module Google
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
+            label_fingerprint: resource.label_fingerprint,
             ip_version: resource.ip_version,
             region: resource.region
           }.reject { |_, v| v.nil? }
         end
 
+  def label_fingerprint_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/global/addresses/{{name}}/setLabels',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        labelFingerprint: @new_resource.__fetched['labelFingerprint']
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

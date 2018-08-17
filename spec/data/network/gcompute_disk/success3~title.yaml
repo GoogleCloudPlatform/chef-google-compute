@@ -34,6 +34,7 @@ description: test description#2 data
 diskEncryptionKey:
   rawKey: test raw_key#2 data
   sha256: test sha256#2 data
+labelFingerprint: test label_fingerprint#2 data
 labels:
   test labels#3 data: test labels#3 data
   test labels#4 data: 10218751724

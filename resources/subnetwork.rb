@@ -158,9 +158,14 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'Subnetwork cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if (@current_resource.ip_cidr_range != @new_resource.ip_cidr_range)
+              ip_cidr_range_update(@current_resource)
+            end
+            if (@current_resource.private_ip_google_access != @new_resource.private_ip_google_access)
+              private_ip_google_access_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#subnetwork')
           end
         end
 
@@ -185,6 +190,39 @@ module Google
           }.reject { |_, v| v.nil? }
         end
 
+  def ip_cidr_range_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/regions/{{region}}/subnetworks/{{name}}/expandIpCidrRange',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        ipCidrRange: @new_resource.ip_cidr_range
+      }.to_json
+    ).send
+  end
+
+  def private_ip_google_access_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/regions/{{region}}/subnetworks/{{name}}/setPrivateIpGoogleAccess',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        privateIpGoogleAccess: @new_resource.private_ip_google_access
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)
