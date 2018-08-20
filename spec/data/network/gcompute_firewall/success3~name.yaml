@@ -44,18 +44,50 @@ allowed:
   - gg
   - hh
 creationTimestamp: '2196-03-05T12:24:32+00:00'
+denied:
+- IPProtocol: test ip_protocol#2 data
+  ports:
+  - mm
+  - nn
+- IPProtocol: test ip_protocol#3 data
+  ports:
+  - ii
+  - jj
+- IPProtocol: test ip_protocol#4 data
+  ports:
+  - ff
+  - gg
+  - hh
+- IPProtocol: test ip_protocol#5 data
+  ports:
+  - bb
+  - cc
+  - dd
 description: test description#2 data
-network: test network#2 data
+destinationRanges:
+- oo
+- pp
+direction: INGRESS
+network: selflink(resource(network,2))
+priority: 1000
 project: "'test project#2 data'"
 sourceRanges:
 - nn
 - oo
 - pp
+sourceServiceAccounts:
+- gg
+- hh
+- ii
+- jj
 sourceTags:
 - qq
 - rr
 - ss
 - tt
+targetServiceAccounts:
+- uu
+- vv
 targetTags:
 - jj
 - kk

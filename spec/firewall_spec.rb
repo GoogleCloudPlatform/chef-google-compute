@@ -64,6 +64,9 @@ context 'gcompute_firewall' do
               expect_network_get_success 1, name: 'title0'
               expect_network_get_success 2, name: 'title1'
               expect_network_get_success 3, name: 'title2'
+              expect_network_get_success_network 1
+              expect_network_get_success_network 2
+              expect_network_get_success_network 3
             end
 
             let(:runner) do
@@ -83,7 +86,7 @@ context 'gcompute_firewall' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: 'gcompute_firewall',
+                step_into: %w[gcompute_firewall gcompute_network],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -93,6 +96,27 @@ context 'gcompute_firewall' do
             let(:chef_run) do
               apply_recipe(
                 <<-MANIFEST
+                  gcompute_network 'resource(network,0)' do
+                    action :create
+                    n_label 'test name#0 data'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_network 'resource(network,1)' do
+                    action :create
+                    n_label 'test name#1 data'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_network 'resource(network,2)' do
+                    action :create
+                    n_label 'test name#2 data'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_firewall 'title0' do
                     action :create
                     allowed [
@@ -109,10 +133,33 @@ context 'gcompute_firewall' do
                         ports: ['mm', 'nn']
                       }
                     ]
+                    denied [
+                      {
+                        ip_protocol: 'test ip_protocol#0 data',
+                        ports: ['uu', 'vv']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#1 data',
+                        ports: ['qq', 'rr']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#2 data',
+                        ports: ['mm', 'nn']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#3 data',
+                        ports: ['ii', 'jj']
+                      }
+                    ]
                     description 'test description#0 data'
-                    network 'test network#0 data'
+                    destination_ranges ['dd', 'ee', 'ff']
+                    direction 'INGRESS'
+                    network 'resource(network,0)'
+                    priority 1000
                     source_ranges ['dd', 'ee', 'ff', 'gg', 'hh']
+                    source_service_accounts ['yy', 'zz']
                     source_tags ['vv', 'ww', 'xx', 'yy', 'zz']
+                    target_service_accounts ['ff', 'gg', 'hh']
                     target_tags ['tt', 'uu', 'vv', 'ww', 'xx']
                     project 'test project#0 data'
                     credential 'mycred'
@@ -142,10 +189,25 @@ context 'gcompute_firewall' do
                         ports: ['bb', 'cc', 'dd']
                       }
                     ]
+                    denied [
+                      {
+                        ip_protocol: 'test ip_protocol#1 data',
+                        ports: ['qq', 'rr']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#2 data',
+                        ports: ['mm', 'nn']
+                      }
+                    ]
                     description 'test description#1 data'
-                    network 'test network#1 data'
+                    destination_ranges ['ii', 'jj', 'kk', 'll']
+                    direction 'EGRESS'
+                    network 'resource(network,1)'
+                    priority 1000
                     source_ranges ['ii', 'jj', 'kk', 'll']
+                    source_service_accounts ['dd', 'ee', 'ff']
                     source_tags ['ss', 'tt', 'uu', 'vv']
+                    target_service_accounts ['mm', 'nn', 'oo', 'pp']
                     target_tags ['oo', 'pp', 'qq', 'rr']
                     project 'test project#1 data'
                     credential 'mycred'
@@ -167,10 +229,33 @@ context 'gcompute_firewall' do
                         ports: ['ff', 'gg', 'hh']
                       }
                     ]
+                    denied [
+                      {
+                        ip_protocol: 'test ip_protocol#2 data',
+                        ports: ['mm', 'nn']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#3 data',
+                        ports: ['ii', 'jj']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#4 data',
+                        ports: ['ff', 'gg', 'hh']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#5 data',
+                        ports: ['bb', 'cc', 'dd']
+                      }
+                    ]
                     description 'test description#2 data'
-                    network 'test network#2 data'
+                    destination_ranges ['oo', 'pp']
+                    direction 'INGRESS'
+                    network 'resource(network,2)'
+                    priority 1000
                     source_ranges ['nn', 'oo', 'pp']
+                    source_service_accounts ['gg', 'hh', 'ii', 'jj']
                     source_tags ['qq', 'rr', 'ss', 'tt']
+                    target_service_accounts ['uu', 'vv']
                     target_tags ['jj', 'kk', 'll']
                     project 'test project#2 data'
                     credential 'mycred'
@@ -195,15 +280,33 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'denied' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(description: 'test description#0 data') }
+
+              it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
+
+              it { is_expected.to have_attributes(direction: 'INGRESS') }
 
               it { is_expected.to have_attributes(f_label: 'title0') }
 
-              it { is_expected.to have_attributes(network: 'test network#0 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'network' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(priority: 1_000) }
 
               it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
+              it { is_expected.to have_attributes(source_service_accounts: %w[yy zz]) }
+
               it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
+
+              it { is_expected.to have_attributes(target_service_accounts: %w[ff gg hh]) }
 
               it { is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx]) }
             end
@@ -218,15 +321,33 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'denied' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(description: 'test description#1 data') }
+
+              it { is_expected.to have_attributes(destination_ranges: %w[ii jj kk ll]) }
+
+              it { is_expected.to have_attributes(direction: 'EGRESS') }
 
               it { is_expected.to have_attributes(f_label: 'title1') }
 
-              it { is_expected.to have_attributes(network: 'test network#1 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'network' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(priority: 1_000) }
 
               it { is_expected.to have_attributes(source_ranges: %w[ii jj kk ll]) }
 
+              it { is_expected.to have_attributes(source_service_accounts: %w[dd ee ff]) }
+
               it { is_expected.to have_attributes(source_tags: %w[ss tt uu vv]) }
+
+              it { is_expected.to have_attributes(target_service_accounts: %w[mm nn oo pp]) }
 
               it { is_expected.to have_attributes(target_tags: %w[oo pp qq rr]) }
             end
@@ -241,15 +362,33 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'denied' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(description: 'test description#2 data') }
+
+              it { is_expected.to have_attributes(destination_ranges: %w[oo pp]) }
+
+              it { is_expected.to have_attributes(direction: 'INGRESS') }
 
               it { is_expected.to have_attributes(f_label: 'title2') }
 
-              it { is_expected.to have_attributes(network: 'test network#2 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'network' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(priority: 1_000) }
 
               it { is_expected.to have_attributes(source_ranges: %w[nn oo pp]) }
 
+              it { is_expected.to have_attributes(source_service_accounts: %w[gg hh ii jj]) }
+
               it { is_expected.to have_attributes(source_tags: %w[qq rr ss tt]) }
+
+              it { is_expected.to have_attributes(target_service_accounts: %w[uu vv]) }
 
               it { is_expected.to have_attributes(target_tags: %w[jj kk ll]) }
             end
@@ -274,6 +413,9 @@ context 'gcompute_firewall' do
               expect_network_get_success 1
               expect_network_get_success 2
               expect_network_get_success 3
+              expect_network_get_success_network 1
+              expect_network_get_success_network 2
+              expect_network_get_success_network 3
             end
 
             let(:runner) do
@@ -293,7 +435,7 @@ context 'gcompute_firewall' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: 'gcompute_firewall',
+                step_into: %w[gcompute_firewall gcompute_network],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -303,6 +445,27 @@ context 'gcompute_firewall' do
             let(:chef_run) do
               apply_recipe(
                 <<-MANIFEST
+                  gcompute_network 'resource(network,0)' do
+                    action :create
+                    n_label 'test name#0 data'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_network 'resource(network,1)' do
+                    action :create
+                    n_label 'test name#1 data'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_network 'resource(network,2)' do
+                    action :create
+                    n_label 'test name#2 data'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_firewall 'title0' do
                     action :create
                     allowed [
@@ -319,11 +482,34 @@ context 'gcompute_firewall' do
                         ports: ['mm', 'nn']
                       }
                     ]
+                    denied [
+                      {
+                        ip_protocol: 'test ip_protocol#0 data',
+                        ports: ['uu', 'vv']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#1 data',
+                        ports: ['qq', 'rr']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#2 data',
+                        ports: ['mm', 'nn']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#3 data',
+                        ports: ['ii', 'jj']
+                      }
+                    ]
                     description 'test description#0 data'
+                    destination_ranges ['dd', 'ee', 'ff']
+                    direction 'INGRESS'
                     f_label 'test name#0 data'
-                    network 'test network#0 data'
+                    network 'resource(network,0)'
+                    priority 1000
                     source_ranges ['dd', 'ee', 'ff', 'gg', 'hh']
+                    source_service_accounts ['yy', 'zz']
                     source_tags ['vv', 'ww', 'xx', 'yy', 'zz']
+                    target_service_accounts ['ff', 'gg', 'hh']
                     target_tags ['tt', 'uu', 'vv', 'ww', 'xx']
                     project 'test project#0 data'
                     credential 'mycred'
@@ -353,11 +539,26 @@ context 'gcompute_firewall' do
                         ports: ['bb', 'cc', 'dd']
                       }
                     ]
+                    denied [
+                      {
+                        ip_protocol: 'test ip_protocol#1 data',
+                        ports: ['qq', 'rr']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#2 data',
+                        ports: ['mm', 'nn']
+                      }
+                    ]
                     description 'test description#1 data'
+                    destination_ranges ['ii', 'jj', 'kk', 'll']
+                    direction 'EGRESS'
                     f_label 'test name#1 data'
-                    network 'test network#1 data'
+                    network 'resource(network,1)'
+                    priority 1000
                     source_ranges ['ii', 'jj', 'kk', 'll']
+                    source_service_accounts ['dd', 'ee', 'ff']
                     source_tags ['ss', 'tt', 'uu', 'vv']
+                    target_service_accounts ['mm', 'nn', 'oo', 'pp']
                     target_tags ['oo', 'pp', 'qq', 'rr']
                     project 'test project#1 data'
                     credential 'mycred'
@@ -379,11 +580,34 @@ context 'gcompute_firewall' do
                         ports: ['ff', 'gg', 'hh']
                       }
                     ]
+                    denied [
+                      {
+                        ip_protocol: 'test ip_protocol#2 data',
+                        ports: ['mm', 'nn']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#3 data',
+                        ports: ['ii', 'jj']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#4 data',
+                        ports: ['ff', 'gg', 'hh']
+                      },
+                      {
+                        ip_protocol: 'test ip_protocol#5 data',
+                        ports: ['bb', 'cc', 'dd']
+                      }
+                    ]
                     description 'test description#2 data'
+                    destination_ranges ['oo', 'pp']
+                    direction 'INGRESS'
                     f_label 'test name#2 data'
-                    network 'test network#2 data'
+                    network 'resource(network,2)'
+                    priority 1000
                     source_ranges ['nn', 'oo', 'pp']
+                    source_service_accounts ['gg', 'hh', 'ii', 'jj']
                     source_tags ['qq', 'rr', 'ss', 'tt']
+                    target_service_accounts ['uu', 'vv']
                     target_tags ['jj', 'kk', 'll']
                     project 'test project#2 data'
                     credential 'mycred'
@@ -408,15 +632,33 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'denied' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(description: 'test description#0 data') }
+
+              it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
+
+              it { is_expected.to have_attributes(direction: 'INGRESS') }
 
               it { is_expected.to have_attributes(f_label: 'test name#0 data') }
 
-              it { is_expected.to have_attributes(network: 'test network#0 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'network' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(priority: 1_000) }
 
               it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
+              it { is_expected.to have_attributes(source_service_accounts: %w[yy zz]) }
+
               it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
+
+              it { is_expected.to have_attributes(target_service_accounts: %w[ff gg hh]) }
 
               it { is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx]) }
             end
@@ -431,15 +673,33 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'denied' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(description: 'test description#1 data') }
+
+              it { is_expected.to have_attributes(destination_ranges: %w[ii jj kk ll]) }
+
+              it { is_expected.to have_attributes(direction: 'EGRESS') }
 
               it { is_expected.to have_attributes(f_label: 'test name#1 data') }
 
-              it { is_expected.to have_attributes(network: 'test network#1 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'network' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(priority: 1_000) }
 
               it { is_expected.to have_attributes(source_ranges: %w[ii jj kk ll]) }
 
+              it { is_expected.to have_attributes(source_service_accounts: %w[dd ee ff]) }
+
               it { is_expected.to have_attributes(source_tags: %w[ss tt uu vv]) }
+
+              it { is_expected.to have_attributes(target_service_accounts: %w[mm nn oo pp]) }
 
               it { is_expected.to have_attributes(target_tags: %w[oo pp qq rr]) }
             end
@@ -454,15 +714,33 @@ context 'gcompute_firewall' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'denied' do
+              #   # Add test code here
+              # end
+
               it { is_expected.to have_attributes(description: 'test description#2 data') }
+
+              it { is_expected.to have_attributes(destination_ranges: %w[oo pp]) }
+
+              it { is_expected.to have_attributes(direction: 'INGRESS') }
 
               it { is_expected.to have_attributes(f_label: 'test name#2 data') }
 
-              it { is_expected.to have_attributes(network: 'test network#2 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'network' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(priority: 1_000) }
 
               it { is_expected.to have_attributes(source_ranges: %w[nn oo pp]) }
 
+              it { is_expected.to have_attributes(source_service_accounts: %w[gg hh ii jj]) }
+
               it { is_expected.to have_attributes(source_tags: %w[qq rr ss tt]) }
+
+              it { is_expected.to have_attributes(target_service_accounts: %w[uu vv]) }
 
               it { is_expected.to have_attributes(target_tags: %w[jj kk ll]) }
             end
@@ -536,15 +814,39 @@ context 'gcompute_firewall' do
                     'ports' => %w[mm nn]
                   }
                 ],
+                'denied' => [
+                  {
+                    'IPProtocol' => 'test ip_protocol#0 data',
+                    'ports' => %w[uu vv]
+                  },
+                  {
+                    'IPProtocol' => 'test ip_protocol#1 data',
+                    'ports' => %w[qq rr]
+                  },
+                  {
+                    'IPProtocol' => 'test ip_protocol#2 data',
+                    'ports' => %w[mm nn]
+                  },
+                  {
+                    'IPProtocol' => 'test ip_protocol#3 data',
+                    'ports' => %w[ii jj]
+                  }
+                ],
                 'description' => 'test description#0 data',
+                'destinationRanges' => %w[dd ee ff],
+                'direction' => 'INGRESS',
                 'name' => 'title0',
-                'network' => 'test network#0 data',
+                'network' => 'selflink(resource(network,0))',
+                'priority' => 1_000,
                 'sourceRanges' => %w[dd ee ff gg hh],
+                'sourceServiceAccounts' => %w[yy zz],
                 'sourceTags' => %w[vv ww xx yy zz],
+                'targetServiceAccounts' => %w[ff gg hh],
                 'targetTags' => %w[tt uu vv ww xx]
               },
               name: 'title0'
             expect_network_get_async 1, name: 'title0'
+            expect_network_get_success_network 1
           end
 
           let(:runner) do
@@ -564,7 +866,7 @@ context 'gcompute_firewall' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: 'gcompute_firewall',
+              step_into: %w[gcompute_firewall gcompute_network],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -574,6 +876,13 @@ context 'gcompute_firewall' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_network 'resource(network,0)' do
+                  action :create
+                  n_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_firewall 'title0' do
                   action :create
                   allowed [
@@ -590,10 +899,33 @@ context 'gcompute_firewall' do
                       ports: ['mm', 'nn']
                     }
                   ]
+                  denied [
+                    {
+                      ip_protocol: 'test ip_protocol#0 data',
+                      ports: ['uu', 'vv']
+                    },
+                    {
+                      ip_protocol: 'test ip_protocol#1 data',
+                      ports: ['qq', 'rr']
+                    },
+                    {
+                      ip_protocol: 'test ip_protocol#2 data',
+                      ports: ['mm', 'nn']
+                    },
+                    {
+                      ip_protocol: 'test ip_protocol#3 data',
+                      ports: ['ii', 'jj']
+                    }
+                  ]
                   description 'test description#0 data'
-                  network 'test network#0 data'
+                  destination_ranges ['dd', 'ee', 'ff']
+                  direction 'INGRESS'
+                  network 'resource(network,0)'
+                  priority 1000
                   source_ranges ['dd', 'ee', 'ff', 'gg', 'hh']
+                  source_service_accounts ['yy', 'zz']
                   source_tags ['vv', 'ww', 'xx', 'yy', 'zz']
+                  target_service_accounts ['ff', 'gg', 'hh']
                   target_tags ['tt', 'uu', 'vv', 'ww', 'xx']
                   project 'test project#0 data'
                   credential 'mycred'
@@ -621,15 +953,33 @@ context 'gcompute_firewall' do
           #   # Add test code here
           # end
 
+          # TODO(nelsonjr): Implement complex array object test.
+          # it 'denied' do
+          #   # Add test code here
+          # end
+
           it { is_expected.to have_attributes(description: 'test description#0 data') }
+
+          it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
+
+          it { is_expected.to have_attributes(direction: 'INGRESS') }
 
           it { is_expected.to have_attributes(f_label: 'title0') }
 
-          it { is_expected.to have_attributes(network: 'test network#0 data') }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'network' do
+          #   # Add test code here
+          # end
+
+          it { is_expected.to have_attributes(priority: 1_000) }
 
           it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
+          it { is_expected.to have_attributes(source_service_accounts: %w[yy zz]) }
+
           it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
+
+          it { is_expected.to have_attributes(target_service_accounts: %w[ff gg hh]) }
 
           it { is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx]) }
         end
@@ -665,13 +1015,37 @@ context 'gcompute_firewall' do
                   'ports' => %w[mm nn]
                 }
               ],
+              'denied' => [
+                {
+                  'IPProtocol' => 'test ip_protocol#0 data',
+                  'ports' => %w[uu vv]
+                },
+                {
+                  'IPProtocol' => 'test ip_protocol#1 data',
+                  'ports' => %w[qq rr]
+                },
+                {
+                  'IPProtocol' => 'test ip_protocol#2 data',
+                  'ports' => %w[mm nn]
+                },
+                {
+                  'IPProtocol' => 'test ip_protocol#3 data',
+                  'ports' => %w[ii jj]
+                }
+              ],
               'description' => 'test description#0 data',
+              'destinationRanges' => %w[dd ee ff],
+              'direction' => 'INGRESS',
               'name' => 'test name#0 data',
-              'network' => 'test network#0 data',
+              'network' => 'selflink(resource(network,0))',
+              'priority' => 1_000,
               'sourceRanges' => %w[dd ee ff gg hh],
+              'sourceServiceAccounts' => %w[yy zz],
               'sourceTags' => %w[vv ww xx yy zz],
+              'targetServiceAccounts' => %w[ff gg hh],
               'targetTags' => %w[tt uu vv ww xx]
             expect_network_get_async 1
+            expect_network_get_success_network 1
           end
 
           let(:runner) do
@@ -691,7 +1065,7 @@ context 'gcompute_firewall' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: 'gcompute_firewall',
+              step_into: %w[gcompute_firewall gcompute_network],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -701,6 +1075,13 @@ context 'gcompute_firewall' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_network 'resource(network,0)' do
+                  action :create
+                  n_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_firewall 'title0' do
                   action :create
                   allowed [
@@ -717,11 +1098,34 @@ context 'gcompute_firewall' do
                       ports: ['mm', 'nn']
                     }
                   ]
+                  denied [
+                    {
+                      ip_protocol: 'test ip_protocol#0 data',
+                      ports: ['uu', 'vv']
+                    },
+                    {
+                      ip_protocol: 'test ip_protocol#1 data',
+                      ports: ['qq', 'rr']
+                    },
+                    {
+                      ip_protocol: 'test ip_protocol#2 data',
+                      ports: ['mm', 'nn']
+                    },
+                    {
+                      ip_protocol: 'test ip_protocol#3 data',
+                      ports: ['ii', 'jj']
+                    }
+                  ]
                   description 'test description#0 data'
+                  destination_ranges ['dd', 'ee', 'ff']
+                  direction 'INGRESS'
                   f_label 'test name#0 data'
-                  network 'test network#0 data'
+                  network 'resource(network,0)'
+                  priority 1000
                   source_ranges ['dd', 'ee', 'ff', 'gg', 'hh']
+                  source_service_accounts ['yy', 'zz']
                   source_tags ['vv', 'ww', 'xx', 'yy', 'zz']
+                  target_service_accounts ['ff', 'gg', 'hh']
                   target_tags ['tt', 'uu', 'vv', 'ww', 'xx']
                   project 'test project#0 data'
                   credential 'mycred'
@@ -749,15 +1153,33 @@ context 'gcompute_firewall' do
           #   # Add test code here
           # end
 
+          # TODO(nelsonjr): Implement complex array object test.
+          # it 'denied' do
+          #   # Add test code here
+          # end
+
           it { is_expected.to have_attributes(description: 'test description#0 data') }
+
+          it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
+
+          it { is_expected.to have_attributes(direction: 'INGRESS') }
 
           it { is_expected.to have_attributes(f_label: 'test name#0 data') }
 
-          it { is_expected.to have_attributes(network: 'test network#0 data') }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'network' do
+          #   # Add test code here
+          # end
+
+          it { is_expected.to have_attributes(priority: 1_000) }
 
           it { is_expected.to have_attributes(source_ranges: %w[dd ee ff gg hh]) }
 
+          it { is_expected.to have_attributes(source_service_accounts: %w[yy zz]) }
+
           it { is_expected.to have_attributes(source_tags: %w[vv ww xx yy zz]) }
+
+          it { is_expected.to have_attributes(target_service_accounts: %w[ff gg hh]) }
 
           it { is_expected.to have_attributes(target_tags: %w[tt uu vv ww xx]) }
         end
@@ -780,6 +1202,7 @@ context 'gcompute_firewall' do
         context 'title == name (pass)' do
           before do
             expect_network_get_failed 1, name: 'title0'
+            expect_network_get_success_network 1
           end
 
           let(:runner) do
@@ -799,7 +1222,7 @@ context 'gcompute_firewall' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: 'gcompute_firewall',
+              step_into: %w[gcompute_firewall gcompute_network],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -809,8 +1232,16 @@ context 'gcompute_firewall' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_network 'resource(network,0)' do
+                  action :create
+                  n_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_firewall 'title0' do
                   action :delete
+                  network 'resource(network,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -843,6 +1274,7 @@ context 'gcompute_firewall' do
         context 'title != name (pass)' do
           before do
             expect_network_get_failed 1
+            expect_network_get_success_network 1
           end
 
           let(:runner) do
@@ -862,7 +1294,7 @@ context 'gcompute_firewall' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: 'gcompute_firewall',
+              step_into: %w[gcompute_firewall gcompute_network],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -872,9 +1304,17 @@ context 'gcompute_firewall' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_network 'resource(network,0)' do
+                  action :create
+                  n_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_firewall 'title0' do
                   action :delete
                   f_label 'test name#0 data'
+                  network 'resource(network,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -911,6 +1351,7 @@ context 'gcompute_firewall' do
             expect_network_get_success 1, name: 'title0'
             expect_network_delete 1, 'title0'
             expect_network_get_async 1, name: 'title0'
+            expect_network_get_success_network 1
           end
 
           let(:runner) do
@@ -930,7 +1371,7 @@ context 'gcompute_firewall' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: 'gcompute_firewall',
+              step_into: %w[gcompute_firewall gcompute_network],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -940,8 +1381,16 @@ context 'gcompute_firewall' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_network 'resource(network,0)' do
+                  action :create
+                  n_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_firewall 'title0' do
                   action :delete
+                  network 'resource(network,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -980,6 +1429,7 @@ context 'gcompute_firewall' do
             expect_network_get_success 1
             expect_network_delete 1
             expect_network_get_async 1
+            expect_network_get_success_network 1
           end
 
           let(:runner) do
@@ -999,7 +1449,7 @@ context 'gcompute_firewall' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: 'gcompute_firewall',
+              step_into: %w[gcompute_firewall gcompute_network],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1009,9 +1459,17 @@ context 'gcompute_firewall' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
+                gcompute_network 'resource(network,0)' do
+                  action :create
+                  n_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_firewall 'title0' do
                   action :delete
                   f_label 'test name#0 data'
+                  network 'resource(network,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1110,6 +1568,11 @@ context 'gcompute_firewall' do
     body = { kind: 'compute#operation',
              status: 'DONE', targetLink: self_link(merged_uri) }.to_json
 
+    # Remove refs that are also part of the body
+    expected_body = Hash[expected_body.map do |k, v|
+      [k.is_a?(Symbol) ? k.id2name : k, v]
+    end]
+
     request = double('request')
     allow(request).to receive(:send).and_return(http_success(body))
 
@@ -1151,6 +1614,55 @@ context 'gcompute_firewall' do
     data
   end
 
+  def expect_network_get_success_network(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_network("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_network(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_network(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_network(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_network', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_network objects
+  def uri_data_network(id)
+    {
+      project: GoogleTests::Constants::N_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::N_PROJECT_DATA.size],
+      name: GoogleTests::Constants::N_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::N_NAME_DATA.size]
+    }
+  end
+
+  def self_link_network(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_network(
+        'projects/{{project}}/global/networks/{{name}}',
+        data
+      )
+    )
+  end
+
   def debug(message)
     puts(message) if ENV['RSPEC_DEBUG']
   end
@@ -1158,6 +1670,11 @@ context 'gcompute_firewall' do
   def debug_network(message)
     puts("Network #{message}") \
       if ENV['RSPEC_DEBUG'] || ENV['RSPEC_HTTP_VERBOSE']
+  end
+
+  def expand_variables_network(template, data, ext_dat = {})
+    Google::GCOMPUTE::Network
+      .action_class.expand_variables(template, data, ext_dat)
   end
 
   def collection(data)
