@@ -31,6 +31,7 @@ name: title1
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 description: test description#1 data
 ikeVersion: 2
+labelFingerprint: test label_fingerprint#1 data
 labels:
   test labels#2 data: test labels#2 data
   test labels#3 data: 8175001379

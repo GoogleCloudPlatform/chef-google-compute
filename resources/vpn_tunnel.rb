@@ -80,6 +80,9 @@ module Google
       property :labels,
                [Hash, ::Google::Compute::Property::NameValues],
                coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
+      property :label_fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
                coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
@@ -106,6 +109,7 @@ module Google
             )
             @new_resource.__fetched =
               wait_for_operation create_req.send, @new_resource
+            labels_update(@new_resource)
           end
         else
           @current_resource = @new_resource.clone
@@ -127,6 +131,8 @@ module Google
             ::Google::Compute::Property::StringArray.api_parse(fetch['remoteTrafficSelector'])
           @current_resource.labels =
             ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
+          @current_resource.label_fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @new_resource.__fetched = fetch
 
           update
@@ -180,9 +186,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            message = 'VpnTunnel cannot be edited'
-            Chef::Log.fatal message
-            raise message
+            if (@current_resource.labels != @new_resource.labels)
+              labels_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#vpnTunnel')
           end
         end
 
@@ -207,10 +215,28 @@ module Google
             local_traffic_selector: resource.local_traffic_selector,
             remote_traffic_selector: resource.remote_traffic_selector,
             labels: resource.labels,
+            label_fingerprint: resource.label_fingerprint,
             region: resource.region
           }.reject { |_, v| v.nil? }
         end
 
+  def labels_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/regions/{{region}}/vpnTunnels/{{name}}/setLabels',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        labels: @new_resource.labels,
+        labelFingerprint: @new_resource.__fetched['labelFingerprint']
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

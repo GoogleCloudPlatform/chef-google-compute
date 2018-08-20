@@ -31,6 +31,7 @@ name: test name#0 data
 creationTimestamp: '2045-05-23T12:08:10+00:00'
 description: test description#0 data
 ikeVersion: 2
+labelFingerprint: test label_fingerprint#0 data
 labels:
   test labels#1 data: test labels#1 data
   test labels#2 data: 6131251034

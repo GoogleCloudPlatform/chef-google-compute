@@ -981,6 +981,7 @@ gcompute_disk 'id-for-resource' do
     sha256  string,
   }
   id                             integer
+  label_fingerprint              fingerprint
   labels                         namevalues
   last_attach_timestamp          time
   last_detach_timestamp          time
@@ -1024,6 +1025,10 @@ end
   If the resource already exists Chef will attempt to delete it.
 
 #### Properties
+
+* `label_fingerprint` -
+  Output only. The fingerprint used for optimistic locking of this resource.  Used
+  internally during updates.
 
 * `creation_timestamp` -
   Output only. Creation timestamp in RFC3339 text format.
@@ -1370,6 +1375,7 @@ gcompute_forwarding_rule 'id-for-resource' do
   ip_address            string
   ip_protocol           'TCP', 'UDP', 'ESP', 'AH', 'SCTP' or 'ICMP'
   ip_version            'IPV4' or 'IPV6'
+  label_fingerprint     fingerprint
   load_balancing_scheme 'INTERNAL' or 'EXTERNAL'
   name                  string
   network               reference to gcompute_network
@@ -1517,6 +1523,10 @@ end
   must be of a type appropriate to the target object.
   This field is not used for internal load balancing.
 
+* `label_fingerprint` -
+  Output only. The fingerprint used for optimistic locking of this resource.  Used
+  internally during updates.
+
 * `region` -
   Required. A reference to the region where the regional forwarding rule resides.
   This field is not applicable to global forwarding rules.
@@ -1554,6 +1564,7 @@ gcompute_global_address 'id-for-resource' do
   description        string
   id                 integer
   ip_version         'IPV4' or 'IPV6'
+  label_fingerprint  fingerprint
   name               string
   region             reference to gcompute_region
   project            string
@@ -1595,6 +1606,10 @@ end
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
+
+* `label_fingerprint` -
+  Output only. The fingerprint used for optimistic locking of this resource.  Used
+  internally during updates.
 
 * `ip_version` -
   The IP Version that will be used by this address. Valid options are
@@ -5594,6 +5609,7 @@ gcompute_vpn_tunnel 'id-for-resource' do
   creation_timestamp      time
   description             string
   ike_version             integer
+  label_fingerprint       fingerprint
   labels                  namevalues
   local_traffic_selector  [
     string,
@@ -5678,6 +5694,10 @@ end
 
 * `labels` -
   Labels to apply to this VpnTunnel.
+
+* `label_fingerprint` -
+  Output only. The fingerprint used for optimistic locking of this resource.  Used
+  internally during updates.
 
 * `region` -
   Required. The region where the tunnel is located.

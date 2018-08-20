@@ -33,6 +33,7 @@ address: test address#0 data
 creationTimestamp: '2045-05-23T12:08:10+00:00'
 description: test description#0 data
 ipVersion: IPV4
+labelFingerprint: test label_fingerprint#0 data
 project: "'test project#0 data'"
 region: selflink(resource(region,0))
 selfLink: selflink(resource(global_address,0))
