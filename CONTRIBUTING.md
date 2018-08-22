@@ -115,6 +115,7 @@ chef-codegen:
   * libraries/google/compute/property/double.rb
   * libraries/google/compute/property/enum.rb
   * libraries/google/compute/property/firewall_allowed.rb
+  * libraries/google/compute/property/firewall_denied.rb
   * libraries/google/compute/property/forwardingrule_selflink.rb
   * libraries/google/compute/property/healthcheck_http_health_check.rb
   * libraries/google/compute/property/healthcheck_https_health_check.rb

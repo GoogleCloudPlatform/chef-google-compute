@@ -53,19 +53,44 @@ allowed:
   - cc
   - dd
 creationTimestamp: '2120-10-14T00:16:21+00:00'
+denied:
+- IPProtocol: test ip_protocol#1 data
+  ports:
+  - qq
+  - rr
+- IPProtocol: test ip_protocol#2 data
+  ports:
+  - mm
+  - nn
 description: test description#1 data
-network: test network#1 data
+destinationRanges:
+- ii
+- jj
+- kk
+- ll
+direction: EGRESS
+network: selflink(resource(network,1))
+priority: 1000
 project: "'test project#1 data'"
 sourceRanges:
 - ii
 - jj
 - kk
 - ll
+sourceServiceAccounts:
+- dd
+- ee
+- ff
 sourceTags:
 - ss
 - tt
 - uu
 - vv
+targetServiceAccounts:
+- mm
+- nn
+- oo
+- pp
 targetTags:
 - oo
 - pp

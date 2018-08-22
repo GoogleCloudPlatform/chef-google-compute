@@ -33,8 +33,11 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
+require 'google/compute/property/enum'
 require 'google/compute/property/firewall_allowed'
+require 'google/compute/property/firewall_denied'
 require 'google/compute/property/integer'
+require 'google/compute/property/network_selflink'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/time'
@@ -53,8 +56,18 @@ module Google
                coerce: ::Google::Compute::Property::FirewallAllowedArray.coerce, desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      # denied is Array of Google::Compute::Property::FirewallDeniedArray
+      property :denied,
+               Array,
+               coerce: ::Google::Compute::Property::FirewallDeniedArray.coerce, desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      # destination_ranges is Array of Google::Compute::Property::StringArray
+      property :destination_ranges,
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      property :direction,
+               equal_to: %w[INGRESS EGRESS],
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :f_label,
@@ -62,12 +75,23 @@ module Google
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
       property :network,
-               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+               [String, ::Google::Compute::Data::NetworkSelfLinkRef],
+               coerce: ::Google::Compute::Property::NetworkSelfLinkRef.coerce, desired_state: true
+      property :priority,
+               Integer,
+               coerce: ::Google::Compute::Property::Integer.coerce,
+               default: 1000, desired_state: true
       # source_ranges is Array of Google::Compute::Property::StringArray
       property :source_ranges,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      # source_service_accounts is Array of Google::Compute::Property::StringArray
+      property :source_service_accounts,
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       # source_tags is Array of Google::Compute::Property::StringArray
       property :source_tags,
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      # target_service_accounts is Array of Google::Compute::Property::StringArray
+      property :target_service_accounts,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       # target_tags is Array of Google::Compute::Property::StringArray
       property :target_tags,
@@ -75,6 +99,10 @@ module Google
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
+
+      # TODO(alexstephen): Check w/ Chef how to not expose this property yet
+      # allow the resource to store the @fetched API results for exports usage.
+      property :__fetched, Hash, desired_state: false, required: false
 
       action :create do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
@@ -89,7 +117,8 @@ module Google
               collection(@new_resource), fetch_auth(@new_resource),
               'application/json', resource_to_request
             )
-            wait_for_operation create_req.send, @new_resource
+            @new_resource.__fetched =
+              wait_for_operation create_req.send, @new_resource
           end
         else
           @current_resource = @new_resource.clone
@@ -97,18 +126,30 @@ module Google
             ::Google::Compute::Property::FirewallAllowedArray.api_parse(fetch['allowed'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
+          @current_resource.denied =
+            ::Google::Compute::Property::FirewallDeniedArray.api_parse(fetch['denied'])
           @current_resource.description =
             ::Google::Compute::Property::String.api_parse(fetch['description'])
+          @current_resource.destination_ranges =
+            ::Google::Compute::Property::StringArray.api_parse(fetch['destinationRanges'])
+          @current_resource.direction =
+            ::Google::Compute::Property::Enum.api_parse(fetch['direction'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.f_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.network =
-            ::Google::Compute::Property::String.api_parse(fetch['network'])
+            ::Google::Compute::Property::NetworkSelfLinkRef.api_parse(fetch['network'])
+          @current_resource.priority =
+            ::Google::Compute::Property::Integer.api_parse(fetch['priority'])
           @current_resource.source_ranges =
             ::Google::Compute::Property::StringArray.api_parse(fetch['sourceRanges'])
+          @current_resource.source_service_accounts =
+            ::Google::Compute::Property::StringArray.api_parse(fetch['sourceServiceAccounts'])
           @current_resource.source_tags =
             ::Google::Compute::Property::StringArray.api_parse(fetch['sourceTags'])
+          @current_resource.target_service_accounts =
+            ::Google::Compute::Property::StringArray.api_parse(fetch['targetServiceAccounts'])
           @current_resource.target_tags =
             ::Google::Compute::Property::StringArray.api_parse(fetch['targetTags'])
+          @new_resource.__fetched = fetch
 
           update
         end
@@ -129,6 +170,12 @@ module Google
 
       # TODO(nelsonjr): Add actions :manage and :modify
 
+      def exports
+        {
+          self_link: __fetched['selfLink']
+        }
+      end
+
       private
 
       action_class do
@@ -136,11 +183,17 @@ module Google
           request = {
             kind: 'compute#firewall',
             allowed: new_resource.allowed,
+            denied: new_resource.denied,
             description: new_resource.description,
+            destinationRanges: new_resource.destination_ranges,
+            direction: new_resource.direction,
             name: new_resource.f_label,
             network: new_resource.network,
+            priority: new_resource.priority,
             sourceRanges: new_resource.source_ranges,
+            sourceServiceAccounts: new_resource.source_service_accounts,
             sourceTags: new_resource.source_tags,
+            targetServiceAccounts: new_resource.target_service_accounts,
             targetTags: new_resource.target_tags
           }.reject { |_, v| v.nil? }
           request.to_json
@@ -153,12 +206,17 @@ module Google
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
             update_req =
-              ::Google::Compute::Network::Put.new(self_link(@new_resource),
-                                                  fetch_auth(@new_resource),
-                                                  'application/json',
-                                                  resource_to_request)
+              ::Google::Compute::Network::Patch.new(self_link(@new_resource),
+                                                    fetch_auth(@new_resource),
+                                                    'application/json',
+                                                    resource_to_request)
             wait_for_operation update_req.send, @new_resource
           end
+        end
+
+        def self.fetch_export(resource, type, id, property)
+          return if id.nil?
+          resource.resources("#{type}[#{id}]").exports[property]
         end
 
         def self.resource_to_hash(resource)
@@ -168,11 +226,17 @@ module Google
             kind: 'compute#firewall',
             allowed: resource.allowed,
             creation_timestamp: resource.creation_timestamp,
+            denied: resource.denied,
             description: resource.description,
+            destination_ranges: resource.destination_ranges,
+            direction: resource.direction,
             id: resource.id,
             network: resource.network,
+            priority: resource.priority,
             source_ranges: resource.source_ranges,
+            source_service_accounts: resource.source_service_accounts,
             source_tags: resource.source_tags,
+            target_service_accounts: resource.target_service_accounts,
             target_tags: resource.target_tags
           }.reject { |_, v| v.nil? }
         end
