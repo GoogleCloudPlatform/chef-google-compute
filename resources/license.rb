@@ -62,8 +62,7 @@ module Google
                          "Please use the License Name instead."
                         ].join(" "))
 
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#license')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#license')
         if fetch.nil?
           converge_by "Creating gcompute_license[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
@@ -89,8 +88,7 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#license')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#license')
         unless fetch.nil?
           converge_by "Deleting gcompute_license[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(

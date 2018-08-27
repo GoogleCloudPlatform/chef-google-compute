@@ -75,8 +75,7 @@ module Google
                          "Please use the Region Name instead."
                         ].join(" "))
 
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#region')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#region')
         if fetch.nil?
           converge_by "Creating gcompute_region[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
@@ -109,8 +108,7 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#region')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#region')
         unless fetch.nil?
           converge_by "Deleting gcompute_region[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(

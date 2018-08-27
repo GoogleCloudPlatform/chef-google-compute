@@ -102,7 +102,8 @@ module Google
       property :__fetched, Hash, desired_state: false, required: false
 
       action :create do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
+        fetch = fetch_resource(@new_resource,
+                               self_link(@new_resource),
                                'compute#instanceGroupManager')
         if fetch.nil?
           converge_by "Creating gcompute_instance_group_manager[#{new_resource.name}]" do
@@ -157,7 +158,8 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
+        fetch = fetch_resource(@new_resource,
+                               self_link(@new_resource),
                                'compute#instanceGroupManager')
         unless fetch.nil?
           converge_by "Deleting gcompute_instance_group_manager[#{new_resource.name}]" do
