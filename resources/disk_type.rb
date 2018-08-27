@@ -79,8 +79,7 @@ module Google
                          "Please use the DiskType Name instead."
                         ].join(" "))
 
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#diskType')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#diskType')
         if fetch.nil?
           converge_by "Creating gcompute_disk_type[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
@@ -116,8 +115,7 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#diskType')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#diskType')
         unless fetch.nil?
           converge_by "Deleting gcompute_disk_type[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(

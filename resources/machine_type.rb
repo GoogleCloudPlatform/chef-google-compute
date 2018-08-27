@@ -88,8 +88,7 @@ module Google
                          "Please use the MachineType Name instead."
                         ].join(" "))
 
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#machineType')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#machineType')
         if fetch.nil?
           converge_by "Creating gcompute_machine_type[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
@@ -133,8 +132,7 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#machineType')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#machineType')
         unless fetch.nil?
           converge_by "Deleting gcompute_machine_type[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(

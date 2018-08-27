@@ -90,8 +90,7 @@ module Google
       property :__fetched, Hash, desired_state: false, required: false
 
       action :create do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#targetPool')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#targetPool')
         if fetch.nil?
           converge_by "Creating gcompute_target_pool[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
@@ -127,8 +126,7 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource),
-                               'compute#targetPool')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#targetPool')
         unless fetch.nil?
           converge_by "Deleting gcompute_target_pool[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
