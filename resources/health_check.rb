@@ -34,6 +34,7 @@ require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/enum'
+require 'google/compute/property/health_check_proxy_header'
 require 'google/compute/property/healthcheck_http_health_check'
 require 'google/compute/property/healthcheck_https_health_check'
 require 'google/compute/property/healthcheck_ssl_health_check'
@@ -58,7 +59,8 @@ module Google
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :healthy_threshold,
-               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+               Integer,
+               coerce: ::Google::Compute::Property::Integer.coerce, default: 2, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :hc_label,
@@ -72,7 +74,7 @@ module Google
                Integer,
                coerce: ::Google::Compute::Property::Integer.coerce, default: 2, desired_state: true
       property :type,
-               equal_to: %w[TCP SSL HTTP],
+               equal_to: %w[TCP SSL HTTP HTTPS],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :http_health_check,
                [Hash, ::Google::Compute::Data::HealthCheckHttpHealthCheck],
@@ -94,6 +96,10 @@ module Google
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
 
+      # TODO(alexstephen): Check w/ Chef how to not expose this property yet
+      # allow the resource to store the @fetched API results for exports usage.
+      property :__fetched, Hash, desired_state: false, required: false
+
       action :create do
         fetch = fetch_resource(@new_resource, self_link(@new_resource),
                                'compute#healthCheck')
@@ -107,7 +113,8 @@ module Google
               collection(@new_resource), fetch_auth(@new_resource),
               'application/json', resource_to_request
             )
-            wait_for_operation create_req.send, @new_resource
+            @new_resource.__fetched =
+              wait_for_operation create_req.send, @new_resource
           end
         else
           @current_resource = @new_resource.clone
@@ -120,8 +127,6 @@ module Google
           @current_resource.healthy_threshold =
             ::Google::Compute::Property::Integer.api_parse(fetch['healthyThreshold'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.hc_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.timeout_sec =
             ::Google::Compute::Property::Integer.api_parse(fetch['timeoutSec'])
           @current_resource.unhealthy_threshold =
@@ -143,6 +148,7 @@ module Google
             ::Google::Compute::Property::HealthCheckSslHealthCheck.api_parse(
               fetch['sslHealthCheck']
             )
+          @new_resource.__fetched = fetch
 
           update
         end
@@ -162,6 +168,12 @@ module Google
       end
 
       # TODO(nelsonjr): Add actions :manage and :modify
+
+      def exports
+        {
+          self_link: __fetched['selfLink']
+        }
+      end
 
       private
 
