@@ -222,6 +222,13 @@ context 'gcompute_backend_service' do
                     description 'test description#0 data'
                     enable_cdn true
                     health_checks ['rr', 'ss', 'tt', 'uu', 'vv']
+                    iap({
+                      enabled: true,
+                      oauth2_client_id: 'test oauth2_client_id#0 data',
+                      oauth2_client_secret: 'test oauth2_client_secret#0 data',
+                      oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#0 data'
+                    })
+                    load_balancing_scheme 'INTERNAL'
                     port_name 'test port_name#0 data'
                     protocol 'HTTP'
                     region 'resource(region,0)'
@@ -284,6 +291,13 @@ context 'gcompute_backend_service' do
                     description 'test description#1 data'
                     enable_cdn false
                     health_checks ['kk', 'll', 'mm', 'nn']
+                    iap({
+                      enabled: false,
+                      oauth2_client_id: 'test oauth2_client_id#1 data',
+                      oauth2_client_secret: 'test oauth2_client_secret#1 data',
+                      oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#1 data'
+                    })
+                    load_balancing_scheme 'EXTERNAL'
                     port_name 'test port_name#1 data'
                     protocol 'HTTPS'
                     region 'resource(region,1)'
@@ -346,6 +360,13 @@ context 'gcompute_backend_service' do
                     description 'test description#2 data'
                     enable_cdn true
                     health_checks ['ee', 'ff', 'gg', 'hh']
+                    iap({
+                      enabled: true,
+                      oauth2_client_id: 'test oauth2_client_id#2 data',
+                      oauth2_client_secret: 'test oauth2_client_secret#2 data',
+                      oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#2 data'
+                    })
+                    load_balancing_scheme 'INTERNAL'
                     port_name 'test port_name#2 data'
                     protocol 'TCP'
                     region 'resource(region,2)'
@@ -392,6 +413,13 @@ context 'gcompute_backend_service' do
 
               it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
 
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'iap' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
+
               it { is_expected.to have_attributes(bs_label: 'title0') }
 
               it { is_expected.to have_attributes(port_name: 'test port_name#0 data') }
@@ -436,6 +464,13 @@ context 'gcompute_backend_service' do
 
               it { is_expected.to have_attributes(health_checks: %w[kk ll mm nn]) }
 
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'iap' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(load_balancing_scheme: 'EXTERNAL') }
+
               it { is_expected.to have_attributes(bs_label: 'title1') }
 
               it { is_expected.to have_attributes(port_name: 'test port_name#1 data') }
@@ -479,6 +514,13 @@ context 'gcompute_backend_service' do
               it { is_expected.to have_attributes(enable_cdn: true) }
 
               it { is_expected.to have_attributes(health_checks: %w[ee ff gg hh]) }
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'iap' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
               it { is_expected.to have_attributes(bs_label: 'title2') }
 
@@ -675,6 +717,13 @@ context 'gcompute_backend_service' do
                     description 'test description#0 data'
                     enable_cdn true
                     health_checks ['rr', 'ss', 'tt', 'uu', 'vv']
+                    iap({
+                      enabled: true,
+                      oauth2_client_id: 'test oauth2_client_id#0 data',
+                      oauth2_client_secret: 'test oauth2_client_secret#0 data',
+                      oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#0 data'
+                    })
+                    load_balancing_scheme 'INTERNAL'
                     port_name 'test port_name#0 data'
                     protocol 'HTTP'
                     region 'resource(region,0)'
@@ -738,6 +787,13 @@ context 'gcompute_backend_service' do
                     description 'test description#1 data'
                     enable_cdn false
                     health_checks ['kk', 'll', 'mm', 'nn']
+                    iap({
+                      enabled: false,
+                      oauth2_client_id: 'test oauth2_client_id#1 data',
+                      oauth2_client_secret: 'test oauth2_client_secret#1 data',
+                      oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#1 data'
+                    })
+                    load_balancing_scheme 'EXTERNAL'
                     port_name 'test port_name#1 data'
                     protocol 'HTTPS'
                     region 'resource(region,1)'
@@ -801,6 +857,13 @@ context 'gcompute_backend_service' do
                     description 'test description#2 data'
                     enable_cdn true
                     health_checks ['ee', 'ff', 'gg', 'hh']
+                    iap({
+                      enabled: true,
+                      oauth2_client_id: 'test oauth2_client_id#2 data',
+                      oauth2_client_secret: 'test oauth2_client_secret#2 data',
+                      oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#2 data'
+                    })
+                    load_balancing_scheme 'INTERNAL'
                     port_name 'test port_name#2 data'
                     protocol 'TCP'
                     region 'resource(region,2)'
@@ -847,6 +910,13 @@ context 'gcompute_backend_service' do
 
               it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
 
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'iap' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
+
               it { is_expected.to have_attributes(bs_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(port_name: 'test port_name#0 data') }
@@ -891,6 +961,13 @@ context 'gcompute_backend_service' do
 
               it { is_expected.to have_attributes(health_checks: %w[kk ll mm nn]) }
 
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'iap' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(load_balancing_scheme: 'EXTERNAL') }
+
               it { is_expected.to have_attributes(bs_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(port_name: 'test port_name#1 data') }
@@ -934,6 +1011,13 @@ context 'gcompute_backend_service' do
               it { is_expected.to have_attributes(enable_cdn: true) }
 
               it { is_expected.to have_attributes(health_checks: %w[ee ff gg hh]) }
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'iap' do
+              #   # Add test code here
+              # end
+
+              it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
               it { is_expected.to have_attributes(bs_label: 'test name#2 data') }
 
@@ -1057,6 +1141,13 @@ context 'gcompute_backend_service' do
                 'description' => 'test description#0 data',
                 'enableCDN' => true,
                 'healthChecks' => %w[rr ss tt uu vv],
+                'iap' => {
+                  'enabled' => true,
+                  'oauth2ClientId' => 'test oauth2_client_id#0 data',
+                  'oauth2ClientSecret' => 'test oauth2_client_secret#0 data',
+                  'oauth2ClientSecretSha256' => 'test oauth2_client_secret_sha256#0 data'
+                },
+                'loadBalancingScheme' => 'INTERNAL',
                 'name' => 'title0',
                 'portName' => 'test port_name#0 data',
                 'protocol' => 'HTTP',
@@ -1208,6 +1299,13 @@ context 'gcompute_backend_service' do
                   description 'test description#0 data'
                   enable_cdn true
                   health_checks ['rr', 'ss', 'tt', 'uu', 'vv']
+                  iap({
+                    enabled: true,
+                    oauth2_client_id: 'test oauth2_client_id#0 data',
+                    oauth2_client_secret: 'test oauth2_client_secret#0 data',
+                    oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#0 data'
+                  })
+                  load_balancing_scheme 'INTERNAL'
                   port_name 'test port_name#0 data'
                   protocol 'HTTP'
                   region 'resource(region,0)'
@@ -1256,6 +1354,13 @@ context 'gcompute_backend_service' do
           it { is_expected.to have_attributes(enable_cdn: true) }
 
           it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
+
+          # TODO(nelsonjr): Implement complex nested property object test.
+          # it 'iap' do
+          #   # Add test code here
+          # end
+
+          it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
           it { is_expected.to have_attributes(bs_label: 'title0') }
 
@@ -1341,6 +1446,13 @@ context 'gcompute_backend_service' do
               'description' => 'test description#0 data',
               'enableCDN' => true,
               'healthChecks' => %w[rr ss tt uu vv],
+              'iap' => {
+                'enabled' => true,
+                'oauth2ClientId' => 'test oauth2_client_id#0 data',
+                'oauth2ClientSecret' => 'test oauth2_client_secret#0 data',
+                'oauth2ClientSecretSha256' => 'test oauth2_client_secret_sha256#0 data'
+              },
+              'loadBalancingScheme' => 'INTERNAL',
               'name' => 'test name#0 data',
               'portName' => 'test port_name#0 data',
               'protocol' => 'HTTP',
@@ -1491,6 +1603,13 @@ context 'gcompute_backend_service' do
                   description 'test description#0 data'
                   enable_cdn true
                   health_checks ['rr', 'ss', 'tt', 'uu', 'vv']
+                  iap({
+                    enabled: true,
+                    oauth2_client_id: 'test oauth2_client_id#0 data',
+                    oauth2_client_secret: 'test oauth2_client_secret#0 data',
+                    oauth2_client_secret_sha256: 'test oauth2_client_secret_sha256#0 data'
+                  })
+                  load_balancing_scheme 'INTERNAL'
                   port_name 'test port_name#0 data'
                   protocol 'HTTP'
                   region 'resource(region,0)'
@@ -1539,6 +1658,13 @@ context 'gcompute_backend_service' do
           it { is_expected.to have_attributes(enable_cdn: true) }
 
           it { is_expected.to have_attributes(health_checks: %w[rr ss tt uu vv]) }
+
+          # TODO(nelsonjr): Implement complex nested property object test.
+          # it 'iap' do
+          #   # Add test code here
+          # end
+
+          it { is_expected.to have_attributes(load_balancing_scheme: 'INTERNAL') }
 
           it { is_expected.to have_attributes(bs_label: 'test name#0 data') }
 

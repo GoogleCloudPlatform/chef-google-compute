@@ -103,6 +103,7 @@ chef-codegen:
   * libraries/google/compute/property/backendservice_cache_key_policy.rb
   * libraries/google/compute/property/backendservice_cdn_policy.rb
   * libraries/google/compute/property/backendservice_connection_draining.rb
+  * libraries/google/compute/property/backendservice_iap.rb
   * libraries/google/compute/property/backendservice_selflink.rb
   * libraries/google/compute/property/boolean.rb
   * libraries/google/compute/property/disk_disk_encryption_key.rb
@@ -117,6 +118,7 @@ chef-codegen:
   * libraries/google/compute/property/firewall_allowed.rb
   * libraries/google/compute/property/firewall_denied.rb
   * libraries/google/compute/property/forwardingrule_selflink.rb
+  * libraries/google/compute/property/health_check_proxy_header.rb
   * libraries/google/compute/property/healthcheck_http_health_check.rb
   * libraries/google/compute/property/healthcheck_https_health_check.rb
   * libraries/google/compute/property/healthcheck_ssl_health_check.rb

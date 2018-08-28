@@ -194,8 +194,16 @@ For complete details of the authentication cookbook, visit the
     An HttpsHealthCheck resource. This resource defines a template for how
     individual VMs should be checked for health, via HTTPS.
 * [`gcompute_health_check`](#gcompute_health_check) -
-    An HealthCheck resource. This resource defines a template for how individual virtual
-    machines should be checked for health, via one of the supported protocols.
+    Health Checks determine whether instances are responsive and able to do work.
+    They are an important part of a comprehensive load balancing configuration,
+    as they enable monitoring instances behind load balancers.
+    Health Checks poll instances at a specified interval. Instances that
+    do not respond successfully to some number of probes in a row are marked
+    as unhealthy. No new connections are sent to unhealthy instances,
+    though existing connections will continue. The health check will
+    continue to poll unhealthy instances. If an instance later responds
+    successfully to some number of consecutive probes, it is marked
+    healthy again and can receive new connections.
 * [`gcompute_instance_template`](#gcompute_instance_template) -
     Defines an Instance Template resource that provides configuration settings
     for your virtual machine instances. Instance templates are not tied to the
@@ -622,7 +630,14 @@ gcompute_backend_service 'id-for-resource' do
     string,
     ...
   ]
+  iap                     {
+    enabled                     boolean,
+    oauth2_client_id            string,
+    oauth2_client_secret        string,
+    oauth2_client_secret_sha256 string,
+  }
   id                      integer
+  load_balancing_scheme   'INTERNAL' or 'EXTERNAL'
   name                    string
   port_name               string
   protocol                'HTTP', 'HTTPS', 'TCP' or 'SSL'
@@ -782,6 +797,26 @@ end
 
 * `id` -
   Output only. The unique identifier for the resource.
+
+* `iap` -
+  Settings for enabling Cloud Identity Aware Proxy
+
+* `iap/enabled`
+  Enables IAP.
+
+* `iap/oauth2_client_id`
+  OAuth2 Client ID for IAP
+
+* `iap/oauth2_client_secret`
+  OAuth2 Client Secret for IAP
+
+* `iap/oauth2_client_secret_sha256`
+  Output only. OAuth2 Client Secret SHA-256 for IAP
+
+* `load_balancing_scheme` -
+  Indicates whether the backend service will be used with internal or
+  external load balancing. A backend service created for one type of
+  load balancing cannot be used with the other.
 
 * `name` -
   Name of the resource. Provided by the client when the resource is
@@ -2126,7 +2161,21 @@ of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
 ### gcompute_health_check
-An HealthCheck resource. This resource defines a template for how individual virtual machines should be checked for health, via one of the supported protocols.
+Health Checks determine whether instances are responsive and able to do work.
+They are an important part of a comprehensive load balancing configuration,
+as they enable monitoring instances behind load balancers.
+
+Health Checks poll instances at a specified interval. Instances that
+do not respond successfully to some number of probes in a row are marked
+as unhealthy. No new connections are sent to unhealthy instances,
+though existing connections will continue. The health check will
+continue to poll unhealthy instances. If an instance later responds
+successfully to some number of consecutive probes, it is marked
+healthy again and can receive new connections.
+
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/latest/healthChecks)
+* [Official Documentation](https://cloud.google.com/load-balancing/docs/health-checks)
 
 #### Example
 
@@ -2187,7 +2236,7 @@ gcompute_health_check 'id-for-resource' do
     response     string,
   }
   timeout_sec         integer
-  type                'TCP', 'SSL' or 'HTTP'
+  type                'TCP', 'SSL', 'HTTP' or 'HTTPS'
   unhealthy_threshold integer
   project             string
   credential          reference to gauth_credential
@@ -2226,7 +2275,7 @@ end
   the server.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
   match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
