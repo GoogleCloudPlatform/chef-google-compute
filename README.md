@@ -194,16 +194,8 @@ For complete details of the authentication cookbook, visit the
     An HttpsHealthCheck resource. This resource defines a template for how
     individual VMs should be checked for health, via HTTPS.
 * [`gcompute_health_check`](#gcompute_health_check) -
-    Health Checks determine whether instances are responsive and able to do work.
-    They are an important part of a comprehensive load balancing configuration,
-    as they enable monitoring instances behind load balancers.
-    Health Checks poll instances at a specified interval. Instances that
-    do not respond successfully to some number of probes in a row are marked
-    as unhealthy. No new connections are sent to unhealthy instances,
-    though existing connections will continue. The health check will
-    continue to poll unhealthy instances. If an instance later responds
-    successfully to some number of consecutive probes, it is marked
-    healthy again and can receive new connections.
+    An HealthCheck resource. This resource defines a template for how individual virtual
+    machines should be checked for health, via one of the supported protocols.
 * [`gcompute_instance_template`](#gcompute_instance_template) -
     Defines an Instance Template resource that provides configuration settings
     for your virtual machine instances. Instance templates are not tied to the
@@ -2134,21 +2126,7 @@ of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
 ### gcompute_health_check
-Health Checks determine whether instances are responsive and able to do work.
-They are an important part of a comprehensive load balancing configuration,
-as they enable monitoring instances behind load balancers.
-
-Health Checks poll instances at a specified interval. Instances that
-do not respond successfully to some number of probes in a row are marked
-as unhealthy. No new connections are sent to unhealthy instances,
-though existing connections will continue. The health check will
-continue to poll unhealthy instances. If an instance later responds
-successfully to some number of consecutive probes, it is marked
-healthy again and can receive new connections.
-
-#### Reference Guides
-* [API Reference](https://cloud.google.com/compute/docs/reference/rest/latest/healthChecks)
-* [Official Documentation](https://cloud.google.com/load-balancing/docs/health-checks)
+An HealthCheck resource. This resource defines a template for how individual virtual machines should be checked for health, via one of the supported protocols.
 
 #### Example
 
@@ -2209,7 +2187,7 @@ gcompute_health_check 'id-for-resource' do
     response     string,
   }
   timeout_sec         integer
-  type                'TCP', 'SSL', 'HTTP' or 'HTTPS'
+  type                'TCP', 'SSL' or 'HTTP'
   unhealthy_threshold integer
   project             string
   credential          reference to gauth_credential
@@ -2248,7 +2226,7 @@ end
   the server.
 
 * `name` -
-  Required. Name of the resource. Provided by the client when the resource is
+  Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035.  Specifically, the name must be 1-63 characters long and
   match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means
