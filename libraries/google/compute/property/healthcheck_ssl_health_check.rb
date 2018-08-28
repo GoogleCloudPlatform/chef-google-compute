@@ -102,7 +102,7 @@ module Google
           @response = Google::Compute::Property::String.api_parse(args['response'])
           @port = Google::Compute::Property::Integer.api_parse(args['port'])
           @port_name = Google::Compute::Property::String.api_parse(args['portName'])
-          @proxy_header = Google::Compute::Property::Enum.api_parse(args['proxyHeader'])
+          @proxy_header = Google::Compute::Property::ProxyHeaderEnum.api_parse(args['proxyHeader'])
         end
       end
 
@@ -114,7 +114,8 @@ module Google
           @response = Google::Compute::Property::String.catalog_parse(args[:response])
           @port = Google::Compute::Property::Integer.catalog_parse(args[:port])
           @port_name = Google::Compute::Property::String.catalog_parse(args[:port_name])
-          @proxy_header = Google::Compute::Property::Enum.catalog_parse(args[:proxy_header])
+          @proxy_header =
+            Google::Compute::Property::ProxyHeaderEnum.catalog_parse(args[:proxy_header])
         end
       end
     end

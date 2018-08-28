@@ -25,40 +25,27 @@
 #
 # ----------------------------------------------------------------------------
 
----
-kind: compute#healthCheck
-name: title2
-id: 6448502614
-checkIntervalSec: 5
-creationTimestamp: '2196-03-05T12:24:32+00:00'
-description: test description#2 data
-healthyThreshold: 2
-httpHealthCheck:
-  host: test host#2 data
-  requestPath: "/"
-  port: 2278536410
-  portName: test port_name#2 data
-  proxyHeader: NONE
-httpsHealthCheck:
-  host: test host#2 data
-  requestPath: "/"
-  port: 2278536410
-  portName: test port_name#2 data
-  proxyHeader: NONE
-project: "'test project#2 data'"
-sslHealthCheck:
-  request: test request#2 data
-  response: test response#2 data
-  port: 2278536410
-  portName: test port_name#2 data
-  proxyHeader: NONE
-tcpHealthCheck:
-  request: test request#2 data
-  response: test response#2 data
-  port: 2278536410
-  portName: test port_name#2 data
-  proxyHeader: NONE
-timeoutSec: 5
-type: HTTP
-unhealthyThreshold: 2
-selfLink: selflink(resource(health_check,2))
+module Google
+  module Compute
+    module Property
+      # A class to handle serialization of an enum with a
+      # default.  The default is important because GCP sometimes
+      # does not return the default value for an enum, but we need
+      # to avoid detecting a diff if it is explicitly set.
+      class ProxyHeaderEnum
+        def self.coerce
+          ->(x) { ::Google::Compute::Property::Enum.catalog_parse(x) }
+        end
+
+        def self.api_parse(value)
+          return "NONE" if value.nil?
+          value
+        end
+
+        def self.catalog_parse(value)
+          value
+        end
+      end
+    end
+  end
+end
