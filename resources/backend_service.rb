@@ -37,6 +37,7 @@ require 'google/compute/property/backendservice_backends'
 require 'google/compute/property/backendservice_cache_key_policy'
 require 'google/compute/property/backendservice_cdn_policy'
 require 'google/compute/property/backendservice_connection_draining'
+require 'google/compute/property/backendservice_iap'
 require 'google/compute/property/boolean'
 require 'google/compute/property/double'
 require 'google/compute/property/enum'
@@ -82,6 +83,12 @@ module Google
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      property :iap,
+               [Hash, ::Google::Compute::Data::BackendServiceIap],
+               coerce: ::Google::Compute::Property::BackendServiceIap.coerce, desired_state: true
+      property :load_balancing_scheme,
+               equal_to: %w[INTERNAL EXTERNAL],
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :bs_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
@@ -143,6 +150,10 @@ module Google
           @current_resource.health_checks =
             ::Google::Compute::Property::StringArray.api_parse(fetch['healthChecks'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
+          @current_resource.iap =
+            ::Google::Compute::Property::BackendServiceIap.api_parse(fetch['iap'])
+          @current_resource.load_balancing_scheme =
+            ::Google::Compute::Property::Enum.api_parse(fetch['loadBalancingScheme'])
           @current_resource.bs_label =
             ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.port_name =
@@ -196,6 +207,8 @@ module Google
             description: new_resource.description,
             enableCDN: new_resource.enable_cdn,
             healthChecks: new_resource.health_checks,
+            iap: new_resource.iap,
+            loadBalancingScheme: new_resource.load_balancing_scheme,
             name: new_resource.bs_label,
             portName: new_resource.port_name,
             protocol: new_resource.protocol,
@@ -243,6 +256,8 @@ module Google
             enable_cdn: resource.enable_cdn,
             health_checks: resource.health_checks,
             id: resource.id,
+            iap: resource.iap,
+            load_balancing_scheme: resource.load_balancing_scheme,
             port_name: resource.port_name,
             protocol: resource.protocol,
             region: resource.region,

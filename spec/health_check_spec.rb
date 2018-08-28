@@ -97,20 +97,20 @@ context 'gcompute_health_check' do
                     action :create
                     check_interval_sec 5
                     description 'test description#0 data'
-                    healthy_threshold 295703256
+                    healthy_threshold 2
                     http_health_check({
                       host: 'test host#0 data',
                       port: 759512136,
                       port_name: 'test port_name#0 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#0 data'
+                      request_path: '/'
                     })
                     https_health_check({
                       host: 'test host#0 data',
                       port: 759512136,
                       port_name: 'test port_name#0 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#0 data'
+                      request_path: '/'
                     })
                     ssl_health_check({
                       port: 759512136,
@@ -137,32 +137,32 @@ context 'gcompute_health_check' do
                     action :create
                     check_interval_sec 5
                     description 'test description#1 data'
-                    healthy_threshold 591406512
+                    healthy_threshold 2
                     http_health_check({
                       host: 'test host#1 data',
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
-                      request_path: 'test request_path#1 data'
+                      proxy_header: 'NONE',
+                      request_path: '/'
                     })
                     https_health_check({
                       host: 'test host#1 data',
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
-                      request_path: 'test request_path#1 data'
+                      proxy_header: 'NONE',
+                      request_path: '/'
                     })
                     ssl_health_check({
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
+                      proxy_header: 'NONE',
                       request: 'test request#1 data',
                       response: 'test response#1 data'
                     })
                     tcp_health_check({
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
+                      proxy_header: 'NONE',
                       request: 'test request#1 data',
                       response: 'test response#1 data'
                     })
@@ -177,20 +177,20 @@ context 'gcompute_health_check' do
                     action :create
                     check_interval_sec 5
                     description 'test description#2 data'
-                    healthy_threshold 887109769
+                    healthy_threshold 2
                     http_health_check({
                       host: 'test host#2 data',
                       port: 2278536410,
                       port_name: 'test port_name#2 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#2 data'
+                      request_path: '/'
                     })
                     https_health_check({
                       host: 'test host#2 data',
                       port: 2278536410,
                       port_name: 'test port_name#2 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#2 data'
+                      request_path: '/'
                     })
                     ssl_health_check({
                       port: 2278536410,
@@ -231,7 +231,7 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
+              it { is_expected.to have_attributes(healthy_threshold: 2) }
 
               it { is_expected.to have_attributes(hc_label: 'title0') }
 
@@ -271,7 +271,7 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it { is_expected.to have_attributes(healthy_threshold: 591_406_512) }
+              it { is_expected.to have_attributes(healthy_threshold: 2) }
 
               it { is_expected.to have_attributes(hc_label: 'title1') }
 
@@ -311,7 +311,7 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it { is_expected.to have_attributes(healthy_threshold: 887_109_769) }
+              it { is_expected.to have_attributes(healthy_threshold: 2) }
 
               it { is_expected.to have_attributes(hc_label: 'title2') }
 
@@ -396,20 +396,20 @@ context 'gcompute_health_check' do
                     check_interval_sec 5
                     description 'test description#0 data'
                     hc_label 'test name#0 data'
-                    healthy_threshold 295703256
+                    healthy_threshold 2
                     http_health_check({
                       host: 'test host#0 data',
                       port: 759512136,
                       port_name: 'test port_name#0 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#0 data'
+                      request_path: '/'
                     })
                     https_health_check({
                       host: 'test host#0 data',
                       port: 759512136,
                       port_name: 'test port_name#0 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#0 data'
+                      request_path: '/'
                     })
                     ssl_health_check({
                       port: 759512136,
@@ -437,32 +437,32 @@ context 'gcompute_health_check' do
                     check_interval_sec 5
                     description 'test description#1 data'
                     hc_label 'test name#1 data'
-                    healthy_threshold 591406512
+                    healthy_threshold 2
                     http_health_check({
                       host: 'test host#1 data',
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
-                      request_path: 'test request_path#1 data'
+                      proxy_header: 'NONE',
+                      request_path: '/'
                     })
                     https_health_check({
                       host: 'test host#1 data',
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
-                      request_path: 'test request_path#1 data'
+                      proxy_header: 'NONE',
+                      request_path: '/'
                     })
                     ssl_health_check({
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
+                      proxy_header: 'NONE',
                       request: 'test request#1 data',
                       response: 'test response#1 data'
                     })
                     tcp_health_check({
                       port: 1519024273,
                       port_name: 'test port_name#1 data',
-                      proxy_header: 'PROXY_V1',
+                      proxy_header: 'NONE',
                       request: 'test request#1 data',
                       response: 'test response#1 data'
                     })
@@ -478,20 +478,20 @@ context 'gcompute_health_check' do
                     check_interval_sec 5
                     description 'test description#2 data'
                     hc_label 'test name#2 data'
-                    healthy_threshold 887109769
+                    healthy_threshold 2
                     http_health_check({
                       host: 'test host#2 data',
                       port: 2278536410,
                       port_name: 'test port_name#2 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#2 data'
+                      request_path: '/'
                     })
                     https_health_check({
                       host: 'test host#2 data',
                       port: 2278536410,
                       port_name: 'test port_name#2 data',
                       proxy_header: 'NONE',
-                      request_path: 'test request_path#2 data'
+                      request_path: '/'
                     })
                     ssl_health_check({
                       port: 2278536410,
@@ -532,7 +532,7 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
+              it { is_expected.to have_attributes(healthy_threshold: 2) }
 
               it { is_expected.to have_attributes(hc_label: 'test name#0 data') }
 
@@ -572,7 +572,7 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it { is_expected.to have_attributes(healthy_threshold: 591_406_512) }
+              it { is_expected.to have_attributes(healthy_threshold: 2) }
 
               it { is_expected.to have_attributes(hc_label: 'test name#1 data') }
 
@@ -612,7 +612,7 @@ context 'gcompute_health_check' do
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it { is_expected.to have_attributes(healthy_threshold: 887_109_769) }
+              it { is_expected.to have_attributes(healthy_threshold: 2) }
 
               it { is_expected.to have_attributes(hc_label: 'test name#2 data') }
 
@@ -700,21 +700,21 @@ context 'gcompute_health_check' do
                 'kind' => 'compute#healthCheck',
                 'checkIntervalSec' => 5,
                 'description' => 'test description#0 data',
-                'healthyThreshold' => 295_703_256,
+                'healthyThreshold' => 2,
                 'name' => 'title0',
                 'timeoutSec' => 5,
                 'unhealthyThreshold' => 2,
                 'type' => 'TCP',
                 'httpHealthCheck' => {
                   'host' => 'test host#0 data',
-                  'requestPath' => 'test request_path#0 data',
+                  'requestPath' => '/',
                   'port' => 759_512_136,
                   'portName' => 'test port_name#0 data',
                   'proxyHeader' => 'NONE'
                 },
                 'httpsHealthCheck' => {
                   'host' => 'test host#0 data',
-                  'requestPath' => 'test request_path#0 data',
+                  'requestPath' => '/',
                   'port' => 759_512_136,
                   'portName' => 'test port_name#0 data',
                   'proxyHeader' => 'NONE'
@@ -769,20 +769,20 @@ context 'gcompute_health_check' do
                   action :create
                   check_interval_sec 5
                   description 'test description#0 data'
-                  healthy_threshold 295703256
+                  healthy_threshold 2
                   http_health_check({
                     host: 'test host#0 data',
                     port: 759512136,
                     port_name: 'test port_name#0 data',
                     proxy_header: 'NONE',
-                    request_path: 'test request_path#0 data'
+                    request_path: '/'
                   })
                   https_health_check({
                     host: 'test host#0 data',
                     port: 759512136,
                     port_name: 'test port_name#0 data',
                     proxy_header: 'NONE',
-                    request_path: 'test request_path#0 data'
+                    request_path: '/'
                   })
                   ssl_health_check({
                     port: 759512136,
@@ -826,7 +826,7 @@ context 'gcompute_health_check' do
 
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
+          it { is_expected.to have_attributes(healthy_threshold: 2) }
 
           it { is_expected.to have_attributes(hc_label: 'title0') }
 
@@ -876,21 +876,21 @@ context 'gcompute_health_check' do
               'kind' => 'compute#healthCheck',
               'checkIntervalSec' => 5,
               'description' => 'test description#0 data',
-              'healthyThreshold' => 295_703_256,
+              'healthyThreshold' => 2,
               'name' => 'test name#0 data',
               'timeoutSec' => 5,
               'unhealthyThreshold' => 2,
               'type' => 'TCP',
               'httpHealthCheck' => {
                 'host' => 'test host#0 data',
-                'requestPath' => 'test request_path#0 data',
+                'requestPath' => '/',
                 'port' => 759_512_136,
                 'portName' => 'test port_name#0 data',
                 'proxyHeader' => 'NONE'
               },
               'httpsHealthCheck' => {
                 'host' => 'test host#0 data',
-                'requestPath' => 'test request_path#0 data',
+                'requestPath' => '/',
                 'port' => 759_512_136,
                 'portName' => 'test port_name#0 data',
                 'proxyHeader' => 'NONE'
@@ -944,20 +944,20 @@ context 'gcompute_health_check' do
                   check_interval_sec 5
                   description 'test description#0 data'
                   hc_label 'test name#0 data'
-                  healthy_threshold 295703256
+                  healthy_threshold 2
                   http_health_check({
                     host: 'test host#0 data',
                     port: 759512136,
                     port_name: 'test port_name#0 data',
                     proxy_header: 'NONE',
-                    request_path: 'test request_path#0 data'
+                    request_path: '/'
                   })
                   https_health_check({
                     host: 'test host#0 data',
                     port: 759512136,
                     port_name: 'test port_name#0 data',
                     proxy_header: 'NONE',
-                    request_path: 'test request_path#0 data'
+                    request_path: '/'
                   })
                   ssl_health_check({
                     port: 759512136,
@@ -1001,7 +1001,7 @@ context 'gcompute_health_check' do
 
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it { is_expected.to have_attributes(healthy_threshold: 295_703_256) }
+          it { is_expected.to have_attributes(healthy_threshold: 2) }
 
           it { is_expected.to have_attributes(hc_label: 'test name#0 data') }
 

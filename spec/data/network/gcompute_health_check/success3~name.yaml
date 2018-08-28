@@ -32,16 +32,16 @@ id: 6448502614
 checkIntervalSec: 5
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
-healthyThreshold: 887109769
+healthyThreshold: 2
 httpHealthCheck:
   host: test host#2 data
-  requestPath: test request_path#2 data
+  requestPath: "/"
   port: 2278536410
   portName: test port_name#2 data
   proxyHeader: NONE
 httpsHealthCheck:
   host: test host#2 data
-  requestPath: test request_path#2 data
+  requestPath: "/"
   port: 2278536410
   portName: test port_name#2 data
   proxyHeader: NONE

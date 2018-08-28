@@ -82,6 +82,12 @@ healthChecks:
 - ff
 - gg
 - hh
+iap:
+  enabled: true
+  oauth2ClientId: test oauth2_client_id#2 data
+  oauth2ClientSecret: test oauth2_client_secret#2 data
+  oauth2ClientSecretSha256: test oauth2_client_secret_sha256#2 data
+loadBalancingScheme: INTERNAL
 portName: test port_name#2 data
 project: "'test project#2 data'"
 protocol: TCP

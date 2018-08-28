@@ -86,6 +86,12 @@ healthChecks:
 - tt
 - uu
 - vv
+iap:
+  enabled: true
+  oauth2ClientId: test oauth2_client_id#0 data
+  oauth2ClientSecret: test oauth2_client_secret#0 data
+  oauth2ClientSecretSha256: test oauth2_client_secret_sha256#0 data
+loadBalancingScheme: INTERNAL
 portName: test port_name#0 data
 project: "'test project#0 data'"
 protocol: HTTP
