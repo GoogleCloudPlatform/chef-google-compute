@@ -301,8 +301,6 @@ module Google
           result = JSON.parse(response.body)
           raise_if_errors result, %w[error errors], 'message'
           raise "Bad response: #{response}" unless response.is_a?(Net::HTTPOK)
-          raise "Incorrect result: #{result['kind']} (expected '#{kind}')" \
-            unless result['kind'] == kind
           result
         end
         # rubocop:enable Metrics/CyclomaticComplexity
