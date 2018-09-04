@@ -27,8 +27,9 @@
 
 name 'google-gcompute'
 maintainer 'Google'
-maintainer_email 'nelsona@google.com'
-license 'apachev2'
+maintainer_email 'chef-on-gcp@google.com'
+license 'Apache-2.0'
+chef_version '>= 12.5' if respond_to?(:chef_version)
 description 'A Chef cookbook to manage Google Cloud Compute resources'
 long_description '
     This cookbook provides the built-in types and services for Chef to manage
