@@ -82,7 +82,7 @@ gcompute_backend_service 'chef-e2e-my-ssl-backend' do
     { group: 'chef-e2e-my-chef-servers' }
   ]
   health_checks [
-    gcompute_health_check_ref('another-hc', ENV['PROJECT'] # ex: 'my-test-project')
+    gcompute_health_check_ref('another-hc', ENV['PROJECT']) # ex: 'my-test-project'
   ]
   protocol 'SSL'
   project ENV['PROJECT'] # ex: 'my-test-project'
