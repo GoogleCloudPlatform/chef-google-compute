@@ -36,6 +36,7 @@ require 'google/compute/network/put'
 require 'google/compute/property/integer'
 require 'google/compute/property/namevalues'
 require 'google/compute/property/region_name'
+require 'google/compute/property/router_selflink'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/targetvpngateway_selflink'
@@ -61,7 +62,8 @@ module Google
                coerce: ::Google::Compute::Property::TargetVpnGatewaySelfLinkRef.coerce,
                desired_state: true
       property :router,
-               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+               [String, ::Google::Compute::Data::RouterSelfLinkRef],
+               coerce: ::Google::Compute::Property::RouterSelfLinkRef.coerce, desired_state: true
       property :peer_ip,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :shared_secret,

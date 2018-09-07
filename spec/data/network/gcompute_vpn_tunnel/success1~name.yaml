@@ -48,7 +48,7 @@ remoteTrafficSelector:
 - xx
 - yy
 - zz
-router: test router#0 data
+router: selflink(resource(router,0))
 sharedSecret: test shared_secret#0 data
 sharedSecretHash: test shared_secret_hash#0 data
 targetVpnGateway: selflink(resource(target_vpn_gateway,0))
