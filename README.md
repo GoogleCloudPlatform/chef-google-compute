@@ -5756,7 +5756,7 @@ gcompute_vpn_tunnel 'id-for-resource' do
     string,
     ...
   ]
-  router                  string
+  router                  reference to gcompute_router
   shared_secret           string
   shared_secret_hash      string
   target_vpn_gateway      reference to gcompute_target_vpn_gateway

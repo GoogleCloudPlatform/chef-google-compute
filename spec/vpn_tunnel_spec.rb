@@ -73,6 +73,9 @@ context 'gcompute_vpn_tunnel' do
               expect_network_get_success_target_vpn_gateway 1, region: 'test name#0 data'
               expect_network_get_success_target_vpn_gateway 2, region: 'test name#1 data'
               expect_network_get_success_target_vpn_gateway 3, region: 'test name#2 data'
+              expect_network_get_success_router 1, region: 'test name#0 data'
+              expect_network_get_success_router 2, region: 'test name#1 data'
+              expect_network_get_success_router 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -92,7 +95,7 @@ context 'gcompute_vpn_tunnel' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+                step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                               gcompute_target_vpn_gateway],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
@@ -172,6 +175,33 @@ context 'gcompute_vpn_tunnel' do
                     credential 'mycred'
                   end
 
+                  gcompute_router 'resource(router,0)' do
+                    action :create
+                    network 'resource(network,0)'
+                    r_label 'test name#0 data'
+                    region 'resource(region,0)'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_router 'resource(router,1)' do
+                    action :create
+                    network 'resource(network,1)'
+                    r_label 'test name#1 data'
+                    region 'resource(region,1)'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_router 'resource(router,2)' do
+                    action :create
+                    network 'resource(network,2)'
+                    r_label 'test name#2 data'
+                    region 'resource(region,2)'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_vpn_tunnel 'title0' do
                     action :create
                     description 'test description#0 data'
@@ -184,7 +214,7 @@ context 'gcompute_vpn_tunnel' do
                     peer_ip 'test peer_ip#0 data'
                     region 'resource(region,0)'
                     remote_traffic_selector ['xx', 'yy', 'zz']
-                    router 'test router#0 data'
+                    router 'resource(router,0)'
                     shared_secret 'test shared_secret#0 data'
                     target_vpn_gateway 'resource(target_vpn_gateway,0)'
                     project 'test project#0 data'
@@ -204,7 +234,7 @@ context 'gcompute_vpn_tunnel' do
                     peer_ip 'test peer_ip#1 data'
                     region 'resource(region,1)'
                     remote_traffic_selector ['ww', 'xx', 'yy', 'zz']
-                    router 'test router#1 data'
+                    router 'resource(router,1)'
                     shared_secret 'test shared_secret#1 data'
                     target_vpn_gateway 'resource(target_vpn_gateway,1)'
                     project 'test project#1 data'
@@ -225,7 +255,7 @@ context 'gcompute_vpn_tunnel' do
                     peer_ip 'test peer_ip#2 data'
                     region 'resource(region,2)'
                     remote_traffic_selector ['vv', 'ww', 'xx', 'yy', 'zz']
-                    router 'test router#2 data'
+                    router 'resource(router,2)'
                     shared_secret 'test shared_secret#2 data'
                     target_vpn_gateway 'resource(target_vpn_gateway,2)'
                     project 'test project#2 data'
@@ -255,7 +285,10 @@ context 'gcompute_vpn_tunnel' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(router: 'test router#0 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'router' do
+              #   # Add test code here
+              # end
 
               it { is_expected.to have_attributes(peer_ip: 'test peer_ip#0 data') }
 
@@ -292,7 +325,10 @@ context 'gcompute_vpn_tunnel' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(router: 'test router#1 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'router' do
+              #   # Add test code here
+              # end
 
               it { is_expected.to have_attributes(peer_ip: 'test peer_ip#1 data') }
 
@@ -329,7 +365,10 @@ context 'gcompute_vpn_tunnel' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(router: 'test router#2 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'router' do
+              #   # Add test code here
+              # end
 
               it { is_expected.to have_attributes(peer_ip: 'test peer_ip#2 data') }
 
@@ -381,6 +420,9 @@ context 'gcompute_vpn_tunnel' do
               expect_network_get_success_target_vpn_gateway 1, region: 'test name#0 data'
               expect_network_get_success_target_vpn_gateway 2, region: 'test name#1 data'
               expect_network_get_success_target_vpn_gateway 3, region: 'test name#2 data'
+              expect_network_get_success_router 1, region: 'test name#0 data'
+              expect_network_get_success_router 2, region: 'test name#1 data'
+              expect_network_get_success_router 3, region: 'test name#2 data'
             end
 
             let(:runner) do
@@ -400,7 +442,7 @@ context 'gcompute_vpn_tunnel' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+                step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                               gcompute_target_vpn_gateway],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
@@ -480,6 +522,33 @@ context 'gcompute_vpn_tunnel' do
                     credential 'mycred'
                   end
 
+                  gcompute_router 'resource(router,0)' do
+                    action :create
+                    network 'resource(network,0)'
+                    r_label 'test name#0 data'
+                    region 'resource(region,0)'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_router 'resource(router,1)' do
+                    action :create
+                    network 'resource(network,1)'
+                    r_label 'test name#1 data'
+                    region 'resource(region,1)'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_router 'resource(router,2)' do
+                    action :create
+                    network 'resource(network,2)'
+                    r_label 'test name#2 data'
+                    region 'resource(region,2)'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
                   gcompute_vpn_tunnel 'title0' do
                     action :create
                     description 'test description#0 data'
@@ -492,7 +561,7 @@ context 'gcompute_vpn_tunnel' do
                     peer_ip 'test peer_ip#0 data'
                     region 'resource(region,0)'
                     remote_traffic_selector ['xx', 'yy', 'zz']
-                    router 'test router#0 data'
+                    router 'resource(router,0)'
                     shared_secret 'test shared_secret#0 data'
                     target_vpn_gateway 'resource(target_vpn_gateway,0)'
                     vt_label 'test name#0 data'
@@ -513,7 +582,7 @@ context 'gcompute_vpn_tunnel' do
                     peer_ip 'test peer_ip#1 data'
                     region 'resource(region,1)'
                     remote_traffic_selector ['ww', 'xx', 'yy', 'zz']
-                    router 'test router#1 data'
+                    router 'resource(router,1)'
                     shared_secret 'test shared_secret#1 data'
                     target_vpn_gateway 'resource(target_vpn_gateway,1)'
                     vt_label 'test name#1 data'
@@ -535,7 +604,7 @@ context 'gcompute_vpn_tunnel' do
                     peer_ip 'test peer_ip#2 data'
                     region 'resource(region,2)'
                     remote_traffic_selector ['vv', 'ww', 'xx', 'yy', 'zz']
-                    router 'test router#2 data'
+                    router 'resource(router,2)'
                     shared_secret 'test shared_secret#2 data'
                     target_vpn_gateway 'resource(target_vpn_gateway,2)'
                     vt_label 'test name#2 data'
@@ -566,7 +635,10 @@ context 'gcompute_vpn_tunnel' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(router: 'test router#0 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'router' do
+              #   # Add test code here
+              # end
 
               it { is_expected.to have_attributes(peer_ip: 'test peer_ip#0 data') }
 
@@ -603,7 +675,10 @@ context 'gcompute_vpn_tunnel' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(router: 'test router#1 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'router' do
+              #   # Add test code here
+              # end
 
               it { is_expected.to have_attributes(peer_ip: 'test peer_ip#1 data') }
 
@@ -640,7 +715,10 @@ context 'gcompute_vpn_tunnel' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(router: 'test router#2 data') }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'router' do
+              #   # Add test code here
+              # end
 
               it { is_expected.to have_attributes(peer_ip: 'test peer_ip#2 data') }
 
@@ -721,7 +799,7 @@ context 'gcompute_vpn_tunnel' do
                 'name' => 'title0',
                 'description' => 'test description#0 data',
                 'targetVpnGateway' => 'selflink(resource(target_vpn_gateway,0))',
-                'router' => 'test router#0 data',
+                'router' => 'selflink(resource(router,0))',
                 'peerIp' => 'test peer_ip#0 data',
                 'sharedSecret' => 'test shared_secret#0 data',
                 'ikeVersion' => 2,
@@ -738,6 +816,7 @@ context 'gcompute_vpn_tunnel' do
             expect_network_get_success_network 1
             expect_network_get_success_region 1
             expect_network_get_success_target_vpn_gateway 1, region: 'test name#0 data'
+            expect_network_get_success_router 1, region: 'test name#0 data'
           end
 
           let(:runner) do
@@ -757,7 +836,7 @@ context 'gcompute_vpn_tunnel' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                             gcompute_target_vpn_gateway],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -791,6 +870,15 @@ context 'gcompute_vpn_tunnel' do
                   credential 'mycred'
                 end
 
+                gcompute_router 'resource(router,0)' do
+                  action :create
+                  network 'resource(network,0)'
+                  r_label 'test name#0 data'
+                  region 'resource(region,0)'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_vpn_tunnel 'title0' do
                   action :create
                   description 'test description#0 data'
@@ -803,7 +891,7 @@ context 'gcompute_vpn_tunnel' do
                   peer_ip 'test peer_ip#0 data'
                   region 'resource(region,0)'
                   remote_traffic_selector ['xx', 'yy', 'zz']
-                  router 'test router#0 data'
+                  router 'resource(router,0)'
                   shared_secret 'test shared_secret#0 data'
                   target_vpn_gateway 'resource(target_vpn_gateway,0)'
                   project 'test project#0 data'
@@ -836,7 +924,10 @@ context 'gcompute_vpn_tunnel' do
           #   # Add test code here
           # end
 
-          it { is_expected.to have_attributes(router: 'test router#0 data') }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'router' do
+          #   # Add test code here
+          # end
 
           it { is_expected.to have_attributes(peer_ip: 'test peer_ip#0 data') }
 
@@ -880,7 +971,7 @@ context 'gcompute_vpn_tunnel' do
                 'name' => 'test name#0 data',
                 'description' => 'test description#0 data',
                 'targetVpnGateway' => 'selflink(resource(target_vpn_gateway,0))',
-                'router' => 'test router#0 data',
+                'router' => 'selflink(resource(router,0))',
                 'peerIp' => 'test peer_ip#0 data',
                 'sharedSecret' => 'test shared_secret#0 data',
                 'ikeVersion' => 2,
@@ -896,6 +987,7 @@ context 'gcompute_vpn_tunnel' do
             expect_network_get_success_network 1
             expect_network_get_success_region 1
             expect_network_get_success_target_vpn_gateway 1, region: 'test name#0 data'
+            expect_network_get_success_router 1, region: 'test name#0 data'
           end
 
           let(:runner) do
@@ -915,7 +1007,7 @@ context 'gcompute_vpn_tunnel' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                             gcompute_target_vpn_gateway],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -949,6 +1041,15 @@ context 'gcompute_vpn_tunnel' do
                   credential 'mycred'
                 end
 
+                gcompute_router 'resource(router,0)' do
+                  action :create
+                  network 'resource(network,0)'
+                  r_label 'test name#0 data'
+                  region 'resource(region,0)'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
                 gcompute_vpn_tunnel 'title0' do
                   action :create
                   description 'test description#0 data'
@@ -961,7 +1062,7 @@ context 'gcompute_vpn_tunnel' do
                   peer_ip 'test peer_ip#0 data'
                   region 'resource(region,0)'
                   remote_traffic_selector ['xx', 'yy', 'zz']
-                  router 'test router#0 data'
+                  router 'resource(router,0)'
                   shared_secret 'test shared_secret#0 data'
                   target_vpn_gateway 'resource(target_vpn_gateway,0)'
                   vt_label 'test name#0 data'
@@ -995,7 +1096,10 @@ context 'gcompute_vpn_tunnel' do
           #   # Add test code here
           # end
 
-          it { is_expected.to have_attributes(router: 'test router#0 data') }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'router' do
+          #   # Add test code here
+          # end
 
           it { is_expected.to have_attributes(peer_ip: 'test peer_ip#0 data') }
 
@@ -1058,7 +1162,7 @@ context 'gcompute_vpn_tunnel' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                             gcompute_target_vpn_gateway],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1152,7 +1256,7 @@ context 'gcompute_vpn_tunnel' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                             gcompute_target_vpn_gateway],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1251,7 +1355,7 @@ context 'gcompute_vpn_tunnel' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                             gcompute_target_vpn_gateway],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1351,7 +1455,7 @@ context 'gcompute_vpn_tunnel' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network
+              step_into: %w[gcompute_vpn_tunnel gcompute_region gcompute_network gcompute_router
                             gcompute_target_vpn_gateway],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
@@ -1685,6 +1789,155 @@ context 'gcompute_vpn_tunnel' do
     )
   end
 
+  def expect_network_get_success_router(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_router("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_router(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_router(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_router(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_router', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_router objects
+  def uri_data_router(id)
+    {
+      project: GoogleTests::Constants::R_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::R_PROJECT_DATA.size],
+      region: GoogleTests::Constants::R_REGION_DATA[(id - 1) \
+        % GoogleTests::Constants::R_REGION_DATA.size],
+      name: GoogleTests::Constants::R_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::R_NAME_DATA.size]
+    }
+  end
+
+  def self_link_router(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_router(
+        'projects/{{project}}/regions/{{region}}/routers/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_network(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_network("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_network(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_network(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_network(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_network', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_network objects
+  def uri_data_network(id)
+    {
+      project: GoogleTests::Constants::N_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::N_PROJECT_DATA.size],
+      name: GoogleTests::Constants::N_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::N_NAME_DATA.size]
+    }
+  end
+
+  def self_link_network(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_network(
+        'projects/{{project}}/global/networks/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_region(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_region("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_region(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_region(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_region(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_region', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_region objects
+  def uri_data_region(id)
+    {
+      project: GoogleTests::Constants::R_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::R_PROJECT_DATA.size],
+      name: GoogleTests::Constants::R_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::R_NAME_DATA.size]
+    }
+  end
+
+  def self_link_region(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_region(
+        'projects/{{project}}/regions/{{name}}',
+        data
+      )
+    )
+  end
+
   def expect_network_get_success_region(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
     body = load_network_result_region("success#{id}~" \
@@ -1745,6 +1998,21 @@ context 'gcompute_vpn_tunnel' do
 
   def expand_variables_target_vpn_gateway(template, data, ext_dat = {})
     Google::GCOMPUTE::TargetVpnGateway
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_network(template, data, ext_dat = {})
+    Google::GCOMPUTE::Network
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_region(template, data, ext_dat = {})
+    Google::GCOMPUTE::Region
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_router(template, data, ext_dat = {})
+    Google::GCOMPUTE::Router
       .action_class.expand_variables(template, data, ext_dat)
   end
 
