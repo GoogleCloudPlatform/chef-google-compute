@@ -35,10 +35,12 @@ module Google
         end
 
         def self.catalog_parse(value)
+          return if value.nil?
           value.to_f
         end
 
         def self.api_parse(value)
+          return if value.nil?
           value.to_f
         end
       end
