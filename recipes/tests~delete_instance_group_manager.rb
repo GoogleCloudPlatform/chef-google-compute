@@ -60,11 +60,6 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_zone 'us-west1-a' do
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_instance_group_manager 'test1' do
   action :delete
   zone 'us-west1-a'

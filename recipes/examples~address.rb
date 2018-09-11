@@ -60,16 +60,10 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
 
 gcompute_address 'test1' do
   action :create
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

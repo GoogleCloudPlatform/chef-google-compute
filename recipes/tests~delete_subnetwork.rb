@@ -60,16 +60,9 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_region 'chef-e2e-some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_subnetwork 'chef-e2e-servers' do
   action :delete
-  region 'chef-e2e-some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

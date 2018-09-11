@@ -30,12 +30,6 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_zone 'us-west1-a' do
-  action :create
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_disk 'instance-test-os-1' do
   action :create
   source_image 'projects/ubuntu-os-cloud/global/images/family/ubuntu-1604-lts'
@@ -50,22 +44,9 @@ gcompute_network 'mynetwork-test' do
   credential 'mycred'
 end
 
-gcompute_region 'us-west1' do
-  action :create
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_address 'instance-test-ip' do
   action :create
   region 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-gcompute_machine_type 'n1-standard-1' do
-  action :create
-  zone 'us-west1-a'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -144,10 +125,6 @@ For complete details of the authentication cookbook, visit the
 * [`gcompute_backend_service`](#gcompute_backend_service) -
     Creates a BackendService resource in the specified project using the data
     included in the request.
-* [`gcompute_disk_type`](#gcompute_disk_type) -
-    Represents a DiskType resource. A DiskType resource represents the type
-    of disk to use, such as a pd-ssd or pd-standard. To reference a disk
-    type, use the disk type's full or partial URL.
 * [`gcompute_disk`](#gcompute_disk) -
     Persistent disks are durable storage devices that function similarly to
     the physical disks in a desktop or a server. Compute Engine manages the
@@ -213,10 +190,6 @@ For complete details of the authentication cookbook, visit the
     managed instance group.
     Tip: Disks should be set to autoDelete=true
     so that leftover disks are not left behind on machine deletion.
-* [`gcompute_license`](#gcompute_license) -
-    A License resource represents a software license. Licenses are used to
-    track software usage in images, persistent disks, snapshots, and virtual
-    machine instances.
 * [`gcompute_image`](#gcompute_image) -
     Represents an Image resource.
     Google Compute Engine uses operating system images to create the root
@@ -246,10 +219,6 @@ For complete details of the authentication cookbook, visit the
     instances in the group have not yet been created. You must separately
     verify the status of the individual instances.
     A managed instance group can have up to 1000 VM instances per group.
-* [`gcompute_machine_type`](#gcompute_machine_type) -
-    Represents a MachineType resource. Machine types determine the virtualized
-    hardware specifications of your virtual machine instances, such as the
-    amount of memory or number of virtual CPUs.
 * [`gcompute_network`](#gcompute_network) -
     Represents a Network resource.
     Your Cloud Platform Console project can contain multiple networks, and
@@ -264,10 +233,6 @@ For complete details of the authentication cookbook, visit the
     to one network. All Compute Engine networks use the IPv4 protocol. Compute
     Engine currently does not support IPv6. However, Google is a major
     advocate of IPv6 and it is an important future direction.
-* [`gcompute_region`](#gcompute_region) -
-    Represents a Region resource. A region is a specific geographical
-    location where you can run your resources. Each region has one or more
-    zones
 * [`gcompute_route`](#gcompute_route) -
     Represents a Route resource.
     A route is a rule that specifies how certain packets should be handled by
@@ -348,8 +313,6 @@ For complete details of the authentication cookbook, visit the
     that you define for the host and path of an incoming URL.
 * [`gcompute_vpn_tunnel`](#gcompute_vpn_tunnel) -
     VPN tunnel resource.
-* [`gcompute_zone`](#gcompute_zone) -
-    Represents a Zone resource.
 
 
 ### gcompute_address
@@ -375,16 +338,10 @@ static.
 #### Example
 
 ```ruby
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
 
 gcompute_address 'test1' do
   action :create
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -857,114 +814,6 @@ end
 
 #### Label
 Set the `bs_label` property when attempting to set primary key
-of this object. The primary key will always be referred to by the initials of
-the resource followed by "_label"
-
-### gcompute_disk_type
-Represents a DiskType resource. A DiskType resource represents the type
-of disk to use, such as a pd-ssd or pd-standard. To reference a disk
-type, use the disk type's full or partial URL.
-
-
-#### Example
-
-```ruby
-gcompute_disk_type 'pd-standard' do
-  action :create
-  zone 'us-central1-a'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-```
-
-#### Reference
-
-```ruby
-gcompute_disk_type 'id-for-resource' do
-  creation_timestamp   time
-  default_disk_size_gb integer
-  deprecated           {
-    deleted     time,
-    deprecated  time,
-    obsolete    time,
-    replacement string,
-    state       'DEPRECATED', 'OBSOLETE' or 'DELETED',
-  }
-  description          string
-  id                   integer
-  name                 string
-  valid_disk_size      string
-  zone                 reference to gcompute_zone
-  project              string
-  credential           reference to gauth_credential
-end
-```
-
-#### Actions
-
-* `create` -
-  Converges the `gcompute_disk_type` resource into the final
-  state described within the block. If the resource does not exist, Chef will
-  attempt to create it.
-* `delete` -
-  Ensures the `gcompute_disk_type` resource is not present.
-  If the resource already exists Chef will attempt to delete it.
-
-#### Properties
-
-* `creation_timestamp` -
-  Output only. Creation timestamp in RFC3339 text format.
-
-* `default_disk_size_gb` -
-  Output only. Server-defined default disk size in GB.
-
-* `deprecated` -
-  Output only. The deprecation status associated with this disk type.
-
-* `deprecated/deleted`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation state
-  of this resource will be changed to DELETED.
-
-* `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation state
-  of this resource will be changed to DEPRECATED.
-
-* `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation state
-  of this resource will be changed to OBSOLETE.
-
-* `deprecated/replacement`
-  Output only. The URL of the suggested replacement for a deprecated resource. The
-  suggested replacement resource must be the same kind of resource as
-  the deprecated resource.
-
-* `deprecated/state`
-  Output only. The deprecation state of this resource. This can be DEPRECATED,
-  OBSOLETE, or DELETED. Operations which create a new resource using a
-  DEPRECATED resource will return successfully, but with a warning
-  indicating the deprecated resource and recommending its replacement.
-  Operations which use OBSOLETE or DELETED resources will be rejected
-  and result in an error.
-
-* `description` -
-  Output only. An optional description of this resource.
-
-* `id` -
-  Output only. The unique identifier for the resource.
-
-* `name` -
-  Name of the resource.
-
-* `valid_disk_size` -
-  Output only. An optional textual description of the valid disk size, such as
-  "10GB-10TB".
-
-* `zone` -
-  Required. A reference to the zone where the disk type resides.
-
-#### Label
-Set the `dt_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
@@ -1477,7 +1326,7 @@ gcompute_forwarding_rule 'fwd-rule-test' do
   ip_protocol 'TCP'
   port_range '80'
   target 'target-pool'
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -2421,10 +2270,9 @@ so that leftover disks are not left behind on machine deletion.
 # Power Tips:
 #   1) Remember to define the resources needed to allocate the VM:
 #      a) gcompute_disk_type (to be used in 'diskType' property)
-#      b) gcompute_machine_type (to be used in 'machine_type' property)
-#      c) gcompute_network (to be used in 'network_interfaces' property)
-#      d) gcompute_subnetwork (to be used in the 'subnetwork' property)
-#      e) gcompute_disk (to be used in the 'sourceDisk' property)
+#      b) gcompute_network (to be used in 'network_interfaces' property)
+#      c) gcompute_subnetwork (to be used in the 'subnetwork' property)
+#      d) gcompute_disk (to be used in the 'sourceDisk' property)
 #   2) Don't forget to define a source_image for the OS of the boot disk
 gcompute_instance_template 'instance-template-test' do
   action :create
@@ -2876,58 +2724,6 @@ Set the `it_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
-### gcompute_license
-A License resource represents a software license. Licenses are used to
-track software usage in images, persistent disks, snapshots, and virtual
-machine instances.
-
-
-#### Example
-
-```ruby
-gcompute_license 'test-license' do
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-```
-
-#### Reference
-
-```ruby
-gcompute_license 'id-for-resource' do
-  charges_use_fee boolean
-  name            string
-  project         string
-  credential      reference to gauth_credential
-end
-```
-
-#### Actions
-
-* `create` -
-  Converges the `gcompute_license` resource into the final
-  state described within the block. If the resource does not exist, Chef will
-  attempt to create it.
-* `delete` -
-  Ensures the `gcompute_license` resource is not present.
-  If the resource already exists Chef will attempt to delete it.
-
-#### Properties
-
-* `name` -
-  Output only. Name of the resource. The name is 1-63 characters long
-  and complies with RFC1035.
-
-* `charges_use_fee` -
-  Output only. If true, the customer will be charged license fee for
-  running software that contains this license on an instance.
-
-#### Label
-Set the `l_label` property when attempting to set primary key
-of this object. The primary key will always be referred to by the initials of
-the resource followed by "_label"
-
 ### gcompute_image
 Represents an Image resource.
 
@@ -3189,8 +2985,6 @@ An instance is a virtual machine (VM) hosted on Google's infrastructure.
 #      b) gcompute_network (to be used in 'network' property)
 #      c) gcompute_address (to be used in 'access_configs', if your machine
 #         needs external ingress access)
-#      d) gcompute_zone (to determine where the VM will be allocated)
-#      e) gcompute_machine_type (to determine the kind of machine to be created)
 #   2) Don't forget to define a source_image for the OS of the boot disk
 #      a) You can use the provided gcompute_image_family function to specify the
 #         latest version of an operating system of a given family
@@ -3668,9 +3462,8 @@ and add instances to an instance group manually.
 #### Example
 
 ```ruby
-# Instance group requires a network and a region, so define them in your recipe:
+# Instance group requires a network so define one in your recipe:
 #   - gcompute_network 'my-network' do ... end
-#   - gcompute_zone 'my-zone' do ... end
 gcompute_instance_group 'my-masters' do
   action :create
   named_ports [
@@ -3959,133 +3752,6 @@ Set the `igm_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
-### gcompute_machine_type
-Represents a MachineType resource. Machine types determine the virtualized
-hardware specifications of your virtual machine instances, such as the
-amount of memory or number of virtual CPUs.
-
-
-#### Example
-
-```ruby
-gcompute_machine_type 'n1-standard-1' do
-  action :create
-  zone 'us-west1-a'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-```
-
-#### Reference
-
-```ruby
-gcompute_machine_type 'id-for-resource' do
-  creation_timestamp               time
-  deprecated                       {
-    deleted     time,
-    deprecated  time,
-    obsolete    time,
-    replacement string,
-    state       'DEPRECATED', 'OBSOLETE' or 'DELETED',
-  }
-  description                      string
-  guest_cpus                       integer
-  id                               integer
-  is_shared_cpu                    boolean
-  maximum_persistent_disks         integer
-  maximum_persistent_disks_size_gb integer
-  memory_mb                        integer
-  name                             string
-  zone                             reference to gcompute_zone
-  project                          string
-  credential                       reference to gauth_credential
-end
-```
-
-#### Actions
-
-* `create` -
-  Converges the `gcompute_machine_type` resource into the final
-  state described within the block. If the resource does not exist, Chef will
-  attempt to create it.
-* `delete` -
-  Ensures the `gcompute_machine_type` resource is not present.
-  If the resource already exists Chef will attempt to delete it.
-
-#### Properties
-
-* `creation_timestamp` -
-  Output only. Creation timestamp in RFC3339 text format.
-
-* `deprecated` -
-  Output only. The deprecation status associated with this machine type.
-
-* `deprecated/deleted`
-  Output only. An optional RFC3339 timestamp on or after which the state of this
-  resource is intended to change to DELETED. This is only
-  informational and the status will not change unless the client
-  explicitly changes it.
-
-* `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the state of this
-  resource is intended to change to DEPRECATED. This is only
-  informational and the status will not change unless the client
-  explicitly changes it.
-
-* `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the state of this
-  resource is intended to change to OBSOLETE. This is only
-  informational and the status will not change unless the client
-  explicitly changes it.
-
-* `deprecated/replacement`
-  Output only. The URL of the suggested replacement for a deprecated resource.
-  The suggested replacement resource must be the same kind of
-  resource as the deprecated resource.
-
-* `deprecated/state`
-  Output only. The deprecation state of this resource. This can be DEPRECATED,
-  OBSOLETE, or DELETED. Operations which create a new resource
-  using a DEPRECATED resource will return successfully, but with a
-  warning indicating the deprecated resource and recommending its
-  replacement. Operations which use OBSOLETE or DELETED resources
-  will be rejected and result in an error.
-
-* `description` -
-  Output only. An optional textual description of the resource.
-
-* `guest_cpus` -
-  Output only. The number of virtual CPUs that are available to the instance.
-
-* `id` -
-  Output only. The unique identifier for the resource.
-
-* `is_shared_cpu` -
-  Output only. Whether this machine type has a shared CPU. See Shared-core machine
-  types for more information.
-
-* `maximum_persistent_disks` -
-  Output only. Maximum persistent disks allowed.
-
-* `maximum_persistent_disks_size_gb` -
-  Output only. Maximum total persistent disks size (GB) allowed.
-
-* `memory_mb` -
-  Output only. The amount of physical memory available to the instance, defined in
-  MB.
-
-* `name` -
-  Name of the resource.
-
-* `zone` -
-  Required. The zone the machine type is defined.
-
-#### Label
-Set the `mt_label` property when attempting to set primary key
-of this object. The primary key will always be referred to by the initials of
-the resource followed by "_label"
-
 ### gcompute_network
 Represents a Network resource.
 
@@ -4193,107 +3859,6 @@ Set the `n_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
-### gcompute_region
-Represents a Region resource. A region is a specific geographical
-location where you can run your resources. Each region has one or more
-zones
-
-
-#### Example
-
-```ruby
-gcompute_region 'us-west1' do
-  action :create
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-```
-
-#### Reference
-
-```ruby
-gcompute_region 'id-for-resource' do
-  creation_timestamp time
-  deprecated         {
-    deleted     time,
-    deprecated  time,
-    obsolete    time,
-    replacement string,
-    state       'DEPRECATED', 'OBSOLETE' or 'DELETED',
-  }
-  description        string
-  id                 integer
-  name               string
-  zones              [
-    string,
-    ...
-  ]
-  project            string
-  credential         reference to gauth_credential
-end
-```
-
-#### Actions
-
-* `create` -
-  Converges the `gcompute_region` resource into the final
-  state described within the block. If the resource does not exist, Chef will
-  attempt to create it.
-* `delete` -
-  Ensures the `gcompute_region` resource is not present.
-  If the resource already exists Chef will attempt to delete it.
-
-#### Properties
-
-* `creation_timestamp` -
-  Output only. Creation timestamp in RFC3339 text format.
-
-* `deprecated` -
-  Output only. The deprecation state of this resource.
-
-* `deprecated/deleted`
-  An optional RFC3339 timestamp on or after which the deprecation state
-  of this resource will be changed to DELETED.
-
-* `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation state
-  of this resource will be changed to DEPRECATED.
-
-* `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the deprecation state
-  of this resource will be changed to OBSOLETE.
-
-* `deprecated/replacement`
-  Output only. The URL of the suggested replacement for a deprecated resource. The
-  suggested replacement resource must be the same kind of resource as
-  the deprecated resource.
-
-* `deprecated/state`
-  Output only. The deprecation state of this resource. This can be DEPRECATED,
-  OBSOLETE, or DELETED. Operations which create a new resource using a
-  DEPRECATED resource will return successfully, but with a warning
-  indicating the deprecated resource and recommending its replacement.
-  Operations which use OBSOLETE or DELETED resources will be rejected
-  and result in an error.
-
-* `description` -
-  Output only. An optional description of this resource.
-
-* `id` -
-  Output only. The unique identifier for the resource.
-
-* `name` -
-  Name of the resource.
-
-* `zones` -
-  Output only. List of zones within the region
-
-#### Label
-Set the `r_label` property when attempting to set primary key
-of this object. The primary key will always be referred to by the initials of
-the resource followed by "_label"
-
 ### gcompute_route
 Represents a Route resource.
 
@@ -4324,9 +3889,8 @@ nextHopGateway, nextHopInstance, nextHopIp, or nextHopVpnTunnel.
 #### Example
 
 ```ruby
-# Subnetwork requires a network and a region, so define them in your recipe:
+# Route requires a network so define one in your recipe:
 #   - gcompute_network 'my-network' do ... end
-#   - gcompute_region 'some-region' do ... end
 gcompute_route 'corp-route' do
   action :create
   dest_range '192.168.6.0/24'
@@ -4445,9 +4009,8 @@ Represents a Router resource.
 #### Example
 
 ```ruby
-# Router requires a network and a region, so define them in your recipe:
+# Router requires a network so define one in your recipe:
 #   - gcompute_network 'my-network' do ... end
-#   - gcompute_region 'some-region' do ... end
 gcompute_router 'my-router' do
   action :create
   bgp(
@@ -4464,7 +4027,7 @@ gcompute_router 'my-router' do
     ]
   )
   network 'my-network'
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -4872,14 +4435,13 @@ of the network, even entire subnets, using firewall rules.
 #### Example
 
 ```ruby
-# Subnetwork requires a network and a region, so define them in your recipe:
+# Subnetwork requires a network so define one in your recipe:
 #   - gcompute_network 'my-network' do ... end
-#   - gcompute_region 'some-region' do ... end
 gcompute_subnetwork 'servers' do
   action :create
   ip_cidr_range '172.16.0.0/16'
   network 'mynetwork-subnetwork'
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -5437,19 +4999,12 @@ gcompute_network 'mynetwork' do
   credential 'mycred'
 end
 
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_target_vpn_gateway 'mygateway' do
   action :create
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
   network 'mynetwork'
-  region 'some-region'
+  region 'us-west1'
 end
 
 ```
@@ -5711,19 +5266,12 @@ gcompute_network 'mynetwork' do
   credential 'mycred'
 end
 
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_target_vpn_gateway 'mygateway' do
   action :create
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
   network 'mynetwork'
-  region 'some-region'
+  region 'us-west1'
 end
 
 gcompute_vpn_tunnel 'mytunnel' do
@@ -5731,7 +5279,7 @@ gcompute_vpn_tunnel 'mytunnel' do
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
   target_vpn_gateway 'mygateway'
-  region 'some-region'
+  region 'us-west1'
 end
 
 ```
@@ -5838,111 +5386,6 @@ end
 
 #### Label
 Set the `vt_label` property when attempting to set primary key
-of this object. The primary key will always be referred to by the initials of
-the resource followed by "_label"
-
-### gcompute_zone
-Represents a Zone resource.
-
-#### Example
-
-```ruby
-gcompute_zone 'us-west1-a' do
-  action :create
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-```
-
-#### Reference
-
-```ruby
-gcompute_zone 'id-for-resource' do
-  creation_timestamp time
-  deprecated         {
-    deleted     time,
-    deprecated  time,
-    obsolete    time,
-    replacement string,
-    state       'DEPRECATED', 'OBSOLETE' or 'DELETED',
-  }
-  description        string
-  id                 integer
-  name               string
-  region             reference to gcompute_region
-  status             'UP' or 'DOWN'
-  project            string
-  credential         reference to gauth_credential
-end
-```
-
-#### Actions
-
-* `create` -
-  Converges the `gcompute_zone` resource into the final
-  state described within the block. If the resource does not exist, Chef will
-  attempt to create it.
-* `delete` -
-  Ensures the `gcompute_zone` resource is not present.
-  If the resource already exists Chef will attempt to delete it.
-
-#### Properties
-
-* `creation_timestamp` -
-  Output only. Creation timestamp in RFC3339 text format.
-
-* `deprecated` -
-  Output only. The deprecation status associated with this machine type.
-
-* `deprecated/deleted`
-  Output only. An optional RFC3339 timestamp on or after which the state of this
-  resource is intended to change to DELETED. This is only
-  informational and the status will not change unless the client
-  explicitly changes it.
-
-* `deprecated/deprecated`
-  Output only. An optional RFC3339 timestamp on or after which the state of this
-  resource is intended to change to DEPRECATED. This is only
-  informational and the status will not change unless the client
-  explicitly changes it.
-
-* `deprecated/obsolete`
-  Output only. An optional RFC3339 timestamp on or after which the state of this
-  resource is intended to change to OBSOLETE. This is only
-  informational and the status will not change unless the client
-  explicitly changes it.
-
-* `deprecated/replacement`
-  Output only. The URL of the suggested replacement for a deprecated resource.
-  The suggested replacement resource must be the same kind of
-  resource as the deprecated resource.
-
-* `deprecated/state`
-  Output only. The deprecation state of this resource. This can be DEPRECATED,
-  OBSOLETE, or DELETED. Operations which create a new resource
-  using a DEPRECATED resource will return successfully, but with a
-  warning indicating the deprecated resource and recommending its
-  replacement. Operations which use OBSOLETE or DELETED resources
-  will be rejected and result in an error.
-
-* `description` -
-  Output only. An optional textual description of the resource.
-
-* `id` -
-  Output only. The unique identifier for the resource.
-
-* `name` -
-  Name of the resource.
-
-* `region` -
-  Output only. The region where the zone is located.
-
-* `status` -
-  Output only. The status of the zone.
-
-#### Label
-Set the `z_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 

@@ -66,11 +66,6 @@ gcompute_global_address 'chef-e2e-my-app-lb-address' do
   credential 'mycred'
 end
 
-gcompute_zone 'us-central1-a' do
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_instance_group 'chef-e2e-my-chef-servers' do
   action :create
   zone 'us-central1-a'

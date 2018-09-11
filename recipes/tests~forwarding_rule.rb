@@ -60,22 +60,16 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_region 'chef-e2e-some-region' do
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_address 'chef-e2e-some-address' do
   action :create
-  region 'chef-e2e-some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_target_pool 'chef-e2e-target-pool' do
   action :create
-  region 'chef-e2e-some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -89,7 +83,7 @@ gcompute_forwarding_rule 'chef-e2e-fwd-rule-test' do
   ip_protocol 'TCP'
   port_range '80'
   target 'chef-e2e-target-pool'
-  region 'chef-e2e-some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

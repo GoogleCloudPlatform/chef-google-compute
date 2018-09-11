@@ -60,12 +60,6 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_zone 'us-west1-a' do
-  action :create
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 # Google::Functions must be included at runtime to ensure that the
 # gcompute_image_family function can be used in gcompute_disk blocks.
 ::Chef::Resource.send(:include, Google::Functions)
@@ -84,22 +78,9 @@ gcompute_network 'chef-e2e-mynetwork-test' do
   credential 'mycred'
 end
 
-gcompute_region 'us-west1' do
-  action :create
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_address 'chef-e2e-instance-test-ip' do
   action :create
   region 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
-gcompute_machine_type 'n1-standard-1' do
-  action :create
-  zone 'us-west1-a'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

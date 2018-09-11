@@ -66,17 +66,10 @@ gcompute_network 'mynetwork' do
   credential 'mycred'
 end
 
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_target_vpn_gateway 'mygateway' do
   action :create
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
   network 'mynetwork'
-  region 'some-region'
+  region 'us-west1'
 end
