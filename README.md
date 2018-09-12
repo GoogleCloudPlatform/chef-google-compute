@@ -266,9 +266,9 @@ For complete details of the authentication cookbook, visit the
     persistent disk faster and at a much lower cost than if you regularly
     created a full image of the disk.
 * [`gcompute_ssl_certificate`](#gcompute_ssl_certificate) -
-    An SslCertificate resource. This resource provides a mechanism to upload
-    an SSL key and certificate to the load balancer to serve secure
-    connections from the user.
+    An SslCertificate resource, used for HTTPS load balancing. This resource
+    provides a mechanism to upload an SSL key and certificate to
+    the load balancer to serve secure connections from the user.
 * [`gcompute_subnetwork`](#gcompute_subnetwork) -
     A VPC network is a virtual version of the traditional physical networks
     that exist within and between physical data centers. A VPC network
@@ -4290,10 +4290,13 @@ of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 
 ### gcompute_ssl_certificate
-An SslCertificate resource. This resource provides a mechanism to upload
-an SSL key and certificate to the load balancer to serve secure
-connections from the user.
+An SslCertificate resource, used for HTTPS load balancing. This resource
+provides a mechanism to upload an SSL key and certificate to
+the load balancer to serve secure connections from the user.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/sslCertificates)
+* [Official Documentation](https://cloud.google.com/load-balancing/docs/ssl-certificates)
 
 #### Example
 
@@ -4373,7 +4376,7 @@ end
 #### Properties
 
 * `certificate` -
-  The certificate in PEM format.
+  Required. The certificate in PEM format.
   The certificate chain must be no greater than 5 certs long.
   The chain must include at least one intermediate cert.
 
@@ -4396,7 +4399,7 @@ end
   character, which cannot be a dash.
 
 * `private_key` -
-  The private key in PEM format.
+  Required. The write-only private key in PEM format.
 
 #### Label
 Set the `sc_label` property when attempting to set primary key
