@@ -41,7 +41,6 @@ require 'google/hash_utils'
 module Google
   module GCOMPUTE
     # A provider to manage Google Compute Engine resources.
-    # rubocop:disable Metrics/ClassLength
     class Region < Chef::Resource
       resource_name :gcompute_region
 
@@ -324,6 +323,5 @@ module Google
         end
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

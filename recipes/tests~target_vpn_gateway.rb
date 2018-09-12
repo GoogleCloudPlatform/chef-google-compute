@@ -66,17 +66,10 @@ gcompute_network 'chef-e2e-mynetwork' do
   credential 'mycred'
 end
 
-gcompute_region 'chef-e2e-some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_target_vpn_gateway 'chef-e2e-mygateway' do
   action :create
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
   network 'chef-e2e-mynetwork'
-  region 'chef-e2e-some-region'
+  region 'us-west1'
 end

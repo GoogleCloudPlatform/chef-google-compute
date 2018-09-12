@@ -239,12 +239,10 @@ chef-codegen:
   * recipes/examples~instance_group_manager.rb
   * recipes/examples~instance_template.rb
   * recipes/examples~license.rb
-  * recipes/examples~machine_type.rb
   * recipes/examples~network~auto.rb
   * recipes/examples~network~convert_to_custom.rb
   * recipes/examples~network~custom.rb
   * recipes/examples~network~legacy.rb
-  * recipes/examples~region.rb
   * recipes/examples~route.rb
   * recipes/examples~snapshot.rb
   * recipes/examples~ssl_certificate.rb
@@ -256,7 +254,6 @@ chef-codegen:
   * recipes/examples~target_vpn_gateway.rb
   * recipes/examples~url_map.rb
   * recipes/examples~vpn_tunnel.rb
-  * recipes/examples~zone.rb
   * recipes/README.md
   * recipes/tests~address.rb
   * recipes/tests~backend_bucket.rb
@@ -303,12 +300,10 @@ chef-codegen:
   * recipes/tests~instance_group_manager.rb
   * recipes/tests~instance_template.rb
   * recipes/tests~license.rb
-  * recipes/tests~machine_type.rb
   * recipes/tests~network~auto.rb
   * recipes/tests~network~convert_to_custom.rb
   * recipes/tests~network~custom.rb
   * recipes/tests~network~legacy.rb
-  * recipes/tests~region.rb
   * recipes/tests~route.rb
   * recipes/tests~snapshot.rb
   * recipes/tests~ssl_certificate.rb
@@ -320,7 +315,6 @@ chef-codegen:
   * recipes/tests~target_vpn_gateway.rb
   * recipes/tests~url_map.rb
   * recipes/tests~vpn_tunnel.rb
-  * recipes/tests~zone.rb
   * resources/address.rb
   * resources/backend_bucket.rb
   * resources/backend_service.rb

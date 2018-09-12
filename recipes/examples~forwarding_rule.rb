@@ -60,22 +60,16 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_region 'some-region' do
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_address 'some-address' do
   action :create
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
 
 gcompute_target_pool 'target-pool' do
   action :create
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
@@ -89,7 +83,7 @@ gcompute_forwarding_rule 'fwd-rule-test' do
   ip_protocol 'TCP'
   port_range '80'
   target 'target-pool'
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

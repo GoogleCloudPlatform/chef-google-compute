@@ -67,18 +67,11 @@ gcompute_network 'chef-e2e-mynetwork-subnetwork' do
   credential 'mycred'
 end
 
-gcompute_region 'chef-e2e-some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_subnetwork 'chef-e2e-servers' do
   action :create
   ip_cidr_range '172.16.0.0/16'
   network 'chef-e2e-mynetwork-subnetwork'
-  region 'chef-e2e-some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end

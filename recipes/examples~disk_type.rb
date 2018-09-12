@@ -60,11 +60,6 @@ gauth_credential 'mycred' do
   ]
 end
 
-gcompute_zone 'us-central1-a' do
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_disk_type 'pd-standard' do
   action :create
   zone 'us-central1-a'

@@ -66,13 +66,6 @@ gcompute_network 'my-network' do
   credential 'mycred'
 end
 
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_route 'corp-route' do
   action :create
   dest_range '192.168.6.0/24'

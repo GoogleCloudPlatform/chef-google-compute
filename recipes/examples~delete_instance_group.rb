@@ -66,11 +66,6 @@ gcompute_network 'my-network' do
   credential 'mycred'
 end
 
-gcompute_zone 'us-central1-a' do
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_instance_group 'my-masters' do
   action :delete
   zone 'us-central1-a'

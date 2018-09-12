@@ -66,13 +66,6 @@ gcompute_network 'chef-e2e-my-network' do
   credential 'mycred'
 end
 
-gcompute_region 'chef-e2e-some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_route 'chef-e2e-corp-route' do
   action :delete
   project ENV['PROJECT'] # ex: 'my-test-project'

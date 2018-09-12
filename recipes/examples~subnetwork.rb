@@ -67,18 +67,11 @@ gcompute_network 'mynetwork-subnetwork' do
   credential 'mycred'
 end
 
-gcompute_region 'some-region' do
-  action :create
-  r_label 'us-west1'
-  project ENV['PROJECT'] # ex: 'my-test-project'
-  credential 'mycred'
-end
-
 gcompute_subnetwork 'servers' do
   action :create
   ip_cidr_range '172.16.0.0/16'
   network 'mynetwork-subnetwork'
-  region 'some-region'
+  region 'us-west1'
   project ENV['PROJECT'] # ex: 'my-test-project'
   credential 'mycred'
 end
