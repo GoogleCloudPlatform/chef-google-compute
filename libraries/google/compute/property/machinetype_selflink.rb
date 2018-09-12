@@ -25,6 +25,7 @@
 #
 # ----------------------------------------------------------------------------
 
+
 module Google
   module Compute
     module Data
@@ -53,8 +54,9 @@ module Google
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
       class MachineTypeSelfLinkRefCatalog < MachineTypeSelfLinkRef
-        def initialize(title)
+        def initialize(title, parent_resource)
           @title = title
+          @parent_resource = parent_resource
         end
 
         # Chef requires the title for autorequiring
@@ -74,6 +76,16 @@ module Google
         def resource
           Chef.run_context.resource_collection.each do |entry|
             return entry.exports[:self_link] if entry.name == @title
+          end
+
+
+          unless /https:\/\/www.googleapis.com\/compute\/v1\/projects\/.*\/zones\/[a-z1-9\-]*\/machineTypes\/[a-z1-9\-]*/.match(@title)
+            # We'll assemble the self_link for the user if a full URL was not specified
+            # We need to retrieve attributes from the parent resource to qualify the URL
+            if @parent_resource.nil?
+              raise "Cannot find parent resource for resource #{@title}"
+            end
+            return "https://www.googleapis.com/compute/v1/projects/#{@parent_resource.project}/zones/#{@parent_resource.zone}/machineTypes/#{@title}"
           end
           @title
         end
@@ -102,18 +114,18 @@ module Google
       # A class to manage fetching self_link from a machine_type
       class MachineTypeSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::MachineTypeSelfLinkRef.catalog_parse(x) }
+          ->(parent_resource, value) { ::Google::Compute::Property::MachineTypeSelfLinkRef.catalog_parse(value, parent_resource) }
         end
 
-        def catalog_parse(value)
+        def catalog_parse(value, parent_resource = nil)
           return if value.nil?
-          self.class.catalog_parse(value)
+          self.class.catalog_parse(value, parent_resource)
         end
 
-        def self.catalog_parse(value)
+        def self.catalog_parse(value, parent_resource = nil)
           return if value.nil?
           return value if value.is_a? Data::MachineTypeSelfLinkRef
-          Data::MachineTypeSelfLinkRefCatalog.new(value)
+          Data::MachineTypeSelfLinkRefCatalog.new(value, parent_resource)
         end
 
         # Used for fetched JSON values

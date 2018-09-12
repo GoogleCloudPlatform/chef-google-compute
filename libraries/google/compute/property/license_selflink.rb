@@ -1,4 +1,3 @@
-require 'google/compute/property/array'
 # Copyright 2018 Google Inc.
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -25,6 +24,8 @@ require 'google/compute/property/array'
 #     CONTRIBUTING.md located at the root of this package.
 #
 # ----------------------------------------------------------------------------
+
+require 'google/compute/property/array'
 
 module Google
   module Compute
@@ -54,8 +55,9 @@ module Google
       # A class to fetch the resource value from a referenced block
       # Will return the value exported from a different Chef resource
       class LicenseSelfLinkRefCatalog < LicenseSelfLinkRef
-        def initialize(title)
+        def initialize(title, parent_resource)
           @title = title
+          @parent_resource = parent_resource
         end
 
         # Chef requires the title for autorequiring
@@ -75,6 +77,16 @@ module Google
         def resource
           Chef.run_context.resource_collection.each do |entry|
             return entry.exports[:self_link] if entry.name == @title
+          end
+
+
+          unless /https:\/\/www.googleapis.com\/compute\/v1\/\/projects\/.*\/global\/licenses\/[a-z1-9\-]*/.match(@title)
+            # We'll assemble the self_link for the user if a full URL was not specified
+            # We need to retrieve attributes from the parent resource to qualify the URL
+            if @parent_resource.nil?
+              raise "Cannot find parent resource for resource #{@title}"
+            end
+            return "https://www.googleapis.com/compute/v1//projects/#{@parent_resource.project}/global/licenses/#{@title}"
           end
           @title
         end
@@ -103,18 +115,18 @@ module Google
       # A class to manage fetching self_link from a license
       class LicenseSelfLinkRef
         def self.coerce
-          ->(x) { ::Google::Compute::Property::LicenseSelfLinkRef.catalog_parse(x) }
+          ->(parent_resource, value) { ::Google::Compute::Property::LicenseSelfLinkRef.catalog_parse(value, parent_resource) }
         end
 
-        def catalog_parse(value)
+        def catalog_parse(value, parent_resource = nil)
           return if value.nil?
-          self.class.catalog_parse(value)
+          self.class.catalog_parse(value, parent_resource)
         end
 
-        def self.catalog_parse(value)
+        def self.catalog_parse(value, parent_resource = nil)
           return if value.nil?
           return value if value.is_a? Data::LicenseSelfLinkRef
-          Data::LicenseSelfLinkRefCatalog.new(value)
+          Data::LicenseSelfLinkRefCatalog.new(value, parent_resource)
         end
 
         # Used for fetched JSON values
@@ -132,11 +144,11 @@ module Google
         end
 
         # Used for parsing Chef catalog
-        def self.catalog_parse(value)
+        def self.catalog_parse(value, parent_resource = nil)
           return if value.nil?
-          return LicenseSelfLinkRef.catalog_parse(value) \
+          return LicenseSelfLinkRef.catalog_parse(value, parent_resource) \
             unless value.is_a?(::Array)
-          value.map { |v| LicenseSelfLinkRef.catalog_parse(v) }
+          value.map { |v| LicenseSelfLinkRef.catalog_parse(v, parent_resource) }
         end
 
         # Used for parsing GCP API responses
