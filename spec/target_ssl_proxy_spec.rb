@@ -123,6 +123,8 @@ context 'gcompute_target_ssl_proxy' do
 
                   gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                     action :create
+                    certificate 'test certificate#0 data'
+                    private_key 'test private_key#0 data'
                     sc_label 'test name#0 data'
                     project 'test project#0 data'
                     credential 'mycred'
@@ -130,6 +132,8 @@ context 'gcompute_target_ssl_proxy' do
 
                   gcompute_ssl_certificate 'resource(ssl_certificate,1)' do
                     action :create
+                    certificate 'test certificate#1 data'
+                    private_key 'test private_key#1 data'
                     sc_label 'test name#1 data'
                     project 'test project#1 data'
                     credential 'mycred'
@@ -137,6 +141,8 @@ context 'gcompute_target_ssl_proxy' do
 
                   gcompute_ssl_certificate 'resource(ssl_certificate,2)' do
                     action :create
+                    certificate 'test certificate#2 data'
+                    private_key 'test private_key#2 data'
                     sc_label 'test name#2 data'
                     project 'test project#2 data'
                     credential 'mycred'
@@ -326,6 +332,8 @@ context 'gcompute_target_ssl_proxy' do
 
                   gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                     action :create
+                    certificate 'test certificate#0 data'
+                    private_key 'test private_key#0 data'
                     sc_label 'test name#0 data'
                     project 'test project#0 data'
                     credential 'mycred'
@@ -333,6 +341,8 @@ context 'gcompute_target_ssl_proxy' do
 
                   gcompute_ssl_certificate 'resource(ssl_certificate,1)' do
                     action :create
+                    certificate 'test certificate#1 data'
+                    private_key 'test private_key#1 data'
                     sc_label 'test name#1 data'
                     project 'test project#1 data'
                     credential 'mycred'
@@ -340,6 +350,8 @@ context 'gcompute_target_ssl_proxy' do
 
                   gcompute_ssl_certificate 'resource(ssl_certificate,2)' do
                     action :create
+                    certificate 'test certificate#2 data'
+                    private_key 'test private_key#2 data'
                     sc_label 'test name#2 data'
                     project 'test project#2 data'
                     credential 'mycred'
@@ -559,6 +571,8 @@ context 'gcompute_target_ssl_proxy' do
 
                 gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                   action :create
+                  certificate 'test certificate#0 data'
+                  private_key 'test private_key#0 data'
                   sc_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -674,6 +688,8 @@ context 'gcompute_target_ssl_proxy' do
 
                 gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                   action :create
+                  certificate 'test certificate#0 data'
+                  private_key 'test private_key#0 data'
                   sc_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -783,6 +799,8 @@ context 'gcompute_target_ssl_proxy' do
 
                 gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                   action :create
+                  certificate 'test certificate#0 data'
+                  private_key 'test private_key#0 data'
                   sc_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -865,6 +883,8 @@ context 'gcompute_target_ssl_proxy' do
 
                 gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                   action :create
+                  certificate 'test certificate#0 data'
+                  private_key 'test private_key#0 data'
                   sc_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -952,6 +972,8 @@ context 'gcompute_target_ssl_proxy' do
 
                 gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                   action :create
+                  certificate 'test certificate#0 data'
+                  private_key 'test private_key#0 data'
                   sc_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
@@ -1040,6 +1062,8 @@ context 'gcompute_target_ssl_proxy' do
 
                 gcompute_ssl_certificate 'resource(ssl_certificate,0)' do
                   action :create
+                  certificate 'test certificate#0 data'
+                  private_key 'test private_key#0 data'
                   sc_label 'test name#0 data'
                   project 'test project#0 data'
                   credential 'mycred'
