@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 (2018-09-13)
+
+### New features
+
+- Fixes for machine type url construction
+
 ## 0.3.0 (2018-09-04)
 
 ### New features
