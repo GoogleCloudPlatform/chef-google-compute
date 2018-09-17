@@ -34,7 +34,7 @@ description 'A Chef cookbook to manage Google Cloud Compute resources'
 long_description '
     This cookbook provides the built-in types and services for Chef to manage
     Google Cloud Compute resources, as native Chef types.'
-version '0.3.0'
+version '0.3.1'
 depends 'google-gauth', '< 0.3.0'
 issues_url 'https://github.com/GoogleCloudPlatform/chef-google-compute/issues' \
   if respond_to?(:issues_url)
