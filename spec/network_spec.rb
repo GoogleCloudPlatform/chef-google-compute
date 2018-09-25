@@ -97,8 +97,21 @@ context 'gcompute_network' do
                     action :create
                     auto_create_subnetworks true
                     description 'test description#0 data'
-                    gateway_ipv4 'test gateway_ipv4#0 data'
                     ipv4_range 'test ipv4_range#0 data'
+                    routing_config [
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      },
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      }
+                    ]
                     project 'test project#0 data'
                     credential 'mycred'
                   end
@@ -107,8 +120,15 @@ context 'gcompute_network' do
                     action :create
                     auto_create_subnetworks false
                     description 'test description#1 data'
-                    gateway_ipv4 'test gateway_ipv4#1 data'
                     ipv4_range 'test ipv4_range#1 data'
+                    routing_config [
+                      {
+                        routing_mode: 'GLOBAL'
+                      },
+                      {
+                        routing_mode: 'REGIONAL'
+                      }
+                    ]
                     project 'test project#1 data'
                     credential 'mycred'
                   end
@@ -117,8 +137,21 @@ context 'gcompute_network' do
                     action :create
                     auto_create_subnetworks true
                     description 'test description#2 data'
-                    gateway_ipv4 'test gateway_ipv4#2 data'
                     ipv4_range 'test ipv4_range#2 data'
+                    routing_config [
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      },
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      }
+                    ]
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -139,13 +172,16 @@ context 'gcompute_network' do
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
-
               it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
               it { is_expected.to have_attributes(n_label: 'title0') }
 
               it { is_expected.to have_attributes(auto_create_subnetworks: true) }
+
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'routingConfig' do
+              #   # Add test code here
+              # end
             end
 
             context 'gcompute_network[title1]' do
@@ -155,13 +191,16 @@ context 'gcompute_network' do
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#1 data') }
-
               it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#1 data') }
 
               it { is_expected.to have_attributes(n_label: 'title1') }
 
               it { is_expected.to have_attributes(auto_create_subnetworks: false) }
+
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'routingConfig' do
+              #   # Add test code here
+              # end
             end
 
             context 'gcompute_network[title2]' do
@@ -171,13 +210,16 @@ context 'gcompute_network' do
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#2 data') }
-
               it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#2 data') }
 
               it { is_expected.to have_attributes(n_label: 'title2') }
 
               it { is_expected.to have_attributes(auto_create_subnetworks: true) }
+
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'routingConfig' do
+              #   # Add test code here
+              # end
             end
           end
 
@@ -233,9 +275,22 @@ context 'gcompute_network' do
                     action :create
                     auto_create_subnetworks true
                     description 'test description#0 data'
-                    gateway_ipv4 'test gateway_ipv4#0 data'
                     ipv4_range 'test ipv4_range#0 data'
                     n_label 'test name#0 data'
+                    routing_config [
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      },
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      }
+                    ]
                     project 'test project#0 data'
                     credential 'mycred'
                   end
@@ -244,9 +299,16 @@ context 'gcompute_network' do
                     action :create
                     auto_create_subnetworks false
                     description 'test description#1 data'
-                    gateway_ipv4 'test gateway_ipv4#1 data'
                     ipv4_range 'test ipv4_range#1 data'
                     n_label 'test name#1 data'
+                    routing_config [
+                      {
+                        routing_mode: 'GLOBAL'
+                      },
+                      {
+                        routing_mode: 'REGIONAL'
+                      }
+                    ]
                     project 'test project#1 data'
                     credential 'mycred'
                   end
@@ -255,9 +317,22 @@ context 'gcompute_network' do
                     action :create
                     auto_create_subnetworks true
                     description 'test description#2 data'
-                    gateway_ipv4 'test gateway_ipv4#2 data'
                     ipv4_range 'test ipv4_range#2 data'
                     n_label 'test name#2 data'
+                    routing_config [
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      },
+                      {
+                        routing_mode: 'REGIONAL'
+                      },
+                      {
+                        routing_mode: 'GLOBAL'
+                      }
+                    ]
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -278,13 +353,16 @@ context 'gcompute_network' do
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
-
               it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
               it { is_expected.to have_attributes(n_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(auto_create_subnetworks: true) }
+
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'routingConfig' do
+              #   # Add test code here
+              # end
             end
 
             context 'gcompute_network[title1]' do
@@ -294,13 +372,16 @@ context 'gcompute_network' do
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#1 data') }
-
               it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#1 data') }
 
               it { is_expected.to have_attributes(n_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(auto_create_subnetworks: false) }
+
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'routingConfig' do
+              #   # Add test code here
+              # end
             end
 
             context 'gcompute_network[title2]' do
@@ -310,13 +391,16 @@ context 'gcompute_network' do
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#2 data') }
-
               it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#2 data') }
 
               it { is_expected.to have_attributes(n_label: 'test name#2 data') }
 
               it { is_expected.to have_attributes(auto_create_subnetworks: true) }
+
+              # TODO(nelsonjr): Implement complex array object test.
+              # it 'routingConfig' do
+              #   # Add test code here
+              # end
             end
           end
 
@@ -375,10 +459,23 @@ context 'gcompute_network' do
               {
                 'kind' => 'compute#network',
                 'description' => 'test description#0 data',
-                'gatewayIPv4' => 'test gateway_ipv4#0 data',
                 'IPv4Range' => 'test ipv4_range#0 data',
                 'name' => 'title0',
-                'autoCreateSubnetworks' => true
+                'autoCreateSubnetworks' => true,
+                'routingConfig' => [
+                  {
+                    'routingMode' => 'REGIONAL'
+                  },
+                  {
+                    'routingMode' => 'GLOBAL'
+                  },
+                  {
+                    'routingMode' => 'REGIONAL'
+                  },
+                  {
+                    'routingMode' => 'GLOBAL'
+                  }
+                ]
               },
               name: 'title0'
             expect_network_get_async 1, name: 'title0'
@@ -415,8 +512,21 @@ context 'gcompute_network' do
                   action :create
                   auto_create_subnetworks true
                   description 'test description#0 data'
-                  gateway_ipv4 'test gateway_ipv4#0 data'
                   ipv4_range 'test ipv4_range#0 data'
+                  routing_config [
+                    {
+                      routing_mode: 'REGIONAL'
+                    },
+                    {
+                      routing_mode: 'GLOBAL'
+                    },
+                    {
+                      routing_mode: 'REGIONAL'
+                    },
+                    {
+                      routing_mode: 'GLOBAL'
+                    }
+                  ]
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -440,13 +550,16 @@ context 'gcompute_network' do
           end
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
-
           it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
           it { is_expected.to have_attributes(n_label: 'title0') }
 
           it { is_expected.to have_attributes(auto_create_subnetworks: true) }
+
+          # TODO(nelsonjr): Implement complex array object test.
+          # it 'routingConfig' do
+          #   # Add test code here
+          # end
         end
 
         # Ensure present: resource missing, ignore, no name, fail
@@ -467,10 +580,23 @@ context 'gcompute_network' do
               1,
               'kind' => 'compute#network',
               'description' => 'test description#0 data',
-              'gatewayIPv4' => 'test gateway_ipv4#0 data',
               'IPv4Range' => 'test ipv4_range#0 data',
               'name' => 'test name#0 data',
-              'autoCreateSubnetworks' => true
+              'autoCreateSubnetworks' => true,
+              'routingConfig' => [
+                {
+                  'routingMode' => 'REGIONAL'
+                },
+                {
+                  'routingMode' => 'GLOBAL'
+                },
+                {
+                  'routingMode' => 'REGIONAL'
+                },
+                {
+                  'routingMode' => 'GLOBAL'
+                }
+              ]
             expect_network_get_async 1
           end
 
@@ -505,9 +631,22 @@ context 'gcompute_network' do
                   action :create
                   auto_create_subnetworks true
                   description 'test description#0 data'
-                  gateway_ipv4 'test gateway_ipv4#0 data'
                   ipv4_range 'test ipv4_range#0 data'
                   n_label 'test name#0 data'
+                  routing_config [
+                    {
+                      routing_mode: 'REGIONAL'
+                    },
+                    {
+                      routing_mode: 'GLOBAL'
+                    },
+                    {
+                      routing_mode: 'REGIONAL'
+                    },
+                    {
+                      routing_mode: 'GLOBAL'
+                    }
+                  ]
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -531,13 +670,16 @@ context 'gcompute_network' do
           end
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it { is_expected.to have_attributes(gateway_ipv4: 'test gateway_ipv4#0 data') }
-
           it { is_expected.to have_attributes(ipv4_range: 'test ipv4_range#0 data') }
 
           it { is_expected.to have_attributes(n_label: 'test name#0 data') }
 
           it { is_expected.to have_attributes(auto_create_subnetworks: true) }
+
+          # TODO(nelsonjr): Implement complex array object test.
+          # it 'routingConfig' do
+          #   # Add test code here
+          # end
         end
 
         # Ensure present: resource missing, ignore, has name, fail

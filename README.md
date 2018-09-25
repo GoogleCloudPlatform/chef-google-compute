@@ -3769,6 +3769,9 @@ to one network. All Compute Engine networks use the IPv4 protocol. Compute
 Engine currently does not support IPv6. However, Google is a major
 advocate of IPv6 and it is an important future direction.
 
+#### Reference Guides
+* [API Reference](https://cloud.google.com/compute/docs/reference/rest/v1/networks)
+* [Official Documentation](https://cloud.google.com/vpc/docs/vpc)
 
 #### Example
 
@@ -3793,6 +3796,12 @@ gcompute_network 'id-for-resource' do
   id                      integer
   ipv4_range              string
   name                    string
+  routing_config          [
+    {
+      routing_mode 'REGIONAL' or 'GLOBAL',
+    },
+    ...
+  ]
   subnetworks             [
     string,
     ...
@@ -3819,7 +3828,7 @@ end
   you create the resource.
 
 * `gateway_ipv4` -
-  A gateway address for default routing to other networks. This value is
+  Output only. A gateway address for default routing to other networks. This value is
   read only and is selected by the Google Compute Engine, typically as
   the first usable address in the IPv4Range.
 
@@ -3832,7 +3841,7 @@ end
   by the client when the network is created.
 
 * `name` -
-  Name of the resource. Provided by the client when the resource is
+  Required. Name of the resource. Provided by the client when the resource is
   created. The name must be 1-63 characters long, and comply with
   RFC1035. Specifically, the name must be 1-63 characters long and match
   the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
@@ -3853,6 +3862,18 @@ end
 
 * `creation_timestamp` -
   Output only. Creation timestamp in RFC3339 text format.
+
+* `routing_config` -
+  The network-level routing configuration for this network. Used by Cloud
+  Router to determine what type of network-wide routing behavior to
+  enforce.
+
+* `routing_config[]/routing_mode`
+  Required. The network-wide routing mode to use. If set to REGIONAL, this
+  network's cloud routers will only advertise routes with subnetworks
+  of this network in the same region as the router. If set to GLOBAL,
+  this network's cloud routers will advertise routes with all
+  subnetworks of this network, across regions.
 
 #### Label
 Set the `n_label` property when attempting to set primary key

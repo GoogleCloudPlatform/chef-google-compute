@@ -164,6 +164,7 @@ chef-codegen:
   * libraries/google/compute/property/machinetype_name.rb
   * libraries/google/compute/property/machinetype_selflink.rb
   * libraries/google/compute/property/namevalues.rb
+  * libraries/google/compute/property/network_routing_config.rb
   * libraries/google/compute/property/network_selflink.rb
   * libraries/google/compute/property/region_deprecated.rb
   * libraries/google/compute/property/region_name.rb
