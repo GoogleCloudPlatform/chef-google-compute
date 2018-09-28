@@ -161,6 +161,10 @@ context 'gcompute_image' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
+                    labels({
+                      'test labels#1 data' => 'test labels#1 data',
+                      'test labels#2 data' => 6131251034
+                    })
                     licenses ['ww', 'xx']
                     raw_disk({
                       container_type: 'TAR',
@@ -197,6 +201,11 @@ context 'gcompute_image' do
                     image_encryption_key({
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
+                    })
+                    labels({
+                      'test labels#2 data' => 'test labels#2 data',
+                      'test labels#3 data' => 8175001379,
+                      'test labels#4 data' => 'test labels#4 data'
                     })
                     licenses ['uu', 'vv']
                     raw_disk({
@@ -238,6 +247,12 @@ context 'gcompute_image' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
+                    labels({
+                      'test labels#3 data' => 'test labels#3 data',
+                      'test labels#4 data' => 10218751724,
+                      'test labels#5 data' => 'test labels#5 data',
+                      'test labels#6 data' => 14306252413
+                    })
                     licenses ['tt', 'uu', 'vv']
                     raw_disk({
                       container_type: 'TAR',
@@ -277,6 +292,11 @@ context 'gcompute_image' do
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
@@ -325,6 +345,11 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'imageEncryptionKey' do
               #   # Add test code here
@@ -367,6 +392,11 @@ context 'gcompute_image' do
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
@@ -517,6 +547,10 @@ context 'gcompute_image' do
                       raw_key: 'test raw_key#0 data',
                       sha256: 'test sha256#0 data'
                     })
+                    labels({
+                      'test labels#1 data' => 'test labels#1 data',
+                      'test labels#2 data' => 6131251034
+                    })
                     licenses ['ww', 'xx']
                     raw_disk({
                       container_type: 'TAR',
@@ -554,6 +588,11 @@ context 'gcompute_image' do
                     image_encryption_key({
                       raw_key: 'test raw_key#1 data',
                       sha256: 'test sha256#1 data'
+                    })
+                    labels({
+                      'test labels#2 data' => 'test labels#2 data',
+                      'test labels#3 data' => 8175001379,
+                      'test labels#4 data' => 'test labels#4 data'
                     })
                     licenses ['uu', 'vv']
                     raw_disk({
@@ -596,6 +635,12 @@ context 'gcompute_image' do
                       raw_key: 'test raw_key#2 data',
                       sha256: 'test sha256#2 data'
                     })
+                    labels({
+                      'test labels#3 data' => 'test labels#3 data',
+                      'test labels#4 data' => 10218751724,
+                      'test labels#5 data' => 'test labels#5 data',
+                      'test labels#6 data' => 14306252413
+                    })
                     licenses ['tt', 'uu', 'vv']
                     raw_disk({
                       container_type: 'TAR',
@@ -635,6 +680,11 @@ context 'gcompute_image' do
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
@@ -683,6 +733,11 @@ context 'gcompute_image' do
               #   # Add test code here
               # end
 
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
+              #   # Add test code here
+              # end
+
               # TODO(nelsonjr): Implement complex nested property object test.
               # it 'imageEncryptionKey' do
               #   # Add test code here
@@ -725,6 +780,11 @@ context 'gcompute_image' do
 
               # TODO(nelsonjr): Implement complex array object test.
               # it 'guestOsFeatures' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
@@ -823,6 +883,10 @@ context 'gcompute_image' do
                     'type' => 'VIRTIO_SCSI_MULTIQUEUE'
                   }
                 ],
+                'labels' => {
+                  'test labels#1 data' => 'test labels#1 data',
+                  'test labels#2 data' => 6_131_251_034
+                },
                 'imageEncryptionKey' => {
                   'rawKey' => 'test raw_key#0 data',
                   'sha256' => 'test sha256#0 data'
@@ -907,6 +971,10 @@ context 'gcompute_image' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
+                  labels({
+                    'test labels#1 data' => 'test labels#1 data',
+                    'test labels#2 data' => 6131251034
+                  })
                   licenses ['ww', 'xx']
                   raw_disk({
                     container_type: 'TAR',
@@ -949,6 +1017,11 @@ context 'gcompute_image' do
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'guestOsFeatures' do
+          #   # Add test code here
+          # end
+
+          # TODO(nelsonjr): Implement complex namevalues property test.
+          # it 'labels' do
           #   # Add test code here
           # end
 
@@ -1009,6 +1082,10 @@ context 'gcompute_image' do
                   'type' => 'VIRTIO_SCSI_MULTIQUEUE'
                 }
               ],
+              'labels' => {
+                'test labels#1 data' => 'test labels#1 data',
+                'test labels#2 data' => 6_131_251_034
+              },
               'imageEncryptionKey' => {
                 'rawKey' => 'test raw_key#0 data',
                 'sha256' => 'test sha256#0 data'
@@ -1092,6 +1169,10 @@ context 'gcompute_image' do
                     raw_key: 'test raw_key#0 data',
                     sha256: 'test sha256#0 data'
                   })
+                  labels({
+                    'test labels#1 data' => 'test labels#1 data',
+                    'test labels#2 data' => 6131251034
+                  })
                   licenses ['ww', 'xx']
                   raw_disk({
                     container_type: 'TAR',
@@ -1134,6 +1215,11 @@ context 'gcompute_image' do
 
           # TODO(nelsonjr): Implement complex array object test.
           # it 'guestOsFeatures' do
+          #   # Add test code here
+          # end
+
+          # TODO(nelsonjr): Implement complex namevalues property test.
+          # it 'labels' do
           #   # Add test code here
           # end
 

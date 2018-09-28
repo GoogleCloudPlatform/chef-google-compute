@@ -32,6 +32,7 @@ id: 4299001743
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 description: test description#1 data
 diskSizeGb: 900184319
+labelFingerprint: test label_fingerprint#1 data
 labels:
 - xx
 - yy

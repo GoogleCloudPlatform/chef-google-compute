@@ -1533,7 +1533,6 @@ gcompute_global_address 'id-for-resource' do
   description        string
   id                 integer
   ip_version         'IPV4' or 'IPV6'
-  label_fingerprint  fingerprint
   name               string
   region             reference to gcompute_region
   project            string
@@ -1575,10 +1574,6 @@ end
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
-
-* `label_fingerprint` -
-  Output only. The fingerprint used for optimistic locking of this resource.  Used
-  internally during updates.
 
 * `ip_version` -
   The IP Version that will be used by this address. Valid options are
@@ -2783,6 +2778,8 @@ gcompute_image 'id-for-resource' do
     raw_key string,
     sha256  string,
   }
+  label_fingerprint          fingerprint
+  labels                     namevalues
   licenses                   [
     string,
     ...
@@ -2892,6 +2889,13 @@ end
   WINDOWS to indicate that this is a Windows image. This value is
   purely informational and does not enable or disable any
   features.
+
+* `labels` -
+  Labels to apply to this VpnTunnel.
+
+* `label_fingerprint` -
+  Output only. The fingerprint used for optimistic locking of this resource.  Used
+  internally during updates.
 
 * `id` -
   Output only. The unique identifier for the resource. This identifier
@@ -4181,6 +4185,7 @@ gcompute_snapshot 'id-for-resource' do
   description                string
   disk_size_gb               integer
   id                         integer
+  label_fingerprint          fingerprint
   labels                     [
     string,
     ...
@@ -4252,6 +4257,10 @@ end
 
 * `labels` -
   Labels to apply to this snapshot.
+
+* `label_fingerprint` -
+  Output only. The fingerprint used for optimistic locking of this resource.  Used
+  internally during updates.
 
 * `source` -
   A reference to the disk used to create this snapshot.

@@ -41,6 +41,7 @@ require 'google/compute/property/image_image_encryption_key'
 require 'google/compute/property/image_raw_disk'
 require 'google/compute/property/image_source_disk_encryption_key'
 require 'google/compute/property/integer'
+require 'google/compute/property/namevalues'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/time'
@@ -71,6 +72,12 @@ module Google
                Array,
                coerce: ::Google::Compute::Property::ImageGuestOsFeaturesArray.coerce,
                desired_state: true
+      property :labels,
+               [Hash, ::Google::Compute::Property::NameValues],
+               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
+      property :label_fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :image_encryption_key,
@@ -135,6 +142,10 @@ module Google
             ::Google::Compute::Property::ImageGuestOsFeaturesArray.api_parse(
               fetch['guestOsFeatures']
             )
+          @current_resource.labels =
+            ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
+          @current_resource.label_fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.image_encryption_key =
             ::Google::Compute::Property::ImageImageEncryptionKey.api_parse(
@@ -186,6 +197,7 @@ module Google
             diskSizeGb: new_resource.disk_size_gb,
             family: new_resource.family,
             guestOsFeatures: new_resource.guest_os_features,
+            labels: new_resource.labels,
             imageEncryptionKey: new_resource.image_encryption_key,
             licenses: new_resource.licenses,
             name: new_resource.i_label,
@@ -206,12 +218,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            update_req =
-              ::Google::Compute::Network::Put.new(self_link(@new_resource),
-                                                  fetch_auth(@new_resource),
-                                                  'application/json',
-                                                  resource_to_request)
-            wait_for_operation update_req.send, @new_resource
+            if (@current_resource.labels != @new_resource.labels)
+              labels_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#image')
           end
         end
 
@@ -233,6 +244,8 @@ module Google
             disk_size_gb: resource.disk_size_gb,
             family: resource.family,
             guest_os_features: resource.guest_os_features,
+            labels: resource.labels,
+            label_fingerprint: resource.label_fingerprint,
             id: resource.id,
             image_encryption_key: resource.image_encryption_key,
             licenses: resource.licenses,
@@ -245,6 +258,23 @@ module Google
         end
         # rubocop:enable Metrics/MethodLength
 
+  def labels_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/global/images/{{name}}/setLabels',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        labels: @new_resource.labels,
+        labelFingerprint: @new_resource.__fetched['labelFingerprint']
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

@@ -47,6 +47,11 @@ guestOsFeatures:
 imageEncryptionKey:
   rawKey: test raw_key#1 data
   sha256: test sha256#1 data
+labelFingerprint: test label_fingerprint#1 data
+labels:
+  test labels#2 data: test labels#2 data
+  test labels#3 data: 8175001379
+  test labels#4 data: test labels#4 data
 licenses:
 - uu
 - vv

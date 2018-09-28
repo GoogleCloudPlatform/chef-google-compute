@@ -202,12 +202,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            update_req =
-              ::Google::Compute::Network::Put.new(self_link(@new_resource),
-                                                  fetch_auth(@new_resource),
-                                                  'application/json',
-                                                  resource_to_request)
-            wait_for_operation update_req.send, @new_resource
+            if (@current_resource.instance_template != @new_resource.instance_template)
+              instance_template_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#instanceGroupManager')
           end
         end
 
@@ -236,6 +235,22 @@ module Google
           }.reject { |_, v| v.nil? }
         end
 
+  def instance_template_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/zones/{{zone}}/instanceGroupManagers/{{name}}/setInstanceTemplate',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        instanceTemplate: @new_resource.instance_template
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)

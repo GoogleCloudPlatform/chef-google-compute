@@ -72,6 +72,9 @@ module Google
       # labels is Array of Google::Compute::Property::StringArray
       property :labels,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      property :label_fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :source,
                [String, ::Google::Compute::Data::DiskNameRef],
                coerce: ::Google::Compute::Property::DiskNameRef.coerce, desired_state: true
@@ -125,6 +128,8 @@ module Google
             ::Google::Compute::Property::LicenseSelfLinkRefArray.api_parse(fetch['licenses'])
           @current_resource.labels =
             ::Google::Compute::Property::StringArray.api_parse(fetch['labels'])
+          @current_resource.label_fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @new_resource.__fetched = fetch
 
           update
@@ -175,12 +180,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            update_req =
-              ::Google::Compute::Network::Put.new(self_link(@new_resource),
-                                                  fetch_auth(@new_resource),
-                                                  'application/json',
-                                                  resource_to_request)
-            wait_for_operation update_req.send, @new_resource
+            if (@current_resource.labels != @new_resource.labels)
+              labels_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#snapshot')
           end
         end
 
@@ -201,6 +205,7 @@ module Google
             storage_bytes: resource.storage_bytes,
             licenses: resource.licenses,
             labels: resource.labels,
+            label_fingerprint: resource.label_fingerprint,
             source: resource.source,
             zone: resource.zone,
             snapshot_encryption_key: resource.snapshot_encryption_key,
@@ -208,6 +213,23 @@ module Google
           }.reject { |_, v| v.nil? }
         end
 
+  def labels_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/global/snapshots/{{name}}/setLabels',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        labels: @new_resource.labels,
+        labelFingerprint: @new_resource.__fetched['labelFingerprint']
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)
