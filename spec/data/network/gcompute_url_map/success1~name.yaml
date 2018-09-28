@@ -32,6 +32,7 @@ id: 2149500871
 creationTimestamp: '2045-05-23T12:08:10+00:00'
 defaultService: selflink(resource(backend_service,0))
 description: test description#0 data
+fingerprint: test fingerprint#0 data
 hostRules:
 - description: test description#0 data
   hosts:

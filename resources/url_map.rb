@@ -64,6 +64,9 @@ module Google
                coerce: ::Google::Compute::Property::UrlMapHostRulesArray.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      property :fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :um_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
@@ -113,8 +116,8 @@ module Google
           @current_resource.host_rules =
             ::Google::Compute::Property::UrlMapHostRulesArray.api_parse(fetch['hostRules'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.um_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['fingerprint'])
           @current_resource.path_matchers =
             ::Google::Compute::Property::UrlMapPathMatchersArray.api_parse(fetch['pathMatchers'])
           @current_resource.tests =
@@ -191,6 +194,7 @@ module Google
             description: resource.description,
             host_rules: resource.host_rules,
             id: resource.id,
+            fingerprint: resource.fingerprint,
             path_matchers: resource.path_matchers,
             tests: resource.tests
           }.reject { |_, v| v.nil? }
