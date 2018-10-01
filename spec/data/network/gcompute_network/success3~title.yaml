@@ -35,6 +35,11 @@ creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
 gatewayIPv4: test gateway_ipv4#2 data
 project: "'test project#2 data'"
+routingConfig:
+- routingMode: REGIONAL
+- routingMode: GLOBAL
+- routingMode: REGIONAL
+- routingMode: GLOBAL
 subnetworks:
 - mm
 - nn

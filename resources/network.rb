@@ -34,7 +34,9 @@ require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/boolean'
+require 'google/compute/property/enum'
 require 'google/compute/property/integer'
+require 'google/compute/property/network_routing_config'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
 require 'google/compute/property/time'
@@ -67,6 +69,11 @@ module Google
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      # routing_config is Array of Google::Compute::Property::NetworkRoutingConfigArray
+      property :routing_config,
+               Array,
+               coerce: ::Google::Compute::Property::NetworkRoutingConfigArray.coerce,
+               desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -92,20 +99,17 @@ module Google
           end
         else
           @current_resource = @new_resource.clone
-          @current_resource.description =
-            ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.gateway_ipv4 =
             ::Google::Compute::Property::String.api_parse(fetch['gatewayIPv4'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.ipv4_range =
-            ::Google::Compute::Property::String.api_parse(fetch['IPv4Range'])
-          @current_resource.n_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
           @current_resource.subnetworks =
             ::Google::Compute::Property::StringArray.api_parse(fetch['subnetworks'])
-          @current_resource.auto_create_subnetworks =
-            ::Google::Compute::Property::Boolean.api_parse(fetch['autoCreateSubnetworks'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
+          @current_resource.routing_config =
+            ::Google::Compute::Property::NetworkRoutingConfigArray.api_parse(
+              fetch['routingConfig']
+            )
           @new_resource.__fetched = fetch
 
           update
@@ -139,10 +143,10 @@ module Google
           request = {
             kind: 'compute#network',
             description: new_resource.description,
-            gatewayIPv4: new_resource.gateway_ipv4,
             IPv4Range: new_resource.ipv4_range,
             name: new_resource.n_label,
-            autoCreateSubnetworks: new_resource.auto_create_subnetworks
+            autoCreateSubnetworks: new_resource.auto_create_subnetworks,
+            routingConfig: new_resource.routing_config
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -153,11 +157,14 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
+            if (@current_resource.routing_config != @new_resource.routing_config)
+              routing_config_update(@current_resource)
+            end
             update_req =
-              ::Google::Compute::Network::Put.new(self_link(@new_resource),
-                                                  fetch_auth(@new_resource),
-                                                  'application/json',
-                                                  resource_to_request)
+              ::Google::Compute::Network::Patch.new(self_link(@new_resource),
+                                                    fetch_auth(@new_resource),
+                                                    'application/json',
+                                                    resource_to_request)
             wait_for_operation update_req.send, @new_resource
           end
         end
@@ -173,10 +180,27 @@ module Google
             ipv4_range: resource.ipv4_range,
             subnetworks: resource.subnetworks,
             auto_create_subnetworks: resource.auto_create_subnetworks,
-            creation_timestamp: resource.creation_timestamp
+            creation_timestamp: resource.creation_timestamp,
+            routing_config: resource.routing_config
           }.reject { |_, v| v.nil? }
         end
 
+  def routing_config_update(data)
+    ::Google::Compute::Network::Patch.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/regions/{{region}}/subnetworks/{{name}}',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        routingConfig: @new_resource.routing_config
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)
