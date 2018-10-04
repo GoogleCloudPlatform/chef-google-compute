@@ -118,6 +118,7 @@ chef-codegen:
   * libraries/google/compute/property/firewall_allowed.rb
   * libraries/google/compute/property/firewall_denied.rb
   * libraries/google/compute/property/forwardingrule_selflink.rb
+  * libraries/google/compute/property/global_address_address_type.rb
   * libraries/google/compute/property/health_check_proxy_header.rb
   * libraries/google/compute/property/healthcheck_http_health_check.rb
   * libraries/google/compute/property/healthcheck_https_health_check.rb
@@ -169,6 +170,9 @@ chef-codegen:
   * libraries/google/compute/property/region_deprecated.rb
   * libraries/google/compute/property/region_name.rb
   * libraries/google/compute/property/region_selflink.rb
+  * libraries/google/compute/property/regiondisk_disk_encryption_key.rb
+  * libraries/google/compute/property/regiondisk_source_snapshot_encryption_key.rb
+  * libraries/google/compute/property/regiondisktype_selflink.rb
   * libraries/google/compute/property/router_advertise_mode.rb
   * libraries/google/compute/property/router_advertised_ip_ranges.rb
   * libraries/google/compute/property/router_bgp.rb
@@ -179,6 +183,7 @@ chef-codegen:
   * libraries/google/compute/property/sslcertificate_selflink.rb
   * libraries/google/compute/property/string.rb
   * libraries/google/compute/property/string_array.rb
+  * libraries/google/compute/property/subnetwork_secondary_ip_ranges.rb
   * libraries/google/compute/property/subnetwork_selflink.rb
   * libraries/google/compute/property/targetpool_selflink.rb
   * libraries/google/compute/property/targetvpngateway_selflink.rb
@@ -190,6 +195,7 @@ chef-codegen:
   * libraries/google/compute/property/urlmap_tests.rb
   * libraries/google/compute/property/zone_deprecated.rb
   * libraries/google/compute/property/zone_name.rb
+  * libraries/google/compute/property/zone_selflink.rb
   * libraries/google/functions/gcompute_address_ip.rb
   * libraries/google/functions/gcompute_health_check_ref.rb
   * libraries/google/functions/gcompute_image_family.rb
@@ -337,6 +343,7 @@ chef-codegen:
   * resources/machine_type.rb
   * resources/network.rb
   * resources/region.rb
+  * resources/region_disk.rb
   * resources/route.rb
   * resources/router.rb
   * resources/snapshot.rb
@@ -482,6 +489,12 @@ chef-codegen:
   * spec/data/network/gcompute_region/success2~title.yaml
   * spec/data/network/gcompute_region/success3~name.yaml
   * spec/data/network/gcompute_region/success3~title.yaml
+  * spec/data/network/gcompute_region_disk/success1~name.yaml
+  * spec/data/network/gcompute_region_disk/success1~title.yaml
+  * spec/data/network/gcompute_region_disk/success2~name.yaml
+  * spec/data/network/gcompute_region_disk/success2~title.yaml
+  * spec/data/network/gcompute_region_disk/success3~name.yaml
+  * spec/data/network/gcompute_region_disk/success3~title.yaml
   * spec/data/network/gcompute_route/success1~name.yaml
   * spec/data/network/gcompute_route/success1~title.yaml
   * spec/data/network/gcompute_route/success2~name.yaml
@@ -592,6 +605,7 @@ chef-codegen:
   * spec/network_post_spec.rb
   * spec/network_put_spec.rb
   * spec/network_spec.rb
+  * spec/region_disk_spec.rb
   * spec/region_spec.rb
   * spec/route_spec.rb
   * spec/router_spec.rb

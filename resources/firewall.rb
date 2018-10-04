@@ -33,6 +33,7 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
+require 'google/compute/property/boolean'
 require 'google/compute/property/enum'
 require 'google/compute/property/firewall_allowed'
 require 'google/compute/property/firewall_denied'
@@ -68,6 +69,9 @@ module Google
       property :direction,
                equal_to: %w[INGRESS EGRESS],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
+      property :disabled,
+               kind_of: [TrueClass, FalseClass],
+               coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
       property :f_label,
@@ -133,6 +137,8 @@ module Google
             ::Google::Compute::Property::StringArray.api_parse(fetch['destinationRanges'])
           @current_resource.direction =
             ::Google::Compute::Property::Enum.api_parse(fetch['direction'])
+          @current_resource.disabled =
+            ::Google::Compute::Property::Boolean.api_parse(fetch['disabled'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.network =
             ::Google::Compute::Property::NetworkSelfLinkRef.api_parse(fetch['network'])
@@ -185,6 +191,7 @@ module Google
             description: new_resource.description,
             destinationRanges: new_resource.destination_ranges,
             direction: new_resource.direction,
+            disabled: new_resource.disabled,
             name: new_resource.f_label,
             network: new_resource.network,
             priority: new_resource.priority,
@@ -228,6 +235,7 @@ module Google
             description: resource.description,
             destination_ranges: resource.destination_ranges,
             direction: resource.direction,
+            disabled: resource.disabled,
             id: resource.id,
             network: resource.network,
             priority: resource.priority,

@@ -38,6 +38,7 @@ ipVersion: IPV6
 labelFingerprint: test label_fingerprint#1 data
 loadBalancingScheme: EXTERNAL
 network: selflink(resource(network,1))
+networkTier: STANDARD
 portRange: test port_range#1 data
 ports:
 - qq

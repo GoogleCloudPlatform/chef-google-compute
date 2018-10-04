@@ -33,46 +33,80 @@ require 'google/compute/network/delete'
 require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
-require 'google/compute/property/enum'
-require 'google/compute/property/global_address_address_type'
+require 'google/compute/property/instance_selflink'
 require 'google/compute/property/integer'
-require 'google/compute/property/region_selflink'
+require 'google/compute/property/namevalues'
+require 'google/compute/property/region_name'
+require 'google/compute/property/regiondisk_disk_encryption_key'
+require 'google/compute/property/regiondisk_source_snapshot_encryption_key'
+require 'google/compute/property/regiondisktype_selflink'
+require 'google/compute/property/snapshot_selflink'
 require 'google/compute/property/string'
+require 'google/compute/property/string_array'
 require 'google/compute/property/time'
+require 'google/compute/property/zone_selflink'
 require 'google/hash_utils'
 
 module Google
   module GCOMPUTE
     # A provider to manage Google Compute Engine resources.
-    # rubocop:disable Metrics/ClassLength
-    class GlobalAddress < Chef::Resource
-      resource_name :gcompute_global_address
+    class RegionDisk < Chef::Resource
+      resource_name :gcompute_region_disk
 
-      property :address,
-               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :label_fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :creation_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :description,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :id,
                Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
-      property :ga_label,
+      property :last_attach_timestamp,
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :last_detach_timestamp,
+               Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
+      property :labels,
+               [Hash, ::Google::Compute::Property::NameValues],
+               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
+      # licenses is Array of Google::Compute::Property::StringArray
+      property :licenses,
+               Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
+      property :rd_label,
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
-      property :label_fingerprint,
-               [String, ::Google::Compute::Property::String],
-               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
-      property :ip_version,
-               equal_to: %w[IPV4 IPV6],
-               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
+      property :size_gb,
+               Integer, coerce: ::Google::Compute::Property::Integer.coerce, desired_state: true
+      # users is Array of Google::Compute::Property::InstanceSelfLinkRefArray
+      property :users,
+               Array,
+               coerce: ::Google::Compute::Property::InstanceSelfLinkRefArray.coerce,
+               desired_state: true
+      # replica_zones is Array of Google::Compute::Property::ZoneSelfLinkRefArray
+      property :replica_zones,
+               Array,
+               coerce: ::Google::Compute::Property::ZoneSelfLinkRefArray.coerce, desired_state: true
+      property :type,
+               [String, ::Google::Compute::Data::RegionDiskTypeSelfLinkRef],
+               coerce: ::Google::Compute::Property::RegionDiskTypeSelfLinkRef.coerce,
+               desired_state: true
       property :region,
-               [String, ::Google::Compute::Data::RegionSelfLinkRef],
-               coerce: ::Google::Compute::Property::RegionSelfLinkRef.coerce, desired_state: true
-      property :address_type,
-               equal_to: %w[EXTERNAL INTERNAL],
-               coerce: ::Google::Compute::Property::AddressTypeEnum.coerce,
-               default: 'EXTERNAL', desired_state: true
+               [String, ::Google::Compute::Data::RegionNameRef],
+               coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
+      property :disk_encryption_key,
+               [Hash, ::Google::Compute::Data::RegionDiskDiskEncryptionKey],
+               coerce: ::Google::Compute::Property::RegionDiskDiskEncryptionKey.coerce,
+               desired_state: true
+      property :source_snapshot,
+               [String, ::Google::Compute::Data::SnapshotSelfLinkRef],
+               coerce: ::Google::Compute::Property::SnapshotSelfLinkRef.coerce, desired_state: true
+      property :source_snapshot_encryption_key,
+               [Hash, ::Google::Compute::Data::RegionDiskSourceSnapshotEncryptionKey],
+               coerce: ::Google::Compute::Property::RegionDiskSourceSnapshotEncryptionKey.coerce,
+               desired_state: true
+      property :source_snapshot_id,
+               String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
 
       property :credential, String, desired_state: false, required: true
       property :project, String, desired_state: false, required: true
@@ -82,9 +116,9 @@ module Google
       property :__fetched, Hash, desired_state: false, required: false
 
       action :create do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#address')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#disk')
         if fetch.nil?
-          converge_by "Creating gcompute_global_address[#{new_resource.name}]" do
+          converge_by "Creating gcompute_region_disk[#{new_resource.name}]" do
             # TODO(nelsonjr): Show a list of variables to create
             # TODO(nelsonjr): Determine how to print green like update converge
             puts # making a newline until we find a better way TODO: find!
@@ -98,23 +132,29 @@ module Google
           end
         else
           @current_resource = @new_resource.clone
-          @current_resource.address =
-            ::Google::Compute::Property::String.api_parse(fetch['address'])
+          @current_resource.label_fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @current_resource.creation_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['creationTimestamp'])
           @current_resource.description =
             ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
-          @current_resource.ga_label =
-            ::Google::Compute::Property::String.api_parse(fetch['name'])
-          @current_resource.label_fingerprint =
-            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
-          @current_resource.ip_version =
-            ::Google::Compute::Property::Enum.api_parse(fetch['ipVersion'])
-          @current_resource.region =
-            ::Google::Compute::Property::RegionSelfLinkRef.api_parse(fetch['region'])
-          @current_resource.address_type =
-            ::Google::Compute::Property::AddressTypeEnum.api_parse(fetch['addressType'])
+          @current_resource.last_attach_timestamp =
+            ::Google::Compute::Property::Time.api_parse(fetch['lastAttachTimestamp'])
+          @current_resource.last_detach_timestamp =
+            ::Google::Compute::Property::Time.api_parse(fetch['lastDetachTimestamp'])
+          @current_resource.labels =
+            ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
+          @current_resource.licenses =
+            ::Google::Compute::Property::StringArray.api_parse(fetch['licenses'])
+          @current_resource.size_gb =
+            ::Google::Compute::Property::Integer.api_parse(fetch['sizeGb'])
+          @current_resource.users =
+            ::Google::Compute::Property::InstanceSelfLinkRefArray.api_parse(fetch['users'])
+          @current_resource.replica_zones =
+            ::Google::Compute::Property::ZoneSelfLinkRefArray.api_parse(fetch['replicaZones'])
+          @current_resource.type =
+            ::Google::Compute::Property::RegionDiskTypeSelfLinkRef.api_parse(fetch['type'])
           @new_resource.__fetched = fetch
 
           update
@@ -122,9 +162,9 @@ module Google
       end
 
       action :delete do
-        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#address')
+        fetch = fetch_resource(@new_resource, self_link(@new_resource), 'compute#disk')
         unless fetch.nil?
-          converge_by "Deleting gcompute_global_address[#{new_resource.name}]" do
+          converge_by "Deleting gcompute_region_disk[#{new_resource.name}]" do
             delete_req = ::Google::Compute::Network::Delete.new(
               self_link(@new_resource), fetch_auth(@new_resource)
             )
@@ -137,6 +177,7 @@ module Google
 
       def exports
         {
+          name: rd_label,
           self_link: __fetched['selfLink']
         }
       end
@@ -146,11 +187,16 @@ module Google
       action_class do
         def resource_to_request
           request = {
-            kind: 'compute#address',
+            kind: 'compute#disk',
             description: new_resource.description,
-            name: new_resource.ga_label,
-            ipVersion: new_resource.ip_version,
-            addressType: new_resource.address_type
+            labels: new_resource.labels,
+            licenses: new_resource.licenses,
+            name: new_resource.rd_label,
+            sizeGb: new_resource.size_gb,
+            replicaZones: new_resource.replica_zones,
+            type: new_resource.type,
+            diskEncryptionKey: new_resource.disk_encryption_key,
+            sourceSnapshotEncryptionKey: new_resource.source_snapshot_encryption_key
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -161,11 +207,14 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            if 
+            if (@current_resource.labels != @new_resource.labels)
               label_fingerprint_update(@current_resource)
             end
+            if (@current_resource.size_gb != @new_resource.size_gb)
+              size_gb_update(@current_resource)
+            end
             return fetch_resource(@new_resource, self_link(@new_resource),
-                                  'compute#address')
+                                  'compute#disk')
           end
         end
 
@@ -177,16 +226,25 @@ module Google
         def self.resource_to_hash(resource)
           {
             project: resource.project,
-            name: resource.ga_label,
-            kind: 'compute#address',
-            address: resource.address,
+            name: resource.rd_label,
+            kind: 'compute#disk',
+            label_fingerprint: resource.label_fingerprint,
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
-            label_fingerprint: resource.label_fingerprint,
-            ip_version: resource.ip_version,
+            last_attach_timestamp: resource.last_attach_timestamp,
+            last_detach_timestamp: resource.last_detach_timestamp,
+            labels: resource.labels,
+            licenses: resource.licenses,
+            size_gb: resource.size_gb,
+            users: resource.users,
+            replica_zones: resource.replica_zones,
+            type: resource.type,
             region: resource.region,
-            address_type: resource.address_type
+            disk_encryption_key: resource.disk_encryption_key,
+            source_snapshot: resource.source_snapshot,
+            source_snapshot_encryption_key: resource.source_snapshot_encryption_key,
+            source_snapshot_id: resource.source_snapshot_id
           }.reject { |_, v| v.nil? }
         end
 
@@ -195,14 +253,32 @@ module Google
       URI.join(
         'https://www.googleapis.com/compute/v1/',
         expand_variables(
-          'projects/{{project}}/global/addresses/{{name}}/setLabels',
+          'projects/{{project}}/regions/{{region}}/disks/{{name}}/setLabels',
           data
         )
       ),
       fetch_auth(@new_resource),
       'application/json',
       {
-        labelFingerprint: @new_resource.__fetched['labelFingerprint']
+        labelFingerprint: @new_resource.__fetched['labelFingerprint'],
+        labels: @new_resource.labels
+      }.to_json
+    ).send
+  end
+
+  def size_gb_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/regions/{{region}}/disks/{{name}}/resize',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        sizeGb: @new_resource.size_gb
       }.to_json
     ).send
   end
@@ -282,7 +358,7 @@ module Google
           URI.join(
             'https://www.googleapis.com/compute/v1/',
             expand_variables(
-              'projects/{{project}}/global/addresses',
+              'projects/{{project}}/regions/{{region}}/disks',
               data
             )
           )
@@ -296,7 +372,7 @@ module Google
           URI.join(
             'https://www.googleapis.com/compute/v1/',
             expand_variables(
-              'projects/{{project}}/global/addresses/{{name}}',
+              'projects/{{project}}/regions/{{region}}/disks/{{name}}',
               data
             )
           )
@@ -357,7 +433,7 @@ module Google
           URI.join(
             'https://www.googleapis.com/compute/v1/',
             expand_variables(
-              'projects/{{project}}/global/operations/{{op_id}}',
+              'projects/{{project}}/regions/{{region}}/operations/{{op_id}}',
               data, extra_data
             )
           )
@@ -373,7 +449,7 @@ module Google
                                                                        op_result,
                                                                        resource),
                                                    %w[targetLink])),
-            'compute#address'
+            'compute#disk'
           )
         end
 
@@ -384,7 +460,7 @@ module Google
             debug("Waiting for completion of operation #{op_id}")
             raise_if_errors op_result, %w[error errors], 'message'
             sleep 1.0
-            raise "Invalid result '#{status}' on gcompute_global_address." \
+            raise "Invalid result '#{status}' on gcompute_region_disk." \
               unless %w[PENDING RUNNING DONE].include?(status)
             op_result = fetch_resource(resource, op_uri, 'compute#operation')
             status = ::Google::HashUtils.navigate(op_result, %w[status])
@@ -414,6 +490,5 @@ module Google
         end
       end
     end
-    # rubocop:enable Metrics/ClassLength
   end
 end

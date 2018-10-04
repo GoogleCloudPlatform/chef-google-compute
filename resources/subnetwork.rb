@@ -38,6 +38,7 @@ require 'google/compute/property/integer'
 require 'google/compute/property/network_selflink'
 require 'google/compute/property/region_name'
 require 'google/compute/property/string'
+require 'google/compute/property/subnetwork_secondary_ip_ranges'
 require 'google/compute/property/time'
 require 'google/hash_utils'
 
@@ -65,6 +66,17 @@ module Google
       property :network,
                [String, ::Google::Compute::Data::NetworkSelfLinkRef],
                coerce: ::Google::Compute::Property::NetworkSelfLinkRef.coerce, desired_state: true
+      property :enable_flow_logs,
+               kind_of: [TrueClass, FalseClass],
+               coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
+      property :fingerprint,
+               [String, ::Google::Compute::Property::String],
+               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      # secondary_ip_ranges is Array of Google::Compute::Property::SubnetworkSecondaryIpRangesArray
+      property :secondary_ip_ranges,
+               Array,
+               coerce: ::Google::Compute::Property::SubnetworkSecondaryIpRangesArray.coerce,
+               desired_state: true
       property :private_ip_google_access,
                kind_of: [TrueClass, FalseClass],
                coerce: ::Google::Compute::Property::Boolean.coerce, desired_state: true
@@ -106,6 +118,14 @@ module Google
           @current_resource.ip_cidr_range =
             ::Google::Compute::Property::String.api_parse(fetch['ipCidrRange'])
           @current_resource.s_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.enable_flow_logs =
+            ::Google::Compute::Property::Boolean.api_parse(fetch['enableFlowLogs'])
+          @current_resource.fingerprint =
+            ::Google::Compute::Property::String.api_parse(fetch['fingerprint'])
+          @current_resource.secondary_ip_ranges =
+            ::Google::Compute::Property::SubnetworkSecondaryIpRangesArray.api_parse(
+              fetch['secondaryIpRanges']
+            )
           @current_resource.private_ip_google_access =
             ::Google::Compute::Property::Boolean.api_parse(fetch['privateIpGoogleAccess'])
           @new_resource.__fetched = fetch
@@ -144,6 +164,8 @@ module Google
             ipCidrRange: new_resource.ip_cidr_range,
             name: new_resource.s_label,
             network: new_resource.network,
+            enableFlowLogs: new_resource.enable_flow_logs,
+            secondaryIpRanges: new_resource.secondary_ip_ranges,
             privateIpGoogleAccess: new_resource.private_ip_google_access,
             region: new_resource.region
           }.reject { |_, v| v.nil? }
@@ -158,6 +180,9 @@ module Google
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
             if (@current_resource.ip_cidr_range != @new_resource.ip_cidr_range)
               ip_cidr_range_update(@current_resource)
+            end
+            if (@current_resource.enable_flow_logs != @new_resource.enable_flow_logs) || (@current_resource.secondary_ip_ranges != @new_resource.secondary_ip_ranges)
+              enable_flow_logs_update(@current_resource)
             end
             if (@current_resource.private_ip_google_access != @new_resource.private_ip_google_access)
               private_ip_google_access_update(@current_resource)
@@ -183,6 +208,9 @@ module Google
             id: resource.id,
             ip_cidr_range: resource.ip_cidr_range,
             network: resource.network,
+            enable_flow_logs: resource.enable_flow_logs,
+            fingerprint: resource.fingerprint,
+            secondary_ip_ranges: resource.secondary_ip_ranges,
             private_ip_google_access: resource.private_ip_google_access,
             region: resource.region
           }.reject { |_, v| v.nil? }
@@ -201,6 +229,25 @@ module Google
       'application/json',
       {
         ipCidrRange: @new_resource.ip_cidr_range
+      }.to_json
+    ).send
+  end
+
+  def enable_flow_logs_update(data)
+    ::Google::Compute::Network::Patch.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projects/{{project}}/regions/{{region}}/subnetworks/{{name}}',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        enableFlowLogs: @new_resource.enable_flow_logs,
+        fingerprint: @new_resource.__fetched['fingerprint'],
+        secondaryIpRanges: @new_resource.secondary_ip_ranges
       }.to_json
     ).send
   end

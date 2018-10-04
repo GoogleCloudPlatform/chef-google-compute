@@ -154,6 +154,7 @@ context 'gcompute_firewall' do
                     description 'test description#0 data'
                     destination_ranges ['dd', 'ee', 'ff']
                     direction 'INGRESS'
+                    disabled true
                     network 'resource(network,0)'
                     priority 1000
                     source_ranges ['dd', 'ee', 'ff', 'gg', 'hh']
@@ -202,6 +203,7 @@ context 'gcompute_firewall' do
                     description 'test description#1 data'
                     destination_ranges ['ii', 'jj', 'kk', 'll']
                     direction 'EGRESS'
+                    disabled false
                     network 'resource(network,1)'
                     priority 1000
                     source_ranges ['ii', 'jj', 'kk', 'll']
@@ -250,6 +252,7 @@ context 'gcompute_firewall' do
                     description 'test description#2 data'
                     destination_ranges ['oo', 'pp']
                     direction 'INGRESS'
+                    disabled true
                     network 'resource(network,2)'
                     priority 1000
                     source_ranges ['nn', 'oo', 'pp']
@@ -290,6 +293,8 @@ context 'gcompute_firewall' do
               it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
 
               it { is_expected.to have_attributes(direction: 'INGRESS') }
+
+              it { is_expected.to have_attributes(disabled: true) }
 
               it { is_expected.to have_attributes(f_label: 'title0') }
 
@@ -332,6 +337,8 @@ context 'gcompute_firewall' do
 
               it { is_expected.to have_attributes(direction: 'EGRESS') }
 
+              it { is_expected.to have_attributes(disabled: false) }
+
               it { is_expected.to have_attributes(f_label: 'title1') }
 
               # TODO(alexstephen): Implement resourceref test.
@@ -372,6 +379,8 @@ context 'gcompute_firewall' do
               it { is_expected.to have_attributes(destination_ranges: %w[oo pp]) }
 
               it { is_expected.to have_attributes(direction: 'INGRESS') }
+
+              it { is_expected.to have_attributes(disabled: true) }
 
               it { is_expected.to have_attributes(f_label: 'title2') }
 
@@ -503,6 +512,7 @@ context 'gcompute_firewall' do
                     description 'test description#0 data'
                     destination_ranges ['dd', 'ee', 'ff']
                     direction 'INGRESS'
+                    disabled true
                     f_label 'test name#0 data'
                     network 'resource(network,0)'
                     priority 1000
@@ -552,6 +562,7 @@ context 'gcompute_firewall' do
                     description 'test description#1 data'
                     destination_ranges ['ii', 'jj', 'kk', 'll']
                     direction 'EGRESS'
+                    disabled false
                     f_label 'test name#1 data'
                     network 'resource(network,1)'
                     priority 1000
@@ -601,6 +612,7 @@ context 'gcompute_firewall' do
                     description 'test description#2 data'
                     destination_ranges ['oo', 'pp']
                     direction 'INGRESS'
+                    disabled true
                     f_label 'test name#2 data'
                     network 'resource(network,2)'
                     priority 1000
@@ -643,6 +655,8 @@ context 'gcompute_firewall' do
 
               it { is_expected.to have_attributes(direction: 'INGRESS') }
 
+              it { is_expected.to have_attributes(disabled: true) }
+
               it { is_expected.to have_attributes(f_label: 'test name#0 data') }
 
               # TODO(alexstephen): Implement resourceref test.
@@ -684,6 +698,8 @@ context 'gcompute_firewall' do
 
               it { is_expected.to have_attributes(direction: 'EGRESS') }
 
+              it { is_expected.to have_attributes(disabled: false) }
+
               it { is_expected.to have_attributes(f_label: 'test name#1 data') }
 
               # TODO(alexstephen): Implement resourceref test.
@@ -724,6 +740,8 @@ context 'gcompute_firewall' do
               it { is_expected.to have_attributes(destination_ranges: %w[oo pp]) }
 
               it { is_expected.to have_attributes(direction: 'INGRESS') }
+
+              it { is_expected.to have_attributes(disabled: true) }
 
               it { is_expected.to have_attributes(f_label: 'test name#2 data') }
 
@@ -835,6 +853,7 @@ context 'gcompute_firewall' do
                 'description' => 'test description#0 data',
                 'destinationRanges' => %w[dd ee ff],
                 'direction' => 'INGRESS',
+                'disabled' => true,
                 'name' => 'title0',
                 'network' => 'selflink(resource(network,0))',
                 'priority' => 1_000,
@@ -920,6 +939,7 @@ context 'gcompute_firewall' do
                   description 'test description#0 data'
                   destination_ranges ['dd', 'ee', 'ff']
                   direction 'INGRESS'
+                  disabled true
                   network 'resource(network,0)'
                   priority 1000
                   source_ranges ['dd', 'ee', 'ff', 'gg', 'hh']
@@ -963,6 +983,8 @@ context 'gcompute_firewall' do
           it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
 
           it { is_expected.to have_attributes(direction: 'INGRESS') }
+
+          it { is_expected.to have_attributes(disabled: true) }
 
           it { is_expected.to have_attributes(f_label: 'title0') }
 
@@ -1036,6 +1058,7 @@ context 'gcompute_firewall' do
               'description' => 'test description#0 data',
               'destinationRanges' => %w[dd ee ff],
               'direction' => 'INGRESS',
+              'disabled' => true,
               'name' => 'test name#0 data',
               'network' => 'selflink(resource(network,0))',
               'priority' => 1_000,
@@ -1119,6 +1142,7 @@ context 'gcompute_firewall' do
                   description 'test description#0 data'
                   destination_ranges ['dd', 'ee', 'ff']
                   direction 'INGRESS'
+                  disabled true
                   f_label 'test name#0 data'
                   network 'resource(network,0)'
                   priority 1000
@@ -1163,6 +1187,8 @@ context 'gcompute_firewall' do
           it { is_expected.to have_attributes(destination_ranges: %w[dd ee ff]) }
 
           it { is_expected.to have_attributes(direction: 'INGRESS') }
+
+          it { is_expected.to have_attributes(disabled: true) }
 
           it { is_expected.to have_attributes(f_label: 'test name#0 data') }
 

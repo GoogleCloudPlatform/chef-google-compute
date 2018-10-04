@@ -69,6 +69,7 @@ destinationRanges:
 - kk
 - ll
 direction: EGRESS
+disabled: false
 network: selflink(resource(network,1))
 priority: 1000
 project: "'test project#1 data'"

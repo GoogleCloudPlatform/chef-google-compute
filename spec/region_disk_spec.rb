@@ -48,7 +48,7 @@ require 'spec_helper'
 # +--------------------------------------------------------+
 # TODO(alexstephen): Add tests for manage
 # TODO(alexstephen): Add tests for modify
-context 'gcompute_subnetwork' do
+context 'gcompute_region_disk' do
   context 'ensure == present' do
     context 'resource exists' do
       # Ensure present: resource exists, no change
@@ -64,12 +64,18 @@ context 'gcompute_subnetwork' do
               expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
               expect_network_get_success 2, name: 'title1', region: 'test name#1 data'
               expect_network_get_success 3, name: 'title2', region: 'test name#2 data'
-              expect_network_get_success_network 1
-              expect_network_get_success_network 2
-              expect_network_get_success_network 3
+              expect_network_get_success_zone 1
+              expect_network_get_success_zone 2
+              expect_network_get_success_zone 3
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
+              expect_network_get_success_region_disk_type 1, region: 'test name#0 data'
+              expect_network_get_success_region_disk_type 2, region: 'test name#1 data'
+              expect_network_get_success_region_disk_type 3, region: 'test name#2 data'
+              expect_network_get_success_snapshot 1
+              expect_network_get_success_snapshot 2
+              expect_network_get_success_snapshot 3
             end
 
             let(:runner) do
@@ -89,7 +95,12 @@ context 'gcompute_subnetwork' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+                step_into: %w[gcompute_region_disk
+                              gcompute_snapshot
+                              gcompute_region
+                              gcompute_region_disk_type
+                              gcompute_zone
+                              gcompute_instance],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -99,23 +110,23 @@ context 'gcompute_subnetwork' do
             let(:chef_run) do
               apply_recipe(
                 <<-MANIFEST
-                  gcompute_network 'resource(network,0)' do
+                  gcompute_zone 'resource(zone,0)' do
                     action :create
-                    n_label 'test name#0 data'
+                    z_label 'test name#0 data'
                     project 'test project#0 data'
                     credential 'mycred'
                   end
 
-                  gcompute_network 'resource(network,1)' do
+                  gcompute_zone 'resource(zone,1)' do
                     action :create
-                    n_label 'test name#1 data'
+                    z_label 'test name#1 data'
                     project 'test project#1 data'
                     credential 'mycred'
                   end
 
-                  gcompute_network 'resource(network,2)' do
+                  gcompute_zone 'resource(zone,2)' do
                     action :create
-                    n_label 'test name#2 data'
+                    z_label 'test name#2 data'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -141,92 +152,125 @@ context 'gcompute_subnetwork' do
                     credential 'mycred'
                   end
 
-                  gcompute_subnetwork 'title0' do
+                  gcompute_region_disk_type 'resource(region_disk_type,0)' do
                     action :create
-                    description 'test description#0 data'
-                    enable_flow_logs true
-                    ip_cidr_range 'test ip_cidr_range#0 data'
-                    network 'resource(network,0)'
-                    private_ip_google_access true
+                    rdt_label 'test name#0 data'
                     region 'resource(region,0)'
-                    secondary_ip_ranges [
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#0 data',
-                        range_name: 'test range_name#0 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#1 data',
-                        range_name: 'test range_name#1 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#2 data',
-                        range_name: 'test range_name#2 data'
-                      }
-                    ]
                     project 'test project#0 data'
                     credential 'mycred'
                   end
 
-                  gcompute_subnetwork 'title1' do
+                  gcompute_region_disk_type 'resource(region_disk_type,1)' do
                     action :create
-                    description 'test description#1 data'
-                    enable_flow_logs false
-                    ip_cidr_range 'test ip_cidr_range#1 data'
-                    network 'resource(network,1)'
-                    private_ip_google_access false
+                    rdt_label 'test name#1 data'
                     region 'resource(region,1)'
-                    secondary_ip_ranges [
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#1 data',
-                        range_name: 'test range_name#1 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#2 data',
-                        range_name: 'test range_name#2 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#3 data',
-                        range_name: 'test range_name#3 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#4 data',
-                        range_name: 'test range_name#4 data'
-                      }
-                    ]
                     project 'test project#1 data'
                     credential 'mycred'
                   end
 
-                  gcompute_subnetwork 'title2' do
+                  gcompute_region_disk_type 'resource(region_disk_type,2)' do
+                    action :create
+                    rdt_label 'test name#2 data'
+                    region 'resource(region,2)'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_snapshot 'resource(snapshot,0)' do
+                    action :create
+                    s_label 'test name#0 data'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_snapshot 'resource(snapshot,1)' do
+                    action :create
+                    s_label 'test name#1 data'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_snapshot 'resource(snapshot,2)' do
+                    action :create
+                    s_label 'test name#2 data'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_region_disk 'title0' do
+                    action :create
+                    description 'test description#0 data'
+                    disk_encryption_key({
+                      raw_key: 'test raw_key#0 data',
+                      sha256: 'test sha256#0 data'
+                    })
+                    labels({
+                      'test labels#1 data' => 'test labels#1 data',
+                      'test labels#2 data' => 6131251034
+                    })
+                    licenses ['ww', 'xx']
+                    region 'resource(region,0)'
+                    replica_zones ['resource(zone,0)', 'resource(zone,1)']
+                    size_gb 2858499398
+                    source_snapshot 'resource(snapshot,0)'
+                    source_snapshot_encryption_key({
+                      raw_key: 'test raw_key#0 data',
+                      sha256: 'test sha256#0 data'
+                    })
+                    type 'resource(region_disk_type,0)'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_region_disk 'title1' do
+                    action :create
+                    description 'test description#1 data'
+                    disk_encryption_key({
+                      raw_key: 'test raw_key#1 data',
+                      sha256: 'test sha256#1 data'
+                    })
+                    labels({
+                      'test labels#2 data' => 'test labels#2 data',
+                      'test labels#3 data' => 8175001379,
+                      'test labels#4 data' => 'test labels#4 data'
+                    })
+                    licenses ['uu', 'vv']
+                    region 'resource(region,1)'
+                    replica_zones ['resource(zone,0)', 'resource(zone,1)', 'resource(zone,2)']
+                    size_gb 5716998797
+                    source_snapshot 'resource(snapshot,1)'
+                    source_snapshot_encryption_key({
+                      raw_key: 'test raw_key#1 data',
+                      sha256: 'test sha256#1 data'
+                    })
+                    type 'resource(region_disk_type,1)'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_region_disk 'title2' do
                     action :create
                     description 'test description#2 data'
-                    enable_flow_logs true
-                    ip_cidr_range 'test ip_cidr_range#2 data'
-                    network 'resource(network,2)'
-                    private_ip_google_access true
+                    disk_encryption_key({
+                      raw_key: 'test raw_key#2 data',
+                      sha256: 'test sha256#2 data'
+                    })
+                    labels({
+                      'test labels#3 data' => 'test labels#3 data',
+                      'test labels#4 data' => 10218751724,
+                      'test labels#5 data' => 'test labels#5 data',
+                      'test labels#6 data' => 14306252413
+                    })
+                    licenses ['tt', 'uu', 'vv']
                     region 'resource(region,2)'
-                    secondary_ip_ranges [
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#2 data',
-                        range_name: 'test range_name#2 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#3 data',
-                        range_name: 'test range_name#3 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#4 data',
-                        range_name: 'test range_name#4 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#5 data',
-                        range_name: 'test range_name#5 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#6 data',
-                        range_name: 'test range_name#6 data'
-                      }
-                    ]
+                    replica_zones ['resource(zone,0)', 'resource(zone,1)']
+                    size_gb 8575498196
+                    source_snapshot 'resource(snapshot,2)'
+                    source_snapshot_encryption_key({
+                      raw_key: 'test raw_key#2 data',
+                      sha256: 'test sha256#2 data'
+                    })
+                    type 'resource(region_disk_type,2)'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -240,95 +284,149 @@ context 'gcompute_subnetwork' do
               end
             end
 
-            context 'gcompute_subnetwork[title0]' do
+            context 'gcompute_region_disk[title0]' do
               subject do
-                chef_run.find_resource(:gcompute_subnetwork, 'title0')
+                chef_run.find_resource(:gcompute_region_disk, 'title0')
               end
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#0 data') }
-
-              it { is_expected.to have_attributes(s_label: 'title0') }
-
-              # TODO(alexstephen): Implement resourceref test.
-              # it 'network' do
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(enable_flow_logs: true) }
+              it { is_expected.to have_attributes(licenses: %w[ww xx]) }
+
+              it { is_expected.to have_attributes(rd_label: 'title0') }
+
+              it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
               # TODO(nelsonjr): Implement complex array object test.
-              # it 'secondaryIpRanges' do
+              # it 'replicaZones' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(private_ip_google_access: true) }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
               #   # Add test code here
               # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'diskEncryptionKey' do
+              #   # Add test code here
+              # end
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'sourceSnapshot' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'sourceSnapshotEncryptionKey' do
+              #   # Add test code here
+              # end
             end
 
-            context 'gcompute_subnetwork[title1]' do
+            context 'gcompute_region_disk[title1]' do
               subject do
-                chef_run.find_resource(:gcompute_subnetwork, 'title1')
+                chef_run.find_resource(:gcompute_region_disk, 'title1')
               end
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#1 data') }
-
-              it { is_expected.to have_attributes(s_label: 'title1') }
-
-              # TODO(alexstephen): Implement resourceref test.
-              # it 'network' do
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(enable_flow_logs: false) }
+              it { is_expected.to have_attributes(licenses: %w[uu vv]) }
+
+              it { is_expected.to have_attributes(rd_label: 'title1') }
+
+              it { is_expected.to have_attributes(size_gb: 5_716_998_797) }
 
               # TODO(nelsonjr): Implement complex array object test.
-              # it 'secondaryIpRanges' do
+              # it 'replicaZones' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(private_ip_google_access: false) }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'diskEncryptionKey' do
+              #   # Add test code here
+              # end
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'sourceSnapshot' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'sourceSnapshotEncryptionKey' do
               #   # Add test code here
               # end
             end
 
-            context 'gcompute_subnetwork[title2]' do
+            context 'gcompute_region_disk[title2]' do
               subject do
-                chef_run.find_resource(:gcompute_subnetwork, 'title2')
+                chef_run.find_resource(:gcompute_region_disk, 'title2')
               end
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#2 data') }
-
-              it { is_expected.to have_attributes(s_label: 'title2') }
-
-              # TODO(alexstephen): Implement resourceref test.
-              # it 'network' do
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(enable_flow_logs: true) }
+              it { is_expected.to have_attributes(licenses: %w[tt uu vv]) }
+
+              it { is_expected.to have_attributes(rd_label: 'title2') }
+
+              it { is_expected.to have_attributes(size_gb: 8_575_498_196) }
 
               # TODO(nelsonjr): Implement complex array object test.
-              # it 'secondaryIpRanges' do
+              # it 'replicaZones' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(private_ip_google_access: true) }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'diskEncryptionKey' do
+              #   # Add test code here
+              # end
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'sourceSnapshot' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'sourceSnapshotEncryptionKey' do
               #   # Add test code here
               # end
             end
@@ -353,12 +451,18 @@ context 'gcompute_subnetwork' do
               expect_network_get_success 1, region: 'test name#0 data'
               expect_network_get_success 2, region: 'test name#1 data'
               expect_network_get_success 3, region: 'test name#2 data'
-              expect_network_get_success_network 1
-              expect_network_get_success_network 2
-              expect_network_get_success_network 3
+              expect_network_get_success_zone 1
+              expect_network_get_success_zone 2
+              expect_network_get_success_zone 3
               expect_network_get_success_region 1
               expect_network_get_success_region 2
               expect_network_get_success_region 3
+              expect_network_get_success_region_disk_type 1, region: 'test name#0 data'
+              expect_network_get_success_region_disk_type 2, region: 'test name#1 data'
+              expect_network_get_success_region_disk_type 3, region: 'test name#2 data'
+              expect_network_get_success_snapshot 1
+              expect_network_get_success_snapshot 2
+              expect_network_get_success_snapshot 3
             end
 
             let(:runner) do
@@ -378,7 +482,12 @@ context 'gcompute_subnetwork' do
               cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
               ChefSpec::SoloRunner.new(
-                step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+                step_into: %w[gcompute_region_disk
+                              gcompute_snapshot
+                              gcompute_region
+                              gcompute_region_disk_type
+                              gcompute_zone
+                              gcompute_instance],
                 cookbook_path: cookbook_paths,
                 platform: 'ubuntu',
                 version: '16.04'
@@ -388,23 +497,23 @@ context 'gcompute_subnetwork' do
             let(:chef_run) do
               apply_recipe(
                 <<-MANIFEST
-                  gcompute_network 'resource(network,0)' do
+                  gcompute_zone 'resource(zone,0)' do
                     action :create
-                    n_label 'test name#0 data'
+                    z_label 'test name#0 data'
                     project 'test project#0 data'
                     credential 'mycred'
                   end
 
-                  gcompute_network 'resource(network,1)' do
+                  gcompute_zone 'resource(zone,1)' do
                     action :create
-                    n_label 'test name#1 data'
+                    z_label 'test name#1 data'
                     project 'test project#1 data'
                     credential 'mycred'
                   end
 
-                  gcompute_network 'resource(network,2)' do
+                  gcompute_zone 'resource(zone,2)' do
                     action :create
-                    n_label 'test name#2 data'
+                    z_label 'test name#2 data'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -430,95 +539,128 @@ context 'gcompute_subnetwork' do
                     credential 'mycred'
                   end
 
-                  gcompute_subnetwork 'title0' do
+                  gcompute_region_disk_type 'resource(region_disk_type,0)' do
                     action :create
-                    description 'test description#0 data'
-                    enable_flow_logs true
-                    ip_cidr_range 'test ip_cidr_range#0 data'
-                    network 'resource(network,0)'
-                    private_ip_google_access true
+                    rdt_label 'test name#0 data'
                     region 'resource(region,0)'
-                    s_label 'test name#0 data'
-                    secondary_ip_ranges [
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#0 data',
-                        range_name: 'test range_name#0 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#1 data',
-                        range_name: 'test range_name#1 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#2 data',
-                        range_name: 'test range_name#2 data'
-                      }
-                    ]
                     project 'test project#0 data'
                     credential 'mycred'
                   end
 
-                  gcompute_subnetwork 'title1' do
+                  gcompute_region_disk_type 'resource(region_disk_type,1)' do
                     action :create
-                    description 'test description#1 data'
-                    enable_flow_logs false
-                    ip_cidr_range 'test ip_cidr_range#1 data'
-                    network 'resource(network,1)'
-                    private_ip_google_access false
+                    rdt_label 'test name#1 data'
                     region 'resource(region,1)'
-                    s_label 'test name#1 data'
-                    secondary_ip_ranges [
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#1 data',
-                        range_name: 'test range_name#1 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#2 data',
-                        range_name: 'test range_name#2 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#3 data',
-                        range_name: 'test range_name#3 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#4 data',
-                        range_name: 'test range_name#4 data'
-                      }
-                    ]
                     project 'test project#1 data'
                     credential 'mycred'
                   end
 
-                  gcompute_subnetwork 'title2' do
+                  gcompute_region_disk_type 'resource(region_disk_type,2)' do
+                    action :create
+                    rdt_label 'test name#2 data'
+                    region 'resource(region,2)'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_snapshot 'resource(snapshot,0)' do
+                    action :create
+                    s_label 'test name#0 data'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_snapshot 'resource(snapshot,1)' do
+                    action :create
+                    s_label 'test name#1 data'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_snapshot 'resource(snapshot,2)' do
+                    action :create
+                    s_label 'test name#2 data'
+                    project 'test project#2 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_region_disk 'title0' do
+                    action :create
+                    description 'test description#0 data'
+                    disk_encryption_key({
+                      raw_key: 'test raw_key#0 data',
+                      sha256: 'test sha256#0 data'
+                    })
+                    labels({
+                      'test labels#1 data' => 'test labels#1 data',
+                      'test labels#2 data' => 6131251034
+                    })
+                    licenses ['ww', 'xx']
+                    rd_label 'test name#0 data'
+                    region 'resource(region,0)'
+                    replica_zones ['resource(zone,0)', 'resource(zone,1)']
+                    size_gb 2858499398
+                    source_snapshot 'resource(snapshot,0)'
+                    source_snapshot_encryption_key({
+                      raw_key: 'test raw_key#0 data',
+                      sha256: 'test sha256#0 data'
+                    })
+                    type 'resource(region_disk_type,0)'
+                    project 'test project#0 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_region_disk 'title1' do
+                    action :create
+                    description 'test description#1 data'
+                    disk_encryption_key({
+                      raw_key: 'test raw_key#1 data',
+                      sha256: 'test sha256#1 data'
+                    })
+                    labels({
+                      'test labels#2 data' => 'test labels#2 data',
+                      'test labels#3 data' => 8175001379,
+                      'test labels#4 data' => 'test labels#4 data'
+                    })
+                    licenses ['uu', 'vv']
+                    rd_label 'test name#1 data'
+                    region 'resource(region,1)'
+                    replica_zones ['resource(zone,0)', 'resource(zone,1)', 'resource(zone,2)']
+                    size_gb 5716998797
+                    source_snapshot 'resource(snapshot,1)'
+                    source_snapshot_encryption_key({
+                      raw_key: 'test raw_key#1 data',
+                      sha256: 'test sha256#1 data'
+                    })
+                    type 'resource(region_disk_type,1)'
+                    project 'test project#1 data'
+                    credential 'mycred'
+                  end
+
+                  gcompute_region_disk 'title2' do
                     action :create
                     description 'test description#2 data'
-                    enable_flow_logs true
-                    ip_cidr_range 'test ip_cidr_range#2 data'
-                    network 'resource(network,2)'
-                    private_ip_google_access true
+                    disk_encryption_key({
+                      raw_key: 'test raw_key#2 data',
+                      sha256: 'test sha256#2 data'
+                    })
+                    labels({
+                      'test labels#3 data' => 'test labels#3 data',
+                      'test labels#4 data' => 10218751724,
+                      'test labels#5 data' => 'test labels#5 data',
+                      'test labels#6 data' => 14306252413
+                    })
+                    licenses ['tt', 'uu', 'vv']
+                    rd_label 'test name#2 data'
                     region 'resource(region,2)'
-                    s_label 'test name#2 data'
-                    secondary_ip_ranges [
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#2 data',
-                        range_name: 'test range_name#2 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#3 data',
-                        range_name: 'test range_name#3 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#4 data',
-                        range_name: 'test range_name#4 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#5 data',
-                        range_name: 'test range_name#5 data'
-                      },
-                      {
-                        ip_cidr_range: 'test ip_cidr_range#6 data',
-                        range_name: 'test range_name#6 data'
-                      }
-                    ]
+                    replica_zones ['resource(zone,0)', 'resource(zone,1)']
+                    size_gb 8575498196
+                    source_snapshot 'resource(snapshot,2)'
+                    source_snapshot_encryption_key({
+                      raw_key: 'test raw_key#2 data',
+                      sha256: 'test sha256#2 data'
+                    })
+                    type 'resource(region_disk_type,2)'
                     project 'test project#2 data'
                     credential 'mycred'
                   end
@@ -532,95 +674,149 @@ context 'gcompute_subnetwork' do
               end
             end
 
-            context 'gcompute_subnetwork[title0]' do
+            context 'gcompute_region_disk[title0]' do
               subject do
-                chef_run.find_resource(:gcompute_subnetwork, 'title0')
+                chef_run.find_resource(:gcompute_region_disk, 'title0')
               end
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#0 data') }
-
-              it { is_expected.to have_attributes(s_label: 'test name#0 data') }
-
-              # TODO(alexstephen): Implement resourceref test.
-              # it 'network' do
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(enable_flow_logs: true) }
+              it { is_expected.to have_attributes(licenses: %w[ww xx]) }
+
+              it { is_expected.to have_attributes(rd_label: 'test name#0 data') }
+
+              it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
               # TODO(nelsonjr): Implement complex array object test.
-              # it 'secondaryIpRanges' do
+              # it 'replicaZones' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(private_ip_google_access: true) }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
               #   # Add test code here
               # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'diskEncryptionKey' do
+              #   # Add test code here
+              # end
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'sourceSnapshot' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'sourceSnapshotEncryptionKey' do
+              #   # Add test code here
+              # end
             end
 
-            context 'gcompute_subnetwork[title1]' do
+            context 'gcompute_region_disk[title1]' do
               subject do
-                chef_run.find_resource(:gcompute_subnetwork, 'title1')
+                chef_run.find_resource(:gcompute_region_disk, 'title1')
               end
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#1 data') }
-
-              it { is_expected.to have_attributes(s_label: 'test name#1 data') }
-
-              # TODO(alexstephen): Implement resourceref test.
-              # it 'network' do
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(enable_flow_logs: false) }
+              it { is_expected.to have_attributes(licenses: %w[uu vv]) }
+
+              it { is_expected.to have_attributes(rd_label: 'test name#1 data') }
+
+              it { is_expected.to have_attributes(size_gb: 5_716_998_797) }
 
               # TODO(nelsonjr): Implement complex array object test.
-              # it 'secondaryIpRanges' do
+              # it 'replicaZones' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(private_ip_google_access: false) }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'diskEncryptionKey' do
+              #   # Add test code here
+              # end
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'sourceSnapshot' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'sourceSnapshotEncryptionKey' do
               #   # Add test code here
               # end
             end
 
-            context 'gcompute_subnetwork[title2]' do
+            context 'gcompute_region_disk[title2]' do
               subject do
-                chef_run.find_resource(:gcompute_subnetwork, 'title2')
+                chef_run.find_resource(:gcompute_region_disk, 'title2')
               end
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#2 data') }
-
-              it { is_expected.to have_attributes(s_label: 'test name#2 data') }
-
-              # TODO(alexstephen): Implement resourceref test.
-              # it 'network' do
+              # TODO(nelsonjr): Implement complex namevalues property test.
+              # it 'labels' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(enable_flow_logs: true) }
+              it { is_expected.to have_attributes(licenses: %w[tt uu vv]) }
+
+              it { is_expected.to have_attributes(rd_label: 'test name#2 data') }
+
+              it { is_expected.to have_attributes(size_gb: 8_575_498_196) }
 
               # TODO(nelsonjr): Implement complex array object test.
-              # it 'secondaryIpRanges' do
+              # it 'replicaZones' do
               #   # Add test code here
               # end
 
-              it { is_expected.to have_attributes(private_ip_google_access: true) }
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'type' do
+              #   # Add test code here
+              # end
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'diskEncryptionKey' do
+              #   # Add test code here
+              # end
+
+              # TODO(alexstephen): Implement resourceref test.
+              # it 'sourceSnapshot' do
+              #   # Add test code here
+              # end
+
+              # TODO(nelsonjr): Implement complex nested property object test.
+              # it 'sourceSnapshotEncryptionKey' do
               #   # Add test code here
               # end
             end
@@ -679,34 +875,37 @@ context 'gcompute_subnetwork' do
             expect_network_create \
               1,
               {
-                'kind' => 'compute#subnetwork',
+                'kind' => 'compute#disk',
                 'description' => 'test description#0 data',
-                'ipCidrRange' => 'test ip_cidr_range#0 data',
+                'labels' => {
+                  'test labels#1 data' => 'test labels#1 data',
+                  'test labels#2 data' => 6_131_251_034
+                },
+                'licenses' => %w[ww xx],
                 'name' => 'title0',
-                'network' => 'selflink(resource(network,0))',
-                'enableFlowLogs' => true,
-                'secondaryIpRanges' => [
-                  {
-                    'rangeName' => 'test range_name#0 data',
-                    'ipCidrRange' => 'test ip_cidr_range#0 data'
-                  },
-                  {
-                    'rangeName' => 'test range_name#1 data',
-                    'ipCidrRange' => 'test ip_cidr_range#1 data'
-                  },
-                  {
-                    'rangeName' => 'test range_name#2 data',
-                    'ipCidrRange' => 'test ip_cidr_range#2 data'
-                  }
+                'sizeGb' => 2_858_499_398,
+                'replicaZones' => [
+                  'selflink(resource(zone,0))',
+                  'selflink(resource(zone,1))'
                 ],
-                'privateIpGoogleAccess' => true,
-                'region' => 'test name#0 data'
+                'type' => 'selflink(resource(region_disk_type,0))',
+                'diskEncryptionKey' => {
+                  'rawKey' => 'test raw_key#0 data',
+                  'sha256' => 'test sha256#0 data'
+                },
+                'sourceSnapshotEncryptionKey' => {
+                  'rawKey' => 'test raw_key#0 data',
+                  'sha256' => 'test sha256#0 data'
+                }
               },
               name: 'title0',
               region: 'test name#0 data'
             expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
-            expect_network_get_success_network 1
+            expect_network_get_success_zone 1
+            expect_network_get_success_zone 2
             expect_network_get_success_region 1
+            expect_network_get_success_region_disk_type 1, region: 'test name#0 data'
+            expect_network_get_success_snapshot 1
           end
 
           let(:runner) do
@@ -726,7 +925,12 @@ context 'gcompute_subnetwork' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+              step_into: %w[gcompute_region_disk
+                            gcompute_snapshot
+                            gcompute_region
+                            gcompute_region_disk_type
+                            gcompute_zone
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -736,10 +940,17 @@ context 'gcompute_subnetwork' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
-                gcompute_network 'resource(network,0)' do
+                gcompute_zone 'resource(zone,0)' do
                   action :create
-                  n_label 'test name#0 data'
+                  z_label 'test name#0 data'
                   project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_zone 'resource(zone,1)' do
+                  action :create
+                  z_label 'test name#1 data'
+                  project 'test project#1 data'
                   credential 'mycred'
                 end
 
@@ -750,28 +961,42 @@ context 'gcompute_subnetwork' do
                   credential 'mycred'
                 end
 
-                gcompute_subnetwork 'title0' do
+                gcompute_region_disk_type 'resource(region_disk_type,0)' do
+                  action :create
+                  rdt_label 'test name#0 data'
+                  region 'resource(region,0)'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_snapshot 'resource(snapshot,0)' do
+                  action :create
+                  s_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_region_disk 'title0' do
                   action :create
                   description 'test description#0 data'
-                  enable_flow_logs true
-                  ip_cidr_range 'test ip_cidr_range#0 data'
-                  network 'resource(network,0)'
-                  private_ip_google_access true
+                  disk_encryption_key({
+                    raw_key: 'test raw_key#0 data',
+                    sha256: 'test sha256#0 data'
+                  })
+                  labels({
+                    'test labels#1 data' => 'test labels#1 data',
+                    'test labels#2 data' => 6131251034
+                  })
+                  licenses ['ww', 'xx']
                   region 'resource(region,0)'
-                  secondary_ip_ranges [
-                    {
-                      ip_cidr_range: 'test ip_cidr_range#0 data',
-                      range_name: 'test range_name#0 data'
-                    },
-                    {
-                      ip_cidr_range: 'test ip_cidr_range#1 data',
-                      range_name: 'test range_name#1 data'
-                    },
-                    {
-                      ip_cidr_range: 'test ip_cidr_range#2 data',
-                      range_name: 'test range_name#2 data'
-                    }
-                  ]
+                  replica_zones ['resource(zone,0)', 'resource(zone,1)']
+                  size_gb 2858499398
+                  source_snapshot 'resource(snapshot,0)'
+                  source_snapshot_encryption_key({
+                    raw_key: 'test raw_key#0 data',
+                    sha256: 'test sha256#0 data'
+                  })
+                  type 'resource(region_disk_type,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -786,35 +1011,53 @@ context 'gcompute_subnetwork' do
           end
 
           subject do
-            chef_run.find_resource(:gcompute_subnetwork, 'title0')
+            chef_run.find_resource(:gcompute_region_disk, 'title0')
           end
 
           it 'should run test correctly' do
-            expect(chef_run).to create(:gcompute_subnetwork,
+            expect(chef_run).to create(:gcompute_region_disk,
                                        'title0')
           end
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#0 data') }
-
-          it { is_expected.to have_attributes(s_label: 'title0') }
-
-          # TODO(alexstephen): Implement resourceref test.
-          # it 'network' do
+          # TODO(nelsonjr): Implement complex namevalues property test.
+          # it 'labels' do
           #   # Add test code here
           # end
 
-          it { is_expected.to have_attributes(enable_flow_logs: true) }
+          it { is_expected.to have_attributes(licenses: %w[ww xx]) }
+
+          it { is_expected.to have_attributes(rd_label: 'title0') }
+
+          it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
           # TODO(nelsonjr): Implement complex array object test.
-          # it 'secondaryIpRanges' do
+          # it 'replicaZones' do
           #   # Add test code here
           # end
 
-          it { is_expected.to have_attributes(private_ip_google_access: true) }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'type' do
+          #   # Add test code here
+          # end
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'region' do
+          #   # Add test code here
+          # end
+
+          # TODO(nelsonjr): Implement complex nested property object test.
+          # it 'diskEncryptionKey' do
+          #   # Add test code here
+          # end
+
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'sourceSnapshot' do
+          #   # Add test code here
+          # end
+
+          # TODO(nelsonjr): Implement complex nested property object test.
+          # it 'sourceSnapshotEncryptionKey' do
           #   # Add test code here
           # end
         end
@@ -836,33 +1079,36 @@ context 'gcompute_subnetwork' do
             expect_network_create \
               1,
               {
-                'kind' => 'compute#subnetwork',
+                'kind' => 'compute#disk',
                 'description' => 'test description#0 data',
-                'ipCidrRange' => 'test ip_cidr_range#0 data',
+                'labels' => {
+                  'test labels#1 data' => 'test labels#1 data',
+                  'test labels#2 data' => 6_131_251_034
+                },
+                'licenses' => %w[ww xx],
                 'name' => 'test name#0 data',
-                'network' => 'selflink(resource(network,0))',
-                'enableFlowLogs' => true,
-                'secondaryIpRanges' => [
-                  {
-                    'rangeName' => 'test range_name#0 data',
-                    'ipCidrRange' => 'test ip_cidr_range#0 data'
-                  },
-                  {
-                    'rangeName' => 'test range_name#1 data',
-                    'ipCidrRange' => 'test ip_cidr_range#1 data'
-                  },
-                  {
-                    'rangeName' => 'test range_name#2 data',
-                    'ipCidrRange' => 'test ip_cidr_range#2 data'
-                  }
+                'sizeGb' => 2_858_499_398,
+                'replicaZones' => [
+                  'selflink(resource(zone,0))',
+                  'selflink(resource(zone,1))'
                 ],
-                'privateIpGoogleAccess' => true,
-                'region' => 'test name#0 data'
+                'type' => 'selflink(resource(region_disk_type,0))',
+                'diskEncryptionKey' => {
+                  'rawKey' => 'test raw_key#0 data',
+                  'sha256' => 'test sha256#0 data'
+                },
+                'sourceSnapshotEncryptionKey' => {
+                  'rawKey' => 'test raw_key#0 data',
+                  'sha256' => 'test sha256#0 data'
+                }
               },
               region: 'test name#0 data'
             expect_network_get_async 1, region: 'test name#0 data'
-            expect_network_get_success_network 1
+            expect_network_get_success_zone 1
+            expect_network_get_success_zone 2
             expect_network_get_success_region 1
+            expect_network_get_success_region_disk_type 1, region: 'test name#0 data'
+            expect_network_get_success_snapshot 1
           end
 
           let(:runner) do
@@ -882,7 +1128,12 @@ context 'gcompute_subnetwork' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+              step_into: %w[gcompute_region_disk
+                            gcompute_snapshot
+                            gcompute_region
+                            gcompute_region_disk_type
+                            gcompute_zone
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -892,10 +1143,17 @@ context 'gcompute_subnetwork' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
-                gcompute_network 'resource(network,0)' do
+                gcompute_zone 'resource(zone,0)' do
                   action :create
-                  n_label 'test name#0 data'
+                  z_label 'test name#0 data'
                   project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_zone 'resource(zone,1)' do
+                  action :create
+                  z_label 'test name#1 data'
+                  project 'test project#1 data'
                   credential 'mycred'
                 end
 
@@ -906,29 +1164,43 @@ context 'gcompute_subnetwork' do
                   credential 'mycred'
                 end
 
-                gcompute_subnetwork 'title0' do
+                gcompute_region_disk_type 'resource(region_disk_type,0)' do
+                  action :create
+                  rdt_label 'test name#0 data'
+                  region 'resource(region,0)'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_snapshot 'resource(snapshot,0)' do
+                  action :create
+                  s_label 'test name#0 data'
+                  project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_region_disk 'title0' do
                   action :create
                   description 'test description#0 data'
-                  enable_flow_logs true
-                  ip_cidr_range 'test ip_cidr_range#0 data'
-                  network 'resource(network,0)'
-                  private_ip_google_access true
+                  disk_encryption_key({
+                    raw_key: 'test raw_key#0 data',
+                    sha256: 'test sha256#0 data'
+                  })
+                  labels({
+                    'test labels#1 data' => 'test labels#1 data',
+                    'test labels#2 data' => 6131251034
+                  })
+                  licenses ['ww', 'xx']
+                  rd_label 'test name#0 data'
                   region 'resource(region,0)'
-                  s_label 'test name#0 data'
-                  secondary_ip_ranges [
-                    {
-                      ip_cidr_range: 'test ip_cidr_range#0 data',
-                      range_name: 'test range_name#0 data'
-                    },
-                    {
-                      ip_cidr_range: 'test ip_cidr_range#1 data',
-                      range_name: 'test range_name#1 data'
-                    },
-                    {
-                      ip_cidr_range: 'test ip_cidr_range#2 data',
-                      range_name: 'test range_name#2 data'
-                    }
-                  ]
+                  replica_zones ['resource(zone,0)', 'resource(zone,1)']
+                  size_gb 2858499398
+                  source_snapshot 'resource(snapshot,0)'
+                  source_snapshot_encryption_key({
+                    raw_key: 'test raw_key#0 data',
+                    sha256: 'test sha256#0 data'
+                  })
+                  type 'resource(region_disk_type,0)'
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -943,35 +1215,53 @@ context 'gcompute_subnetwork' do
           end
 
           subject do
-            chef_run.find_resource(:gcompute_subnetwork, 'title0')
+            chef_run.find_resource(:gcompute_region_disk, 'title0')
           end
 
           it 'should run test correctly' do
-            expect(chef_run).to create(:gcompute_subnetwork,
+            expect(chef_run).to create(:gcompute_region_disk,
                                        'title0')
           end
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          it { is_expected.to have_attributes(ip_cidr_range: 'test ip_cidr_range#0 data') }
-
-          it { is_expected.to have_attributes(s_label: 'test name#0 data') }
-
-          # TODO(alexstephen): Implement resourceref test.
-          # it 'network' do
+          # TODO(nelsonjr): Implement complex namevalues property test.
+          # it 'labels' do
           #   # Add test code here
           # end
 
-          it { is_expected.to have_attributes(enable_flow_logs: true) }
+          it { is_expected.to have_attributes(licenses: %w[ww xx]) }
+
+          it { is_expected.to have_attributes(rd_label: 'test name#0 data') }
+
+          it { is_expected.to have_attributes(size_gb: 2_858_499_398) }
 
           # TODO(nelsonjr): Implement complex array object test.
-          # it 'secondaryIpRanges' do
+          # it 'replicaZones' do
           #   # Add test code here
           # end
 
-          it { is_expected.to have_attributes(private_ip_google_access: true) }
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'type' do
+          #   # Add test code here
+          # end
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'region' do
+          #   # Add test code here
+          # end
+
+          # TODO(nelsonjr): Implement complex nested property object test.
+          # it 'diskEncryptionKey' do
+          #   # Add test code here
+          # end
+
+          # TODO(alexstephen): Implement resourceref test.
+          # it 'sourceSnapshot' do
+          #   # Add test code here
+          # end
+
+          # TODO(nelsonjr): Implement complex nested property object test.
+          # it 'sourceSnapshotEncryptionKey' do
           #   # Add test code here
           # end
         end
@@ -994,7 +1284,8 @@ context 'gcompute_subnetwork' do
         context 'title == name (pass)' do
           before do
             expect_network_get_failed 1, name: 'title0', region: 'test name#0 data'
-            expect_network_get_success_network 1
+            expect_network_get_success_zone 1
+            expect_network_get_success_zone 2
             expect_network_get_success_region 1
           end
 
@@ -1015,7 +1306,12 @@ context 'gcompute_subnetwork' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+              step_into: %w[gcompute_region_disk
+                            gcompute_snapshot
+                            gcompute_region
+                            gcompute_region_disk_type
+                            gcompute_zone
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1025,10 +1321,17 @@ context 'gcompute_subnetwork' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
-                gcompute_network 'resource(network,0)' do
+                gcompute_zone 'resource(zone,0)' do
                   action :create
-                  n_label 'test name#0 data'
+                  z_label 'test name#0 data'
                   project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_zone 'resource(zone,1)' do
+                  action :create
+                  z_label 'test name#1 data'
+                  project 'test project#1 data'
                   credential 'mycred'
                 end
 
@@ -1039,11 +1342,10 @@ context 'gcompute_subnetwork' do
                   credential 'mycred'
                 end
 
-                gcompute_subnetwork 'title0' do
+                gcompute_region_disk 'title0' do
                   action :delete
-                  ip_cidr_range 'test ip_cidr_range#0 data'
-                  network 'resource(network,0)'
                   region 'resource(region,0)'
+                  replica_zones ['resource(zone,0)', 'resource(zone,1)']
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1058,7 +1360,7 @@ context 'gcompute_subnetwork' do
           end
 
           subject do
-            chef_run.find_resource(:gcompute_subnetwork, 'title0')
+            chef_run.find_resource(:gcompute_region_disk, 'title0')
           end
         end
 
@@ -1076,7 +1378,8 @@ context 'gcompute_subnetwork' do
         context 'title != name (pass)' do
           before do
             expect_network_get_failed 1, region: 'test name#0 data'
-            expect_network_get_success_network 1
+            expect_network_get_success_zone 1
+            expect_network_get_success_zone 2
             expect_network_get_success_region 1
           end
 
@@ -1097,7 +1400,12 @@ context 'gcompute_subnetwork' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+              step_into: %w[gcompute_region_disk
+                            gcompute_snapshot
+                            gcompute_region
+                            gcompute_region_disk_type
+                            gcompute_zone
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1107,10 +1415,17 @@ context 'gcompute_subnetwork' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
-                gcompute_network 'resource(network,0)' do
+                gcompute_zone 'resource(zone,0)' do
                   action :create
-                  n_label 'test name#0 data'
+                  z_label 'test name#0 data'
                   project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_zone 'resource(zone,1)' do
+                  action :create
+                  z_label 'test name#1 data'
+                  project 'test project#1 data'
                   credential 'mycred'
                 end
 
@@ -1121,12 +1436,11 @@ context 'gcompute_subnetwork' do
                   credential 'mycred'
                 end
 
-                gcompute_subnetwork 'title0' do
+                gcompute_region_disk 'title0' do
                   action :delete
-                  ip_cidr_range 'test ip_cidr_range#0 data'
-                  network 'resource(network,0)'
+                  rd_label 'test name#0 data'
                   region 'resource(region,0)'
-                  s_label 'test name#0 data'
+                  replica_zones ['resource(zone,0)', 'resource(zone,1)']
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1141,7 +1455,7 @@ context 'gcompute_subnetwork' do
           end
 
           subject do
-            chef_run.find_resource(:gcompute_subnetwork, 'title0')
+            chef_run.find_resource(:gcompute_region_disk, 'title0')
           end
         end
 
@@ -1163,7 +1477,8 @@ context 'gcompute_subnetwork' do
             expect_network_get_success 1, name: 'title0', region: 'test name#0 data'
             expect_network_delete 1, 'title0', region: 'test name#0 data'
             expect_network_get_async 1, name: 'title0', region: 'test name#0 data'
-            expect_network_get_success_network 1
+            expect_network_get_success_zone 1
+            expect_network_get_success_zone 2
             expect_network_get_success_region 1
           end
 
@@ -1184,7 +1499,12 @@ context 'gcompute_subnetwork' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+              step_into: %w[gcompute_region_disk
+                            gcompute_snapshot
+                            gcompute_region
+                            gcompute_region_disk_type
+                            gcompute_zone
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1194,10 +1514,17 @@ context 'gcompute_subnetwork' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
-                gcompute_network 'resource(network,0)' do
+                gcompute_zone 'resource(zone,0)' do
                   action :create
-                  n_label 'test name#0 data'
+                  z_label 'test name#0 data'
                   project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_zone 'resource(zone,1)' do
+                  action :create
+                  z_label 'test name#1 data'
+                  project 'test project#1 data'
                   credential 'mycred'
                 end
 
@@ -1208,11 +1535,10 @@ context 'gcompute_subnetwork' do
                   credential 'mycred'
                 end
 
-                gcompute_subnetwork 'title0' do
+                gcompute_region_disk 'title0' do
                   action :delete
-                  ip_cidr_range 'test ip_cidr_range#0 data'
-                  network 'resource(network,0)'
                   region 'resource(region,0)'
+                  replica_zones ['resource(zone,0)', 'resource(zone,1)']
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1227,11 +1553,11 @@ context 'gcompute_subnetwork' do
           end
 
           subject do
-            chef_run.find_resource(:gcompute_subnetwork, 'title0')
+            chef_run.find_resource(:gcompute_region_disk, 'title0')
           end
 
           it 'should run test correctly' do
-            expect(chef_run).to delete(:gcompute_subnetwork,
+            expect(chef_run).to delete(:gcompute_region_disk,
                                        'title0')
           end
         end
@@ -1251,7 +1577,8 @@ context 'gcompute_subnetwork' do
             expect_network_get_success 1, region: 'test name#0 data'
             expect_network_delete 1, nil, region: 'test name#0 data'
             expect_network_get_async 1, region: 'test name#0 data'
-            expect_network_get_success_network 1
+            expect_network_get_success_zone 1
+            expect_network_get_success_zone 2
             expect_network_get_success_region 1
           end
 
@@ -1272,7 +1599,12 @@ context 'gcompute_subnetwork' do
             cookbook_paths << File.join(File.dirname(__FILE__), 'cookbooks')
 
             ChefSpec::SoloRunner.new(
-              step_into: %w[gcompute_subnetwork gcompute_region gcompute_network],
+              step_into: %w[gcompute_region_disk
+                            gcompute_snapshot
+                            gcompute_region
+                            gcompute_region_disk_type
+                            gcompute_zone
+                            gcompute_instance],
               cookbook_path: cookbook_paths,
               platform: 'ubuntu',
               version: '16.04'
@@ -1282,10 +1614,17 @@ context 'gcompute_subnetwork' do
           let(:chef_run) do
             apply_recipe(
               <<-MANIFEST
-                gcompute_network 'resource(network,0)' do
+                gcompute_zone 'resource(zone,0)' do
                   action :create
-                  n_label 'test name#0 data'
+                  z_label 'test name#0 data'
                   project 'test project#0 data'
+                  credential 'mycred'
+                end
+
+                gcompute_zone 'resource(zone,1)' do
+                  action :create
+                  z_label 'test name#1 data'
+                  project 'test project#1 data'
                   credential 'mycred'
                 end
 
@@ -1296,12 +1635,11 @@ context 'gcompute_subnetwork' do
                   credential 'mycred'
                 end
 
-                gcompute_subnetwork 'title0' do
+                gcompute_region_disk 'title0' do
                   action :delete
-                  ip_cidr_range 'test ip_cidr_range#0 data'
-                  network 'resource(network,0)'
+                  rd_label 'test name#0 data'
                   region 'resource(region,0)'
-                  s_label 'test name#0 data'
+                  replica_zones ['resource(zone,0)', 'resource(zone,1)']
                   project 'test project#0 data'
                   credential 'mycred'
                 end
@@ -1316,11 +1654,11 @@ context 'gcompute_subnetwork' do
           end
 
           subject do
-            chef_run.find_resource(:gcompute_subnetwork, 'title0')
+            chef_run.find_resource(:gcompute_region_disk, 'title0')
           end
 
           it 'should run test correctly' do
-            expect(chef_run).to delete(:gcompute_subnetwork,
+            expect(chef_run).to delete(:gcompute_region_disk,
                                        'title0')
           end
         end
@@ -1336,7 +1674,7 @@ context 'gcompute_subnetwork' do
   end
 
   def expand_variables(template, data, extra_data = {})
-    Google::GCOMPUTE::Subnetwork
+    Google::GCOMPUTE::RegionDisk
       .action_class.expand_variables(template, data, extra_data)
   end
 
@@ -1364,7 +1702,7 @@ context 'gcompute_subnetwork' do
   end
 
   def expect_network_get_async(id, data = {})
-    body = { kind: 'compute#subnetwork' }.to_json
+    body = { kind: 'compute#disk' }.to_json
 
     request = double('request')
     allow(request).to receive(:send).and_return(http_success(body))
@@ -1438,7 +1776,7 @@ context 'gcompute_subnetwork' do
 
   def load_network_result(file)
     results = File.join(File.dirname(__FILE__), 'data', 'network',
-                        'gcompute_subnetwork', file)
+                        'gcompute_region_disk', file)
     debug("Loading result file: #{results}")
     raise "Network result data file #{results}" unless File.exist?(results)
     data = YAML.safe_load(File.read(results))
@@ -1446,28 +1784,28 @@ context 'gcompute_subnetwork' do
     data
   end
 
-  def expect_network_get_success_network(id, data = {})
+  def expect_network_get_success_instance(id, data = {})
     id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
-    body = load_network_result_network("success#{id}~" \
+    body = load_network_result_instance("success#{id}~" \
                                                            "#{id_data}.yaml")
            .to_json
-    uri = uri_data_network(id).merge(data)
+    uri = uri_data_instance(id).merge(data)
 
     request = double('request')
     allow(request).to receive(:send).and_return(http_success(body))
 
     debug_network "!! GET #{uri}"
     expect(Google::Compute::Network::Get).to receive(:new)
-      .with(self_link_network(uri),
+      .with(self_link_instance(uri),
             instance_of(Google::FakeAuthorization)) do |args|
       debug_network ">> GET #{args}"
       request
     end
   end
 
-  def load_network_result_network(file)
+  def load_network_result_instance(file)
     results = File.join(File.dirname(__FILE__), 'data', 'network',
-                        'gcompute_network', file)
+                        'gcompute_instance', file)
     raise "Network result data file #{results}" unless File.exist?(results)
     data = YAML.safe_load(File.read(results))
     raise "Invalid network results #{results}" unless data.class <= Hash
@@ -1475,21 +1813,172 @@ context 'gcompute_subnetwork' do
   end
 
   # Creates variable test data to comply with self_link URI parameters
-  # Only used for gcompute_network objects
-  def uri_data_network(id)
+  # Only used for gcompute_instance objects
+  def uri_data_instance(id)
     {
-      project: GoogleTests::Constants::N_PROJECT_DATA[(id - 1) \
-        % GoogleTests::Constants::N_PROJECT_DATA.size],
-      name: GoogleTests::Constants::N_NAME_DATA[(id - 1) \
-        % GoogleTests::Constants::N_NAME_DATA.size]
+      project: GoogleTests::Constants::I_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::I_PROJECT_DATA.size],
+      zone: GoogleTests::Constants::I_ZONE_DATA[(id - 1) \
+        % GoogleTests::Constants::I_ZONE_DATA.size],
+      name: GoogleTests::Constants::I_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::I_NAME_DATA.size]
     }
   end
 
-  def self_link_network(data)
+  def self_link_instance(data)
     URI.join(
       'https://www.googleapis.com/compute/v1/',
-      expand_variables_network(
-        'projects/{{project}}/global/networks/{{name}}',
+      expand_variables_instance(
+        'projects/{{project}}/zones/{{zone}}/instances/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_zone(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_zone("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_zone(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_zone(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_zone(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_zone', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_zone objects
+  def uri_data_zone(id)
+    {
+      project: GoogleTests::Constants::Z_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::Z_PROJECT_DATA.size],
+      name: GoogleTests::Constants::Z_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::Z_NAME_DATA.size]
+    }
+  end
+
+  def self_link_zone(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_zone(
+        'projects/{{project}}/zones/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_zone(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_zone("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_zone(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_zone(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_zone(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_zone', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_zone objects
+  def uri_data_zone(id)
+    {
+      project: GoogleTests::Constants::Z_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::Z_PROJECT_DATA.size],
+      name: GoogleTests::Constants::Z_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::Z_NAME_DATA.size]
+    }
+  end
+
+  def self_link_zone(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_zone(
+        'projects/{{project}}/zones/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_region_disk_type(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_region_disk_type("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_region_disk_type(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_region_disk_type(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_region_disk_type(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_region_disk_type', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_region_disk_type objects
+  def uri_data_region_disk_type(id)
+    {
+      project: GoogleTests::Constants::RDT_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::RDT_PROJECT_DATA.size],
+      region: GoogleTests::Constants::RDT_REGION_DATA[(id - 1) \
+        % GoogleTests::Constants::RDT_REGION_DATA.size],
+      name: GoogleTests::Constants::RDT_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::RDT_NAME_DATA.size]
+    }
+  end
+
+  def self_link_region_disk_type(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_region_disk_type(
+        'projects/{{project}}/regions/{{region}}/diskTypes/{{name}}',
         data
       )
     )
@@ -1544,6 +2033,104 @@ context 'gcompute_subnetwork' do
     )
   end
 
+  def expect_network_get_success_region(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_region("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_region(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_region(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_region(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_region', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_region objects
+  def uri_data_region(id)
+    {
+      project: GoogleTests::Constants::R_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::R_PROJECT_DATA.size],
+      name: GoogleTests::Constants::R_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::R_NAME_DATA.size]
+    }
+  end
+
+  def self_link_region(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_region(
+        'projects/{{project}}/regions/{{name}}',
+        data
+      )
+    )
+  end
+
+  def expect_network_get_success_snapshot(id, data = {})
+    id_data = data.fetch(:name, '').include?('title') ? 'title' : 'name'
+    body = load_network_result_snapshot("success#{id}~" \
+                                                           "#{id_data}.yaml")
+           .to_json
+    uri = uri_data_snapshot(id).merge(data)
+
+    request = double('request')
+    allow(request).to receive(:send).and_return(http_success(body))
+
+    debug_network "!! GET #{uri}"
+    expect(Google::Compute::Network::Get).to receive(:new)
+      .with(self_link_snapshot(uri),
+            instance_of(Google::FakeAuthorization)) do |args|
+      debug_network ">> GET #{args}"
+      request
+    end
+  end
+
+  def load_network_result_snapshot(file)
+    results = File.join(File.dirname(__FILE__), 'data', 'network',
+                        'gcompute_snapshot', file)
+    raise "Network result data file #{results}" unless File.exist?(results)
+    data = YAML.safe_load(File.read(results))
+    raise "Invalid network results #{results}" unless data.class <= Hash
+    data
+  end
+
+  # Creates variable test data to comply with self_link URI parameters
+  # Only used for gcompute_snapshot objects
+  def uri_data_snapshot(id)
+    {
+      project: GoogleTests::Constants::S_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::S_PROJECT_DATA.size],
+      name: GoogleTests::Constants::S_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::S_NAME_DATA.size]
+    }
+  end
+
+  def self_link_snapshot(data)
+    URI.join(
+      'https://www.googleapis.com/compute/v1/',
+      expand_variables_snapshot(
+        'projects/{{project}}/global/snapshots/{{name}}',
+        data
+      )
+    )
+  end
+
   def debug(message)
     puts(message) if ENV['RSPEC_DEBUG']
   end
@@ -1553,8 +2140,23 @@ context 'gcompute_subnetwork' do
       if ENV['RSPEC_DEBUG'] || ENV['RSPEC_HTTP_VERBOSE']
   end
 
-  def expand_variables_network(template, data, ext_dat = {})
-    Google::GCOMPUTE::Network
+  def expand_variables_instance(template, data, ext_dat = {})
+    Google::GCOMPUTE::Instance
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_zone(template, data, ext_dat = {})
+    Google::GCOMPUTE::Zone
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_zone(template, data, ext_dat = {})
+    Google::GCOMPUTE::Zone
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_region_disk_type(template, data, ext_dat = {})
+    Google::GCOMPUTE::RegionDiskType
       .action_class.expand_variables(template, data, ext_dat)
   end
 
@@ -1563,11 +2165,21 @@ context 'gcompute_subnetwork' do
       .action_class.expand_variables(template, data, ext_dat)
   end
 
+  def expand_variables_region(template, data, ext_dat = {})
+    Google::GCOMPUTE::Region
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
+  def expand_variables_snapshot(template, data, ext_dat = {})
+    Google::GCOMPUTE::Snapshot
+      .action_class.expand_variables(template, data, ext_dat)
+  end
+
   def collection(data)
     URI.join(
       'https://www.googleapis.com/compute/v1/',
       expand_variables(
-        'projects/{{project}}/regions/{{region}}/subnetworks',
+        'projects/{{project}}/regions/{{region}}/disks',
         data
       )
     )
@@ -1577,7 +2189,7 @@ context 'gcompute_subnetwork' do
     URI.join(
       'https://www.googleapis.com/compute/v1/',
       expand_variables(
-        'projects/{{project}}/regions/{{region}}/subnetworks/{{name}}',
+        'projects/{{project}}/regions/{{region}}/disks/{{name}}',
         data
       )
     )
@@ -1586,12 +2198,12 @@ context 'gcompute_subnetwork' do
   # Creates variable test data to comply with self_link URI parameters
   def uri_data(id)
     {
-      project: GoogleTests::Constants::S_PROJECT_DATA[(id - 1) \
-        % GoogleTests::Constants::S_PROJECT_DATA.size],
-      region: GoogleTests::Constants::S_REGION_DATA[(id - 1) \
-        % GoogleTests::Constants::S_REGION_DATA.size],
-      name: GoogleTests::Constants::S_NAME_DATA[(id - 1) \
-        % GoogleTests::Constants::S_NAME_DATA.size]
+      project: GoogleTests::Constants::RD_PROJECT_DATA[(id - 1) \
+        % GoogleTests::Constants::RD_PROJECT_DATA.size],
+      region: GoogleTests::Constants::RD_REGION_DATA[(id - 1) \
+        % GoogleTests::Constants::RD_REGION_DATA.size],
+      name: GoogleTests::Constants::RD_NAME_DATA[(id - 1) \
+        % GoogleTests::Constants::RD_NAME_DATA.size]
     }
   end
 

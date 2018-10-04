@@ -30,6 +30,7 @@ kind: compute#address
 name: test name#1 data
 id: 4299001743
 address: test address#1 data
+addressType: EXTERNAL
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 description: test description#1 data
 ipVersion: IPV6

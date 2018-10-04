@@ -31,10 +31,21 @@ name: title1
 id: 4299001743
 creationTimestamp: '2120-10-14T00:16:21+00:00'
 description: test description#1 data
+enableFlowLogs: false
+fingerprint: test fingerprint#1 data
 gatewayAddress: test gateway_address#1 data
 ipCidrRange: test ip_cidr_range#1 data
 network: selflink(resource(network,1))
 privateIpGoogleAccess: false
 project: "'test project#1 data'"
 region: test name#1 data
+secondaryIpRanges:
+- rangeName: test range_name#1 data
+  ipCidrRange: test ip_cidr_range#1 data
+- rangeName: test range_name#2 data
+  ipCidrRange: test ip_cidr_range#2 data
+- rangeName: test range_name#3 data
+  ipCidrRange: test ip_cidr_range#3 data
+- rangeName: test range_name#4 data
+  ipCidrRange: test ip_cidr_range#4 data
 selfLink: selflink(resource(subnetwork,1))
