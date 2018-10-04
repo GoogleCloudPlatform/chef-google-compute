@@ -95,6 +95,9 @@ module Google
       property :label_fingerprint,
                [String, ::Google::Compute::Property::String],
                coerce: ::Google::Compute::Property::String.coerce, desired_state: true
+      property :network_tier,
+               equal_to: %w[PREMIUM STANDARD],
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :region,
                [String, ::Google::Compute::Data::RegionNameRef],
                coerce: ::Google::Compute::Property::RegionNameRef.coerce, desired_state: true
@@ -197,7 +200,8 @@ module Google
             portRange: new_resource.port_range,
             ports: new_resource.ports,
             subnetwork: new_resource.subnetwork,
-            target: new_resource.target
+            target: new_resource.target,
+            networkTier: new_resource.network_tier
           }.reject { |_, v| v.nil? }
           request.to_json
         end
@@ -243,6 +247,7 @@ module Google
             subnetwork: resource.subnetwork,
             target: resource.target,
             label_fingerprint: resource.label_fingerprint,
+            network_tier: resource.network_tier,
             region: resource.region
           }.reject { |_, v| v.nil? }
         end

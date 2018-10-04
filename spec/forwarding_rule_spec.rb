@@ -239,6 +239,7 @@ context 'gcompute_forwarding_rule' do
                     ip_version 'IPV4'
                     load_balancing_scheme 'INTERNAL'
                     network 'resource(network,0)'
+                    network_tier 'PREMIUM'
                     port_range 'test port_range#0 data'
                     ports ['uu', 'vv']
                     region 'resource(region,0)'
@@ -257,6 +258,7 @@ context 'gcompute_forwarding_rule' do
                     ip_version 'IPV6'
                     load_balancing_scheme 'EXTERNAL'
                     network 'resource(network,1)'
+                    network_tier 'STANDARD'
                     port_range 'test port_range#1 data'
                     ports ['qq', 'rr']
                     region 'resource(region,1)'
@@ -275,6 +277,7 @@ context 'gcompute_forwarding_rule' do
                     ip_version 'IPV4'
                     load_balancing_scheme 'INTERNAL'
                     network 'resource(network,2)'
+                    network_tier 'PREMIUM'
                     port_range 'test port_range#2 data'
                     ports ['mm', 'nn']
                     region 'resource(region,2)'
@@ -334,6 +337,8 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
+              it { is_expected.to have_attributes(network_tier: 'PREMIUM') }
+
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
               #   # Add test code here
@@ -381,6 +386,8 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
+              it { is_expected.to have_attributes(network_tier: 'STANDARD') }
+
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
               #   # Add test code here
@@ -427,6 +434,8 @@ context 'gcompute_forwarding_rule' do
               # it 'target' do
               #   # Add test code here
               # end
+
+              it { is_expected.to have_attributes(network_tier: 'PREMIUM') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -630,6 +639,7 @@ context 'gcompute_forwarding_rule' do
                     ip_version 'IPV4'
                     load_balancing_scheme 'INTERNAL'
                     network 'resource(network,0)'
+                    network_tier 'PREMIUM'
                     port_range 'test port_range#0 data'
                     ports ['uu', 'vv']
                     region 'resource(region,0)'
@@ -649,6 +659,7 @@ context 'gcompute_forwarding_rule' do
                     ip_version 'IPV6'
                     load_balancing_scheme 'EXTERNAL'
                     network 'resource(network,1)'
+                    network_tier 'STANDARD'
                     port_range 'test port_range#1 data'
                     ports ['qq', 'rr']
                     region 'resource(region,1)'
@@ -668,6 +679,7 @@ context 'gcompute_forwarding_rule' do
                     ip_version 'IPV4'
                     load_balancing_scheme 'INTERNAL'
                     network 'resource(network,2)'
+                    network_tier 'PREMIUM'
                     port_range 'test port_range#2 data'
                     ports ['mm', 'nn']
                     region 'resource(region,2)'
@@ -727,6 +739,8 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
+              it { is_expected.to have_attributes(network_tier: 'PREMIUM') }
+
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
               #   # Add test code here
@@ -774,6 +788,8 @@ context 'gcompute_forwarding_rule' do
               #   # Add test code here
               # end
 
+              it { is_expected.to have_attributes(network_tier: 'STANDARD') }
+
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
               #   # Add test code here
@@ -820,6 +836,8 @@ context 'gcompute_forwarding_rule' do
               # it 'target' do
               #   # Add test code here
               # end
+
+              it { is_expected.to have_attributes(network_tier: 'PREMIUM') }
 
               # TODO(alexstephen): Implement resourceref test.
               # it 'region' do
@@ -893,7 +911,8 @@ context 'gcompute_forwarding_rule' do
                 'portRange' => 'test port_range#0 data',
                 'ports' => %w[uu vv],
                 'subnetwork' => 'selflink(resource(subnetwork,0))',
-                'target' => 'selflink(resource(target_pool,0))'
+                'target' => 'selflink(resource(target_pool,0))',
+                'networkTier' => 'PREMIUM'
               },
               name: 'title0',
               region: 'test name#0 data'
@@ -985,6 +1004,7 @@ context 'gcompute_forwarding_rule' do
                   ip_version 'IPV4'
                   load_balancing_scheme 'INTERNAL'
                   network 'resource(network,0)'
+                  network_tier 'PREMIUM'
                   port_range 'test port_range#0 data'
                   ports ['uu', 'vv']
                   region 'resource(region,0)'
@@ -1047,6 +1067,8 @@ context 'gcompute_forwarding_rule' do
           #   # Add test code here
           # end
 
+          it { is_expected.to have_attributes(network_tier: 'PREMIUM') }
+
           # TODO(alexstephen): Implement resourceref test.
           # it 'region' do
           #   # Add test code here
@@ -1082,7 +1104,8 @@ context 'gcompute_forwarding_rule' do
                 'portRange' => 'test port_range#0 data',
                 'ports' => %w[uu vv],
                 'subnetwork' => 'selflink(resource(subnetwork,0))',
-                'target' => 'selflink(resource(target_pool,0))'
+                'target' => 'selflink(resource(target_pool,0))',
+                'networkTier' => 'PREMIUM'
               },
               region: 'test name#0 data'
             expect_network_get_async 1, region: 'test name#0 data'
@@ -1174,6 +1197,7 @@ context 'gcompute_forwarding_rule' do
                   ip_version 'IPV4'
                   load_balancing_scheme 'INTERNAL'
                   network 'resource(network,0)'
+                  network_tier 'PREMIUM'
                   port_range 'test port_range#0 data'
                   ports ['uu', 'vv']
                   region 'resource(region,0)'
@@ -1235,6 +1259,8 @@ context 'gcompute_forwarding_rule' do
           # it 'target' do
           #   # Add test code here
           # end
+
+          it { is_expected.to have_attributes(network_tier: 'PREMIUM') }
 
           # TODO(alexstephen): Implement resourceref test.
           # it 'region' do

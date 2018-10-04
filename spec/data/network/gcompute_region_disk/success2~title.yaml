@@ -26,15 +26,39 @@
 # ----------------------------------------------------------------------------
 
 ---
-kind: compute#address
-name: test name#2 data
-id: 6448502614
-address: test address#2 data
-addressType: EXTERNAL
-creationTimestamp: '2196-03-05T12:24:32+00:00'
-description: test description#2 data
-ipVersion: IPV4
-labelFingerprint: test label_fingerprint#2 data
-project: "'test project#2 data'"
-region: selflink(resource(region,2))
-selfLink: selflink(resource(global_address,2))
+kind: compute#disk
+name: title1
+id: 4299001743
+creationTimestamp: '2120-10-14T00:16:21+00:00'
+description: test description#1 data
+diskEncryptionKey:
+  rawKey: test raw_key#1 data
+  sha256: test sha256#1 data
+labelFingerprint: test label_fingerprint#1 data
+labels:
+  test labels#2 data: test labels#2 data
+  test labels#3 data: 8175001379
+  test labels#4 data: test labels#4 data
+lastAttachTimestamp: '2134-07-22T20:53:35+00:00'
+lastDetachTimestamp: '2003-04-28T21:49:42+00:00'
+licenses:
+- uu
+- vv
+project: "'test project#1 data'"
+region: test name#1 data
+replicaZones:
+- selflink(resource(zone,0))
+- selflink(resource(zone,1))
+- selflink(resource(zone,2))
+sizeGb: 5716998797
+sourceSnapshot: selflink(resource(snapshot,1))
+sourceSnapshotEncryptionKey:
+  rawKey: test raw_key#1 data
+  sha256: test sha256#1 data
+sourceSnapshotId: test source_snapshot_id#1 data
+type: selflink(resource(region_disk_type,1))
+users:
+- selflink(resource(instance,0))
+- selflink(resource(instance,1))
+- selflink(resource(instance,2))
+selfLink: selflink(resource(region_disk,1))

@@ -33,6 +33,7 @@ address: test address#2 data
 addressType: EXTERNAL
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
+networkTier: PREMIUM
 project: "'test project#2 data'"
 region: test name#2 data
 subnetwork: selflink(resource(subnetwork,2))

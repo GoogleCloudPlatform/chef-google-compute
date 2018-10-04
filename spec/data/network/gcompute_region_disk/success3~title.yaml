@@ -26,15 +26,39 @@
 # ----------------------------------------------------------------------------
 
 ---
-kind: compute#address
-name: test name#2 data
+kind: compute#disk
+name: title2
 id: 6448502614
-address: test address#2 data
-addressType: EXTERNAL
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
-ipVersion: IPV4
+diskEncryptionKey:
+  rawKey: test raw_key#2 data
+  sha256: test sha256#2 data
 labelFingerprint: test label_fingerprint#2 data
+labels:
+  test labels#3 data: test labels#3 data
+  test labels#4 data: 10218751724
+  test labels#5 data: test labels#5 data
+  test labels#6 data: 14306252413
+lastAttachTimestamp: '2216-11-01T07:20:23+00:00'
+lastDetachTimestamp: '2019-12-26T08:44:33+00:00'
+licenses:
+- tt
+- uu
+- vv
 project: "'test project#2 data'"
-region: selflink(resource(region,2))
-selfLink: selflink(resource(global_address,2))
+region: test name#2 data
+replicaZones:
+- selflink(resource(zone,0))
+- selflink(resource(zone,1))
+sizeGb: 8575498196
+sourceSnapshot: selflink(resource(snapshot,2))
+sourceSnapshotEncryptionKey:
+  rawKey: test raw_key#2 data
+  sha256: test sha256#2 data
+sourceSnapshotId: test source_snapshot_id#2 data
+type: selflink(resource(region_disk_type,2))
+users:
+- selflink(resource(instance,0))
+- selflink(resource(instance,1))
+selfLink: selflink(resource(region_disk,2))

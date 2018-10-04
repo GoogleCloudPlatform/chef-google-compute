@@ -95,6 +95,7 @@ context 'gcompute_global_address' do
                 <<-MANIFEST
                   gcompute_global_address 'title0' do
                     action :create
+                    address_type 'EXTERNAL'
                     description 'test description#0 data'
                     ip_version 'IPV4'
                     project 'test project#0 data'
@@ -103,6 +104,7 @@ context 'gcompute_global_address' do
 
                   gcompute_global_address 'title1' do
                     action :create
+                    address_type 'EXTERNAL'
                     description 'test description#1 data'
                     ip_version 'IPV6'
                     project 'test project#1 data'
@@ -111,6 +113,7 @@ context 'gcompute_global_address' do
 
                   gcompute_global_address 'title2' do
                     action :create
+                    address_type 'EXTERNAL'
                     description 'test description#2 data'
                     ip_version 'IPV4'
                     project 'test project#2 data'
@@ -136,6 +139,8 @@ context 'gcompute_global_address' do
               it { is_expected.to have_attributes(ga_label: 'title0') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
+
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
             end
 
             context 'gcompute_global_address[title1]' do
@@ -148,6 +153,8 @@ context 'gcompute_global_address' do
               it { is_expected.to have_attributes(ga_label: 'title1') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV6') }
+
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
             end
 
             context 'gcompute_global_address[title2]' do
@@ -160,6 +167,8 @@ context 'gcompute_global_address' do
               it { is_expected.to have_attributes(ga_label: 'title2') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
+
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
             end
           end
 
@@ -213,6 +222,7 @@ context 'gcompute_global_address' do
                 <<-MANIFEST
                   gcompute_global_address 'title0' do
                     action :create
+                    address_type 'EXTERNAL'
                     description 'test description#0 data'
                     ga_label 'test name#0 data'
                     ip_version 'IPV4'
@@ -222,6 +232,7 @@ context 'gcompute_global_address' do
 
                   gcompute_global_address 'title1' do
                     action :create
+                    address_type 'EXTERNAL'
                     description 'test description#1 data'
                     ga_label 'test name#1 data'
                     ip_version 'IPV6'
@@ -231,6 +242,7 @@ context 'gcompute_global_address' do
 
                   gcompute_global_address 'title2' do
                     action :create
+                    address_type 'EXTERNAL'
                     description 'test description#2 data'
                     ga_label 'test name#2 data'
                     ip_version 'IPV4'
@@ -257,6 +269,8 @@ context 'gcompute_global_address' do
               it { is_expected.to have_attributes(ga_label: 'test name#0 data') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
+
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
             end
 
             context 'gcompute_global_address[title1]' do
@@ -269,6 +283,8 @@ context 'gcompute_global_address' do
               it { is_expected.to have_attributes(ga_label: 'test name#1 data') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV6') }
+
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
             end
 
             context 'gcompute_global_address[title2]' do
@@ -281,6 +297,8 @@ context 'gcompute_global_address' do
               it { is_expected.to have_attributes(ga_label: 'test name#2 data') }
 
               it { is_expected.to have_attributes(ip_version: 'IPV4') }
+
+              it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
             end
           end
 
@@ -340,7 +358,8 @@ context 'gcompute_global_address' do
                 'kind' => 'compute#address',
                 'description' => 'test description#0 data',
                 'name' => 'title0',
-                'ipVersion' => 'IPV4'
+                'ipVersion' => 'IPV4',
+                'addressType' => 'EXTERNAL'
               },
               name: 'title0'
             expect_network_get_async 1, name: 'title0'
@@ -375,6 +394,7 @@ context 'gcompute_global_address' do
               <<-MANIFEST
                 gcompute_global_address 'title0' do
                   action :create
+                  address_type 'EXTERNAL'
                   description 'test description#0 data'
                   ip_version 'IPV4'
                   project 'test project#0 data'
@@ -403,6 +423,8 @@ context 'gcompute_global_address' do
           it { is_expected.to have_attributes(ga_label: 'title0') }
 
           it { is_expected.to have_attributes(ip_version: 'IPV4') }
+
+          it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
         end
 
         # Ensure present: resource missing, ignore, no name, fail
@@ -424,7 +446,8 @@ context 'gcompute_global_address' do
               'kind' => 'compute#address',
               'description' => 'test description#0 data',
               'name' => 'test name#0 data',
-              'ipVersion' => 'IPV4'
+              'ipVersion' => 'IPV4',
+              'addressType' => 'EXTERNAL'
             expect_network_get_async 1
           end
 
@@ -457,6 +480,7 @@ context 'gcompute_global_address' do
               <<-MANIFEST
                 gcompute_global_address 'title0' do
                   action :create
+                  address_type 'EXTERNAL'
                   description 'test description#0 data'
                   ga_label 'test name#0 data'
                   ip_version 'IPV4'
@@ -486,6 +510,8 @@ context 'gcompute_global_address' do
           it { is_expected.to have_attributes(ga_label: 'test name#0 data') }
 
           it { is_expected.to have_attributes(ip_version: 'IPV4') }
+
+          it { is_expected.to have_attributes(address_type: 'EXTERNAL') }
         end
 
         # Ensure present: resource missing, ignore, has name, fail

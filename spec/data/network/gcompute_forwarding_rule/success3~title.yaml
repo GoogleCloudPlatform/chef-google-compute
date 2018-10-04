@@ -38,6 +38,7 @@ ipVersion: IPV4
 labelFingerprint: test label_fingerprint#2 data
 loadBalancingScheme: INTERNAL
 network: selflink(resource(network,2))
+networkTier: PREMIUM
 portRange: test port_range#2 data
 ports:
 - mm

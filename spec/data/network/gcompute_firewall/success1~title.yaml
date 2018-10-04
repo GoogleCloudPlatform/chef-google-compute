@@ -66,6 +66,7 @@ destinationRanges:
 - ee
 - ff
 direction: INGRESS
+disabled: true
 network: selflink(resource(network,0))
 priority: 1000
 project: "'test project#0 data'"

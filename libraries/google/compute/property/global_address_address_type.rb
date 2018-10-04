@@ -25,16 +25,27 @@
 #
 # ----------------------------------------------------------------------------
 
----
-kind: compute#address
-name: test name#2 data
-id: 6448502614
-address: test address#2 data
-addressType: EXTERNAL
-creationTimestamp: '2196-03-05T12:24:32+00:00'
-description: test description#2 data
-ipVersion: IPV4
-labelFingerprint: test label_fingerprint#2 data
-project: "'test project#2 data'"
-region: selflink(resource(region,2))
-selfLink: selflink(resource(global_address,2))
+module Google
+  module Compute
+    module Property
+      # A class to handle serialization of an enum with a
+      # default.  The default is important because GCP sometimes
+      # does not return the default value for an enum, but we need
+      # to avoid detecting a diff if it is explicitly set.
+      class AddressTypeEnum
+        def self.coerce
+          ->(x) { ::Google::Compute::Property::Enum.catalog_parse(x) }
+        end
+
+        def self.api_parse(value)
+          return "EXTERNAL" if value.nil?
+          value
+        end
+
+        def self.catalog_parse(value)
+          value
+        end
+      end
+    end
+  end
+end

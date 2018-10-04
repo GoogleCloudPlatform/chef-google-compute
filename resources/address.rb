@@ -34,6 +34,7 @@ require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/address_address_type'
+require 'google/compute/property/enum'
 require 'google/compute/property/integer'
 require 'google/compute/property/region_name'
 require 'google/compute/property/string'
@@ -65,6 +66,9 @@ module Google
                String,
                coerce: ::Google::Compute::Property::String.coerce,
                name_property: true, desired_state: true
+      property :network_tier,
+               equal_to: %w[PREMIUM STANDARD],
+               coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
       property :subnetwork,
                [String, ::Google::Compute::Data::SubnetworkSelfLinkRef],
                coerce: ::Google::Compute::Property::SubnetworkSelfLinkRef.coerce,
@@ -110,6 +114,8 @@ module Google
             ::Google::Compute::Property::String.api_parse(fetch['description'])
           @current_resource.id = ::Google::Compute::Property::Integer.api_parse(fetch['id'])
           @current_resource.a_label = ::Google::Compute::Property::String.api_parse(fetch['name'])
+          @current_resource.network_tier =
+            ::Google::Compute::Property::Enum.api_parse(fetch['networkTier'])
           @current_resource.subnetwork =
             ::Google::Compute::Property::SubnetworkSelfLinkRef.api_parse(fetch['subnetwork'])
           @current_resource.users =
@@ -151,6 +157,7 @@ module Google
             addressType: new_resource.address_type,
             description: new_resource.description,
             name: new_resource.a_label,
+            networkTier: new_resource.network_tier,
             subnetwork: new_resource.subnetwork
           }.reject { |_, v| v.nil? }
           request.to_json
@@ -183,6 +190,7 @@ module Google
             creation_timestamp: resource.creation_timestamp,
             description: resource.description,
             id: resource.id,
+            network_tier: resource.network_tier,
             subnetwork: resource.subnetwork,
             users: resource.users,
             region: resource.region
