@@ -34,7 +34,6 @@ addressType: EXTERNAL
 creationTimestamp: '2196-03-05T12:24:32+00:00'
 description: test description#2 data
 ipVersion: IPV4
-labelFingerprint: test label_fingerprint#2 data
 project: "'test project#2 data'"
 region: selflink(resource(region,2))
 selfLink: selflink(resource(global_address,2))

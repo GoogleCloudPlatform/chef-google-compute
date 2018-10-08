@@ -1567,7 +1567,6 @@ gcompute_global_address 'id-for-resource' do
   description        string
   id                 integer
   ip_version         'IPV4' or 'IPV6'
-  label_fingerprint  fingerprint
   name               string
   region             reference to gcompute_region
   project            string
@@ -1609,10 +1608,6 @@ end
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
-
-* `label_fingerprint` -
-  Output only. The fingerprint used for optimistic locking of this resource.  Used
-  internally during updates.
 
 * `ip_version` -
   The IP Version that will be used by this address. Valid options are
