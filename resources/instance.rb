@@ -243,12 +243,11 @@ module Google
             # TODO(nelsonjr): Check w/ Chef... can we print this in red?
             puts # making a newline until we find a better way TODO: find!
             compute_changes.each { |log| puts "    - #{log.strip}\n" }
-            update_req =
-              ::Google::Compute::Network::Put.new(self_link(@new_resource),
-                                                  fetch_auth(@new_resource),
-                                                  'application/json',
-                                                  resource_to_request)
-            wait_for_operation update_req.send, @new_resource
+            if (@current_resource.machine_type != @new_resource.machine_type)
+              machine_type_update(@current_resource)
+            end
+            return fetch_resource(@new_resource, self_link(@new_resource),
+                                  'compute#instance')
           end
         end
 
@@ -284,6 +283,22 @@ module Google
         end
         # rubocop:enable Metrics/MethodLength
 
+  def machine_type_update(data)
+    ::Google::Compute::Network::Post.new(
+      URI.join(
+        'https://www.googleapis.com/compute/v1/',
+        expand_variables(
+          'projdcts/{{project}}/zones/{{zone}}/instances/{{name}}/setMachineType',
+          data
+        )
+      ),
+      fetch_auth(@new_resource),
+      'application/json',
+      {
+        machineType: @new_resource.machine_type
+      }.to_json
+    ).send
+  end
         # Copied from Chef > Provider > #converge_if_changed
         def compute_changes
           properties = @new_resource.class.state_properties.map(&:name)
