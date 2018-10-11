@@ -92,9 +92,6 @@ module Google
                [String, ::Google::Compute::Data::TargetPoolSelfLinkRef],
                coerce: ::Google::Compute::Property::TargetPoolSelfLinkRef.coerce,
                desired_state: true
-      property :label_fingerprint,
-               [String, ::Google::Compute::Property::String],
-               coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :network_tier,
                equal_to: %w[PREMIUM STANDARD],
                coerce: ::Google::Compute::Property::Enum.coerce, desired_state: true
@@ -155,8 +152,6 @@ module Google
             ::Google::Compute::Property::SubnetworkSelfLinkRef.api_parse(fetch['subnetwork'])
           @current_resource.target =
             ::Google::Compute::Property::TargetPoolSelfLinkRef.api_parse(fetch['target'])
-          @current_resource.label_fingerprint =
-            ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @new_resource.__fetched = fetch
 
           update
@@ -215,9 +210,6 @@ module Google
             if (@current_resource.target != @new_resource.target)
               target_update(@current_resource)
             end
-            if 
-              label_fingerprint_update(@current_resource)
-            end
             return fetch_resource(@new_resource, self_link(@new_resource),
                                   'compute#forwardingRule')
           end
@@ -246,7 +238,6 @@ module Google
             ports: resource.ports,
             subnetwork: resource.subnetwork,
             target: resource.target,
-            label_fingerprint: resource.label_fingerprint,
             network_tier: resource.network_tier,
             region: resource.region
           }.reject { |_, v| v.nil? }
@@ -265,23 +256,6 @@ module Google
       'application/json',
       {
         target: @new_resource.target
-      }.to_json
-    ).send
-  end
-
-  def label_fingerprint_update(data)
-    ::Google::Compute::Network::Post.new(
-      URI.join(
-        'https://www.googleapis.com/compute/v1/',
-        expand_variables(
-          'projects/{{project}}/regions/{{region}}/forwardingRules/{{name}}/setLabels',
-          data
-        )
-      ),
-      fetch_auth(@new_resource),
-      'application/json',
-      {
-        labelFingerprint: @new_resource.__fetched['labelFingerprint']
       }.to_json
     ).send
   end

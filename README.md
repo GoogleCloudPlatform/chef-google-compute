@@ -1371,7 +1371,6 @@ gcompute_forwarding_rule 'id-for-resource' do
   ip_address            string
   ip_protocol           'TCP', 'UDP', 'ESP', 'AH', 'SCTP' or 'ICMP'
   ip_version            'IPV4' or 'IPV6'
-  label_fingerprint     fingerprint
   load_balancing_scheme 'INTERNAL' or 'EXTERNAL'
   name                  string
   network               reference to gcompute_network
@@ -1520,10 +1519,6 @@ end
   must be of a type appropriate to the target object.
   This field is not used for internal load balancing.
 
-* `label_fingerprint` -
-  Output only. The fingerprint used for optimistic locking of this resource.  Used
-  internally during updates.
-
 * `network_tier` -
   The networking tier used for configuring this address. This field can
   take the following values: PREMIUM or STANDARD. If this field is not
@@ -1567,7 +1562,6 @@ gcompute_global_address 'id-for-resource' do
   description        string
   id                 integer
   ip_version         'IPV4' or 'IPV6'
-  label_fingerprint  fingerprint
   name               string
   region             reference to gcompute_region
   project            string
@@ -1609,10 +1603,6 @@ end
   the first character must be a lowercase letter, and all following
   characters must be a dash, lowercase letter, or digit, except the last
   character, which cannot be a dash.
-
-* `label_fingerprint` -
-  Output only. The fingerprint used for optimistic locking of this resource.  Used
-  internally during updates.
 
 * `ip_version` -
   The IP Version that will be used by this address. Valid options are
