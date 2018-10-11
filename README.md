@@ -219,6 +219,9 @@ For complete details of the authentication cookbook, visit the
     instances in the group have not yet been created. You must separately
     verify the status of the individual instances.
     A managed instance group can have up to 1000 VM instances per group.
+* [`gcompute_interconnect_attachment`](#gcompute_interconnect_attachment) -
+    Represents an InterconnectAttachment (VLAN attachment) resource. For more
+    information, see Creating VLAN Attachments.
 * [`gcompute_network`](#gcompute_network) -
     Represents a Network resource.
     Your Cloud Platform Console project can contain multiple networks, and
@@ -3778,6 +3781,117 @@ end
 
 #### Label
 Set the `igm_label` property when attempting to set primary key
+of this object. The primary key will always be referred to by the initials of
+the resource followed by "_label"
+
+### gcompute_interconnect_attachment
+Represents an InterconnectAttachment (VLAN attachment) resource. For more
+information, see Creating VLAN Attachments.
+
+
+#### Example
+
+```ruby
+gcompute_interconnect_attachment 'test-interconnect' do
+  action       :create
+  project      'google.com:graphite-playground'
+  region       'us-central1'
+  name         'test-interconnect'  interconnect 'projects/$project/global/interconnects/$interconnect'
+  router       'projects/$project/regions/$region/routers/$router'
+
+  credential 'mycred'
+end
+
+
+```
+
+#### Reference
+
+```ruby
+gcompute_interconnect_attachment 'id-for-resource' do
+  cloud_router_ip_address    string
+  creation_timestamp         time
+  customer_router_ip_address string
+  description                string
+  google_reference_id        string
+  id                         string
+  interconnect               string
+  name                       string
+  private_interconnect_info  {
+    tag8021q integer,
+  }
+  region                     reference to gcompute_region
+  router                     reference to gcompute_router
+  project                    string
+  credential                 reference to gauth_credential
+end
+```
+
+#### Actions
+
+* `create` -
+  Converges the `gcompute_interconnect_attachment` resource into the final
+  state described within the block. If the resource does not exist, Chef will
+  attempt to create it.
+* `delete` -
+  Ensures the `gcompute_interconnect_attachment` resource is not present.
+  If the resource already exists Chef will attempt to delete it.
+
+#### Properties
+
+* `cloud_router_ip_address` -
+  Output only. IPv4 address + prefix length to be configured on Cloud Router
+  Interface for this interconnect attachment.
+
+* `customer_router_ip_address` -
+  Output only. IPv4 address + prefix length to be configured on the customer
+  router subinterface for this interconnect attachment.
+
+* `interconnect` -
+  Required. URL of the underlying Interconnect object that this attachment's traffic will
+  traverse through.
+
+* `description` -
+  An optional description of this resource.
+
+* `private_interconnect_info` -
+  Output only. Information specific to an InterconnectAttachment. This property
+  is populated if the interconnect that this is attached to is of type DEDICATED.
+
+* `private_interconnect_info/tag8021q`
+  Output only. 802.1q encapsulation tag to be used for traffic between
+  Google and the customer, going to and from this network and region.
+
+* `google_reference_id` -
+  Output only. Google reference ID, to be used when raising support tickets with
+  Google or otherwise to debug backend connectivity issues.
+
+* `router` -
+  Required. URL of the cloud router to be used for dynamic routing. This router must be in
+  the same region as this InterconnectAttachment. The InterconnectAttachment will
+  automatically connect the Interconnect to the network & region within which the
+  Cloud Router is configured.
+
+* `creation_timestamp` -
+  Output only. Creation timestamp in RFC3339 text format.
+
+* `id` -
+  Output only. The unique identifier for the resource. This identifier is
+  defined by the server.
+
+* `name` -
+  Required. Name of the resource. Provided by the client when the resource is created. The
+  name must be 1-63 characters long, and comply with RFC1035. Specifically, the
+  name must be 1-63 characters long and match the regular expression
+  `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a
+  lowercase letter, and all following characters must be a dash, lowercase
+  letter, or digit, except the last character, which cannot be a dash.
+
+* `region` -
+  Required. Region where the regional interconnect attachment resides.
+
+#### Label
+Set the `ia_label` property when attempting to set primary key
 of this object. The primary key will always be referred to by the initials of
 the resource followed by "_label"
 

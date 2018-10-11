@@ -160,6 +160,7 @@ chef-codegen:
   * libraries/google/compute/property/instancetemplate_source_image_encryption_key.rb
   * libraries/google/compute/property/instancetemplate_tags.rb
   * libraries/google/compute/property/integer.rb
+  * libraries/google/compute/property/interconnectattachment_private_interconnect_info.rb
   * libraries/google/compute/property/license_selflink.rb
   * libraries/google/compute/property/machinetype_deprecated.rb
   * libraries/google/compute/property/machinetype_name.rb
@@ -339,6 +340,7 @@ chef-codegen:
   * resources/instance_group.rb
   * resources/instance_group_manager.rb
   * resources/instance_template.rb
+  * resources/interconnect_attachment.rb
   * resources/license.rb
   * resources/machine_type.rb
   * resources/network.rb
@@ -465,6 +467,12 @@ chef-codegen:
   * spec/data/network/gcompute_instance_template/success2~title.yaml
   * spec/data/network/gcompute_instance_template/success3~name.yaml
   * spec/data/network/gcompute_instance_template/success3~title.yaml
+  * spec/data/network/gcompute_interconnect_attachment/success1~name.yaml
+  * spec/data/network/gcompute_interconnect_attachment/success1~title.yaml
+  * spec/data/network/gcompute_interconnect_attachment/success2~name.yaml
+  * spec/data/network/gcompute_interconnect_attachment/success2~title.yaml
+  * spec/data/network/gcompute_interconnect_attachment/success3~name.yaml
+  * spec/data/network/gcompute_interconnect_attachment/success3~title.yaml
   * spec/data/network/gcompute_license/success1~name.yaml
   * spec/data/network/gcompute_license/success1~title.yaml
   * spec/data/network/gcompute_license/success2~name.yaml
@@ -596,6 +604,7 @@ chef-codegen:
   * spec/instance_group_spec.rb
   * spec/instance_spec.rb
   * spec/instance_template_spec.rb
+  * spec/interconnect_attachment_spec.rb
   * spec/license_spec.rb
   * spec/machine_type_spec.rb
   * spec/network_blocker.rb
