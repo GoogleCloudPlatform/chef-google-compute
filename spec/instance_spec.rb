@@ -885,7 +885,7 @@ context 'gcompute_instance' do
                 is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data')
               end
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'metadata' do
               #   # Add test code here
               # end
@@ -948,7 +948,7 @@ context 'gcompute_instance' do
                 is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#1 data')
               end
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'metadata' do
               #   # Add test code here
               # end
@@ -1011,7 +1011,7 @@ context 'gcompute_instance' do
                 is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#2 data')
               end
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'metadata' do
               #   # Add test code here
               # end
@@ -1897,7 +1897,7 @@ context 'gcompute_instance' do
                 is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data')
               end
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'metadata' do
               #   # Add test code here
               # end
@@ -1960,7 +1960,7 @@ context 'gcompute_instance' do
                 is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#1 data')
               end
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'metadata' do
               #   # Add test code here
               # end
@@ -2023,7 +2023,7 @@ context 'gcompute_instance' do
                 is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#2 data')
               end
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'metadata' do
               #   # Add test code here
               # end
@@ -2771,7 +2771,7 @@ context 'gcompute_instance' do
 
           it { is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data') }
 
-          # TODO(nelsonjr): Implement complex namevalues property test.
+          # TODO(alexstephen): Implement keyvaluepairs test.
           # it 'metadata' do
           #   # Add test code here
           # end
@@ -3480,7 +3480,7 @@ context 'gcompute_instance' do
 
           it { is_expected.to have_attributes(label_fingerprint: 'test label_fingerprint#0 data') }
 
-          # TODO(nelsonjr): Implement complex namevalues property test.
+          # TODO(alexstephen): Implement keyvaluepairs test.
           # it 'metadata' do
           #   # Add test code here
           # end

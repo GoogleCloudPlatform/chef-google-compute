@@ -50,8 +50,8 @@ require 'google/compute/property/instance_service_accounts'
 require 'google/compute/property/instance_source_image_encryption_key'
 require 'google/compute/property/instance_tags'
 require 'google/compute/property/integer'
+require 'google/compute/property/keyvaluepairs'
 require 'google/compute/property/machinetype_selflink'
-require 'google/compute/property/namevalues'
 require 'google/compute/property/network_selflink'
 require 'google/compute/property/string'
 require 'google/compute/property/string_array'
@@ -87,8 +87,8 @@ module Google
       property :label_fingerprint,
                String, coerce: ::Google::Compute::Property::String.coerce, desired_state: true
       property :metadata,
-               [Hash, ::Google::Compute::Property::NameValues],
-               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
+               [Hash, ::Google::Compute::Property::KeyValuePairs],
+               coerce: ::Google::Compute::Property::KeyValuePairs.coerce, desired_state: true
       property :machine_type,
                [String, ::Google::Compute::Data::MachineTypeSelfLinkRef],
                coerce: ::Google::Compute::Property::MachineTypeSelfLinkRef.coerce,
@@ -161,7 +161,7 @@ module Google
           @current_resource.label_fingerprint =
             ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @current_resource.metadata =
-            ::Google::Compute::Property::NameValues.api_parse(fetch['metadata'])
+            ::Google::Compute::Property::KeyValuePairs.api_parse(fetch['metadata'])
           @current_resource.machine_type =
             ::Google::Compute::Property::MachineTypeSelfLinkRef.api_parse(fetch['machineType'])
           @current_resource.min_cpu_platform =

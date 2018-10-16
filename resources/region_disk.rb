@@ -35,7 +35,7 @@ require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/instance_selflink'
 require 'google/compute/property/integer'
-require 'google/compute/property/namevalues'
+require 'google/compute/property/keyvaluepairs'
 require 'google/compute/property/region_name'
 require 'google/compute/property/regiondisk_disk_encryption_key'
 require 'google/compute/property/regiondisk_source_snapshot_encryption_key'
@@ -67,8 +67,8 @@ module Google
       property :last_detach_timestamp,
                Time, coerce: ::Google::Compute::Property::Time.coerce, desired_state: true
       property :labels,
-               [Hash, ::Google::Compute::Property::NameValues],
-               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
+               [Hash, ::Google::Compute::Property::KeyValuePairs],
+               coerce: ::Google::Compute::Property::KeyValuePairs.coerce, desired_state: true
       # licenses is Array of Google::Compute::Property::StringArray
       property :licenses,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
@@ -144,7 +144,7 @@ module Google
           @current_resource.last_detach_timestamp =
             ::Google::Compute::Property::Time.api_parse(fetch['lastDetachTimestamp'])
           @current_resource.labels =
-            ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
+            ::Google::Compute::Property::KeyValuePairs.api_parse(fetch['labels'])
           @current_resource.licenses =
             ::Google::Compute::Property::StringArray.api_parse(fetch['licenses'])
           @current_resource.size_gb =

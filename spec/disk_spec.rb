@@ -275,7 +275,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -326,7 +326,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -377,7 +377,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -655,7 +655,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -706,7 +706,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(description: 'test description#1 data') }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -757,7 +757,7 @@ context 'gcompute_disk' do
 
               it { is_expected.to have_attributes(description: 'test description#2 data') }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -985,7 +985,7 @@ context 'gcompute_disk' do
           end
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          # TODO(nelsonjr): Implement complex namevalues property test.
+          # TODO(alexstephen): Implement keyvaluepairs test.
           # it 'labels' do
           #   # Add test code here
           # end
@@ -1176,7 +1176,7 @@ context 'gcompute_disk' do
           end
           it { is_expected.to have_attributes(description: 'test description#0 data') }
 
-          # TODO(nelsonjr): Implement complex namevalues property test.
+          # TODO(alexstephen): Implement keyvaluepairs test.
           # it 'labels' do
           #   # Add test code here
           # end

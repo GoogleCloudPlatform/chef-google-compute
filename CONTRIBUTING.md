@@ -161,11 +161,11 @@ chef-codegen:
   * libraries/google/compute/property/instancetemplate_tags.rb
   * libraries/google/compute/property/integer.rb
   * libraries/google/compute/property/interconnectattachment_private_interconnect_info.rb
+  * libraries/google/compute/property/keyvaluepairs.rb
   * libraries/google/compute/property/license_selflink.rb
   * libraries/google/compute/property/machinetype_deprecated.rb
   * libraries/google/compute/property/machinetype_name.rb
   * libraries/google/compute/property/machinetype_selflink.rb
-  * libraries/google/compute/property/namevalues.rb
   * libraries/google/compute/property/network_routing_config.rb
   * libraries/google/compute/property/network_selflink.rb
   * libraries/google/compute/property/region_deprecated.rb

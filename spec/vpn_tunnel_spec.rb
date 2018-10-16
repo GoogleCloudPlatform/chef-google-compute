@@ -300,7 +300,7 @@ context 'gcompute_vpn_tunnel' do
 
               it { is_expected.to have_attributes(remote_traffic_selector: %w[xx yy zz]) }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -340,7 +340,7 @@ context 'gcompute_vpn_tunnel' do
 
               it { is_expected.to have_attributes(remote_traffic_selector: %w[ww xx yy zz]) }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -380,7 +380,7 @@ context 'gcompute_vpn_tunnel' do
 
               it { is_expected.to have_attributes(remote_traffic_selector: %w[vv ww xx yy zz]) }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -650,7 +650,7 @@ context 'gcompute_vpn_tunnel' do
 
               it { is_expected.to have_attributes(remote_traffic_selector: %w[xx yy zz]) }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -690,7 +690,7 @@ context 'gcompute_vpn_tunnel' do
 
               it { is_expected.to have_attributes(remote_traffic_selector: %w[ww xx yy zz]) }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -730,7 +730,7 @@ context 'gcompute_vpn_tunnel' do
 
               it { is_expected.to have_attributes(remote_traffic_selector: %w[vv ww xx yy zz]) }
 
-              # TODO(nelsonjr): Implement complex namevalues property test.
+              # TODO(alexstephen): Implement keyvaluepairs test.
               # it 'labels' do
               #   # Add test code here
               # end
@@ -939,7 +939,7 @@ context 'gcompute_vpn_tunnel' do
 
           it { is_expected.to have_attributes(remote_traffic_selector: %w[xx yy zz]) }
 
-          # TODO(nelsonjr): Implement complex namevalues property test.
+          # TODO(alexstephen): Implement keyvaluepairs test.
           # it 'labels' do
           #   # Add test code here
           # end
@@ -1111,7 +1111,7 @@ context 'gcompute_vpn_tunnel' do
 
           it { is_expected.to have_attributes(remote_traffic_selector: %w[xx yy zz]) }
 
-          # TODO(nelsonjr): Implement complex namevalues property test.
+          # TODO(alexstephen): Implement keyvaluepairs test.
           # it 'labels' do
           #   # Add test code here
           # end

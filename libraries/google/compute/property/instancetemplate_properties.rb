@@ -136,7 +136,7 @@ module Google
           @disks = Google::Compute::Property::InstanceTemplateDisksArray.api_parse(args['disks'])
           @machine_type =
             Google::Compute::Property::MachineTypeNameRef.api_parse(args['machineType'])
-          @metadata = Google::Compute::Property::NameValues.api_parse(args['metadata'])
+          @metadata = Google::Compute::Property::KeyValuePairs.api_parse(args['metadata'])
           @guest_accelerators =
             Google::Compute::Property::InstanceTemplateGuestAcceleratorsArray.api_parse(
               args['guestAccelerators']
@@ -166,7 +166,7 @@ module Google
           @disks = Google::Compute::Property::InstanceTemplateDisksArray.catalog_parse(args[:disks])
           @machine_type =
             Google::Compute::Property::MachineTypeNameRef.catalog_parse(args[:machine_type])
-          @metadata = Google::Compute::Property::NameValues.catalog_parse(args[:metadata])
+          @metadata = Google::Compute::Property::KeyValuePairs.catalog_parse(args[:metadata])
           @guest_accelerators =
             Google::Compute::Property::InstanceTemplateGuestAcceleratorsArray.catalog_parse(
               args[:guest_accelerators]

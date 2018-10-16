@@ -34,7 +34,7 @@ require 'google/compute/network/get'
 require 'google/compute/network/post'
 require 'google/compute/network/put'
 require 'google/compute/property/integer'
-require 'google/compute/property/namevalues'
+require 'google/compute/property/keyvaluepairs'
 require 'google/compute/property/region_name'
 require 'google/compute/property/router_selflink'
 require 'google/compute/property/string'
@@ -80,8 +80,8 @@ module Google
       property :remote_traffic_selector,
                Array, coerce: ::Google::Compute::Property::StringArray.coerce, desired_state: true
       property :labels,
-               [Hash, ::Google::Compute::Property::NameValues],
-               coerce: ::Google::Compute::Property::NameValues.coerce, desired_state: true
+               [Hash, ::Google::Compute::Property::KeyValuePairs],
+               coerce: ::Google::Compute::Property::KeyValuePairs.coerce, desired_state: true
       property :label_fingerprint,
                [String, ::Google::Compute::Property::String],
                coerce: ::Google::Compute::Property::String.coerce, desired_state: true
@@ -131,7 +131,7 @@ module Google
           @current_resource.remote_traffic_selector =
             ::Google::Compute::Property::StringArray.api_parse(fetch['remoteTrafficSelector'])
           @current_resource.labels =
-            ::Google::Compute::Property::NameValues.api_parse(fetch['labels'])
+            ::Google::Compute::Property::KeyValuePairs.api_parse(fetch['labels'])
           @current_resource.label_fingerprint =
             ::Google::Compute::Property::String.api_parse(fetch['labelFingerprint'])
           @new_resource.__fetched = fetch
