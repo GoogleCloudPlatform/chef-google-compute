@@ -103,7 +103,7 @@ GEM
     iniparse (1.4.4)
     ipaddress (0.8.3)
     iso8601 (0.11.0)
-    json (2.1.0)
+    json (2.5.1)
     jwt (2.1.0)
     libyajl2 (1.2.0)
     memoist (0.16.0)
