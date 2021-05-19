@@ -34,7 +34,7 @@ group :test do
   gem 'google-api-client', '= 0.10.1'
   gem 'googleauth'
   gem 'parallel_tests'
-  gem 'rake', '~> 10.0'
+  gem 'rake', '~> 12.3'
   gem 'rspec'
   gem 'rspec-mocks'
   gem 'rubocop', '~> 0.52.1'
